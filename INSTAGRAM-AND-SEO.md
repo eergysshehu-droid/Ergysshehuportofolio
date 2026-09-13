@@ -2,7 +2,7 @@
 
 The live origin is https://ergysshehu.com. Production builds now generate canonical URLs, social preview metadata, homepage Person/WebSite structured data and sitemap.xml. robots.txt points to the sitemap. Local design previews retain noindex; production pages do not. A sitemap does not guarantee Google indexing. The owner should submit https://ergysshehu.com/sitemap.xml in Google Search Console and inspect the homepage URL for the current crawl/index status.
 
-Instagram, Facebook and YouTube profile URLs were extracted from the user's public Wix page. Their icons appear in the footer/contact section and URLs can be edited in Sanity. LinkedIn is supported but hidden until its correct URL is supplied.
+Instagram, Facebook and YouTube profile URLs were extracted from the user's public Wix page. The user confirmed Instagram and Facebook and supplied https://www.linkedin.com/in/ergysshehu/ for LinkedIn. All four icons appear in the footer/contact section and URLs can be edited in Sanity.
 
 ## Collect Instagram for visual review
 
