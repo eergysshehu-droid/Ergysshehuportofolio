@@ -1,0 +1,13 @@
+---
+import {content,photoUrl,safeUrl} from '../lib/content';
+import {defaultSocials} from '../lib/socials';
+interface Props {title:string;description:string;home?:boolean}
+const {title,description,home=false}=Astro.props;
+const {settings}=await content();
+const site=Astro.site || new URL('https://ergysshehu.com');
+const canonical=new URL(Astro.url.pathname,site);
+const image=photoUrl(settings.heroImage,1800);
+const sameAs=Object.entries(defaultSocials).map(([key,value])=>safeUrl(settings[key as keyof typeof defaultSocials]??value)).filter(Boolean);
+const schema={'@context':'https://schema.org','@graph':[{'@type':'Person','@id':new URL('/#artist',site).href,name:settings.name||'Ergys Shehu',url:site.href,jobTitle:'Photographer and Director',sameAs},{'@type':'WebSite','@id':new URL('/#website',site).href,url:site.href,name:'Ergys Shehu',publisher:{'@id':new URL('/#artist',site).href}}]};
+---
+<link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/>{image && <><meta property="og:image" content={new URL(image,site)}/><meta name="twitter:image" content={new URL(image,site)}/></>}{import.meta.env.DESIGN_PREVIEW==='1' && <meta name="robots" content="noindex,nofollow"/>}{home && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/>}

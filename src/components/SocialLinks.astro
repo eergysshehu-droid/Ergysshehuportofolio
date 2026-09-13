@@ -1,0 +1,9 @@
+---
+import {content,safeUrl} from '../lib/content';
+import {defaultSocials} from '../lib/socials';
+const {settings}=await content();
+const links=Object.entries(defaultSocials).map(([key,fallback])=>({key,url:safeUrl(settings[key as keyof typeof defaultSocials] ?? fallback)})).filter(l=>l.url);
+const labels:Record<string,string>={instagram:'Instagram',facebook:'Facebook',youtube:'YouTube',linkedin:'LinkedIn'};
+---
+<nav class="social-links" aria-label="Social profiles">{links.map(({key,url})=><a href={url} target="_blank" rel="noopener noreferrer" aria-label={labels[key]}><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">{key==='instagram'?<><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></>:key==='facebook'?<path d="M14 22v-9h3l.6-4H14V7c0-1.3.5-2 2-2h2V1.5L15 1c-3 0-5 1.8-5 5v3H7v4h3v9"/>:key==='youtube'?<><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 6 3-6 3Z"/></>:<><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 10v7M11 17v-7m0 3c0-4 6-4 6 0v4"/><circle cx="7" cy="7" r=".8" fill="currentColor"/></>}</svg><span>{labels[key]}</span></a>)}</nav>
+<style>.social-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px}.social-links a{display:inline-flex;align-items:center;gap:7px;min-height:44px;font-size:10px}.social-links a:hover{text-decoration:underline}.social-links svg{flex-shrink:0}</style>

@@ -5,7 +5,7 @@ import {content, albumKind, type Album, type Settings} from '../lib/content';
 import {sections} from '../lib/editorial';
 export async function getStaticPaths() {
   const {settings,albums} = await content();
-  return [...sections,{slug:'projects',title:'Projects',subtitle:'Selected stories, still and moving.'}].map(section => ({params:{section:section.slug},props:{section,settings,albums:section.slug === 'projects' ? albums : albums.filter(a => albumKind(a) === section.slug)}}));
+  return [...sections,{slug:'projects',title:'Projects',subtitle:'Selected stories, still and moving.'}].map(section => ({params:{section:section.slug},props:{section,settings,albums:section.slug === 'projects' ? albums : albums.filter(a => section.slug === 'films' ? Boolean(a.localVideo || a.videoUrl || albumKind(a) === 'films') : albumKind(a) === section.slug)}}));
 }
 interface Props {section:{slug:string;title:string;subtitle:string};settings:Settings;albums:Album[]}
 const {section,settings,albums} = Astro.props;

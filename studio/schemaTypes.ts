@@ -40,6 +40,9 @@ const settings = defineType({name: 'siteSettings', title: 'Profili dhe kontakti'
   defineField({name: 'portrait', title: 'Portreti', type: 'portfolioPhoto'}),
   defineField({name: 'email', title: 'Email publik për kontakt', type: 'string', validation: r => r.email()}),
   defineField({name: 'instagram', title: 'Instagram URL', type: 'url', validation: r => r.uri({scheme: ['https']})}),
+  defineField({name: 'facebook', title: 'Facebook URL', type: 'url', validation: r => r.uri({scheme: ['https']})}),
+  defineField({name: 'youtube', title: 'YouTube URL', type: 'url', validation: r => r.uri({scheme: ['https']})}),
+  defineField({name: 'linkedin', title: 'LinkedIn URL', type: 'url', validation: r => r.uri({scheme: ['https']})}),
   defineField({name: 'seoDescription', title: 'Përshkrimi në kërkim', type: 'text', validation: r => r.max(160)})
 ]});
 export const schemaTypes = [photo, category, album, settings];

@@ -2,6 +2,7 @@ node_modules/
 dist/
 studio-dist/
 design-preview/
+.instagram-import/
 .astro/
 .sanity/
 .wrangler/
