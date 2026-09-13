@@ -1,15 +1,15 @@
 ---
 import '../styles/portfolio.css';
+import '../styles/experience.css';
+import Wordmark from '../components/Wordmark.astro';
+import Menu from '../components/Menu.astro';
 import Seo from '../components/Seo.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import {defaults} from '../lib/editorial';
 interface Props {title?:string;description?:string;name?:string;home?:boolean}
 const {title='Ergys Shehu — Photographer / Director',description=defaults.seoDescription,name=defaults.name,home=false}=Astro.props;
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/><Seo title={title} description={description} home={home}/></head>
-<body class:list={[{'is-home':home}]}><a class="skip" href="#main">Skip to content</a><header class="site-header"><a class="brand" href="/" aria-label={name+' home'}><img src="/images/ergys-shehu-logo.png" alt={name} width="98" height="67"/></a><nav class="desktop-nav" aria-label="Primary"><a href="/#selected">Photography</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact ↗</a></nav><span class="location">ALBANIA · WORLDWIDE</span><details class="mobile-menu"><summary>MENU <span>＋</span></summary><nav aria-label="Mobile navigation"><a href="/#selected">Photography</a><a href="/fashion/">Fashion</a><a href="/portraits/">Portraits</a><a href="/weddings/">Weddings</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact ↗</a></nav></details></header>
-<main id="main"><slot/></main><footer><a href="/" class="footer-name">{name}</a><span>© {new Date().getFullYear()} · PHOTOGRAPHER & DIRECTOR</span><SocialLinks/><a href="#main">BACK TO TOP ↑</a></footer>
-<script>
-document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>{const d=a.closest('details');if(d)d.open=false}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll<HTMLDetailsElement>('.mobile-menu[open]').forEach(d=>{d.open=false;d.querySelector('summary')?.focus()})});
-</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/><Seo title={title} description={description} home={home}/></head>
+<body class:list={[{'is-home':home}]}><a class="skip" href="#main">Skip to content</a><header class="site-header"><a class="brand" href="/" aria-label={name+' home'}><Wordmark name={name}/></a><nav class="desktop-nav" aria-label="Primary"><a href="/#selected">Photography</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact ↗</a></nav><Menu/></header>
+<main id="main"><slot/></main><footer><a href="/" class="footer-name"><Wordmark name={name}/></a><span>© {new Date().getFullYear()} · PHOTOGRAPHER & DIRECTOR</span><SocialLinks/><a href="#main">BACK TO TOP ↑</a></footer>
+<script>import '../scripts/motion';</script></body></html>

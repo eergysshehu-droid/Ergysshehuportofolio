@@ -10,3 +10,6 @@ design-preview/
 .env.*
 !.env.example
 *.log
+.env
+.env.*
+instagram-media.json
