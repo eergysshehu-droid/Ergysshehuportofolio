@@ -1,0 +1,18 @@
+---
+import {content,photoUrl,photoSet} from '../lib/content';
+const {settings,albums}=await content();
+const hero=settings.heroImage || albums[0]?.cover;
+const slides=[{photo:hero,title:'Dance in the elements',url:'/portfolio/dance-in-the-elements/'},...['red-room','beauty-studies'].map(slug=>{const a=albums.find(a=>a.slug===slug);return {photo:a?.cover,title:a?.title,url:a?`/portfolio/${a.slug}/`:'/projects/'};})].filter(s=>s.photo);
+---
+<section class="opening cinematic-opening" aria-label="Featured photography" aria-roledescription="carousel"><div class="opening-image">{slides.map(({photo,title},i)=><div class:list={['hero-slide',{'is-active':i===0}]} aria-hidden={i!==0} data-title={title} role="group" aria-roledescription="slide" aria-label={`${i+1} of ${slides.length}`}><picture>{i===0&&photo?.localBase&&<source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(photo,1800)} srcset={photoSet(photo)} sizes="100vw" alt={photo?.alt || title} fetchpriority={i===0?'high':'auto'} loading={i===0?'eager':'lazy'} width={photo?.width} height={photo?.height}/></picture></div>)}</div><h1 class="sr-only">Ergys Shehu — Photographer and Director</h1><div class="hero-intro"><p>PHOTOGRAPHY & MOVING IMAGE</p><span>Independent vision.<br/>A world in every frame.</span></div><div class="hero-lower"><a class="hero-project" href={slides[0]?.url}><span class="hero-project-type">SELECTED WORK / <span data-slide-count>01</span></span><span data-slide-title>{slides[0]?.title}</span><span class="hero-project-arrow" aria-hidden="true">↗</span></a><div class="slideshow-controls"><div class="slide-dots" role="group" aria-label="Choose featured photograph">{slides.map((s,i)=><button data-slide={i} data-url={s.url} aria-label={`Show ${s.title}`} aria-pressed={i===0}><span>0{i+1}</span></button>)}</div><button class="slide-pause" aria-label="Pause slideshow">Pause Ⅱ</button></div><a class="scroll-invitation" href="#selected">Discover the work <span aria-hidden="true">↓</span></a></div></section>
+<script>
+const hero=document.querySelector<HTMLElement>('.cinematic-opening')!;
+const slides=Array.from(hero.querySelectorAll<HTMLElement>('.hero-slide'));
+const buttons=Array.from(hero.querySelectorAll<HTMLButtonElement>('[data-slide]'));
+const pause=hero.querySelector<HTMLButtonElement>('.slide-pause')!;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');let active=0,paused=reduced.matches,timer:ReturnType<typeof setInterval>|undefined;
+function change(index:number){active=index;slides.forEach((s,i)=>{s.classList.toggle('is-active',i===index);s.setAttribute('aria-hidden',String(i!==index));});buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));hero.querySelector('[data-slide-title]')!.textContent=slides[index].dataset.title||'';hero.querySelector('[data-slide-count]')!.textContent=String(index+1).padStart(2,'0');hero.querySelector<HTMLAnchorElement>('.hero-project')!.href=buttons[index].dataset.url!;}
+function sync(){if(timer)clearInterval(timer);pause.textContent=paused?'Play ▷':'Pause Ⅱ';pause.setAttribute('aria-label',paused?'Play slideshow':'Pause slideshow');if(!paused&&!document.hidden&&slides.length>1)timer=setInterval(()=>change((active+1)%slides.length),6500);}
+buttons.forEach((b,i)=>b.addEventListener('click',()=>{change(i);paused=true;sync();}));pause.addEventListener('click',()=>{paused=!paused;sync();});
+hero.addEventListener('focusin',e=>{if(e.target!==pause){paused=true;sync();}});document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});sync();
+</script>

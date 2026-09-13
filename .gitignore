@@ -2,6 +2,7 @@ node_modules/
 dist/
 studio-dist/
 design-preview/
+.instagram-import/
 .astro/
 .sanity/
 .wrangler/
@@ -9,3 +10,6 @@ design-preview/
 .env.*
 !.env.example
 *.log
+.env
+.env.*
+instagram-media.json

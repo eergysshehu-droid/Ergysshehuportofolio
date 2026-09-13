@@ -1,0 +1,6 @@
+---
+interface Props {name?:string}
+const {name='Ergys Shehu'}=Astro.props;
+const [first,...rest]=name.trim().split(/\s+/);
+---
+<span class="name-lockup"><strong>{first}</strong><span>{rest.join(' ')}</span></span>

@@ -1,0 +1,17 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import Wordmark from './Wordmark.astro';
+---
+<button class="menu-trigger" aria-controls="navigation-panel" aria-expanded="false"><span>Menu</span><span class="menu-lines" aria-hidden="true"><i></i><i></i></span></button>
+<dialog id="navigation-panel" class="navigation-panel" aria-label="Main navigation"><div class="menu-top"><a href="/" aria-label="Ergys Shehu home"><Wordmark/></a><button class="menu-close" aria-label="Close menu">Close <span aria-hidden="true">×</span></button></div><div class="menu-content"><nav aria-label="All pages">{[['Photography','/#selected'],['Motion','/films/'],['Project index','/projects/'],['About','/about/'],['Contact','/#contact']].map(([label,href],i)=><a href={href} style={`--order:${i}`}><span class="menu-number">0{i+1}</span><span>{label}</span><span class="menu-arrow" aria-hidden="true">↗</span></a>)}</nav><aside><p>PHOTOGRAPHER<br/>& DIRECTOR</p><p>Albania.<br/>Working worldwide.</p><SocialLinks/></aside></div><div class="menu-bottom"><span>FASHION · BEAUTY · HUMAN STORIES</span><span>ERGYS SHEHU © {new Date().getFullYear()}</span></div></dialog>
+<script>
+const panel=document.querySelector<HTMLDialogElement>('#navigation-panel')!;
+const trigger=document.querySelector<HTMLButtonElement>('.menu-trigger')!;
+let closing=false;
+function closeMenu(){if(closing||!panel.open)return;closing=true;panel.classList.add('closing');setTimeout(()=>{panel.close();panel.classList.remove('closing');closing=false;},matchMedia('(prefers-reduced-motion: reduce)').matches?0:220);}
+trigger.addEventListener('click',()=>{panel.showModal();trigger.setAttribute('aria-expanded','true');document.documentElement.classList.add('menu-is-open');});
+panel.querySelector('.menu-close')?.addEventListener('click',closeMenu);
+panel.addEventListener('cancel',e=>{e.preventDefault();closeMenu();});
+panel.addEventListener('close',()=>{trigger.setAttribute('aria-expanded','false');document.documentElement.classList.remove('menu-is-open');});
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{panel.close();document.documentElement.classList.remove('menu-is-open');}));
+</script>
