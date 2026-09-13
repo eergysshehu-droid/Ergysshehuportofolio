@@ -1,21 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {content, photoUrl} from '../lib/content';
-const {settings, albums} = await content();
-const categories = [...new Set(albums.map(a => a.category).filter(Boolean))];
+import ProjectGrid from '../components/ProjectGrid.astro';
+import {content, photoUrl, photoSet, albumKind, safeUrl} from '../lib/content';
+import {defaults, sections} from '../lib/editorial';
+const {settings: saved, albums} = await content();
+const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([,value]) => value != null))};
+const hero = saved.heroImage || albums.find(a => a.featured)?.cover;
+const covers = [saved.fashionCover, saved.weddingsCover, saved.portraitsCover];
+const film = saved.filmCover || albums.find(a => albumKind(a) === 'films')?.cover;
+const featured = albums.filter(a => a.featured);
+const reel = safeUrl(saved.reelUrl);
 ---
-<Layout name={settings.name} description={settings.seoDescription}>
-<section class="hero"><p class="eyebrow">ERGYS SHEHU / PORTFOLIO</p><h1>{settings.headline || 'Drita. Momenti.\nHistoria.'}</h1><div class="hero-bottom"><p>Një këndvështrim përmes fotografisë.</p><a href="#portfolio">Shiko punimet <span>↓</span></a></div></section>
-<section id="portfolio" class="section"><div class="section-heading"><h2>Punimet e zgjedhura</h2><span class="eyebrow">{String(albums.length).padStart(2,'0')} ALBUME</span></div>
-{categories.length > 0 && <div class="filters" role="group" aria-label="Filtro sipas kategorisë"><button data-filter="all" aria-pressed="true">Të gjitha</button>{categories.map(c => <button data-filter={c} aria-pressed="false">{c}</button>)}</div>}
-{albums.length ? <div class="grid">{albums.map((album, i) => <article data-category={album.category || ''}><a href={`/portfolio/${album.slug}/`}><div class="image-wrap">{photoUrl(album.cover) && <img src={photoUrl(album.cover)} alt={album.cover?.alt || album.title} loading={i < 2 ? 'eager' : 'lazy'} width="1400" height="1000"/>}</div><div class="card-caption"><h3>{album.title}</h3><span>{album.category || 'Fotografi'} ↗</span></div></a></article>)}</div> : <div class="empty"><span class="frame-mark">ES</span><h3>Një histori e re po merr formë.</h3><p>Fotografitë do të publikohen së shpejti.</p></div>}
-</section>
-<section id="about" class="about section"><p class="eyebrow">01 / RRETH MEJE</p><div><h2>{settings.name || 'Ergys Shehu'}</h2>{settings.bio && <p class="bio">{settings.bio}</p>}{photoUrl(settings.portrait,800) && <img class="portrait" src={photoUrl(settings.portrait,800)} alt={settings.portrait?.alt || settings.name || 'Ergys Shehu'} loading="lazy" width="800" height="1000"/>}</div></section>
-<section id="contact" class="contact section"><p class="eyebrow">02 / KONTAKT</p><h2>Le të krijojmë<br/>diçka që mbetet.</h2>{settings.email ? <a class="contact-link" href={`mailto:${settings.email}`}>{settings.email} ↗</a> : <p>Kontaktet do të shtohen së shpejti.</p>}{settings.instagram && <a class="social" href={settings.instagram} target="_blank" rel="noopener noreferrer">Instagram ↗</a>}</section>
+<Layout home name={settings.name} description={settings.seoDescription}>
+<section class="hero"><div class="hero-bg">{photoUrl(hero,2400) && <img class="media-fill" src={photoUrl(hero,2400)} srcset={photoSet(hero)} sizes="100vw" alt={hero?.alt || ''} fetchpriority="high"/>}</div><div class="hero-shade"></div><div class="hero-copy"><div class="kicker">PHOTOGRAPHER / DIRECTOR</div><h1>{settings.headline}</h1><p>{settings.intro}</p><a class="cta-row" href="#selected"><span class="circle-btn" aria-hidden="true">↘</span><span>VIEW SELECTED WORK</span></a></div><div class="hero-note"><em>People<br/>Places<br/>Emotions<br/>A more human tomorrow.</em></div></section>
+<section id="selected" class="triptych" aria-label="Selected work">{sections.slice(0,3).map((section,i) => {const cover = covers[i] || albums.find(a => albumKind(a) === section.slug)?.cover; return <a class="tile section-reveal" href={`/${section.slug}/`}><div class:list={['tile-image',section.texture]}>{photoUrl(cover) && <img class="media-fill" src={photoUrl(cover)} srcset={photoSet(cover)} sizes="(max-width: 900px) 100vw, 34vw" alt={cover?.alt || ''} loading="lazy"/>}</div><div class="tile-overlay"></div><div class="tile-copy"><h2>{section.title.toUpperCase()}</h2><p>{section.subtitle}</p><span class="circle-btn small" aria-hidden="true">↘</span></div></a>;})}</section>
+<section class="film section-reveal" id="film"><div class="film-image">{photoUrl(film,1800) && <img class="media-fill" src={photoUrl(film,1800)} srcset={photoSet(film)} sizes="100vw" alt={film?.alt || ''} loading="lazy"/>}</div><div class="film-overlay"></div><div class="film-copy"><h2>FILM</h2><p>Music videos, short films<br/>and visual stories.</p><a class="cta-row" href={reel || '/films/'} target={reel ? '_blank' : undefined} rel={reel ? 'noopener noreferrer' : undefined}><span class="circle-btn" aria-hidden="true">↗</span><span>{reel ? 'WATCH REEL' : 'EXPLORE FILMS'}</span></a></div><div class="film-quote"><em>“Same emotions.<br/>A wider frame.”</em><div class="filmstrip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div></section>
+{featured.length > 0 && <section class="featured-section section-reveal"><div class="section-title"><p class="kicker">SELECTED PROJECTS</p><a href="/projects/">All projects ↗</a></div><ProjectGrid albums={featured}/></section>}
+<section class="about-contact section-reveal" id="about"><div class="ballerina-panel"><div class="ballerina-image">{photoUrl(saved.portrait,1200) && <img class="media-fill" src={photoUrl(saved.portrait,1200)} srcset={photoSet(saved.portrait)} sizes="(max-width: 900px) 100vw, 40vw" alt={saved.portrait?.alt || 'Ergys Shehu'} loading="lazy"/>}</div><div class="ballerina-script"><em>Discipline<br/>creates<br/>freedom.</em></div></div><div class="about-panel"><div class="kicker dark">ABOUT</div><h2>{settings.aboutHeading}</h2><p>{settings.bio}</p><a class="cta-row dark-link" href="#contact"><span class="circle-btn dark-btn" aria-hidden="true">↗</span><span>LET’S WORK TOGETHER</span></a></div><div class="contact-panel" id="contact"><div class="kicker dark">LET’S CREATE</div><h2>Get in touch.</h2><p>Projects, collaborations or just a conversation — I’d love to hear from you.</p><div class="contact-links">{safeUrl(settings.instagram) && <a href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer">◎ &nbsp; Instagram ↗</a>}{settings.email && <a href={`mailto:${settings.email}`}>✉ &nbsp; {settings.email}</a>}</div>{settings.email && <a class="cta-row dark-link" href={`mailto:${settings.email}`}><span class="circle-btn dark-btn" aria-hidden="true">↗</span><span>SEND A MESSAGE</span></a>}</div></section>
 </Layout>
-<script>
-document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => button.addEventListener('click', () => {
-  document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-  document.querySelectorAll<HTMLElement>('[data-category]').forEach(card => card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter);
-}));
-</script>

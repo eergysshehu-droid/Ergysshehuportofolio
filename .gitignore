@@ -1,6 +1,7 @@
 node_modules/
 dist/
 studio-dist/
+design-preview/
 .astro/
 .sanity/
 .wrangler/

@@ -1,11 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import {content, photoUrl, type Album, type Settings} from '../../lib/content';
+import {content, photoUrl, photoSet, safeUrl, type Album, type Settings} from '../../lib/content';
 export async function getStaticPaths() {const {albums, settings} = await content(); return albums.map(album => ({params: {slug: album.slug}, props: {album, settings}}));}
 interface Props {album: Album; settings: Settings}
 const {album, settings} = Astro.props;
 ---
 <Layout title={`${album.title} — ${settings.name || 'Ergys Shehu'}`} name={settings.name} description={album.description}>
-<section class="album-intro section"><a href="/#portfolio">← Të gjitha punimet</a><p class="eyebrow">{[album.category, album.location, album.year].filter(Boolean).join(' / ')}</p><h1>{album.title}</h1>{album.description && <p class="bio">{album.description}</p>}</section>
-<section class="gallery section" aria-label={album.title}>{(album.photos || []).filter(p => photoUrl(p)).map((photo,i) => <figure><a href={photoUrl(photo,2400)} target="_blank" rel="noopener noreferrer" aria-label={`Hap fotografinë: ${photo.alt || album.title}`}><img src={photoUrl(photo,1800)} alt={photo.alt || album.title} loading={i === 0 ? 'eager' : 'lazy'}/></a>{(photo.caption || photo.credit) && <figcaption>{photo.caption}{photo.credit && <span> © {photo.credit}</span>}</figcaption>}</figure>)}</section>
+<section class="collection-intro"><a class="back-link" href="/projects/">← All projects</a><p class="kicker">{[album.category, album.location, album.year].filter(Boolean).join(' / ')}</p><h1>{album.title}</h1>{album.description && <p class="bio">{album.description}</p>}{safeUrl(album.videoUrl) && <a class="cta-row video-link" href={safeUrl(album.videoUrl)} target="_blank" rel="noopener noreferrer"><span class="circle-btn" aria-hidden="true">↗</span><span>WATCH FILM</span></a>}{album.credits && <p class="credits">{album.credits}</p>}</section>
+<section class="gallery collection-body" aria-label={album.title}>{(album.photos || []).filter(p => photoUrl(p)).map((photo,i) => <figure><a href={photoUrl(photo,2400)} target="_blank" rel="noopener noreferrer" aria-label={`Open photograph: ${photo.alt || album.title}`}><img src={photoUrl(photo,1800)} srcset={photoSet(photo)} sizes="90vw" alt={photo.alt || album.title} loading={i === 0 ? 'eager' : 'lazy'}/></a>{(photo.caption || photo.credit) && <figcaption>{photo.caption}{photo.credit && <span> © {photo.credit}</span>}</figcaption>}</figure>)}</section>
 </Layout>

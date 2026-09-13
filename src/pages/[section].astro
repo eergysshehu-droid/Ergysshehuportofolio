@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import {content, albumKind, type Album, type Settings} from '../lib/content';
+import {sections} from '../lib/editorial';
+export async function getStaticPaths() {
+  const {settings,albums} = await content();
+  return [...sections,{slug:'projects',title:'Projects',subtitle:'Selected stories, still and moving.'}].map(section => ({params:{section:section.slug},props:{section,settings,albums:section.slug === 'projects' ? albums : albums.filter(a => albumKind(a) === section.slug)}}));
+}
+interface Props {section:{slug:string;title:string;subtitle:string};settings:Settings;albums:Album[]}
+const {section,settings,albums} = Astro.props;
+---
+<Layout title={`${section.title} — Ergys Shehu`} name={settings.name} description={section.subtitle}><section class="collection-intro"><a class="back-link" href="/">← Home</a><p class="kicker">THE PORTFOLIO / {String(albums.length).padStart(2,'0')} PROJECTS</p><h1>{section.title}</h1><p>{section.subtitle}</p></section><section class="collection-body">{albums.length ? <ProjectGrid albums={albums}/> : <div class="collection-empty"><p class="kicker">COMING SOON</p><h2>A new story is taking shape.</h2><p>Selected work will appear here soon.</p><a class="cta-row" href="/#contact"><span class="circle-btn" aria-hidden="true">↗</span><span>GET IN TOUCH</span></a></div>}</section></Layout>

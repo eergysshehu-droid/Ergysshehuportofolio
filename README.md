@@ -1,5 +1,13 @@
 # Ergys Shehu Portfolio
 
+## V2 design review
+
+The homepage now follows the user-supplied `ergys-shehu-portfolio-v2.zip`: dark editorial layout, large serif headline, three photography categories, film banner and ivory About/Contact panels. Its supplied biography, email and Instagram are defaults overridden by Sanity. The ZIP contains no photographs or videos; the original gradient placeholders remain until real media is supplied.
+
+`node scripts/build-design.mjs` creates an explicitly offline, empty-content design review in `design-preview`, separate from the production output. Use `node scripts/preview-design.mjs` to view it locally at http://127.0.0.1:4322. Normal `npm run build` still requires successful Sanity access. Never deploy `design-preview` as the finished portfolio.
+
+New CMS fields include homepage covers, hero image, introduction, About heading, showreel URL, project section, featured projects, video URL and credits. Category pages: `/fashion/`, `/weddings/`, `/portraits/`, `/films/`; `/projects/` lists all published projects. Video links open the supplied HTTPS video URL without automatically loading third-party embeds. For film projects, either photos or a video URL is required. Existing album and settings document types and IDs are preserved.
+
 Astro static photography portfolio and a separate Sanity Studio. No domain purchase, paid plan, Worker function, database or storage subscription is configured.
 
 ## Local setup
