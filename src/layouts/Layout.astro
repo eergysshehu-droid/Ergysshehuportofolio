@@ -1,0 +1,8 @@
+---
+import '../styles/global.css';
+interface Props {title?: string; description?: string; name?: string}
+const {title = 'Ergys Shehu — Fotografi', description = 'Portfolio fotografik i Ergys Shehu.', name = 'Ergys Shehu'} = Astro.props;
+---
+<!doctype html>
+<html lang="sq"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><meta name="robots" content="noindex, nofollow"/><title>{title}</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"/>{Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}/>}<meta property="og:title" content={title}/><meta property="og:description" content={description}/></head>
+<body><a class="skip" href="#main">Kalo te përmbajtja</a><header><a class="brand" href="/">{name}<span>FOTOGRAFI</span></a><nav aria-label="Navigimi kryesor"><a href="/#portfolio">Portfolio</a><a href="/#about">Rreth meje</a><a href="/#contact">Kontakt ↗</a></nav></header><main id="main"><slot/></main><footer><span>© {new Date().getFullYear()} {name}</span><span>Momente që mbeten.</span><a href="#main">Në krye ↑</a></footer></body></html>

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+studio-dist/
+.astro/
+.sanity/
+.wrangler/
+.env
+.env.*
+!.env.example
+*.log

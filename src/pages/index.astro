@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {content, photoUrl} from '../lib/content';
+const {settings, albums} = await content();
+const categories = [...new Set(albums.map(a => a.category).filter(Boolean))];
+---
+<Layout name={settings.name} description={settings.seoDescription}>
+<section class="hero"><p class="eyebrow">ERGYS SHEHU / PORTFOLIO</p><h1>{settings.headline || 'Drita. Momenti.\nHistoria.'}</h1><div class="hero-bottom"><p>Një këndvështrim përmes fotografisë.</p><a href="#portfolio">Shiko punimet <span>↓</span></a></div></section>
+<section id="portfolio" class="section"><div class="section-heading"><h2>Punimet e zgjedhura</h2><span class="eyebrow">{String(albums.length).padStart(2,'0')} ALBUME</span></div>
+{categories.length > 0 && <div class="filters" role="group" aria-label="Filtro sipas kategorisë"><button data-filter="all" aria-pressed="true">Të gjitha</button>{categories.map(c => <button data-filter={c} aria-pressed="false">{c}</button>)}</div>}
+{albums.length ? <div class="grid">{albums.map((album, i) => <article data-category={album.category || ''}><a href={`/portfolio/${album.slug}/`}><div class="image-wrap">{photoUrl(album.cover) && <img src={photoUrl(album.cover)} alt={album.cover?.alt || album.title} loading={i < 2 ? 'eager' : 'lazy'} width="1400" height="1000"/>}</div><div class="card-caption"><h3>{album.title}</h3><span>{album.category || 'Fotografi'} ↗</span></div></a></article>)}</div> : <div class="empty"><span class="frame-mark">ES</span><h3>Një histori e re po merr formë.</h3><p>Fotografitë do të publikohen së shpejti.</p></div>}
+</section>
+<section id="about" class="about section"><p class="eyebrow">01 / RRETH MEJE</p><div><h2>{settings.name || 'Ergys Shehu'}</h2>{settings.bio && <p class="bio">{settings.bio}</p>}{photoUrl(settings.portrait,800) && <img class="portrait" src={photoUrl(settings.portrait,800)} alt={settings.portrait?.alt || settings.name || 'Ergys Shehu'} loading="lazy" width="800" height="1000"/>}</div></section>
+<section id="contact" class="contact section"><p class="eyebrow">02 / KONTAKT</p><h2>Le të krijojmë<br/>diçka që mbetet.</h2>{settings.email ? <a class="contact-link" href={`mailto:${settings.email}`}>{settings.email} ↗</a> : <p>Kontaktet do të shtohen së shpejti.</p>}{settings.instagram && <a class="social" href={settings.instagram} target="_blank" rel="noopener noreferrer">Instagram ↗</a>}</section>
+</Layout>
+<script>
+document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+  document.querySelectorAll<HTMLElement>('[data-category]').forEach(card => card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter);
+}));
+</script>
