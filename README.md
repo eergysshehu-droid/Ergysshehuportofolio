@@ -1,62 +1,61 @@
 # Ergys Shehu Portfolio
 
-## V2 design review
+Astro photography portfolio, Sanity CMS structure and a local preview. No domain was purchased or paid service enabled.
 
-The homepage now follows the user-supplied `ergys-shehu-portfolio-v2.zip`: dark editorial layout, large serif headline, three photography categories, film banner and ivory About/Contact panels. Its supplied biography, email and Instagram are defaults overridden by Sanity. The ZIP contains no photographs or videos; the original gradient placeholders remain until real media is supplied.
+## Current design and content
 
-`node scripts/build-design.mjs` creates an explicitly offline, empty-content design review in `design-preview`, separate from the production output. Use `node scripts/preview-design.mjs` to view it locally at http://127.0.0.1:4322. Normal `npm run build` still requires successful Sanity access. Never deploy `design-preview` as the finished portfolio.
+The current design puts the supplied photography first: full-screen dance image, the supplied logo, a large serif name, a masonry project grid with category filters, an artist section, and contact details. The supplied references informed the project-index structure; the exact Wix font could not be verified.
 
-New CMS fields include homepage covers, hero image, introduction, About heading, showreel URL, project section, featured projects, video URL and credits. Category pages: `/fashion/`, `/weddings/`, `/portraits/`, `/films/`; `/projects/` lists all published projects. Video links open the supplied HTTPS video URL without automatically loading third-party embeds. For film projects, either photos or a video URL is required. Existing album and settings document types and IDs are preserved.
+Imported from the user's Website photos folder: 159 image files, 142 distinct file hashes, 130 selected photographs in 16 collections, plus the logo. Original files were not modified. Identical copies and obvious alternative exports/logo mockups were omitted. WebP derivatives at 480, 1000 and 1800 pixels total approximately 52 MB; responsive loading selects a suitable size instead of downloading all variants.
 
-Astro static photography portfolio and a separate Sanity Studio. No domain purchase, paid plan, Worker function, database or storage subscription is configured.
+Named collections use supplied folder names. Other collection titles and grouping are editorial selections to review, not verified client or campaign names. Biographical claims and contact information were supplied by the user. English and Albanian full biographies appear at /about/.
 
-## Local setup
+The film page is ready for video projects, but no video files or showreel links were supplied.
 
-Use Node 22.12 or later, then `npm ci`. Copy `.env.example` to `.env` and fill both project ID fields with the **existing** Sanity Project ID. Set both dataset fields to the existing dataset. Do not create or replace a dataset during setup.
+## Run locally
 
-- `npm run dev`: website at http://localhost:4321
-- `npm run studio`: editor at http://localhost:3333 (sign in with the existing Sanity account)
-- `npm run check`: Astro and TypeScript checks
-- `npm run build`: static site in `dist`
-- `npm run studio:build`: standalone Studio in `studio-dist`
+Use Node 22.12 or later and npm ci.
 
-The verified existing project `46mghxoy`, dataset `production`, is the default; environment variables can override it. An empty dataset renders an honest coming-soon page. API/authentication errors intentionally fail the build so an existing live portfolio is not replaced by an empty site. A private dataset requires a read-only `SANITY_API_READ_TOKEN` stored in local/Cloudflare environment settings, never Git. Studio variables and the project ID are public: do not put secrets in them.
+- node scripts/build-design.mjs: local content preview in design-preview.
+- node scripts/preview-design.mjs: preview at http://127.0.0.1:4322.
+- npm run check: Astro and TypeScript checks.
+- npm run dev: website with live Sanity access.
+- npm run studio: Sanity Studio on localhost:3333.
+- npm run build: production build in dist, requiring Sanity access.
+- npm run studio:build: standalone editor in studio-dist.
 
-## CMS
+DESIGN_PREVIEW=1 uses the imported local catalog and is rejected on Cloudflare Pages. It does not read live CMS content. The local and production output directories are separate.
 
-Open **Profili dhe kontakti** to edit the singleton `siteSettings`: name, headline, biography, portrait, public email, Instagram, and search description. Create categories, then albums with a title, generated slug, cover, ordered photos, location, year, and display order. Each photo supports alternative text, caption, credit, crop and hotspot. Publish documents to expose them on the website. Drafts are excluded.
+## Content and CMS
 
-Album pages are generated at `/portfolio/<slug>/`. Gallery photos open a larger version. Home page category buttons filter published albums. No sample images or invented contact details are presented as the photographer's work.
+Existing project: 46mghxoy / production. Configuration is in .env.example. No credentials are committed.
 
-## Cloudflare Pages — Git integration
+src/data/local-portfolio.json is the imported baseline. Normal production builds merge published Sanity content into this baseline by slug; Sanity values override the matching local project. API failures fail the production build. The local photos have not yet been uploaded to Sanity.
 
-Connect `eergysshehu-droid/Ergysshehuportofolio` in Cloudflare **Workers & Pages → Create → Pages → Connect to Git**. Use the Free plan only; stop if any paid upgrade is required.
+The CMS supports: category, project section, cover, ordered photos, alt text, captions, credits, featured status, HTTPS video URL, hero/category covers, showreel URL, short bio, full English/Albanian biographies, and artist quote. Existing document types and singleton IDs are preserved.
 
-- Framework: Astro
-- Production branch: `main`
-- Root directory: repository root
-- Build command: `npm run build`
-- Output directory: `dist`
-- Environment: `NODE_VERSION=22`, `PUBLIC_SANITY_PROJECT_ID`, `PUBLIC_SANITY_DATASET`
-- Optional private dataset: `SANITY_API_READ_TOKEN` as a secret
+To migrate the local collection after Sanity login:
 
-Set the same required values separately for Preview. Cloudflare assigns a free `pages.dev` URL; branch deployments receive preview URLs. Confirm the actual assigned URL from the successful deployment. Do not assume a hostname is available. Git integration must be configured in the account dashboard; a direct Wrangler upload does not create this integration.
+    npx sanity exec scripts/import-sanity.mjs --with-user-token
 
-For a one-off preview on an existing Pages project, after authentication and a successful build: `npx wrangler pages deploy dist --project-name <confirmed-project-name> --branch preview`. Check the account and existing projects before creating anything.
+This uploads optimized images and creates missing draft projects/settings. It preserves existing documents with the same deterministic IDs and does not publish. Review titles, grouping, descriptions and credits in Studio before publishing. After the complete migration, remove the local baseline merge so deletions in Sanity also remove projects from the site. Until then the baseline intentionally keeps the locally imported projects visible.
 
-Sanity changes need a fresh static build. In Cloudflare Pages create a deploy hook for the desired branch. In the existing Sanity project create a webhook for create/update/delete, filtered to `_type in ["album", "category", "siteSettings"] && !(_id in path("drafts.**"))`, pointing to the deploy hook. Treat that hook URL as a secret. Publish an album and verify a new deployment and updated page. Free-plan build and CMS quotas still apply.
+## Cloudflare
 
-Studio can remain local. If hosted separately, build `studio-dist` into a separate free Pages project. Add only its exact confirmed origin to the existing Sanity project's CORS origins with credentials enabled; add `http://localhost:3333` for local editing. Do not allow credentialed wildcard origins.
+GitHub repository: eergysshehu-droid/Ergysshehuportofolio.
+Create a Free Cloudflare Pages project connected to that repository. Root: repository root. Build: npm run build. Output: dist. Node: 22. Project/dataset default to the verified Sanity project; environment variables can override them.
 
-## Preview privacy and launch
+For a private dataset use SANITY_API_READ_TOKEN as a secret, never PUBLIC_ or SANITY_STUDIO_. Set the required values separately for Preview and Production. Do not deploy design-preview as the CMS-connected production website.
 
-This setup requests no indexing using robots.txt, a robots meta tag and an X-Robots-Tag header. A public preview remains accessible to anyone with its URL. Once ready for public search indexing, remove all three noindex controls and set `SITE_URL` to the confirmed canonical URL.
+Cloudflare gives a pages.dev address and branch preview URLs after successful deployment. No live Cloudflare URL has been verified yet. A Sanity publish webhook can trigger a Cloudflare deploy hook to rebuild static pages. Keep hook URLs secret.
 
-## Official references
+Preview indexing is disabled with robots.txt, a meta tag and a response header. Remove all three controls and set SITE_URL only when the site is ready for indexing.
 
+## Checks and remaining work
+
+The local preview builds 24 pages and passes Astro checks. Review the visual composition and category assignments with the photographer. Live Sanity upload, Cloudflare authentication/deployment and custom domain setup remain outstanding. Instagram and Google Drive are not live feeds.
+
+Official references:
 - https://docs.astro.build/en/guides/cms/sanity/
-- https://www.sanity.io/docs/studio/environment-variables
 - https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/
-- https://developers.cloudflare.com/pages/configuration/git-integration/
-- https://developers.cloudflare.com/pages/configuration/deploy-hooks/
-- https://developers.cloudflare.com/pages/platform/limits/
+- https://www.sanity.io/docs/studio/environment-variables

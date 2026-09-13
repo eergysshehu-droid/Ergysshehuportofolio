@@ -1,0 +1,1366 @@
+{
+  "settings": {
+    "heroImage": {
+      "src": "/images/54a8ae48a11173-1800.webp",
+      "localBase": "/images/54a8ae48a11173",
+      "width": 5839,
+      "height": 3892,
+      "alt": "Photograph by Ergys Shehu",
+      "sourceFile": "ESH03139 first.jpg"
+    },
+    "fashionCover": {
+      "src": "/images/6df8aeb5387481-1800.webp",
+      "localBase": "/images/6df8aeb5387481",
+      "width": 2048,
+      "height": 1638,
+      "alt": "Photograph by Ergys Shehu",
+      "sourceFile": "ESH03400 hat instagram.jpg"
+    },
+    "weddingsCover": {
+      "src": "/images/7b83c3acfdc8b9-1800.webp",
+      "localBase": "/images/7b83c3acfdc8b9",
+      "width": 2048,
+      "height": 1273,
+      "alt": "Photograph by Ergys Shehu",
+      "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+    },
+    "portraitsCover": {
+      "src": "/images/8f822a1dff5d46-1800.webp",
+      "localBase": "/images/8f822a1dff5d46",
+      "width": 3528,
+      "height": 4410,
+      "alt": "Photograph by Ergys Shehu",
+      "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+    }
+  },
+  "albums": [
+    {
+      "slug": "dance-in-the-elements",
+      "title": "Dance in the elements",
+      "kind": "projects",
+      "description": "A dancer moves across an open waterfront beneath dramatic skies.",
+      "order": 0,
+      "featured": true,
+      "cover": {
+        "src": "/images/54a8ae48a11173-1800.webp",
+        "localBase": "/images/54a8ae48a11173",
+        "width": 5839,
+        "height": 3892,
+        "alt": "Dance in the elements — photography by Ergys Shehu",
+        "sourceFile": "ESH03139 first.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/54a8ae48a11173-1800.webp",
+          "localBase": "/images/54a8ae48a11173",
+          "width": 5839,
+          "height": 3892,
+          "alt": "Dance in the elements — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH03139 first.jpg"
+        },
+        {
+          "src": "/images/eb68d69795eddd-1800.webp",
+          "localBase": "/images/eb68d69795eddd",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Dance in the elements — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH03058 low.jpg"
+        },
+        {
+          "src": "/images/f7a610eb535430-1800.webp",
+          "localBase": "/images/f7a610eb535430",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Dance in the elements — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH03185 low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "adel-lami",
+      "title": "Adel Lami",
+      "kind": "fashion",
+      "description": "Fashion portraits in blue, print and eveningwear.",
+      "order": 1,
+      "featured": true,
+      "cover": {
+        "src": "/images/bf46f1c1db778e-1800.webp",
+        "localBase": "/images/bf46f1c1db778e",
+        "width": 1462,
+        "height": 2048,
+        "alt": "Adel Lami — photography by Ergys Shehu",
+        "sourceFile": "Adel Lami\\ESH05529 low.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/bf46f1c1db778e-1800.webp",
+          "localBase": "/images/bf46f1c1db778e",
+          "width": 1462,
+          "height": 2048,
+          "alt": "Adel Lami — photograph 1 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05529 low.jpg"
+        },
+        {
+          "src": "/images/5ef79d674aabf3-1800.webp",
+          "localBase": "/images/5ef79d674aabf3",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Adel Lami — photograph 2 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05349 v2 web.jpg"
+        },
+        {
+          "src": "/images/57fb66a29b09ee-1800.webp",
+          "localBase": "/images/57fb66a29b09ee",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Adel Lami — photograph 3 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05369 low.jpg"
+        },
+        {
+          "src": "/images/579eb1884a6191-1800.webp",
+          "localBase": "/images/579eb1884a6191",
+          "width": 4000,
+          "height": 6000,
+          "alt": "Adel Lami — photograph 4 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05547 web.jpg"
+        },
+        {
+          "src": "/images/0e802b3b2a388c-1800.webp",
+          "localBase": "/images/0e802b3b2a388c",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Adel Lami — photograph 5 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05552 web.jpg"
+        },
+        {
+          "src": "/images/5beed3c0759e02-1800.webp",
+          "localBase": "/images/5beed3c0759e02",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Adel Lami — photograph 6 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05590 web.jpg"
+        },
+        {
+          "src": "/images/8043b7f053e322-1800.webp",
+          "localBase": "/images/8043b7f053e322",
+          "width": 1384,
+          "height": 2048,
+          "alt": "Adel Lami — photograph 7 by Ergys Shehu",
+          "sourceFile": "Adel Lami\\ESH05628 web.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "megan-mersinaj",
+      "title": "Megan Mersinaj",
+      "kind": "fashion",
+      "description": "Eveningwear, coastal light and cinematic locations.",
+      "order": 2,
+      "featured": true,
+      "cover": {
+        "src": "/images/3ec9245b1a6e9c-1800.webp",
+        "localBase": "/images/3ec9245b1a6e9c",
+        "width": 1639,
+        "height": 2048,
+        "alt": "Megan Mersinaj — photography by Ergys Shehu",
+        "sourceFile": "ESH07048 Low.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/3ec9245b1a6e9c-1800.webp",
+          "localBase": "/images/3ec9245b1a6e9c",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH07048 Low.jpg"
+        },
+        {
+          "src": "/images/b789b60ef6520c-1800.webp",
+          "localBase": "/images/b789b60ef6520c",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Megan Mersinaj — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH06873 Low.jpg"
+        },
+        {
+          "src": "/images/cc3d7e1cfc9cf7-1800.webp",
+          "localBase": "/images/cc3d7e1cfc9cf7",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Megan Mersinaj — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH06885 low.jpg"
+        },
+        {
+          "src": "/images/0bc3b20b4b8918-1800.webp",
+          "localBase": "/images/0bc3b20b4b8918",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH06890 low.jpg"
+        },
+        {
+          "src": "/images/8626b4dc9c7830-1800.webp",
+          "localBase": "/images/8626b4dc9c7830",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH06891 Low Web.jpg"
+        },
+        {
+          "src": "/images/db4014724c2310-1800.webp",
+          "localBase": "/images/db4014724c2310",
+          "width": 4000,
+          "height": 5000,
+          "alt": "Megan Mersinaj — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH06971 v2.jpg"
+        },
+        {
+          "src": "/images/0ce1dbf084b9b5-1800.webp",
+          "localBase": "/images/0ce1dbf084b9b5",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 7 by Ergys Shehu",
+          "sourceFile": "ESH07052 Low.jpg"
+        },
+        {
+          "src": "/images/91d4516a58fea2-1800.webp",
+          "localBase": "/images/91d4516a58fea2",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 8 by Ergys Shehu",
+          "sourceFile": "ESH07078-Low.jpg"
+        },
+        {
+          "src": "/images/d0840f6a7fb8fa-1800.webp",
+          "localBase": "/images/d0840f6a7fb8fa",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Megan Mersinaj — photograph 9 by Ergys Shehu",
+          "sourceFile": "ESH07224 Low.jpg"
+        },
+        {
+          "src": "/images/c4a3dfab55171c-1800.webp",
+          "localBase": "/images/c4a3dfab55171c",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Megan Mersinaj — photograph 10 by Ergys Shehu",
+          "sourceFile": "ESH07261 Low.jpg"
+        },
+        {
+          "src": "/images/35b8da6ab1a741-1800.webp",
+          "localBase": "/images/35b8da6ab1a741",
+          "width": 1080,
+          "height": 1350,
+          "alt": "Megan Mersinaj — photograph 11 by Ergys Shehu",
+          "sourceFile": "Instagram V2.jpg"
+        },
+        {
+          "src": "/images/cbdb92e661b3a1-1800.webp",
+          "localBase": "/images/cbdb92e661b3a1",
+          "width": 1080,
+          "height": 1920,
+          "alt": "Megan Mersinaj — photograph 12 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\behance_download_1584826735577.png"
+        }
+      ]
+    },
+    {
+      "slug": "livia-sinani",
+      "title": "Livia Sinani",
+      "kind": "fashion",
+      "description": "Fashion portraits in emerald and white.",
+      "order": 3,
+      "featured": false,
+      "cover": {
+        "src": "/images/3395a6407755e9-1800.webp",
+        "localBase": "/images/3395a6407755e9",
+        "width": 1365,
+        "height": 2048,
+        "alt": "Livia Sinani — photography by Ergys Shehu",
+        "sourceFile": "Livia sinani\\ESH01380 cc.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/3395a6407755e9-1800.webp",
+          "localBase": "/images/3395a6407755e9",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Livia Sinani — photograph 1 by Ergys Shehu",
+          "sourceFile": "Livia sinani\\ESH01380 cc.jpg"
+        },
+        {
+          "src": "/images/9cc6f3e8469bf2-1800.webp",
+          "localBase": "/images/9cc6f3e8469bf2",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Livia Sinani — photograph 2 by Ergys Shehu",
+          "sourceFile": "Livia sinani\\ESH00013 Insta.jpg"
+        },
+        {
+          "src": "/images/eebef988b591ec-1800.webp",
+          "localBase": "/images/eebef988b591ec",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Livia Sinani — photograph 3 by Ergys Shehu",
+          "sourceFile": "Livia sinani\\ESH01431 low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "margaret-shllaku",
+      "title": "Margaret Shllaku",
+      "kind": "fashion",
+      "description": "Studio fashion in warm tones and textured styling.",
+      "order": 4,
+      "featured": false,
+      "cover": {
+        "src": "/images/b8a07f1d3c5b16-1800.webp",
+        "localBase": "/images/b8a07f1d3c5b16",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Margaret Shllaku — photography by Ergys Shehu",
+        "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/b8a07f1d3c5b16-1800.webp",
+          "localBase": "/images/b8a07f1d3c5b16",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Margaret Shllaku — photograph 1 by Ergys Shehu",
+          "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg"
+        },
+        {
+          "src": "/images/cd70deb784d70f-1800.webp",
+          "localBase": "/images/cd70deb784d70f",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Margaret Shllaku — photograph 2 by Ergys Shehu",
+          "sourceFile": "Margaret Shllaku\\ESH07775  cc 2.jpg"
+        },
+        {
+          "src": "/images/a20806ce7b4528-1800.webp",
+          "localBase": "/images/a20806ce7b4528",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Margaret Shllaku — photograph 3 by Ergys Shehu",
+          "sourceFile": "Margaret Shllaku\\ESH07946 low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "sara-fani",
+      "title": "Sara Fani",
+      "kind": "portraits",
+      "description": "Portraits across street locations and the studio.",
+      "order": 5,
+      "featured": false,
+      "cover": {
+        "src": "/images/0650e65f1418d9-1800.webp",
+        "localBase": "/images/0650e65f1418d9",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Sara Fani — photography by Ergys Shehu",
+        "sourceFile": "Sara Fani\\2 web.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/0650e65f1418d9-1800.webp",
+          "localBase": "/images/0650e65f1418d9",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 1 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\2 web.jpg"
+        },
+        {
+          "src": "/images/2cc65ebbd704ab-1800.webp",
+          "localBase": "/images/2cc65ebbd704ab",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 2 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01257 low.jpg"
+        },
+        {
+          "src": "/images/e156afb0b8a4b4-1800.webp",
+          "localBase": "/images/e156afb0b8a4b4",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 3 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01277 Low.jpg"
+        },
+        {
+          "src": "/images/b4bbd87a0fa1ec-1800.webp",
+          "localBase": "/images/b4bbd87a0fa1ec",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 4 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01483 low fin.jpg"
+        },
+        {
+          "src": "/images/efc8059db5289d-1800.webp",
+          "localBase": "/images/efc8059db5289d",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 5 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01501 3 low.jpg"
+        },
+        {
+          "src": "/images/9820f20131a995-1800.webp",
+          "localBase": "/images/9820f20131a995",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 6 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01692 Low.jpg"
+        },
+        {
+          "src": "/images/e8b2a7e2016a10-1800.webp",
+          "localBase": "/images/e8b2a7e2016a10",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Sara Fani — photograph 7 by Ergys Shehu",
+          "sourceFile": "Sara Fani\\ESH01739 2.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "eli",
+      "title": "Eli",
+      "kind": "portraits",
+      "description": "Expressive studio portraits with floral styling.",
+      "order": 6,
+      "featured": false,
+      "cover": {
+        "src": "/images/b6a54e995a81dc-1800.webp",
+        "localBase": "/images/b6a54e995a81dc",
+        "width": 1639,
+        "height": 2048,
+        "alt": "Eli — photography by Ergys Shehu",
+        "sourceFile": "Eli (1)\\ESH_0974 low.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/b6a54e995a81dc-1800.webp",
+          "localBase": "/images/b6a54e995a81dc",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Eli — photograph 1 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0974 low.jpg"
+        },
+        {
+          "src": "/images/31944828b99743-1800.webp",
+          "localBase": "/images/31944828b99743",
+          "width": 2048,
+          "height": 1367,
+          "alt": "Eli — photograph 2 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0746 Progress low.jpg"
+        },
+        {
+          "src": "/images/3914f8274ce92d-1800.webp",
+          "localBase": "/images/3914f8274ce92d",
+          "width": 3077,
+          "height": 4614,
+          "alt": "Eli — photograph 3 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0884 ccr.jpg"
+        },
+        {
+          "src": "/images/86dbb5e8c21fe4-1800.webp",
+          "localBase": "/images/86dbb5e8c21fe4",
+          "width": 2048,
+          "height": 1516,
+          "alt": "Eli — photograph 4 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0912.jpg"
+        },
+        {
+          "src": "/images/e80b07f231bf6d-1800.webp",
+          "localBase": "/images/e80b07f231bf6d",
+          "width": 2048,
+          "height": 1321,
+          "alt": "Eli — photograph 5 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0920 low.jpg"
+        },
+        {
+          "src": "/images/1b0a4aeb00389c-1800.webp",
+          "localBase": "/images/1b0a4aeb00389c",
+          "width": 2048,
+          "height": 1638,
+          "alt": "Eli — photograph 6 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0957 low.jpg"
+        },
+        {
+          "src": "/images/c9cc1ca4ebc236-1800.webp",
+          "localBase": "/images/c9cc1ca4ebc236",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Eli — photograph 7 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_0974 red low.jpg"
+        },
+        {
+          "src": "/images/bd848dbd85c04a-1800.webp",
+          "localBase": "/images/bd848dbd85c04a",
+          "width": 1503,
+          "height": 2048,
+          "alt": "Eli — photograph 8 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1025 low.jpg"
+        },
+        {
+          "src": "/images/3547a7d5f26e73-1800.webp",
+          "localBase": "/images/3547a7d5f26e73",
+          "width": 1530,
+          "height": 2048,
+          "alt": "Eli — photograph 9 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1051 low.jpg"
+        },
+        {
+          "src": "/images/8f51499ec8140e-1800.webp",
+          "localBase": "/images/8f51499ec8140e",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Eli — photograph 10 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1057 low.jpg"
+        },
+        {
+          "src": "/images/63a9dd27aab350-1800.webp",
+          "localBase": "/images/63a9dd27aab350",
+          "width": 1514,
+          "height": 2048,
+          "alt": "Eli — photograph 11 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1088 low.jpg"
+        },
+        {
+          "src": "/images/abcdea6e850a7a-1800.webp",
+          "localBase": "/images/abcdea6e850a7a",
+          "width": 2048,
+          "height": 1367,
+          "alt": "Eli — photograph 12 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1245-low.jpg"
+        },
+        {
+          "src": "/images/0b8b782bf2c85f-1800.webp",
+          "localBase": "/images/0b8b782bf2c85f",
+          "width": 2048,
+          "height": 1388,
+          "alt": "Eli — photograph 13 by Ergys Shehu",
+          "sourceFile": "Eli (1)\\ESH_1253 low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "coastal-colour",
+      "title": "Coastal colour",
+      "kind": "fashion",
+      "description": "Fashion studies shaped by sunlight, sea and colour.",
+      "order": 7,
+      "featured": false,
+      "cover": {
+        "src": "/images/6df8aeb5387481-1800.webp",
+        "localBase": "/images/6df8aeb5387481",
+        "width": 2048,
+        "height": 1638,
+        "alt": "Coastal colour — photography by Ergys Shehu",
+        "sourceFile": "ESH03400 hat instagram.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/6df8aeb5387481-1800.webp",
+          "localBase": "/images/6df8aeb5387481",
+          "width": 2048,
+          "height": 1638,
+          "alt": "Coastal colour — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH03400 hat instagram.jpg"
+        },
+        {
+          "src": "/images/df79da6af149d3-1800.webp",
+          "localBase": "/images/df79da6af149d3",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH03212 low.jpg"
+        },
+        {
+          "src": "/images/26ee266dfb6dd2-1800.webp",
+          "localBase": "/images/26ee266dfb6dd2",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH03234 low.jpg"
+        },
+        {
+          "src": "/images/2c609baca2d619-1800.webp",
+          "localBase": "/images/2c609baca2d619",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH03238 low.jpg"
+        },
+        {
+          "src": "/images/431a89b2281f5c-1800.webp",
+          "localBase": "/images/431a89b2281f5c",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH03414 low.jpg"
+        },
+        {
+          "src": "/images/1b4cf46cdf211f-1800.webp",
+          "localBase": "/images/1b4cf46cdf211f",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH03415 isida low.jpg"
+        },
+        {
+          "src": "/images/efabcbb8c442a5-1800.webp",
+          "localBase": "/images/efabcbb8c442a5",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 7 by Ergys Shehu",
+          "sourceFile": "ESH06097 web.jpg"
+        },
+        {
+          "src": "/images/bdd1c4df0df62c-1800.webp",
+          "localBase": "/images/bdd1c4df0df62c",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 8 by Ergys Shehu",
+          "sourceFile": "ESH06257 web.jpg"
+        },
+        {
+          "src": "/images/c4375c2050375c-1800.webp",
+          "localBase": "/images/c4375c2050375c",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Coastal colour — photograph 9 by Ergys Shehu",
+          "sourceFile": "ESH06460 cc low.jpg"
+        },
+        {
+          "src": "/images/4140fd44889912-1800.webp",
+          "localBase": "/images/4140fd44889912",
+          "width": 1416,
+          "height": 2048,
+          "alt": "Coastal colour — photograph 10 by Ergys Shehu",
+          "sourceFile": "ESH_1977 low.jpg"
+        },
+        {
+          "src": "/images/b6587f47f09e35-1800.webp",
+          "localBase": "/images/b6587f47f09e35",
+          "width": 1173,
+          "height": 1466,
+          "alt": "Coastal colour — photograph 11 by Ergys Shehu",
+          "sourceFile": "ESH_2124 Final Insta.jpg"
+        },
+        {
+          "src": "/images/9f1aa2426263ac-1800.webp",
+          "localBase": "/images/9f1aa2426263ac",
+          "width": 805,
+          "height": 1080,
+          "alt": "Coastal colour — photograph 12 by Ergys Shehu",
+          "sourceFile": "ESH_2125 Final no blue insta.jpg"
+        },
+        {
+          "src": "/images/3c2c0e1ca9fa81-1800.webp",
+          "localBase": "/images/3c2c0e1ca9fa81",
+          "width": 1365,
+          "height": 1706,
+          "alt": "Coastal colour — photograph 13 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH08285+instav2-1.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "red-room",
+      "title": "The red room",
+      "kind": "fashion",
+      "description": "Red eveningwear across interior and open-air settings.",
+      "order": 8,
+      "featured": true,
+      "cover": {
+        "src": "/images/1b8614ecb0efff-1800.webp",
+        "localBase": "/images/1b8614ecb0efff",
+        "width": 2048,
+        "height": 1365,
+        "alt": "The red room — photography by Ergys Shehu",
+        "sourceFile": "ESH08511 low.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/1b8614ecb0efff-1800.webp",
+          "localBase": "/images/1b8614ecb0efff",
+          "width": 2048,
+          "height": 1365,
+          "alt": "The red room — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH08511 low.jpg"
+        },
+        {
+          "src": "/images/59182db5d92518-1800.webp",
+          "localBase": "/images/59182db5d92518",
+          "width": 1385,
+          "height": 2048,
+          "alt": "The red room — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH04601web.jpg"
+        },
+        {
+          "src": "/images/2f009d427535b4-1800.webp",
+          "localBase": "/images/2f009d427535b4",
+          "width": 3982,
+          "height": 4977,
+          "alt": "The red room — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH07430 cc f.jpg"
+        },
+        {
+          "src": "/images/95df597b0970d4-1800.webp",
+          "localBase": "/images/95df597b0970d4",
+          "width": 1638,
+          "height": 2048,
+          "alt": "The red room — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH07485 cc2 low.jpg"
+        },
+        {
+          "src": "/images/24f17d12f20f69-1800.webp",
+          "localBase": "/images/24f17d12f20f69",
+          "width": 1638,
+          "height": 2048,
+          "alt": "The red room — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH08310 low.jpg"
+        },
+        {
+          "src": "/images/43077f8b3cfef5-1800.webp",
+          "localBase": "/images/43077f8b3cfef5",
+          "width": 1638,
+          "height": 2048,
+          "alt": "The red room — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH08340 v2 low.jpg"
+        },
+        {
+          "src": "/images/6f74a964ece069-1800.webp",
+          "localBase": "/images/6f74a964ece069",
+          "width": 1365,
+          "height": 2048,
+          "alt": "The red room — photograph 7 by Ergys Shehu",
+          "sourceFile": "ESH08421 web.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "in-the-woods",
+      "title": "In the woods",
+      "kind": "fashion",
+      "description": "Fashion and movement within a wooded landscape.",
+      "order": 9,
+      "featured": true,
+      "cover": {
+        "src": "/images/73804281668775-1800.webp",
+        "localBase": "/images/73804281668775",
+        "width": 1638,
+        "height": 2048,
+        "alt": "In the woods — photography by Ergys Shehu",
+        "sourceFile": "ESH09430web.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/73804281668775-1800.webp",
+          "localBase": "/images/73804281668775",
+          "width": 1638,
+          "height": 2048,
+          "alt": "In the woods — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH09430web.jpg"
+        },
+        {
+          "src": "/images/c77fab16901d69-1800.webp",
+          "localBase": "/images/c77fab16901d69",
+          "width": 1638,
+          "height": 2048,
+          "alt": "In the woods — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH09300 final.jpg"
+        },
+        {
+          "src": "/images/445f6c3afb5d97-1800.webp",
+          "localBase": "/images/445f6c3afb5d97",
+          "width": 5937,
+          "height": 4000,
+          "alt": "In the woods — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH09359 Low.jpg"
+        },
+        {
+          "src": "/images/2a13a668afd088-1800.webp",
+          "localBase": "/images/2a13a668afd088",
+          "width": 1638,
+          "height": 2048,
+          "alt": "In the woods — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH09482-web.jpg"
+        },
+        {
+          "src": "/images/2304c8efad0107-1800.webp",
+          "localBase": "/images/2304c8efad0107",
+          "width": 2048,
+          "height": 1365,
+          "alt": "In the woods — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH09555 web.jpg"
+        },
+        {
+          "src": "/images/fe65ecc62b0da6-1800.webp",
+          "localBase": "/images/fe65ecc62b0da6",
+          "width": 2048,
+          "height": 1314,
+          "alt": "In the woods — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH09589 LOw.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "city-studies",
+      "title": "City studies",
+      "kind": "fashion",
+      "description": "Street silhouettes, architecture and natural light.",
+      "order": 10,
+      "featured": false,
+      "cover": {
+        "src": "/images/36c5e316fc1068-1800.webp",
+        "localBase": "/images/36c5e316fc1068",
+        "width": 1638,
+        "height": 2048,
+        "alt": "City studies — photography by Ergys Shehu",
+        "sourceFile": "ESH07318 web.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/36c5e316fc1068-1800.webp",
+          "localBase": "/images/36c5e316fc1068",
+          "width": 1638,
+          "height": 2048,
+          "alt": "City studies — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH07318 web.jpg"
+        },
+        {
+          "src": "/images/bcc81c84d70232-1800.webp",
+          "localBase": "/images/bcc81c84d70232",
+          "width": 1588,
+          "height": 2048,
+          "alt": "City studies — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH07134web.jpg"
+        },
+        {
+          "src": "/images/36441463c73a57-1800.webp",
+          "localBase": "/images/36441463c73a57",
+          "width": 1365,
+          "height": 2048,
+          "alt": "City studies — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH07415 web.jpg"
+        },
+        {
+          "src": "/images/1e170ac24b53bc-1800.webp",
+          "localBase": "/images/1e170ac24b53bc",
+          "width": 1429,
+          "height": 2048,
+          "alt": "City studies — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH07423 web.jpg"
+        },
+        {
+          "src": "/images/059f7c730d1f77-1800.webp",
+          "localBase": "/images/059f7c730d1f77",
+          "width": 2048,
+          "height": 1365,
+          "alt": "City studies — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH07970 Low.jpg"
+        },
+        {
+          "src": "/images/4ae1be4408e354-1800.webp",
+          "localBase": "/images/4ae1be4408e354",
+          "width": 2048,
+          "height": 2560,
+          "alt": "City studies — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH09850 web.jpg"
+        },
+        {
+          "src": "/images/46b21ba15a6098-1800.webp",
+          "localBase": "/images/46b21ba15a6098",
+          "width": 1638,
+          "height": 2048,
+          "alt": "City studies — photograph 7 by Ergys Shehu",
+          "sourceFile": "ESH09856 web v2.jpg"
+        },
+        {
+          "src": "/images/e9c862ee6b0c88-1800.webp",
+          "localBase": "/images/e9c862ee6b0c88",
+          "width": 1638,
+          "height": 2048,
+          "alt": "City studies — photograph 8 by Ergys Shehu",
+          "sourceFile": "ESH09866 web.jpg"
+        },
+        {
+          "src": "/images/dc6586b51c707f-1800.webp",
+          "localBase": "/images/dc6586b51c707f",
+          "width": 2048,
+          "height": 1365,
+          "alt": "City studies — photograph 9 by Ergys Shehu",
+          "sourceFile": "ESH09876-web.jpg"
+        },
+        {
+          "src": "/images/c8a9ac7c693f0b-1800.webp",
+          "localBase": "/images/c8a9ac7c693f0b",
+          "width": 2048,
+          "height": 1330,
+          "alt": "City studies — photograph 10 by Ergys Shehu",
+          "sourceFile": "ESH09902-web.jpg"
+        },
+        {
+          "src": "/images/1c67e8960fb3a8-1800.webp",
+          "localBase": "/images/1c67e8960fb3a8",
+          "width": 1080,
+          "height": 1920,
+          "alt": "City studies — photograph 11 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\behance_download_1581932623102.png"
+        },
+        {
+          "src": "/images/0fb376de66bf7a-1800.webp",
+          "localBase": "/images/0fb376de66bf7a",
+          "width": 6000,
+          "height": 4000,
+          "alt": "City studies — photograph 12 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH09876.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "beauty-studies",
+      "title": "Beauty studies",
+      "kind": "portraits",
+      "description": "A selection of close-up beauty portraits.",
+      "order": 11,
+      "featured": true,
+      "cover": {
+        "src": "/images/8f822a1dff5d46-1800.webp",
+        "localBase": "/images/8f822a1dff5d46",
+        "width": 3528,
+        "height": 4410,
+        "alt": "Beauty studies — photography by Ergys Shehu",
+        "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/8f822a1dff5d46-1800.webp",
+          "localBase": "/images/8f822a1dff5d46",
+          "width": 3528,
+          "height": 4410,
+          "alt": "Beauty studies — photograph 1 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+        },
+        {
+          "src": "/images/6057419de67e68-1800.webp",
+          "localBase": "/images/6057419de67e68",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Beauty studies — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH07508 cc web.jpg"
+        },
+        {
+          "src": "/images/77fac6a4db4901-1800.webp",
+          "localBase": "/images/77fac6a4db4901",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Beauty studies — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH07641 web.jpg"
+        },
+        {
+          "src": "/images/ff9f92093064be-1800.webp",
+          "localBase": "/images/ff9f92093064be",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Beauty studies — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH09763 low.jpg"
+        },
+        {
+          "src": "/images/44bd3dd8f3e059-1800.webp",
+          "localBase": "/images/44bd3dd8f3e059",
+          "width": 5188,
+          "height": 3459,
+          "alt": "Beauty studies — photograph 5 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04921-Edit+v23+final1609443166839.jpg"
+        },
+        {
+          "src": "/images/6001cb9264ee07-1800.webp",
+          "localBase": "/images/6001cb9264ee07",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Beauty studies — photograph 6 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH08995+low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "intimate-light",
+      "title": "Intimate light",
+      "kind": "fashion",
+      "description": "Fashion portraits between interiors and natural settings.",
+      "order": 12,
+      "featured": false,
+      "cover": {
+        "src": "/images/a50b7a2600bf58-1800.webp",
+        "localBase": "/images/a50b7a2600bf58",
+        "width": 4800,
+        "height": 3840,
+        "alt": "Intimate light — photography by Ergys Shehu",
+        "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/a50b7a2600bf58-1800.webp",
+          "localBase": "/images/a50b7a2600bf58",
+          "width": 4800,
+          "height": 3840,
+          "alt": "Intimate light — photograph 1 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg"
+        },
+        {
+          "src": "/images/61e29d86bc0f9e-1800.webp",
+          "localBase": "/images/61e29d86bc0f9e",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Intimate light — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH00015-Edit Low.jpg"
+        },
+        {
+          "src": "/images/6022e2bce4a82f-1800.webp",
+          "localBase": "/images/6022e2bce4a82f",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Intimate light — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH00060  low 2.jpg"
+        },
+        {
+          "src": "/images/fb2f848e9f39c9-1800.webp",
+          "localBase": "/images/fb2f848e9f39c9",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Intimate light — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH00708 web.jpg"
+        },
+        {
+          "src": "/images/25c891a8e1eb5d-1800.webp",
+          "localBase": "/images/25c891a8e1eb5d",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Intimate light — photograph 5 by Ergys Shehu",
+          "sourceFile": "ESH00745 web.jpg"
+        },
+        {
+          "src": "/images/9f875ad91431db-1800.webp",
+          "localBase": "/images/9f875ad91431db",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Intimate light — photograph 6 by Ergys Shehu",
+          "sourceFile": "ESH00864 low.jpg"
+        },
+        {
+          "src": "/images/61071cabdcaf03-1800.webp",
+          "localBase": "/images/61071cabdcaf03",
+          "width": 1576,
+          "height": 2048,
+          "alt": "Intimate light — photograph 7 by Ergys Shehu",
+          "sourceFile": "ESH01014 2cv.jpg"
+        },
+        {
+          "src": "/images/0e005311c156bf-1800.webp",
+          "localBase": "/images/0e005311c156bf",
+          "width": 1894,
+          "height": 2048,
+          "alt": "Intimate light — photograph 8 by Ergys Shehu",
+          "sourceFile": "ESH04087 low v2.jpg"
+        },
+        {
+          "src": "/images/ee4c72472284a3-1800.webp",
+          "localBase": "/images/ee4c72472284a3",
+          "width": 1303,
+          "height": 2048,
+          "alt": "Intimate light — photograph 9 by Ergys Shehu",
+          "sourceFile": "ESH04841-web.jpg"
+        },
+        {
+          "src": "/images/529a5f26d5962e-1800.webp",
+          "localBase": "/images/529a5f26d5962e",
+          "width": 1488,
+          "height": 2048,
+          "alt": "Intimate light — photograph 10 by Ergys Shehu",
+          "sourceFile": "ESH05026web.jpg"
+        },
+        {
+          "src": "/images/d53f37c4f86f1d-1800.webp",
+          "localBase": "/images/d53f37c4f86f1d",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Intimate light — photograph 11 by Ergys Shehu",
+          "sourceFile": "ESH09685 low.jpg"
+        },
+        {
+          "src": "/images/353db151f53243-1800.webp",
+          "localBase": "/images/353db151f53243",
+          "width": 1476,
+          "height": 2048,
+          "alt": "Intimate light — photograph 12 by Ergys Shehu",
+          "sourceFile": "ESH09690 low.jpg"
+        },
+        {
+          "src": "/images/07d0b9c8963558-1800.webp",
+          "localBase": "/images/07d0b9c8963558",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Intimate light — photograph 13 by Ergys Shehu",
+          "sourceFile": "ESH09752 face  low.jpg"
+        },
+        {
+          "src": "/images/a346c9f10d3668-1800.webp",
+          "localBase": "/images/a346c9f10d3668",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Intimate light — photograph 14 by Ergys Shehu",
+          "sourceFile": "ESH09786 low.jpg"
+        },
+        {
+          "src": "/images/8ce1e1bbd83a8d-1800.webp",
+          "localBase": "/images/8ce1e1bbd83a8d",
+          "width": 2048,
+          "height": 1638,
+          "alt": "Intimate light — photograph 15 by Ergys Shehu",
+          "sourceFile": "ESH09814web.jpg"
+        },
+        {
+          "src": "/images/62ae9f04422b8e-1800.webp",
+          "localBase": "/images/62ae9f04422b8e",
+          "width": 3240,
+          "height": 2160,
+          "alt": "Intimate light — photograph 16 by Ergys Shehu",
+          "sourceFile": "ESH09883 cc.jpg"
+        },
+        {
+          "src": "/images/cebdc4ba62e0a1-1800.webp",
+          "localBase": "/images/cebdc4ba62e0a1",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Intimate light — photograph 17 by Ergys Shehu",
+          "sourceFile": "ig v2.jpg"
+        },
+        {
+          "src": "/images/c843858c582d50-1800.webp",
+          "localBase": "/images/c843858c582d50",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Intimate light — photograph 18 by Ergys Shehu",
+          "sourceFile": "Instagram cc Bright,.jpg"
+        },
+        {
+          "src": "/images/426fce7c2509a3-1800.webp",
+          "localBase": "/images/426fce7c2509a3",
+          "width": 1080,
+          "height": 1350,
+          "alt": "Intimate light — photograph 19 by Ergys Shehu",
+          "sourceFile": "Instagram.jpg"
+        },
+        {
+          "src": "/images/3647d236a3a0a3-1800.webp",
+          "localBase": "/images/3647d236a3a0a3",
+          "width": 3667,
+          "height": 4584,
+          "alt": "Intimate light — photograph 20 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04623-Edit1607881806791.jpg"
+        },
+        {
+          "src": "/images/28acfaead4827c-1800.webp",
+          "localBase": "/images/28acfaead4827c",
+          "width": 5181,
+          "height": 3811,
+          "alt": "Intimate light — photograph 21 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04805-Edit+v231609434742216.jpg"
+        },
+        {
+          "src": "/images/b5a0b3eb1ab1ba-1800.webp",
+          "localBase": "/images/b5a0b3eb1ab1ba",
+          "width": 4000,
+          "height": 5000,
+          "alt": "Intimate light — photograph 22 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH08739-Edit-+Full+Size.jpg"
+        },
+        {
+          "src": "/images/f1be13a6e30c80-1800.webp",
+          "localBase": "/images/f1be13a6e30c80",
+          "width": 2800,
+          "height": 3500,
+          "alt": "Intimate light — photograph 23 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH08796-Edit.jpg"
+        },
+        {
+          "src": "/images/ed476a98de12a0-1800.webp",
+          "localBase": "/images/ed476a98de12a0",
+          "width": 5250,
+          "height": 3500,
+          "alt": "Intimate light — photograph 24 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH08881+Low.jpg"
+        },
+        {
+          "src": "/images/d7009a9f022954-1800.webp",
+          "localBase": "/images/d7009a9f022954",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Intimate light — photograph 25 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH09831+low-1.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "evening-silhouettes",
+      "title": "Evening silhouettes",
+      "kind": "fashion",
+      "description": "Eveningwear photographed in an open landscape.",
+      "order": 13,
+      "featured": false,
+      "cover": {
+        "src": "/images/b8a82d1ab99d96-1800.webp",
+        "localBase": "/images/b8a82d1ab99d96",
+        "width": 4000,
+        "height": 5000,
+        "alt": "Evening silhouettes — photography by Ergys Shehu",
+        "sourceFile": "ESH07553 v2.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/b8a82d1ab99d96-1800.webp",
+          "localBase": "/images/b8a82d1ab99d96",
+          "width": 4000,
+          "height": 5000,
+          "alt": "Evening silhouettes — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH07553 v2.jpg"
+        },
+        {
+          "src": "/images/53a0aca1b1780e-1800.webp",
+          "localBase": "/images/53a0aca1b1780e",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Evening silhouettes — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH07560-Recovered low.jpg"
+        },
+        {
+          "src": "/images/ddde5330bbd88e-1800.webp",
+          "localBase": "/images/ddde5330bbd88e",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Evening silhouettes — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH07629 fix low.jpg"
+        },
+        {
+          "src": "/images/129550a3b0552c-1800.webp",
+          "localBase": "/images/129550a3b0552c",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Evening silhouettes — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH07680 Low.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "character-studies",
+      "title": "Character studies",
+      "kind": "portraits",
+      "description": "Portraits exploring character, light and atmosphere.",
+      "order": 14,
+      "featured": false,
+      "cover": {
+        "src": "/images/cce42326e411ab-1800.webp",
+        "localBase": "/images/cce42326e411ab",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Character studies — photography by Ergys Shehu",
+        "sourceFile": "ESH00013web.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/cce42326e411ab-1800.webp",
+          "localBase": "/images/cce42326e411ab",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Character studies — photograph 1 by Ergys Shehu",
+          "sourceFile": "ESH00013web.jpg"
+        },
+        {
+          "src": "/images/d2f954e4f34b2c-1800.webp",
+          "localBase": "/images/d2f954e4f34b2c",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Character studies — photograph 2 by Ergys Shehu",
+          "sourceFile": "ESH09740-cc-web.jpg"
+        },
+        {
+          "src": "/images/3c89eee303ab2d-1800.webp",
+          "localBase": "/images/3c89eee303ab2d",
+          "width": 2048,
+          "height": 1365,
+          "alt": "Character studies — photograph 3 by Ergys Shehu",
+          "sourceFile": "ESH09844 low web2.jpg"
+        },
+        {
+          "src": "/images/ec31c580c8f789-1800.webp",
+          "localBase": "/images/ec31c580c8f789",
+          "width": 3522,
+          "height": 4402,
+          "alt": "Character studies — photograph 4 by Ergys Shehu",
+          "sourceFile": "ESH03575.jpg"
+        },
+        {
+          "src": "/images/ef147e9486bd60-1800.webp",
+          "localBase": "/images/ef147e9486bd60",
+          "width": 1639,
+          "height": 2048,
+          "alt": "Character studies — photograph 5 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH03575web-1.jpg"
+        },
+        {
+          "src": "/images/79e642cd901dc2-1800.webp",
+          "localBase": "/images/79e642cd901dc2",
+          "width": 1639,
+          "height": 1312,
+          "alt": "Character studies — photograph 6 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH03575web-1_edited.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "wedding-stories",
+      "title": "Wedding stories",
+      "kind": "weddings",
+      "description": "A selection of wedding and bridal photographs.",
+      "order": 15,
+      "featured": false,
+      "cover": {
+        "src": "/images/7b83c3acfdc8b9-1800.webp",
+        "localBase": "/images/7b83c3acfdc8b9",
+        "width": 2048,
+        "height": 1273,
+        "alt": "Wedding stories — photography by Ergys Shehu",
+        "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+      },
+      "photos": [
+        {
+          "src": "/images/7b83c3acfdc8b9-1800.webp",
+          "localBase": "/images/7b83c3acfdc8b9",
+          "width": 2048,
+          "height": 1273,
+          "alt": "Wedding stories — photograph 1 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+        },
+        {
+          "src": "/images/99c5fef509fae2-1800.webp",
+          "localBase": "/images/99c5fef509fae2",
+          "width": 1638,
+          "height": 2048,
+          "alt": "Wedding stories — photograph 2 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH_8943cc.jpg"
+        },
+        {
+          "src": "/images/08e4c3196ed78b-1800.webp",
+          "localBase": "/images/08e4c3196ed78b",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Wedding stories — photograph 3 by Ergys Shehu",
+          "sourceFile": "Mobile Uploads\\ESH04992-web.jpg"
+        }
+      ]
+    }
+  ]
+}

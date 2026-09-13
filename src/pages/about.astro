@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {content, photoUrl, photoSet} from '../lib/content';
+import {defaults, biography} from '../lib/editorial';
+const {settings} = await content();
+---
+<Layout title="About — Ergys Shehu" name={settings.name}>
+<section class="collection-intro"><a class="back-link" href="/">← Selected work</a><p class="kicker">PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST</p><h1>Ergys Shehu.</h1><p>{settings.bio || defaults.bio}</p></section>
+<section class="biography-layout collection-body">
+<aside>{settings.portrait && <img src={photoUrl(settings.portrait,1200)} srcset={photoSet(settings.portrait)} sizes="(max-width: 700px) 90vw, 35vw" alt={settings.portrait.alt || 'Ergys Shehu'}/>}<p class="kicker">ALBANIA / WORLDWIDE</p><p>Photography<br/>Film & creative direction<br/>Painting & decorative arts<br/>Cultural curation</p><a href="/#contact">Enquiries ↗</a></aside>
+<div><details class="bio-language" open><summary>English <span>EN</span></summary><p lang="en">{settings.biographyEn || biography.en}</p></details><details class="bio-language"><summary>Shqip <span>SQ</span></summary><p lang="sq">{settings.biographySq || biography.sq}</p></details><blockquote>“{settings.artistQuote || biography.quote}”<cite>— Ergys Shehu</cite></blockquote><div class="bio-milestones"><p><span>2017</span>Founded ALERT Visual Production Studio</p><p><span>2020</span>Best Director · Netët e Klipit Shqiptar</p><p><span>KULT 360</span>Executive Director</p></div></div>
+</section></Layout>
