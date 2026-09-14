@@ -94,7 +94,8 @@
         "height": 2048,
         "alt": "Adel Lami — photography by Ergys Shehu",
         "sourceFile": "Adel Lami\\ESH05529 low.jpg",
-        "color": "#4551a2"
+        "color": "#4551a2",
+        "hotspot": {"x": 0.42, "y": 0.2}
       },
       "photos": [
         {
@@ -104,7 +105,8 @@
           "height": 2048,
           "alt": "Adel Lami — photograph 1 by Ergys Shehu",
           "sourceFile": "Adel Lami\\ESH05529 low.jpg",
-          "color": "#4551a2"
+          "color": "#4551a2",
+          "hotspot": {"x": 0.42, "y": 0.2}
         },
         {
           "src": "/images/5ef79d674aabf3-1800.webp",
@@ -349,7 +351,8 @@
         "height": 2048,
         "alt": "Margaret Shllaku — photography by Ergys Shehu",
         "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg",
-        "color": "#4c2715"
+        "color": "#4c2715",
+        "hotspot": {"x": 0.35, "y": 0.08}
       },
       "photos": [
         {
@@ -359,7 +362,8 @@
           "height": 2048,
           "alt": "Margaret Shllaku — photograph 1 by Ergys Shehu",
           "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg",
-          "color": "#4c2715"
+          "color": "#4c2715",
+          "hotspot": {"x": 0.35, "y": 0.08}
         },
         {
           "src": "/images/cd70deb784d70f-1800.webp",
@@ -395,7 +399,8 @@
         "height": 2048,
         "alt": "Sara Fani — photography by Ergys Shehu",
         "sourceFile": "Sara Fani\\2 web.jpg",
-        "color": "#a17862"
+        "color": "#a17862",
+        "hotspot": {"x": 0.55, "y": 0.2}
       },
       "photos": [
         {
@@ -831,7 +836,8 @@
         "height": 2048,
         "alt": "In the woods — photography by Ergys Shehu",
         "sourceFile": "ESH09430web.jpg",
-        "color": "#4f3016"
+        "color": "#4f3016",
+        "hotspot": {"x": 0.5, "y": 0.16}
       },
       "photos": [
         {
@@ -841,7 +847,8 @@
           "height": 2048,
           "alt": "In the woods — photograph 1 by Ergys Shehu",
           "sourceFile": "ESH09430web.jpg",
-          "color": "#4f3016"
+          "color": "#4f3016",
+          "hotspot": {"x": 0.5, "y": 0.16}
         },
         {
           "src": "/images/c77fab16901d69-1800.webp",
