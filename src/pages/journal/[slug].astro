@@ -2,13 +2,15 @@
 import Layout from '../../layouts/Layout.astro';
 import {content, photoUrl, photoSet} from '../../lib/content';
 import {journal, type PortableSpan, type PortableMarkDef, type PortableItem} from '../../lib/journal';
+import {defaults} from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const posts = await journal();
   return posts.map(post => ({params: {slug: post.slug}, props: {post}}));
 }
 const {post} = Astro.props;
-const {settings} = await content();
+const {settings: saved} = await content();
+const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
 const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
 
 const escapeHtml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

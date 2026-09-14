@@ -2,8 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import {content, photoUrl, photoSet} from '../../lib/content';
 import {journal} from '../../lib/journal';
+import {defaults} from '../../lib/editorial';
 
-const {settings} = await content();
+const {settings: saved} = await content();
+const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
 const posts = await journal();
 const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
 ---
