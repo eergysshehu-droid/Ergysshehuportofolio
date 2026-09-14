@@ -367,6 +367,9 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 .yt-play svg{width:22px;height:22px;margin-left:3px}
 .yt-label{position:absolute;left:14px;bottom:12px;color:#fff;font-size:var(--text-xs);letter-spacing:.08em;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .films-more-link{display:flex;width:fit-content;align-items:center;gap:10px;font-size:var(--text-xs);letter-spacing:.1em;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:6px;margin:24px auto 0}
+.films-more-videos{padding:10px 5vw 70px;border-top:1px solid var(--line)}
+.films-more-videos .kicker{margin:40px 0 24px}
+.films-more-videos .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
 .collection-empty{border-top:1px solid var(--line);padding:50px 0}
 .collection-empty h2{font:400 42px var(--serif)}
 .collection-empty>p{color:var(--muted)}
