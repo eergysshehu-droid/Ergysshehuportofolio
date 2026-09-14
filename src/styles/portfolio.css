@@ -281,7 +281,7 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 .project-card a{display:block}
 .project-image{position:relative;background:#e2dfd7;overflow:hidden}
 .project-image:has(.project-fallback){aspect-ratio:3/4}
-.project-image img{width:100%;height:auto;transition:transform .8s var(--ease-editorial),filter .5s var(--ease-editorial)}
+.project-image img{width:100%;height:auto;transition:transform 1s var(--ease-editorial),filter .9s var(--ease-editorial)}
 .project-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;color:var(--muted);font:400 18px var(--serif)}
 .icon-badge{position:absolute;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(11,11,10,.42);backdrop-filter:blur(3px);color:#fff;font-size:var(--text-sm);line-height:1;z-index:2}
 .project-play{top:14px;left:14px}
@@ -292,10 +292,15 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 .project-card{transition:transform .25s var(--ease-editorial)}
 /* Spotlight on hover: the card under the pointer brightens and lifts
    slightly, every other card in the same grid dims — gives the whole grid
-   a "focus" feel and signals it's clickable without a separate icon. */
+   a "focus" feel and signals it's clickable without a separate icon.
+   Driven by JS (.is-spotlighting/.is-focused, see Layout.astro) rather than
+   a pure :has(:hover) rule, so crossing the small gap between cards doesn't
+   flash the whole grid back to normal and immediately dim again — a slower,
+   longer "dissolve" transition makes the effect feel like a soft melt
+   rather than a hard cut either way. */
 @media(hover:hover) and (pointer:fine){
-  .project-grid:has(.project-card:hover) .project-card:not(:hover) .project-image img{filter:brightness(.62)}
-  .project-card:hover .project-image img{transform:scale(1.045);filter:brightness(1.08)}
+  .project-grid.is-spotlighting .project-card:not(.is-focused) .project-image img{filter:brightness(.6)}
+  .project-card.is-focused .project-image img{transform:scale(1.045);filter:brightness(1.08)}
 }
 .project-overlay{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:26px 20px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;color:#f6f4ee;background:linear-gradient(to top,rgba(9,9,8,.85) 0%,rgba(9,9,8,.5) 45%,transparent 100%);pointer-events:none}
 .project-no{font-size:var(--text-xs);opacity:.7;flex-shrink:0}
@@ -373,10 +378,10 @@ footer{background:var(--paper);border-top:var(--border-subtle);max-width:var(--c
 footer .footer-row{display:flex;align-items:center;gap:28px;justify-self:start}
 footer .footer-name{font-family:var(--wordmark-font);font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
 footer .footer-contact{font-size:var(--text-xs);letter-spacing:.12em}
-.social-icons{display:flex;align-items:center;gap:18px}
-.social-icons a{opacity:.82;display:inline-flex;transition:opacity .2s,color .2s,transform .2s}
+.social-icons{display:flex;align-items:center;gap:16px}
+.social-icons a{opacity:.9;display:inline-flex;transition:opacity .2s,color .2s,transform .2s}
 .social-icons a:hover{opacity:1;color:var(--accent);transform:translateY(-2px)}
-.social-icons svg{width:20px;height:20px}
+.social-icons svg{width:23px;height:23px}
 footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 footer>span{justify-self:center;text-align:center}
 footer>a:last-child{justify-self:end}
