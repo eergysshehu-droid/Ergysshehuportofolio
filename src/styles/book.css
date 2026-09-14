@@ -1,0 +1,76 @@
+/* ==========================================================================
+   BOOK PAGE — dark editorial booking/contact page.
+   Every rule here is scoped under .book-page so nothing else on the site
+   is affected. Imported only from src/pages/book.astro.
+   ========================================================================== */
+.book-page{background:#0b0b09;color:#f4efe6}
+.book-page section{padding:var(--section-gap) var(--page-pad)}
+.book-page .kicker{color:rgba(244,239,230,.6)}
+
+.book-hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding-bottom:clamp(60px,8vw,120px);overflow:hidden}
+.book-hero-image{position:absolute;inset:0}
+.book-hero-image img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.book-hero-image:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,7,.35) 0%,rgba(8,8,7,.15) 40%,rgba(8,8,7,.9) 100%)}
+.book-hero-content{position:relative;z-index:1;max-width:900px}
+.book-lang-toggle{display:flex;gap:8px;align-items:center;margin:0 0 22px;color:rgba(244,239,230,.6)}
+.book-lang-toggle button{padding:2px 0;letter-spacing:.14em;color:inherit;cursor:pointer}
+.book-lang-toggle button[aria-pressed=true]{color:#f4efe6;border-bottom:1px solid #f4efe6}
+.book-hero h1{font:400 clamp(38px,6vw,86px)/1.08 var(--serif);letter-spacing:-.03em;margin:18px 0 26px;max-width:16ch}
+.book-hero-sub{font-size:var(--text-md);color:rgba(244,239,230,.68);max-width:52ch;line-height:1.7;margin:0 0 34px}
+.book-cta{display:inline-flex;align-items:center;gap:14px;font-size:var(--text-xs);letter-spacing:.13em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid rgba(244,239,230,.3)}
+.book-cta span:last-child{display:inline-block;transition:transform .3s var(--ease-editorial)}
+.book-cta:hover span:last-child{transform:translateY(4px)}
+
+.book-heading h2{font:400 clamp(32px,4.2vw,64px)/1.14 var(--serif);letter-spacing:-.03em;margin:16px 0 0}
+
+.service-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(244,239,230,.14);margin-top:clamp(40px,4vw,70px)}
+.service-card{background:#0b0b09;position:relative;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0}
+.service-image{display:block;aspect-ratio:3/4;overflow:hidden;background:#151512}
+.service-image img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease-editorial),filter .7s var(--ease-editorial);filter:grayscale(.25) brightness(.85)}
+.service-card:hover .service-image img{transform:scale(1.05);filter:grayscale(0) brightness(1)}
+.service-label{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 4px;font-size:var(--text-sm);letter-spacing:.06em}
+.service-label span:last-child{opacity:.6;display:inline-block;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
+.service-card:hover .service-label span:last-child{transform:translate(3px,-3px);opacity:1}
+
+.contact-links{display:grid;gap:0;margin-top:clamp(30px,3.5vw,50px);border-top:1px solid rgba(244,239,230,.14)}
+.contact-link{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid rgba(244,239,230,.14)}
+.contact-link span:first-child{font-size:var(--text-xs);letter-spacing:.13em;text-transform:uppercase;color:rgba(244,239,230,.6)}
+.contact-value{font-size:clamp(15px,1.6vw,24px);font-family:var(--serif);overflow-wrap:anywhere;text-align:right}
+.book-location{margin-top:26px;color:rgba(244,239,230,.6);font-size:var(--text-sm)}
+
+.inquiry-form{max-width:680px;margin-top:clamp(36px,4vw,60px);display:grid;gap:26px}
+.form-row{display:grid;gap:10px}
+.form-row label{font-size:var(--text-xs);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,230,.6);display:flex;gap:6px}
+.form-row .optional{text-transform:none;letter-spacing:0}
+.form-row input,.form-row select,.form-row textarea{background:transparent;border:0;border-bottom:1px solid rgba(244,239,230,.3);color:#f4efe6;font:400 17px/1.5 var(--sans);padding:8px 2px;width:100%}
+.form-row select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#f4efe6 50%),linear-gradient(135deg,#f4efe6 50%,transparent 50%);background-position:calc(100% - 4px) 55%,calc(100% - 9px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+.form-row select option{color:#111}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:0;border-bottom-color:#f4efe6}
+.form-row textarea{resize:vertical;min-height:110px}
+.submit-btn{justify-self:start;display:inline-flex;align-items:center;gap:14px;font-size:var(--text-xs);letter-spacing:.13em;text-transform:uppercase;padding:16px 30px;border:1px solid #f4efe6;color:#f4efe6;cursor:pointer;transition:background .3s var(--ease-editorial),color .3s var(--ease-editorial)}
+.submit-btn:hover{background:#f4efe6;color:#0b0b09}
+.form-note{font-size:var(--text-2xs);color:rgba(244,239,230,.55);margin:0}
+
+.collab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3vw,40px);margin-top:clamp(36px,4vw,60px);border-top:1px solid rgba(244,239,230,.14);padding-top:clamp(28px,3vw,40px)}
+.collab-item h3{font:400 22px var(--serif);margin:0 0 12px}
+.collab-item p{font-size:var(--text-sm);color:rgba(244,239,230,.62);line-height:1.7;margin:0}
+.collab-cta{display:inline-flex;align-items:center;gap:14px;margin-top:clamp(36px,4vw,54px);font-size:var(--text-xs);letter-spacing:.13em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid rgba(244,239,230,.3);cursor:pointer}
+
+.book-closing{text-align:center;border-top:1px solid rgba(244,239,230,.14)}
+.book-closing h2{font:400 clamp(30px,4.5vw,64px)/1.15 var(--serif);letter-spacing:-.03em;margin:18px auto 30px;max-width:16ch}
+.book-closing-link{display:inline-block;font-size:clamp(15px,1.6vw,22px);border-bottom:1px solid rgba(244,239,230,.3);padding-bottom:8px}
+
+@media (max-width:900px){
+  .service-grid{grid-template-columns:repeat(2,1fr)}
+  .collab-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:700px){
+  .book-page section{padding:clamp(50px,12vw,80px) 6vw}
+  .service-grid{grid-template-columns:1fr}
+  .collab-grid{grid-template-columns:1fr;gap:30px}
+  .contact-link{flex-direction:column;align-items:flex-start;gap:6px}
+  .contact-value{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  .service-image img,.book-cta span:last-child,.service-label span:last-child{transition:none}
+}
