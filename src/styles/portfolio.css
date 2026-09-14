@@ -166,7 +166,7 @@ html.mobile-menu-open{overflow:hidden}
 .opening-frame{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease-editorial)}
 .opening-frame.is-active{opacity:1}
 .opening:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0004 0%,#0000 32%,#0000 55%,#0009 100%)}
-.hero-topline,.hero-feature,.scroll-indicator{
+.hero-topline,.hero-feature{
   transform:translate3d(0,var(--hero-content-shift,0px),0);
   opacity:var(--hero-content-opacity,1);
 }
@@ -195,7 +195,7 @@ html.mobile-menu-open{overflow:hidden}
 .hero-nav-arrows{display:flex;align-items:center;gap:16px;flex-shrink:0}
 .hero-nav-arrows button{border:0;background:transparent;color:#fff;font-size:1.3rem;line-height:1;cursor:pointer;padding:4px}
 .hero-nav-arrows span{width:1px;height:22px;background:rgba(255,255,255,.4)}
-.scroll-indicator{position:absolute;z-index:2;right:var(--page-pad);bottom:28px;display:grid;place-items:center;gap:10px;color:#fff;text-decoration:none}
+.scroll-indicator{position:absolute;z-index:2;left:50%;transform:translateX(-50%);bottom:calc(var(--hero-overlap) + 14px);display:grid;place-items:center;gap:10px;color:#fff;text-decoration:none}
 .scroll-indicator span{font-size:var(--text-2xs);letter-spacing:.25em;text-transform:uppercase}
 .scroll-indicator i{width:1px;height:34px;background:rgba(255,255,255,.7);display:block;font-style:normal}
 
@@ -440,10 +440,9 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .hero-scroll-scene{height:calc(100svh + var(--hero-overlap))}
   .opening{min-height:560px}
   .hero-topline{top:96px}
-  .hero-feature{bottom:96px;max-width:88vw}
+  .hero-feature{bottom:130px;max-width:88vw}
   .hero-project-title{font-size:clamp(40px,12vw,60px)}
   .hero-controls,.hero-progress{width:min(280px,68vw)}
-  .scroll-indicator{display:none}
   :root{--hero-overlap:clamp(40px,10vw,70px)}
   .work-section,.motion-section,.artist-section{border-radius:clamp(12px,4vw,18px) clamp(12px,4vw,18px) 0 0}
   .work-section{padding:55px 5vw 45px}
@@ -499,7 +498,7 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .cinematic-intro{display:none!important}
   .hero-light-sweep{display:none!important}
   .title-mask [data-slide-title]{transform:none!important}
-  [data-reveal],[data-image-reveal] img,.opening-image img,.hero-topline,.hero-feature,.scroll-indicator{
+  [data-reveal],[data-image-reveal] img,.opening-image img,.hero-topline,.hero-feature{
     opacity:1!important;
     transform:none!important;
     clip-path:none!important;
