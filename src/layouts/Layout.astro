@@ -69,29 +69,44 @@ if('IntersectionObserver' in window){
   if(stackGrid && window.matchMedia('(max-width: 700px)').matches){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
-      // One IntersectionObserver drives both effects off the same signal —
-      // whichever card is most prominently on screen right now: it sets the
-      // page background to that card's color AND marks it "in focus" (kept
-      // sharp), while every other revealed card is dimmed + blurred. This
-      // doesn't depend on getBoundingClientRect()/offsetTop tracking scroll
-      // math (which broke down once a card was actually pinned by position:
-      // sticky in this browser — both start mirroring scrollY once "stuck",
-      // making every card look permanently covered) — isIntersecting alone
-      // is enough to say "this one's current" regardless of what the sticky
-      // positioning is really doing under the hood.
-      const bgIo=new IntersectionObserver(entries=>{
+      // A single IntersectionObserver with many thresholds gives us each
+      // card's real intersection ratio as it scrolls under the next one —
+      // no getBoundingClientRect()/offsetTop math (which broke down once a
+      // card was pinned by position:sticky in this browser — both start
+      // mirroring scrollY once "stuck"). --melt goes from 0 (fully visible,
+      // sharp) to 1 (fully covered, blurred), eased so it barely moves while
+      // still mostly uncovered and ramps up past the halfway point. Going
+      // back to sharp (scrolling up) gets a much shorter transition than
+      // going blurry, so flipping back to re-check a photo reads instantly.
+      const ratios=new Map<HTMLElement,number>();
+      const steps=Array.from({length:41},(_,i)=>i/40);
+      const meltIo=new IntersectionObserver(entries=>{
         entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            const el=entry.target as HTMLElement;
-            const color=el.style.getPropertyValue('--frame-color');
-            if(color)document.body.style.setProperty('background-color',color);
-            cards.forEach(c=>c.classList.toggle('is-focused',c===el));
-          }
+          const card=entry.target as HTMLElement;
+          const img=card.querySelector<HTMLElement>('.project-image img');
+          const ratio=entry.intersectionRatio;
+          ratios.set(card,ratio);
+          const prevMelt=parseFloat(card.style.getPropertyValue('--melt')||'1');
+          const melt=Math.pow(Math.max(0,1-ratio),1.6);
+          if(img)img.style.transitionDuration=melt<prevMelt?'.32s':'.75s';
+          card.style.setProperty('--melt',String(melt));
         });
-      },{threshold:0.55});
-      cards.forEach(c=>bgIo.observe(c));
+        let current:HTMLElement|null=null;
+        let best=0;
+        for(const [el,ratio] of ratios){
+          if(ratio>best){best=ratio;current=el}
+        }
+        if(current && best>0.4){
+          const color=current.style.getPropertyValue('--frame-color');
+          if(color){
+            document.body.style.setProperty('--frame-color-current',color);
+            document.body.classList.add('has-frame-color');
+          }
+        }
+      },{threshold:steps});
+      cards.forEach(c=>meltIo.observe(c));
       const gridIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{if(!entry.isIntersecting)document.body.style.removeProperty('background-color')});
+        entries.forEach(entry=>{if(!entry.isIntersecting)document.body.classList.remove('has-frame-color')});
       },{threshold:0});
       gridIo.observe(stackGrid);
     }
