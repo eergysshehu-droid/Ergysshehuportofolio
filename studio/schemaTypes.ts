@@ -42,4 +42,15 @@ const settings = defineType({name: 'siteSettings', title: 'Profili dhe kontakti'
   defineField({name: 'instagram', title: 'Instagram URL', type: 'url', validation: r => r.uri({scheme: ['https']})}),
   defineField({name: 'seoDescription', title: 'Përshkrimi në kërkim', type: 'text', validation: r => r.max(160)})
 ]});
-export const schemaTypes = [photo, category, album, settings];
+const post = defineType({name: 'post', title: 'Artikuj (Journal)', type: 'document', fields: [
+  defineField({name: 'title', title: 'Titulli', type: 'string', validation: r => r.required()}),
+  defineField({name: 'slug', title: 'Adresa', type: 'slug', options: {source: 'title'}, validation: r => r.required().custom(value => !value?.current || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.current) || 'Përdor shkronja të vogla, numra dhe viza.')}),
+  defineField({name: 'excerpt', title: 'Përmbledhje e shkurtër', type: 'text', validation: r => r.required().max(200)}),
+  defineField({name: 'cover', title: 'Kopertina', type: 'portfolioPhoto', validation: r => r.required()}),
+  defineField({name: 'body', title: 'Përmbajtja', type: 'array', of: [
+    defineArrayMember({type: 'block', styles: [{title: 'Normal', value: 'normal'}, {title: 'H2', value: 'h2'}, {title: 'H3', value: 'h3'}, {title: 'Citim', value: 'blockquote'}]}),
+    defineArrayMember({type: 'portfolioPhoto'})
+  ], validation: r => r.required()}),
+  defineField({name: 'publishedAt', title: 'Data e publikimit', type: 'datetime', initialValue: () => new Date().toISOString(), validation: r => r.required()})
+], orderings: [{title: 'Data, e fundit e para', name: 'publishedAtDesc', by: [{field: 'publishedAt', direction: 'desc'}]}], preview: {select: {title: 'title', media: 'cover', date: 'publishedAt'}, prepare: ({title, media, date}) => ({title, subtitle: date ? new Date(date).toLocaleDateString() : undefined, media})}});
+export const schemaTypes = [photo, category, album, settings, post];

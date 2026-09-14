@@ -2,9 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 import LatestWork from '../components/LatestWork.astro';
-import {content,photoUrl,photoSet,safeUrl} from '../lib/content';
+import {content,photoUrl,photoSet,photoPosition,safeUrl} from '../lib/content';
+import {journal} from '../lib/journal';
 import {defaults} from '../lib/editorial';
 const {settings:saved,albums}=await content();
+const journalFeature=(await journal()).slice(0,3);
+const journalDate=(iso:string)=>new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 const settings={...defaults,...Object.fromEntries(Object.entries(saved).filter(([,v])=>v!=null))};
 const featuredAlbums=albums.filter(a=>a.featured);
 const hero=saved.heroImage || featuredAlbums[0]?.cover;
@@ -23,30 +26,82 @@ const heroSlides=heroCandidates.filter(a=>{const key=photoKey(a.cover);if(!key||
 if(hero && photoUrl(hero) && isHeroShaped(hero)){const key=photoKey(hero);if(key && !heroSeen.has(key)){heroSeen.add(key);heroSlides.unshift({photo:hero,title:featuredAlbums[0]?.title || settings.name,href:featuredAlbums[0]?`/portfolio/${featuredAlbums[0].slug}/`:'#selected'});heroSlides.length=Math.min(heroSlides.length,5)}}
 ---
 <Layout home name={settings.name} description={settings.seoDescription} image={hero && photoUrl(hero,1800)}>
+<div class="cinematic-intro" data-intro aria-hidden="true"><div class="intro-brand"><strong>ERGYS</strong><span>SHEHU</span></div><span class="intro-line"></span><div class="intro-meta"><span>A VISUAL STORY AWAITS</span><span>01 / 04</span></div><div class="intro-curtain intro-curtain-left"></div><div class="intro-curtain intro-curtain-right"></div></div>
 <div class="hero-scroll-scene"><section class="opening cinematic-opening" aria-label="Selected photography" data-hero-rotator>
 <div class="opening-image">{heroSlides.map((slide,i)=><picture class:list={['opening-frame',{'is-active':i===0}]} data-href={slide.href} data-title={slide.title} style={`--slide-pos:${heroPosition(slide.photo)}`}>{i===0 && slide.photo.localBase && <source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(slide.photo,1800)} srcset={photoSet(slide.photo)} sizes="100vw" alt={slide.photo.alt || slide.title} loading={i===0?undefined:'lazy'} fetchpriority={i===0?'high':undefined} width={slide.photo.width} height={slide.photo.height}/></picture>)}</div>
+<div class="hero-light-sweep" data-hero-sweep aria-hidden="true"></div>
 <h1 class="sr-only">{settings.name}</h1>
 <div class="hero-topline"><span>Photographer / Director</span><span>Albania · Available worldwide</span></div>
-<div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label">Selected work</span><span class="hero-project-title"><span data-slide-title>{heroSlides[0]?.title}</span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}</div>
-<div class="hero-bottom">{heroSlides.length>1 && <div class="slide-dots" role="tablist" aria-label="Hero slides">{heroSlides.map((_,i)=><button type="button" role="tab" aria-current={i===0?'true':'false'} aria-label={`Go to slide ${i+1}`} data-slide-dot={i}></button>)}</div>}{heroSlides.length>1 && <button type="button" class="slide-pause" data-slide-pause aria-pressed="false">Pause</button>}<a class="scroll-invitation" href="#selected">View work <span aria-hidden="true">↓</span></a></div>
+<div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label">Selected work</span><span class="hero-project-title"><span class="title-mask"><span data-slide-title>{heroSlides[0]?.title}</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}{heroSlides.length>1 && <div class="hero-progress" aria-hidden="true"><span data-hero-progress></span></div>}<div class="hero-controls"><a class="hero-explore" href={heroSlides[0]?.href || '#selected'} data-slide-link>Explore the story</a>{heroSlides.length>1 && <div class="hero-nav-arrows"><button type="button" data-slide-prev aria-label="Previous project"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button><span aria-hidden="true"></span><button type="button" data-slide-next aria-label="Next project"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></div>}</div></div>
+<a class="scroll-indicator" href="#selected"><span>Scroll</span><i aria-hidden="true"></i></a>
 </section>
 <section class="work-section" id="selected"><div class="work-heading" data-reveal><div><p class="kicker">A SELECTED PERSPECTIVE</p><h2>Still. <em>Never silent.</em></h2></div><span class="work-count">{String(albums.length).padStart(2,'0')} COLLECTIONS</span></div><div class="work-toolbar" data-reveal><div class="filters" role="group" aria-label="Filter projects"><button data-filter="all" aria-pressed="true">All work</button><button data-filter="fashion" aria-pressed="false">Fashion</button><button data-filter="portraits" aria-pressed="false">Portraits</button><button data-filter="weddings" aria-pressed="false">Weddings</button><button data-filter="projects" aria-pressed="false">Personal</button></div><a class="index-link" href="/projects/">PROJECT INDEX ↗</a></div><ProjectGrid albums={selected}/><p class="work-empty" hidden>No projects in this selection yet.</p></section>
 </div>
 {reel && <section class="motion-section"><p class="kicker" data-reveal>MOVING IMAGE</p><h2 data-reveal>Beyond the still.</h2><a data-reveal href={reel} target="_blank" rel="noopener noreferrer">WATCH THE REEL ↗</a></section>}
 <LatestWork/>
+{journalFeature.length>0 && <section class="journal-feature"><div class="journal-feature-heading" data-reveal><div><p class="kicker">THE JOURNAL</p><h2>Beyond the frame.</h2></div><a class="index-link" href="/journal/">READ THE JOURNAL ↗</a></div><div class="journal-feature-grid">{journalFeature.map(post=><a class="journal-card" data-reveal href={`/journal/${post.slug}/`}>{post.cover && photoUrl(post.cover) && <div class="journal-card-image" data-image-reveal style={`--focal-point:${photoPosition(post.cover)}`}><img src={photoUrl(post.cover,700)} srcset={photoSet(post.cover)} sizes="(max-width:700px) 90vw, 30vw" alt={post.cover.alt || post.title} loading="lazy"/></div>}<div class="journal-card-copy"><span class="journal-date">{post.category?`${post.category} / `:''}{journalDate(post.publishedAt)}</span><h2>{post.title}</h2><p>{post.excerpt}</p><span class="journal-read">Read <span aria-hidden="true">↗</span></span></div></a>)}</div></section>}
 <section class="artist-section" id="about"><div class="artist-label" data-reveal><span class="kicker">BEHIND THE LENS</span><span class="artist-number">ES / 01</span></div><div class="artist-copy"><h2 data-reveal>Purity.<br/>Simplicity.<br/><em>Honesty.</em></h2><p data-reveal>{settings.bio}</p><a class="text-link" data-reveal href="/about/">THE ARTIST · EN / SQ <span>↗</span></a></div></section>
 <section class="contact-section" id="contact"><div data-reveal><p class="kicker">FOR COMMISSIONS & COLLABORATIONS</p><h2>Let’s make<br/><em>something matter.</em></h2></div><div class="contact-details" data-reveal>{settings.email && <a class="email" href={`mailto:${settings.email}`}>{settings.email} ↗</a>}<p>Based in Albania.<br/>Available worldwide.</p>{safeUrl(settings.instagram) && <a href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>}</div></section>
 <script>
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Cinematic intro — plays once per browser tab session (sessionStorage-gated),
+// skipped entirely under reduced motion. The overlay covers the hero at
+// z-index:9999 while it plays, so the hero's own fade/scale entrance just
+// runs underneath, unseen, and is already finished by the time the curtain
+// opens. Every path below ends by removing 'intro-running' from <html> and/or
+// clearing the title's inline transform, so the headline can never be left
+// permanently hidden if a step above it fails.
+const introSeenKey='ergys-intro-seen';
+const introEl=document.querySelector<HTMLElement>('[data-intro]');
+let introSeen=false;
+try{introSeen=sessionStorage.getItem(introSeenKey)==='1'}catch{}
+const introTitle=document.querySelector<HTMLElement>('.title-mask [data-slide-title]');
+if(introEl){
+  if(reducedMotion.matches || introSeen){
+    introEl.remove();
+    if(introTitle)introTitle.style.transform='none';
+  }else{
+    document.documentElement.classList.add('intro-running');
+    const isMobile=window.matchMedia('(max-width:700px)').matches;
+    const t=(ms:number)=>Math.round(ms*(isMobile?0.75:1));
+    const leftCurtain=introEl.querySelector<HTMLElement>('.intro-curtain-left');
+    const rightCurtain=introEl.querySelector<HTMLElement>('.intro-curtain-right');
+    const introLine=introEl.querySelector<HTMLElement>('.intro-line');
+    const sweep=document.querySelector<HTMLElement>('[data-hero-sweep]');
+    setTimeout(()=>introLine?.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:t(550),easing:'cubic-bezier(.2,.7,.2,1)',fill:'forwards'}),t(250));
+    setTimeout(()=>{
+      leftCurtain?.animate([{transform:'translateX(0)'},{transform:'translateX(-100%)'}],{duration:t(1100),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'});
+      rightCurtain?.animate([{transform:'translateX(0)'},{transform:'translateX(100%)'}],{duration:t(1100),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'});
+    },t(850));
+    setTimeout(()=>{
+      introEl.animate([{opacity:1},{opacity:0}],{duration:t(450),easing:'ease',fill:'forwards'});
+      introTitle?.animate([{transform:'translateY(115%)'},{transform:'translateY(0)'}],{duration:t(850),easing:'cubic-bezier(.2,.75,.2,1)',fill:'forwards'});
+    },t(1450));
+    setTimeout(()=>sweep?.animate([{left:'-25%',opacity:0},{left:'25%',opacity:.7},{left:'115%',opacity:0}],{duration:t(1800),easing:'ease-in-out'}),t(1800));
+    setTimeout(()=>{
+      introEl.remove();
+      document.documentElement.classList.remove('intro-running');
+      if(introTitle)introTitle.style.transform='none';
+      try{sessionStorage.setItem(introSeenKey,'1')}catch{}
+    },t(2300));
+  }
+}
+
 const heroRoot=document.querySelector<HTMLElement>('[data-hero-rotator]');
 const heroFrameEls=heroRoot?Array.from(heroRoot.querySelectorAll<HTMLElement>('.opening-frame')):[];
-const slideLink=document.querySelector<HTMLAnchorElement>('[data-slide-link]');
+const slideLinks=Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-slide-link]'));
 const slideTitle=document.querySelector<HTMLElement>('[data-slide-title]');
 const slideCount=document.querySelector<HTMLElement>('[data-slide-count]');
-const slideDots=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-slide-dot]'));
-const pauseBtn=document.querySelector<HTMLButtonElement>('[data-slide-pause]');
+const heroProgress=document.querySelector<HTMLElement>('[data-hero-progress]');
+let heroProgressAnim:Animation|undefined;
 let heroActive=0;
 let heroTimer:ReturnType<typeof setInterval>|undefined;
+function playHeroProgress(){
+  if(!heroProgress || reducedMotion.matches || heroFrameEls.length<2)return;
+  heroProgressAnim?.cancel();
+  heroProgressAnim=heroProgress.animate([{width:'0%'},{width:'100%'}],{duration:7000,easing:'linear',fill:'forwards'});
+}
 function showSlide(index:number){
   if(!heroFrameEls.length)return;
   heroFrameEls[heroActive]?.classList.remove('is-active');
@@ -55,19 +110,17 @@ function showSlide(index:number){
   el.classList.add('is-active');
   const href=el.dataset.href;
   const title=el.dataset.title;
-  if(slideLink && href){slideLink.href=href;slideLink.setAttribute('aria-label','Selected work: '+(title||''))}
+  if(href){slideLinks.forEach(link=>{link.href=href;if(link.classList.contains('hero-project'))link.setAttribute('aria-label','Selected work: '+(title||''))})}
   if(slideTitle && title)slideTitle.textContent=title;
   if(slideCount)slideCount.textContent=String(heroActive+1).padStart(2,'0');
-  slideDots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===heroActive)));
+  playHeroProgress();
 }
 function startHero(){if(heroFrameEls.length>1 && !heroTimer)heroTimer=setInterval(()=>showSlide(heroActive+1),7000)}
 function stopHero(){if(heroTimer){clearInterval(heroTimer);heroTimer=undefined}}
 if(!reducedMotion.matches)startHero();
-slideDots.forEach((dot,i)=>dot.addEventListener('click',()=>{stopHero();showSlide(i);startHero()}));
-pauseBtn?.addEventListener('click',()=>{
-  if(heroTimer){stopHero();pauseBtn.textContent='Play';pauseBtn.setAttribute('aria-pressed','true')}
-  else{startHero();pauseBtn.textContent='Pause';pauseBtn.setAttribute('aria-pressed','false')}
-});
+playHeroProgress();
+document.querySelector('[data-slide-prev]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive-1);startHero()});
+document.querySelector('[data-slide-next]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive+1);startHero()});
 
 // Subtle hero parallax, driven by scroll progress through the sticky scene.
 const heroScene=document.querySelector<HTMLElement>('.hero-scroll-scene');
