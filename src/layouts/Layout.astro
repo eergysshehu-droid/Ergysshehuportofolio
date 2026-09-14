@@ -13,4 +13,14 @@ const personLd={'@context':'https://schema.org','@type':'Person',name:defaults.n
 <script>
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>{const d=a.closest('details');if(d)d.open=false}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll<HTMLDetailsElement>('.mobile-menu[open]').forEach(d=>{d.open=false;d.querySelector('summary')?.focus()})});
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+  const revealTargets=document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if(revealTargets.length){
+    const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}})},{threshold:0,rootMargin:'0px 0px -5% 0px'});
+    revealTargets.forEach(el=>{el.classList.add('reveal-init');io.observe(el)});
+    // Safety net: never let content stay invisible — guarantee visibility shortly after load
+    // regardless of scroll behaviour, so the effect can only ever be a bonus, never a risk.
+    setTimeout(()=>{revealTargets.forEach(el=>el.classList.add('is-visible'))},4000);
+  }
+}
 </script></body></html>
