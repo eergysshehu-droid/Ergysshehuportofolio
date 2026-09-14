@@ -6,7 +6,7 @@ export interface PortableSpan {_type: 'span'; text: string; marks?: string[]}
 export interface PortableMarkDef {_key: string; _type: string; href?: string}
 export interface PortableBlock {_type: 'block'; style?: string; children: PortableSpan[]; markDefs?: PortableMarkDef[]}
 export type PortableItem = PortableBlock | (Photo & {_type: 'portfolioPhoto'});
-export interface Post {title: string; slug: string; excerpt: string; cover?: Photo; body: PortableItem[]; publishedAt: string}
+export interface Post {title: string; slug: string; excerpt: string; category?: string; cover?: Photo; body: PortableItem[]; publishedAt: string}
 
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || '46mghxoy';
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';

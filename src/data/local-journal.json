@@ -1,22 +1,861 @@
 [
   {
-    "title": "Welcome to the Journal",
-    "slug": "welcome-to-the-journal",
-    "excerpt": "A new space for behind-the-scenes notes, recent work, and the occasional piece of news — alongside the portfolio.",
-    "publishedAt": "2026-01-01T09:00:00.000Z",
+    "title": "Selected for Europe Week 2026 — TERMINAL: Art, Memory and the Abandoned Railway",
+    "slug": "europe-week-2026-terminal",
+    "excerpt": "Part of the creative team behind Terminal: Vini Re, Vini Re!, one of ten performances selected for Europe Week 2026 out of 267 submissions from across the continent.",
+    "category": "RECOGNITION",
+    "publishedAt": "2026-09-10T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/3ec9245b1a6e9c",
+      "width": 1639,
+      "height": 2048,
+      "alt": "Portrait against a graffiti-covered railway carriage",
+      "_type": "portfolioPhoto"
+    },
     "body": [
-      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "This is where I'll be sharing notes from recent shoots, thoughts on the work, and news as it happens — a slower, more personal companion to the portfolio."}]},
-      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "More entries soon."}]}
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Some recognitions arrive quietly — as a line in an official list, not a trophy handed across a stage. That's how this one arrived. The European Union delegation confirmed the selection for Europe Week 2026: 267 submissions from across the continent, narrowed to ten performances. One of them is Terminal: Vini Re, Vini Re! — a project I'm proud to be part of, as a member of its creative team."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "I want to be precise about what this is, because precision matters to me more than a bigger headline would. This is a selection, not an award. I don't call it “Europe Week Winner,” because that isn't what it is, and because the accurate version is, if anything, the more interesting one: Europe, at a continental scale, made room for ten ideas out of 267 — and this was one of them."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The arithmetic of being chosen"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Ten out of 267 is a little under four percent. That number is worth sitting with. It says nothing about talent in isolation — juries select for fit, timing, relevance to a theme, a dozen things no artist controls — but it says something about the field: hundreds of proposals from across Europe, competing for ten slots, in a year when European institutions are visibly narrowing their attention toward work that says something about memory, place and who gets to be seen."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/cc3d7e1cfc9cf7",
+        "width": 2048,
+        "height": 1365,
+        "alt": "Editorial portrait at dusk by the sea",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "What \"Terminal\" holds"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A terminal is where journeys end and where they're supposed to begin again — a structure built for movement that, abandoned, becomes a monument to the movement that stopped. Vini Re, Vini Re! — “pay attention, pay attention” — is not a neutral title. It's an address to whoever is still listening. The specific staging and the rest of the creative team behind Terminal will be credited here in full once the production materials are cleared for publication."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Where I fit into it"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "My own practice sits at the intersection of photography and direction — building images that hold a place and the people in it, rather than just documenting them. The exact shape of my contribution to Terminal, whether that's photography, visual direction, or both, is something I'll detail here once it's formally confirmed by the production. What I can say now is that being asked onto a team selected at this level is itself a marker: the work I've built since 2017, mostly in fashion and portrait photography, has started to read as relevant outside the frame it was made in."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Why this belongs in the Journal, not just a headline"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "It would be easy to reduce this to a single sentence for a homepage banner. I'd rather use it the way it deserves — as an entry point into a larger story about where the work is heading: from fashion sets and wedding days into cultural production at a European scale, without leaving the first two behind."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "More on Terminal — the performance, the site, the rest of the team — will follow here as the project becomes public. For now: selected, not crowned, and glad to be one of the ten."
+          }
+        ]
+      }
     ]
   },
   {
-    "title": "Kujtimi (Remix) — filmed in the soul of Shkodër",
-    "slug": "kujtimi-remix",
-    "excerpt": "A short film shot across Shkodër — Gjuhadol, Kinema Republika, and its retro alleys.",
-    "publishedAt": "2026-01-15T09:00:00.000Z",
+    "title": "Best Director of the Year — A Turning Point Behind the Camera",
+    "slug": "best-director-2020-turning-point",
+    "excerpt": "A listed recognition — Best Director of the Year 2020, Netët e Klipit Shqiptar — marks the point where my practice turned from stills toward motion. What's confirmed, and what's still being verified.",
+    "category": "RECOGNITION",
+    "publishedAt": "2026-08-20T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/b8a82d1ab99d96",
+      "width": 4000,
+      "height": 5000,
+      "alt": "Editorial portrait at golden hour against mountains",
+      "_type": "portfolioPhoto"
+    },
     "body": [
-      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "Kujtimi (Remix) was filmed across Shkodër — Gjuhadol, Kinema Republika, and the city's retro alleys — chasing the particular light and texture of a place I know well."}]},
-      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "Watch it on "}, {"_type": "span", "text": "YouTube", "marks": ["link1"]}, {"_type": "span", "text": "."}], "markDefs": [{"_key": "link1", "_type": "link", "href": "https://www.youtube.com/watch?v=_yur69PW-10"}]}
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Some lines in a professional record are settled facts. Others are open questions I'm still working to close. This is one of the second kind, and I'd rather say so plainly than let it sit unexamined: my own professional listing records “Best Director of the Year 2020 — Netët e Klipit Shqiptar.” I believe it. I haven't yet been able to point to it."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "What I can say for certain"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "2020 is a real hinge point in the work, independent of any award. It's roughly when directing stopped being an occasional extension of photography and became a discipline of its own — a shift from composing a single frame to composing a sequence of them, with performance, sound and edit rhythm added to the variables I was already managing as a photographer."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/73804281668775",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Dramatic editorial portrait in a wooded setting",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Being honest about the sourcing"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Right now, the reference to this recognition exists in one place I control: my own professional profile. I have not yet located an official winners' archive, a certificate, a ceremony photograph, or a third-party announcement that independently confirms it. That gap matters to me more than the recognition itself would. Until I close it, I'm not calling myself an “award-winning director” on this site — I'm describing a listed, self-reported credential, and I'll update this entry the moment I have something that stands on its own."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Why the pivot mattered more than the trophy"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Whatever the outcome of that verification, the more interesting fact is what came after: a photographer's instinct — for light, for a face, for a frame worth holding — carried into a director's job, where the frame has to move and still mean something. That transition is the real subject of this entry. The award, confirmed or not, is just the year it happened to be written down."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Consider this a working entry rather than a finished claim. If documentation of Netët e Klipit Shqiptar 2020 surfaces — a program, a photograph, a winners' list — this piece will be rewritten the day it does."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Behind the Camera — The Evolution of a Photography Practice",
+    "slug": "behind-the-camera-evolution",
+    "excerpt": "An artist statement on the years since 2017 — portrait, beauty, fashion, fine art — before photography ever needed a second frame to become film.",
+    "category": "PHOTOGRAPHY",
+    "publishedAt": "2026-03-05T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/cce42326e411ab",
+      "width": 1638,
+      "height": 2048,
+      "alt": "Close, moody character portrait",
+      "_type": "portfolioPhoto"
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Every practice has a shape, even if it's only visible in hindsight. Mine starts in 2017 — not with one decisive image, but with a run of work under titles like Sunset, Directly from Camera, Golden Eye, Expressive Sensuality, Spring! — pieces that still sit in an old professional profile, each one a record of what I was testing at the time rather than a portfolio built to impress a client."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Where it started"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "One of those early pieces, from 2017, still carries its full metadata: shot on a Nikon D800E. I'm not going to reconstruct exact settings I don't have in front of me — that's not the point of mentioning it. What the metadata actually shows is a working method already forming: deliberate, recorded, repeatable. Not a hobbyist's lucky frame."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Portrait before fashion"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Portrait came first, and I think that order matters. You learn a face — its structure, its asymmetries, what light does to skin at different angles — before you learn how to dress a set around it. Fashion photography without that foundation tends to read as styling with a person standing in it, rather than a photograph of a person."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/6057419de67e68",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Beauty photography study",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Beauty, fashion, and the fine-art exception"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Beauty work is unforgiving in a specific way: there's nowhere for a lighting mistake to hide when the subject is the light's target. It taught me a precision — in retouch restraint, in skin tone — that carried into the fashion work after it, where the frame stopped being about one person and started being about a story: styling, location, a team, a concept that has to survive contact with weather, schedule and budget. And titles like Golden Eye, Expressive Sensuality, Spring! don't belong to any client brief — they're where the commercial discipline gets set aside for something more exploratory, and, looking back, often where the instincts that later shaped the commercial work were actually formed."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Where it was heading"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The move toward film and directing wasn't a break from any of this — it was a continuation. Composing a frame that has to hold for a thirtieth of a second is a different problem from composing one that has to hold and move for four minutes, but it's the same eye asking it."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "This isn't a CV. It's an account of one fixation — light, a face, a frame worth holding — followed across mediums until it stopped fitting inside a single one."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "PALIMPSEST — Photography, Art Direction and the Album Image",
+    "slug": "palimpsest-photography-art-direction",
+    "excerpt": "Official credits for Eda Zari's Palimpsest read “Photo and art cover by Ergys Shehu.” A look at what that credit actually involves — and where the image traveled after it was made.",
+    "category": "CULTURE",
+    "publishedAt": "2026-05-12T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/1b8614ecb0efff",
+      "width": 2048,
+      "height": 1365,
+      "alt": "Editorial portrait in a warm, lit interior",
+      "_type": "portfolioPhoto"
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "An album cover has to survive a lot of contexts a normal photograph doesn't: a thumbnail on a streaming app, a full sleeve in someone's hands, a press page reprinting it at a size nobody planned for. The official credit on Eda Zari's Palimpsest reads “Photo and art cover by Ergys Shehu” — and that phrase, “art cover,” is doing more work than it looks like."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "More than a photoshoot"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A single photograph and an album's visual identity are not the same deliverable. The image has to carry a title, hold up against text overlays, and represent a body of music it can't literally depict. That's art direction — deciding what the object means before deciding how to light it — layered on top of the photography itself."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/59182db5d92518",
+        "width": 1385,
+        "height": 2048,
+        "alt": "Editorial portrait, warm interior tones",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "What \"Palimpsest\" asks of an image"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A palimpsest is a manuscript with earlier writing still faintly visible underneath the newer text — layers that don't fully erase each other. The specific visual treatment used to evoke that idea on this cover — whether through composition, texture or another technique — is a detail worth describing precisely once it's drawn from the actual production notes rather than reconstructed after the fact."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Where the image went next"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Credit lines are one measure of an image's reach, and this one traveled further than the original release: the German outlet Lippische Landes-Zeitung used the photograph in their own coverage, crediting it to Ergys Shehu. A cover image doing press duty in another country, in another language, is a different kind of validation than a “like” count — it means the image was useful to someone else's storytelling, not just decorative."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Photography as visual identity"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "This is the part of the work that doesn't fit neatly into “photographer” as a job title. Building an album's cover image means thinking like a designer about hierarchy and legibility, like a fan about what the music actually feels like, and like a photographer about light and composition — at the same time, for the same single frame. That's the throughline across projects like this one: photography that's asked to hold cultural weight, not just document a moment. Palimpsest is one entry in that column. It won't be the last on this Journal."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Kujtimi (Remix) — Reconstructing the 1950s Through Cinema",
+    "slug": "kujtimi-remix",
+    "excerpt": "An expanded look at Kujtimi (Remix) — the period detail, the locations in Shkëder, and what it takes to reconstruct a decade rather than just costume it.",
+    "category": "MOTION",
+    "publishedAt": "2026-01-15T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/54a8ae48a11173",
+      "width": 5839,
+      "height": 3892,
+      "alt": "A dancer suspended mid-leap against a dramatic sky",
+      "_type": "portfolioPhoto"
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Portalb described Kujtimi (Remix) as a journey into the 1950s, realized in Shkëder, “with producer Ergys Shehu.” That's the short version. The longer one is about what it actually takes to send a camera back seventy years in a city that's still standing, still inhabited, still partly itself — filmed across Gjuhadol, Kinema Republika, and the city's retro alleys, chasing the particular light and texture of a place I know well."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Why Shkëder, why these streets"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Kinema Republika and Gjuhadol aren't neutral backdrops — they're locations with their own period texture already built in, which is both a gift and a constraint. You're not building a set from nothing; you're finding the frame inside a real street that still hides the decade you need, and cropping everything modern out of view."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/eb68d69795eddd",
+        "width": 1365,
+        "height": 2048,
+        "alt": "Cinematic movement study",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Reconstructing a decade, not costuming it"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The difference between a period video and a costume party on camera is discipline: wardrobe, hair, props and body language all have to agree with each other, and with the architecture behind them. The specific styling and production choices made for this piece will be credited here in full once the production notes are assembled."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Camera movement as a time signature"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Motion has its own vocabulary for “era” — how a camera moves says almost as much as what it's pointed at. A handheld, restless camera reads as contemporary almost regardless of what's in frame; something steadier, more composed, sits more naturally inside a reconstructed 1950s frame. Getting that balance right is a directing decision as much as a technical one."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Producing versus directing on the same shoot"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Portalb's credit — “producer Ergys Shehu” — points at the other half of this job that doesn't show up on screen: locations secured, a period-accurate shoot scheduled and actually executed in a working city, a team held together long enough to get the frames that matter. Directing gets the visible credit; producing is what makes directing possible at all."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Kujtimi (Remix) isn't a photographer pointing a video camera at a set. It's direction, production and visual research working together to put a real city back in a decade it's since moved past — which is a different job than photography, done by the same eye that does the photography."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Watch it on "
+          },
+          {
+            "_type": "span",
+            "text": "YouTube",
+            "marks": [
+              "link1"
+            ]
+          },
+          {
+            "_type": "span",
+            "text": "."
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "link1",
+            "_type": "link",
+            "href": "https://www.youtube.com/watch?v=_yur69PW-10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "From Fashion to Editorial — Photographing People, Not Poses",
+    "slug": "fashion-to-editorial-not-poses",
+    "excerpt": "An editorial reflection on light, casting, skin and the relationship between photographer and subject — how “Purity. Simplicity. Honesty.” holds up under working conditions.",
+    "category": "PHOTOGRAPHY",
+    "publishedAt": "2026-06-18T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/cc3d7e1cfc9cf7",
+      "width": 2048,
+      "height": 1365,
+      "alt": "Editorial portrait of a couple at the shoreline",
+      "_type": "portfolioPhoto"
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Purity. Simplicity. Honesty. — those are the words this site already uses to describe the work, and they're easy to write on a page. What they actually mean, in practice, is a set of decisions made before and during a shoot that have very little to do with a “pose” in the conventional sense."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Light that doesn't announce itself"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The lighting I reach for most is the kind that doesn't call attention to its own construction — light that reads as natural even when it's carefully built, rather than light that says “look how elaborate this setup is.” That restraint is a choice, not a limitation: complexity is available, it's just rarely the point."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Casting is half the photograph"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A face brings its own vocabulary to a frame before a single light is set. Casting well means choosing people whose presence actually fits the story being told, rather than fitting the story to whoever's available — a distinction that shows up immediately in how alive the final images feel."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/36c5e316fc1068",
+        "width": 1638,
+        "height": 2048,
+        "alt": "Editorial portrait against a coloured doorway",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Movement over stillness, set design as restraint"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The strongest frames in this kind of work rarely come from someone holding a pose on command. They come from movement — walking, turning, a laugh that wasn't cued — caught at the right instant rather than manufactured for the camera. And a set that does too much competes with the person in it: the discipline is usually in what gets left out, fewer props, cleaner backgrounds, more room for the subject to actually occupy the frame."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "The photographer-subject relationship"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "None of the above works without trust built quickly, often with someone met for the first time an hour earlier. That relationship — brief, professional, but real — is the actual mechanism behind images that read as honest rather than staged."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "This isn't a technical tutorial. It's the working philosophy behind three words that are easy to write and much harder to earn on a set."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "In Print — When a Photograph Leaves the Screen",
+    "slug": "in-print-when-a-photograph-leaves-the-screen",
+    "excerpt": "From Revista Hejza's October 2025 cover to Beauty Fair Albania — a look at photography that moved from portfolio and social feeds into print and media credit.",
+    "category": "CULTURE",
+    "publishedAt": "2026-07-02T09:00:00.000Z",
+    "cover": {
+      "localBase": "/images/8f822a1dff5d46",
+      "width": 3528,
+      "height": 4410,
+      "alt": "Close beauty portrait, magazine-cover style",
+      "_type": "portfolioPhoto"
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "A photograph behaves differently once it leaves a phone screen. It gets held, folded, put on a shelf, read under a lamp instead of scrolled past in a feed — and it carries a credit line that isn't going anywhere. That's a different kind of accountability than a social post, and it's worth marking when it happens."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Revista Hejza, October 2025"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "On October 31, 2025, Revista Hejza ran a cover and interview with Eda Zari, credited “Foto: Ergys SHEHU.” A magazine cover is a specific kind of validation: an editorial team, independent of the photographer, decided this particular image was the one to represent an entire issue on newsstands. That's a judgment call made by someone else, about work made by me — which is exactly what makes it worth more than a self-assessment."
+          }
+        ]
+      },
+      {
+        "localBase": "/images/059f7c730d1f77",
+        "width": 2048,
+        "height": 1365,
+        "alt": "Editorial portrait on architectural steps",
+        "_type": "portfolioPhoto"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "What a cover credit actually confirms"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "It's easy to undervalue a credit line as a formality. It isn't one. It means the image survived an editorial process — selection, layout, print production — that has its own standards, unconnected to any relationship with the subject or the photographer. The photograph had to work on its own terms."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Beauty Fair Albania, 2019"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Further back, the official Beauty Fair Albania 2019 materials list Ergys Shehu as part of the event's Photo/Video team — a different kind of credit than a magazine cover, closer to production work than authorship of a single frame, but part of the same throughline: photography asked to do a job within a larger public event, not just produce a portfolio piece."
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Why this belongs in the archive"
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Screens are where most photography lives now, and that's fine — but print and press credit remain a specific, external kind of confirmation: that the work has been useful, and good enough, for someone else's publication to put their name on it alongside mine. This entry will grow as more of this work makes it into print. For now: one cover, one production credit, and a reminder that the work doesn't stop at the edge of a screen."
+          }
+        ]
+      }
     ]
   }
 ]
