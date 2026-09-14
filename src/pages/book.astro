@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import {content, photoUrl, photoSet, photoPosition, albumKind, safeUrl} from '../lib/content';
-import {defaults} from '../lib/editorial';
+import {defaults, films} from '../lib/editorial';
 
 const {settings: saved, albums} = await content();
 const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
@@ -16,7 +16,15 @@ const serviceKinds = [
   {kind: 'portraits', project: 'portrait', href: '/portraits/', en: 'Portraits', sq: 'Portrete', subEn: 'INDIVIDUAL / CREATIVE', subSq: 'INDIVIDUALE / KREATIVE'},
   {kind: 'projects', project: 'commercial', href: '/projects/', en: 'Commercial & Brand Content', sq: 'Përmbajtje Komerciale & Brand', subEn: 'BUSINESSES / CAMPAIGNS', subSq: 'BIZNESE / FUSHATA'}
 ] as const;
-const services = serviceKinds.map(s => ({...s, photo: albums.find(a => albumKind(a) === s.kind && photoUrl(a.cover))?.cover}));
+const kujtimi = films[0];
+const services = serviceKinds.map(s => {
+  const cover = albums.find(a => albumKind(a) === s.kind && photoUrl(a.cover))?.cover;
+  if (cover) return {...s, photo: cover};
+  // No films album has a cover of its own yet — use the real Kujtimi (Remix)
+  // thumbnail instead of a blank card, since it's the one video we have.
+  if (s.kind === 'films' && kujtimi) return {...s, photo: {src: `https://i.ytimg.com/vi/${kujtimi.id}/hqdefault.jpg`, alt: kujtimi.label || 'Kujtimi (Remix)', width: 480, height: 360}};
+  return {...s, photo: undefined};
+});
 const collabPhoto = albums.find(a => albumKind(a) === 'weddings' && photoUrl(a.cover) && photoKey(a.cover) !== photoKey(hero))?.cover
   || albums.find(a => photoUrl(a.cover))?.cover;
 function photoKey(p?: {localBase?: string; src?: string; asset?: {_ref: string}}) { return p?.localBase || p?.src || p?.asset?._ref || ''; }
@@ -65,6 +73,7 @@ const instagram = safeUrl(settings.instagram);
     <a class="service-card" href={s.href} data-reveal>
       <div class="service-image" data-image-reveal style={s.photo ? `--focal-point:${photoPosition(s.photo)}` : undefined}>
         {s.photo && photoUrl(s.photo) ? <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/> : <svg class="service-fallback-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="4" y="12" width="40" height="26" rx="3"/><path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/><circle cx="24" cy="27" r="7"/></svg>}
+        {s.kind === 'films' && <span class="icon-badge project-play" aria-hidden="true">▶</span>}
       </div>
       <div class="service-overlay" aria-hidden="true"></div>
       <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span class="service-view" data-en="View work ↗" data-sq="Shiko punën ↗">View work ↗</span></div>
