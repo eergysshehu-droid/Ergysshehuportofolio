@@ -73,24 +73,19 @@ if('IntersectionObserver' in window){
       // card's real intersection ratio as it scrolls under the next one —
       // no getBoundingClientRect()/offsetTop math (which broke down once a
       // card was pinned by position:sticky in this browser — both start
-      // mirroring scrollY once "stuck"). --melt goes from 0 (fully visible,
-      // sharp) to 1 (fully covered, blurred), eased so it barely moves while
-      // still mostly uncovered and ramps up past the halfway point. Going
-      // back to sharp (scrolling up) gets a much shorter transition than
-      // going blurry, so flipping back to re-check a photo reads instantly.
+      // mirroring scrollY once "stuck", so a next-card-rect-based progress
+      // calculation reads wrong the moment it's pinned). Ratio is only the
+      // *target*: a rAF loop lerps each card's actual progress toward it
+      // every frame, at a slow rate while it's covering up (a gradual,
+      // cinematic melt) and a much faster rate while it's clearing (so
+      // scrolling back to re-check a photo un-blurs almost immediately).
       const ratios=new Map<HTMLElement,number>();
+      const progress=new Map<HTMLElement,number>();
+      const cardImgs=new Map<HTMLElement,HTMLElement|null>();
+      cards.forEach(c=>{progress.set(c,0);cardImgs.set(c,c.querySelector<HTMLElement>('.project-image img'))});
       const steps=Array.from({length:41},(_,i)=>i/40);
       const meltIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          const card=entry.target as HTMLElement;
-          const img=card.querySelector<HTMLElement>('.project-image img');
-          const ratio=entry.intersectionRatio;
-          ratios.set(card,ratio);
-          const prevMelt=parseFloat(card.style.getPropertyValue('--melt')||'1');
-          const melt=Math.pow(Math.max(0,1-ratio),1.6);
-          if(img)img.style.transitionDuration=melt<prevMelt?'.32s':'.75s';
-          card.style.setProperty('--melt',String(melt));
-        });
+        entries.forEach(entry=>{ratios.set(entry.target as HTMLElement,entry.intersectionRatio)});
         let current:HTMLElement|null=null;
         let best=0;
         for(const [el,ratio] of ratios){
@@ -105,6 +100,27 @@ if('IntersectionObserver' in window){
         }
       },{threshold:steps});
       cards.forEach(c=>meltIo.observe(c));
+      function tickStack(){
+        cards.forEach(card=>{
+          const ratio=ratios.get(card) ?? 1;
+          const target=Math.max(0,Math.min(1,1-ratio));
+          const prev=progress.get(card) ?? 0;
+          // Covering up (target rising) eases in slowly; clearing (target
+          // falling) catches up fast — kept close to the ~3x split that
+          // read best: gradual melt going one way, near-instant the other.
+          const speed=target>prev?0.13:0.38;
+          const next=prev+(target-prev)*speed;
+          progress.set(card,next);
+          const img=cardImgs.get(card);
+          if(img){
+            img.style.setProperty('--stack-blur',(next*8.5).toFixed(2)+'px');
+            img.style.setProperty('--stack-brightness',(1-next*0.28).toFixed(3));
+            img.style.setProperty('--stack-scale',(1-next*0.018).toFixed(4));
+          }
+        });
+        requestAnimationFrame(tickStack);
+      }
+      requestAnimationFrame(tickStack);
       // The black stacking panel (.work-section/.collection-body) has no
       // background of its own — body.in-stack-grid paints it black for as
       // long as any part of that panel is on screen, watched here instead
