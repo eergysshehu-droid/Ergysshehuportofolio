@@ -14,7 +14,8 @@
         "x": 0.4,
         "y": 0.25
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#544c45"
     },
     "body": [
       {
@@ -62,7 +63,8 @@
         "width": 2048,
         "height": 1365,
         "alt": "Editorial portrait at dusk by the sea",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#7f8484"
       },
       {
         "_type": "block",
@@ -151,7 +153,8 @@
         "x": 0.42,
         "y": 0.13
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#4e3b28"
     },
     "body": [
       {
@@ -189,7 +192,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Dramatic editorial portrait in a wooded setting",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#493727"
       },
       {
         "_type": "block",
@@ -258,7 +262,8 @@
         "x": 0.58,
         "y": 0.3
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#5b514d"
     },
     "body": [
       {
@@ -316,7 +321,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Beauty photography study",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#9a7f70"
       },
       {
         "_type": "block",
@@ -385,7 +391,8 @@
         "x": 0.62,
         "y": 0.2
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#5f2715"
     },
     "body": [
       {
@@ -423,7 +430,8 @@
         "width": 1385,
         "height": 2048,
         "alt": "Editorial portrait, warm interior tones",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#77513c"
       },
       {
         "_type": "block",
@@ -502,7 +510,8 @@
         "x": 0.46,
         "y": 0.42
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#7d7d7c"
     },
     "body": [
       {
@@ -540,7 +549,8 @@
         "width": 1365,
         "height": 2048,
         "alt": "Cinematic movement study",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#717171"
       },
       {
         "_type": "block",
@@ -657,7 +667,8 @@
         "x": 0.66,
         "y": 0.18
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#7f8484"
     },
     "body": [
       {
@@ -715,7 +726,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Editorial portrait against a coloured doorway",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#9d8186"
       },
       {
         "_type": "block",
@@ -784,7 +796,8 @@
         "x": 0.5,
         "y": 0.3
       },
-      "_type": "portfolioPhoto"
+      "_type": "portfolioPhoto",
+      "color": "#875838"
     },
     "body": [
       {
@@ -822,7 +835,8 @@
         "width": 2048,
         "height": 1365,
         "alt": "Editorial portrait on architectural steps",
-        "_type": "portfolioPhoto"
+        "_type": "portfolioPhoto",
+        "color": "#6d635a"
       },
       {
         "_type": "block",
