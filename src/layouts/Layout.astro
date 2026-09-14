@@ -82,6 +82,18 @@ if('IntersectionObserver' in window){
         entries.forEach(entry=>{if(!entry.isIntersecting)document.body.style.removeProperty('background-color')});
       },{threshold:0});
       gridIo.observe(stackGrid);
+
+      // Melt a card away (dim + blur) once it's mostly covered by the next
+      // one sliding up, rather than the hard cut a plain sticky stack gives.
+      // Only applies once a card has actually been revealed (is-visible),
+      // so a card further down the page isn't dimmed before you reach it.
+      const exitIo=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          const el=entry.target as HTMLElement;
+          if(el.classList.contains('is-visible'))el.classList.toggle('is-leaving',entry.intersectionRatio<0.5);
+        });
+      },{threshold:[0,0.25,0.5,0.75,1]});
+      cards.forEach(c=>exitIo.observe(c));
     }
   }
 }
