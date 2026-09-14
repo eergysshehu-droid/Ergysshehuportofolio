@@ -162,7 +162,7 @@ html.mobile-menu-open{overflow:hidden}
 @keyframes hero-in{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:none}}
 .opening-image{position:absolute;inset:0;z-index:-2}
 .opening-image picture{display:block;height:100%}
-.opening-image img{width:100%;height:100%;object-fit:cover;object-position:50% 43%;transform:translate3d(0,var(--hero-image-shift,0px),0) scale(1.035)}
+.opening-image img{width:100%;height:100%;object-fit:cover;object-position:var(--slide-pos,50% 43%);transform:translate3d(0,var(--hero-image-shift,0px),0) scale(1.035)}
 .opening-frame{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease-editorial)}
 .opening-frame.is-active{opacity:1}
 .opening:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0004 0%,#0000 32%,#0000 55%,#0009 100%)}
@@ -421,7 +421,6 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .site-header{padding-inline:5vw}
   .hero-scroll-scene{height:calc(100svh + var(--hero-overlap))}
   .opening{min-height:560px}
-  .opening-image img{object-position:57% 42%}
   .hero-topline{top:96px}
   .hero-feature{bottom:96px;max-width:88vw}
   .hero-project-title{font-size:clamp(40px,12vw,60px)}
