@@ -1,104 +1,128 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import '../styles/book.css';
 import {content, photoUrl, photoSet, albumKind, safeUrl} from '../lib/content';
 import {defaults} from '../lib/editorial';
 
 const {settings: saved, albums} = await content();
 const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
 
-const heroAlbum = albums.find(a => a.featured && photoUrl(a.cover)) || albums.find(a => photoUrl(a.cover));
-const heroPhoto = heroAlbum?.cover || saved.heroImage;
+const featured = albums.filter(a => a.featured);
+const hero = saved.heroImage || featured[0]?.cover || albums.find(a => photoUrl(a.cover))?.cover;
 
 const serviceKinds = [
-  {kind: 'fashion', value: 'fashion', en: 'Fashion Editorial', sq: 'Editorial Mode'},
-  {kind: 'portraits', value: 'portrait', en: 'Portrait Sessions', sq: 'Seanca Portreti'},
-  {kind: 'weddings', value: 'wedding', en: 'Wedding Coverage', sq: 'Dasma'},
-  {kind: 'films', value: 'film', en: 'Film & Music Video', sq: 'Film & Videoklip'},
-  {kind: 'projects', value: 'brand', en: 'Brand & Campaigns', sq: 'Brande & Kampanja'}
+  {kind: 'fashion', project: 'fashion', en: 'Fashion Photography', sq: 'Fotografi Mode', subEn: 'EDITORIAL / CAMPAIGNS', subSq: 'EDITORIALE / FUSHATA'},
+  {kind: 'weddings', project: 'wedding', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash', subEn: 'YOUR STORY, TIMELESS', subSq: 'HISTORIA JUAJ, PA KOHË'},
+  {kind: 'films', project: 'music', en: 'Music Videos', sq: 'Videoklipe', subEn: 'ARTISTS / STORYTELLING', subSq: 'ARTISTË / TREGIME'},
+  {kind: 'portraits', project: 'portrait', en: 'Portraits', sq: 'Portrete', subEn: 'INDIVIDUAL / CREATIVE', subSq: 'INDIVIDUALE / KREATIVE'},
+  {kind: 'projects', project: 'commercial', en: 'Commercial & Brand Content', sq: 'Përmbajtje Komerciale & Brand', subEn: 'BUSINESSES / CAMPAIGNS', subSq: 'BIZNESE / FUSHATA'}
 ] as const;
 const services = serviceKinds.map(s => ({...s, photo: albums.find(a => albumKind(a) === s.kind && photoUrl(a.cover))?.cover}));
+const collabPhoto = albums.find(a => albumKind(a) === 'weddings' && photoUrl(a.cover) && photoKey(a.cover) !== photoKey(hero))?.cover
+  || albums.find(a => photoUrl(a.cover))?.cover;
+function photoKey(p?: {localBase?: string; src?: string; asset?: {_ref: string}}) { return p?.localBase || p?.src || p?.asset?._ref || ''; }
 
 const projectTypes = [
-  {value: 'fashion', en: 'Fashion Editorial', sq: 'Editorial Mode'},
-  {value: 'portrait', en: 'Portrait Session', sq: 'Seancë Portreti'},
-  {value: 'wedding', en: 'Wedding', sq: 'Dasmë'},
-  {value: 'film', en: 'Film & Music Video', sq: 'Film & Videoklip'},
-  {value: 'brand', en: 'Brand Campaign', sq: 'Kampanjë Brandi'},
+  {value: 'fashion', en: 'Fashion Photography', sq: 'Fotografi Mode'},
+  {value: 'wedding', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash'},
+  {value: 'music', en: 'Music Video', sq: 'Videoklip'},
+  {value: 'portrait', en: 'Portrait Photography', sq: 'Fotografi Portreti'},
+  {value: 'commercial', en: 'Commercial / Brand', sq: 'Komerciale / Brand'},
   {value: 'collaboration', en: 'Collaboration', sq: 'Bashkëpunim'},
   {value: 'other', en: 'Other', sq: 'Tjetër'}
 ] as const;
 
+const email = settings.email || 'e.ergysshehu@gmail.com';
+const phoneTel = 'tel:+355693310202';
 const phoneDisplay = '+355 69 331 0202';
 const whatsapp = "https://wa.me/355693310202?text=Hi%20Ergys%2C%20I%27d%20like%20to%20discuss%20a%20project.";
+const instagram = safeUrl(settings.instagram);
 ---
-<Layout home title={`Book a shoot — ${settings.name}`} description="Book Ergys Shehu for fashion, portrait, wedding, film or brand work. Based in Albania, available worldwide." name={settings.name} image={heroPhoto && photoUrl(heroPhoto, 1800)}>
-<div class="book-page">
+<Layout title={`Book a shoot — ${settings.name}`} description="Book Ergys Shehu for fashion, portrait, wedding, music video or commercial work. Based in Albania, available worldwide." name={settings.name} image={hero && photoUrl(hero, 1800)}>
 
-<section class="book-hero" aria-label="Book a shoot">
-  <div class="book-hero-image" data-image-reveal>{heroPhoto && photoUrl(heroPhoto) && <img src={photoUrl(heroPhoto, 1800)} srcset={photoSet(heroPhoto)} sizes="100vw" alt="" loading="eager" fetchpriority="high" width={heroPhoto.width} height={heroPhoto.height}/>}</div>
-  <div class="book-hero-content">
-    <p class="book-lang-toggle" role="group" aria-label="Language / Gjuha"><button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="sq" aria-pressed="false">SQ</button></p>
-    <p class="kicker" data-en="BOOK A SHOOT" data-sq="REZERVO NJË SESION">BOOK A SHOOT</p>
-    <h1 data-en="Let’s create something worth remembering." data-sq="Të krijojmë diçka që vlen të mbahet mend.">Let’s create something worth remembering.</h1>
-    <p class="book-hero-sub" data-en="Fashion, portraits, weddings, film and brand work — shot on location in Albania or wherever the story takes us." data-sq="Modë, portrete, dasma, film dhe punë brandi — realizuar në Shqipëri ose kudo që historia na çon.">Fashion, portraits, weddings, film and brand work — shot on location in Albania or wherever the story takes us.</p>
-    <a class="book-cta" href="#contact"><span data-en="Start an inquiry" data-sq="Fillo një kërkesë">Start an inquiry</span><span aria-hidden="true">↓</span></a>
+<div class="booking-page">
+
+<section class="book-hero">
+  {hero && photoUrl(hero) && <picture class="book-hero-media" data-image-reveal><img src={photoUrl(hero, 1800)} srcset={photoSet(hero)} sizes="100vw" alt="" fetchpriority="high" width={hero.width} height={hero.height}/></picture>}
+  <div class="hero-shade" aria-hidden="true"></div>
+
+  <div class="language-switch" role="group" aria-label="Language / Gjuha">
+    <button type="button" data-lang="en" class="is-active" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="sq" aria-pressed="false">SQ</button>
+  </div>
+
+  <div class="hero-content">
+    <p class="eyebrow" data-en="LET’S CREATE TOGETHER" data-sq="LE TË KRIJOJMË BASHKË">LET’S CREATE TOGETHER</p>
+    <h1 data-en="Book a Shoot" data-sq="Rezervo një Sesion">Book a Shoot</h1>
+    <p class="hero-intro" data-en="Photography, video and creative direction for brands, artists and meaningful stories." data-sq="Fotografi, video dhe drejtim kreativ për brande, artistë dhe histori që kanë kuptim.">Photography, video and creative direction for brands, artists and meaningful stories.</p>
+    <div class="hero-actions">
+      <a class="button button-light" href="#inquiry"><span data-en="BOOK NOW" data-sq="REZERVO">BOOK NOW</span><span aria-hidden="true">→</span></a>
+      <a class="button button-outline" href="#contact"><span data-en="GET IN TOUCH" data-sq="NA KONTAKTO">GET IN TOUCH</span></a>
+    </div>
   </div>
 </section>
 
-<section class="book-services" aria-label="Services">
-  <div class="book-heading" data-reveal><p class="kicker" data-en="WHAT I SHOOT" data-sq="ÇFARË FOTOGRAFOJ">WHAT I SHOOT</p><h2 data-en="Five ways to work together." data-sq="Pesë mënyra për të bashkëpunuar.">Five ways to work together.</h2></div>
-  <div class="service-grid">{services.map(s =>
-    <button type="button" class="service-card" data-service={s.value} data-reveal><span class="service-image">{s.photo && photoUrl(s.photo) && <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:700px) 90vw, 22vw" alt="" loading="lazy"/>}</span><span class="service-label"><span data-en={s.en} data-sq={s.sq}>{s.en}</span><span aria-hidden="true">↗</span></span></button>
+<section class="services-section">
+  <div class="section-heading" data-reveal>
+    <div><p class="eyebrow" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</p><h2 data-en="What I Do" data-sq="Çfarë realizoj">What I Do</h2></div>
+    <p class="section-copy" data-en="From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity." data-sq="Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit.">From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.</p>
+  </div>
+  <div class="services-grid">{services.map(s =>
+    <a class="service-card" href="#inquiry" data-project={s.project} data-reveal>
+      {s.photo && photoUrl(s.photo) && <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/>}
+      <div class="service-overlay" aria-hidden="true"></div>
+      <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span aria-hidden="true">→</span></div>
+    </a>
   )}</div>
 </section>
 
-<section class="book-contact" id="contact" aria-label="Direct contact">
-  <div class="book-heading" data-reveal><p class="kicker" data-en="GET IN TOUCH" data-sq="NA KONTAKTO">GET IN TOUCH</p><h2 data-en="Reach out directly." data-sq="Na kontakto direkt.">Reach out directly.</h2></div>
-  <div class="contact-links" data-reveal>
-    <a class="contact-link" href={`mailto:${settings.email}`}><span data-en="Email" data-sq="Email">Email</span><span class="contact-value">{settings.email}</span></a>
-    <a class="contact-link" href="tel:+355693310202"><span data-en="Phone" data-sq="Telefon">Phone</span><span class="contact-value">{phoneDisplay}</span></a>
-    <a class="contact-link" href={whatsapp} target="_blank" rel="noopener noreferrer"><span data-en="WhatsApp" data-sq="WhatsApp">WhatsApp</span><span class="contact-value" data-en="Message on WhatsApp" data-sq="Shkruaj në WhatsApp">Message on WhatsApp</span></a>
-    {safeUrl(settings.instagram) && <a class="contact-link" href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer"><span data-en="Instagram" data-sq="Instagram">Instagram</span><span class="contact-value">@ergys.shehu</span></a>}
+<section class="contact-booking" id="contact">
+  <div class="direct-contact" data-reveal>
+    <p class="eyebrow" data-en="CONTACT" data-sq="KONTAKT">CONTACT</p>
+    <h2 data-en="Let’s Talk" data-sq="Le të flasim">Let’s Talk</h2>
+    <p class="contact-intro" data-en="Tell me about your project, idea or collaboration. I usually reply within 24 hours." data-sq="Më trego për projektin, idenë ose bashkëpunimin tënd. Zakonisht përgjigjem brenda 24 orësh.">Tell me about your project, idea or collaboration. I usually reply within 24 hours.</p>
+    <div class="contact-links">
+      <a href={`mailto:${email}`}><span aria-hidden="true">✉</span><div><small data-en="EMAIL" data-sq="EMAIL">EMAIL</small><strong>{email}</strong></div></a>
+      <a href={phoneTel}><span aria-hidden="true">☎</span><div><small data-en="PHONE" data-sq="TELEFON">PHONE</small><strong>{phoneDisplay}</strong></div></a>
+      <a href={whatsapp} target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✆</span><div><small data-en="WHATSAPP" data-sq="WHATSAPP">WHATSAPP</small><strong data-en="Message on WhatsApp" data-sq="Shkruaj në WhatsApp">Message on WhatsApp</strong></div></a>
+      {instagram && <a href={instagram} target="_blank" rel="noopener noreferrer"><span aria-hidden="true">◎</span><div><small data-en="INSTAGRAM" data-sq="INSTAGRAM">INSTAGRAM</small><strong>@ergys.shehu</strong></div></a>}
+      <div class="contact-location"><span aria-hidden="true">⌖</span><div><small data-en="LOCATION" data-sq="VENDNDODHJA">LOCATION</small><strong data-en="Albania · Available worldwide" data-sq="Shqipëri · I disponueshëm në mbarë botën">Albania · Available worldwide</strong></div></div>
+    </div>
   </div>
-  <p class="book-location" data-reveal><span data-en="Based in Albania." data-sq="Me bazë në Shqipëri.">Based in Albania.</span> <span data-en="Available worldwide." data-sq="Në dispozicion në mbarë botën.">Available worldwide.</span></p>
-</section>
 
-<section class="book-form-section" aria-label="Inquiry form">
-  <div class="book-heading" data-reveal><p class="kicker" data-en="TELL ME ABOUT YOUR PROJECT" data-sq="TREGOMË PËR PROJEKTIN TËND">TELL ME ABOUT YOUR PROJECT</p><h2 data-en="Send a quick inquiry." data-sq="Dërgo një kërkesë të shpejtë.">Send a quick inquiry.</h2></div>
-  <form id="inquiry-form" class="inquiry-form" data-reveal>
-    <div class="form-row"><label for="name"><span data-en="Name" data-sq="Emri">Name</span><span aria-hidden="true">*</span></label><input id="name" name="name" type="text" required autocomplete="name" data-en-placeholder="Your full name" data-sq-placeholder="Emri e mbiemri" placeholder="Your full name"/></div>
-    <div class="form-row"><label for="email"><span data-en="Email" data-sq="Email">Email</span><span aria-hidden="true">*</span></label><input id="email" name="email" type="email" required autocomplete="email" data-en-placeholder="you@email.com" data-sq-placeholder="ti@email.com" placeholder="you@email.com"/></div>
-    <div class="form-row"><label for="phone"><span data-en="Phone" data-sq="Telefon">Phone</span> <span class="optional" data-en="(optional)" data-sq="(opsionale)">(optional)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" data-en-placeholder="+355 6X XXX XXXX" data-sq-placeholder="+355 6X XXX XXXX" placeholder="+355 6X XXX XXXX"/></div>
-    <div class="form-row"><label for="project-type"><span data-en="Project type" data-sq="Lloji i projektit">Project type</span><span aria-hidden="true">*</span></label><select id="project-type" name="projectType" required>{projectTypes.map(p => <option value={p.value} data-en={p.en} data-sq={p.sq}>{p.en}</option>)}</select></div>
-    <div class="form-row"><label for="message"><span data-en="Message" data-sq="Mesazhi">Message</span><span aria-hidden="true">*</span></label><textarea id="message" name="message" rows="5" required data-en-placeholder="Dates, location, and a little about what you have in mind." data-sq-placeholder="Datat, vendndodhja dhe pak fjalë për atë që ke në mendje." placeholder="Dates, location, and a little about what you have in mind."></textarea></div>
-    <button type="submit" class="submit-btn"><span data-en="Send inquiry" data-sq="Dërgo kërkesën">Send inquiry</span><span aria-hidden="true">↗</span></button>
-    <p class="form-note" data-en="This opens your email app with the details filled in." data-sq="Kjo hap aplikacionin tënd të email-it me të dhënat e plotësuara.">This opens your email app with the details filled in.</p>
+  <form class="inquiry-form" id="inquiry" data-reveal>
+    <div class="form-row">
+      <label><span data-en="Name *" data-sq="Emri *">Name *</span><input type="text" name="name" required autocomplete="name"/></label>
+      <label><span data-en="Email *" data-sq="Email *">Email *</span><input type="email" name="email" required autocomplete="email"/></label>
+    </div>
+    <div class="form-row">
+      <label><span data-en="Phone (optional)" data-sq="Telefoni (opsionale)">Phone (optional)</span><input type="tel" name="phone" autocomplete="tel" placeholder="+355 6X XXX XXXX"/></label>
+      <label><span data-en="Type of project *" data-sq="Lloji i projektit *">Type of project *</span>
+        <select name="project" id="project-type" required>
+          <option value="" data-en="Choose a project" data-sq="Zgjidh projektin">Choose a project</option>
+          {projectTypes.map(p => <option value={p.value} data-en={p.en} data-sq={p.sq}>{p.en}</option>)}
+        </select>
+      </label>
+    </div>
+    <label><span data-en="Tell me about your project *" data-sq="Më trego për projektin *">Tell me about your project *</span><textarea name="message" required rows="6" data-en-placeholder="Date, location, idea, style, number of people…" data-sq-placeholder="Data, vendndodhja, ideja, stili, numri i personave…" placeholder="Date, location, idea, style, number of people…"></textarea></label>
+    <button type="submit" class="submit-button"><span data-en="SEND MESSAGE" data-sq="DËRGO MESAZH">SEND MESSAGE</span><span aria-hidden="true">→</span></button>
+    <p class="form-note" data-en="No long questionnaires. Just tell me what you have in mind." data-sq="Pa formularë të gjatë. Thjesht më trego çfarë ke në mendje.">No long questionnaires. Just tell me what you have in mind.</p>
   </form>
 </section>
 
-<section class="book-collab" aria-label="Collaborations">
-  <div class="book-heading" data-reveal><p class="kicker" data-en="COLLABORATIONS" data-sq="BASHKËPUNIME">COLLABORATIONS</p><h2 data-en="Open to working together." data-sq="I hapur për bashkëpunime.">Open to working together.</h2></div>
-  <div class="collab-grid" data-reveal>
-    <div class="collab-item"><h3 data-en="Models" data-sq="Modele">Models</h3><p data-en="Testing, portfolio building and collaborative shoots." data-sq="Testime, ndërtim portofoli dhe seanca bashkëpunuese.">Testing, portfolio building and collaborative shoots.</p></div>
-    <div class="collab-item"><h3 data-en="Artists & Musicians" data-sq="Artistë & Muzikantë">Artists & Musicians</h3><p data-en="Cover art, music videos and visual identity." data-sq="Kopertina albumesh, videoklipe dhe identitet vizual.">Cover art, music videos and visual identity.</p></div>
-    <div class="collab-item"><h3 data-en="Brands" data-sq="Brande">Brands</h3><p data-en="Campaigns, lookbooks and content production." data-sq="Kampanja, lookbook dhe produksion përmbajtjeje.">Campaigns, lookbooks and content production.</p></div>
-    <div class="collab-item"><h3 data-en="Creative Projects" data-sq="Projekte Krijuese">Creative Projects</h3><p data-en="Personal, editorial and experimental work." data-sq="Punë personale, editoriale dhe eksperimentale.">Personal, editorial and experimental work.</p></div>
+<section class="collab-section">
+  <div class="collab-visual" data-image-reveal>{collabPhoto && photoUrl(collabPhoto) && <img src={photoUrl(collabPhoto, 1000)} srcset={photoSet(collabPhoto)} sizes="(max-width:780px) 100vw, 50vw" alt="" loading="lazy"/>}</div>
+  <div class="collab-copy" data-reveal>
+    <p class="eyebrow" data-en="COLLABORATIONS" data-sq="BASHKËPUNIME">COLLABORATIONS</p>
+    <h2 data-en="Let’s Create Together" data-sq="Le të krijojmë bashkë">Let’s Create Together</h2>
+    <p data-en="I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen." data-sq="Jam gjithmonë i interesuar të punoj me modele, muzikantë, artistë, dizajnerë, brande dhe njerëz kreativë. Nëse ke një ide që ia vlen të eksplorohet, le ta realizojmë.">I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen.</p>
+    <a href="#inquiry" data-project="collaboration" class="button button-outline"><span data-en="COLLABORATE" data-sq="BASHKËPUNOJMË">COLLABORATE</span><span aria-hidden="true">→</span></a>
   </div>
-  <button type="button" class="collab-cta" data-service="collaboration" data-reveal><span data-en="Propose a collaboration" data-sq="Propozo një bashkëpunim">Propose a collaboration</span><span aria-hidden="true">↗</span></button>
-</section>
-
-<section class="book-closing" aria-label="Closing">
-  <p class="kicker" data-reveal data-en="ERGYS SHEHU · PHOTOGRAPHER & DIRECTOR" data-sq="ERGYS SHEHU · FOTOGRAF & REGJISOR">ERGYS SHEHU · PHOTOGRAPHER & DIRECTOR</p>
-  <h2 data-reveal data-en="Available for projects, worldwide." data-sq="I disponueshëm për projekte, kudo në botë.">Available for projects, worldwide.</h2>
-  <a class="book-closing-link" data-reveal href={`mailto:${settings.email}`}>{settings.email} <span aria-hidden="true">↗</span></a>
 </section>
 
 </div>
 
-<script define:vars={{contactEmail: settings.email}} is:inline>
+<script define:vars={{email}} is:inline>
 const STORAGE_KEY = 'book-lang';
-const root = document.querySelector('.book-page');
+const root = document.querySelector('.booking-page');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function currentLang() {
@@ -115,7 +139,10 @@ function applyLang(lang) {
     const text = lang === 'sq' ? el.dataset.sqPlaceholder : el.dataset.enPlaceholder;
     if (text != null) el.placeholder = text;
   });
-  root.querySelectorAll('[data-lang]').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang)));
+  root.querySelectorAll('[data-lang]').forEach(btn => {
+    btn.classList.toggle('is-active', btn.dataset.lang === lang);
+    btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
+  });
   document.documentElement.lang = lang;
   try { localStorage.setItem(STORAGE_KEY, lang); } catch {}
 }
@@ -123,33 +150,113 @@ function applyLang(lang) {
 applyLang(currentLang());
 root?.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang || 'en')));
 
-// Service / collaboration cards preselect the project type and scroll to the form.
-root?.querySelectorAll('[data-service]').forEach(el => {
+// Service cards and the collaboration CTA preselect the project type and
+// scroll to the form (the #inquiry anchor already scrolls without JS).
+const projectSelect = document.querySelector('#project-type');
+root?.querySelectorAll('[data-project]').forEach(el => {
   el.addEventListener('click', () => {
-    const value = el.dataset.service;
-    const select = document.querySelector('#project-type');
-    if (select && value) select.value = value;
-    document.querySelector('#inquiry-form')?.scrollIntoView({behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start'});
-    window.setTimeout(() => document.querySelector('#name')?.focus({preventScroll: true}), reducedMotion.matches ? 0 : 500);
+    const value = el.dataset.project;
+    if (projectSelect && value) projectSelect.value = value;
+    window.setTimeout(() => document.querySelector('input[name="name"]')?.focus({preventScroll: true}), reducedMotion.matches ? 0 : 500);
   });
 });
 
 // No backend: fall back to a pre-filled mailto. Never shows a fake success state.
-const form = document.querySelector('#inquiry-form');
+const form = document.querySelector('#inquiry');
 form?.addEventListener('submit', e => {
   e.preventDefault();
   const data = new FormData(form);
   const name = String(data.get('name') || '').trim();
-  const email = String(data.get('email') || '').trim();
+  const sender = String(data.get('email') || '').trim();
   const phone = String(data.get('phone') || '').trim();
   const message = String(data.get('message') || '').trim();
-  const select = document.querySelector('#project-type');
-  const selectedOption = select?.selectedOptions[0];
+  const selectedOption = projectSelect?.selectedOptions[0];
   const lang = currentLang();
-  const projectTypeLabel = (lang === 'sq' ? selectedOption?.dataset.sq : selectedOption?.dataset.en) || String(data.get('projectType') || '');
-  const subject = `${projectTypeLabel} — ${name}`;
-  const bodyLines = [`Name: ${name}`, `Email: ${email}`, phone && `Phone: ${phone}`, `Project Type: ${projectTypeLabel}`, '', message].filter(Boolean).join('\n');
-  window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
+  const projectLabel = (lang === 'sq' ? selectedOption?.dataset.sq : selectedOption?.dataset.en) || '';
+  const subject = `${projectLabel || 'Project inquiry'} — ${name}`;
+  const bodyLines = [`Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project Type: ${projectLabel}`, '', message].filter(Boolean).join('\n');
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
 });
 </script>
+
+<style>
+.booking-page{background:#080a0a;color:#f4f0e8}
+
+.book-hero{position:relative;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden;background:#080a0a}
+.book-hero-media,.book-hero-media img{position:absolute;inset:0;width:100%;height:100%}
+.book-hero-media img{object-fit:cover;object-position:center}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,7,7,.91) 0%,rgba(5,7,7,.68) 38%,rgba(5,7,7,.14) 72%,rgba(5,7,7,.26) 100%),linear-gradient(0deg,rgba(5,7,7,.75),transparent 50%)}
+.hero-content{position:relative;z-index:1;width:min(760px,70vw);padding:clamp(4rem,8vh,7rem) clamp(1.5rem,5vw,6rem) clamp(4rem,8vh,7rem)}
+.eyebrow{margin:0 0 1.25rem;font-size:.69rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(244,240,232,.7)}
+.book-hero h1{margin:0;max-width:800px;font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,7.5vw,7.5rem);line-height:.92;letter-spacing:-.03em}
+.hero-intro{max-width:520px;margin:2rem 0 0;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.55;color:rgba(255,255,255,.76)}
+.hero-actions{display:flex;gap:1rem;margin-top:2.4rem;flex-wrap:wrap}
+.button{min-height:52px;padding:0 2rem;display:inline-flex;align-items:center;justify-content:center;gap:.9rem;border:1px solid rgba(255,255,255,.45);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:#fff;transition:background .25s var(--ease-editorial),color .25s var(--ease-editorial)}
+.button-light{background:#f4f0e8;color:#090b0b;border-color:#f4f0e8}
+.button:hover{background:#fff;color:#080a0a;border-color:#fff}
+.language-switch{position:absolute;z-index:2;top:1.6rem;right:clamp(1.25rem,4vw,3rem);display:flex;gap:.5rem;align-items:center;font-size:.7rem;letter-spacing:.13em}
+.language-switch button{border:0;padding:0;background:transparent;color:rgba(255,255,255,.52);cursor:pointer}
+.language-switch button.is-active{color:#fff}
+.language-switch span{color:rgba(255,255,255,.3)}
+
+.services-section{padding:var(--section-gap) var(--page-pad)}
+.section-heading{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;margin-bottom:clamp(2rem,4vw,3rem)}
+.section-heading h2,.direct-contact h2,.collab-copy h2{margin:.3rem 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,4.4vw,4.6rem);line-height:.98;letter-spacing:-.03em}
+.section-copy{max-width:520px;margin:0 0 .4rem auto;color:rgba(244,240,232,.66);line-height:1.65;font-size:var(--text-md)}
+.services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(244,240,232,.12)}
+.service-card{position:relative;min-height:340px;overflow:hidden;color:#fff;text-decoration:none;background:#111312;display:block}
+.service-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease-editorial)}
+.service-card:hover img{transform:scale(1.045)}
+.service-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,7,.96) 0%,rgba(5,7,7,.25) 62%,rgba(5,7,7,.06) 100%)}
+.service-copy{position:absolute;z-index:1;left:1.4rem;right:1.4rem;bottom:1.4rem}
+.service-copy h3{margin:0 0 .55rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,1.5vw,1.5rem);line-height:1.08}
+.service-copy p{margin:0;font-size:.56rem;letter-spacing:.14em;color:rgba(255,255,255,.55)}
+.service-copy>span{position:absolute;right:0;bottom:0;opacity:.65;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
+.service-card:hover .service-copy>span{transform:translate(3px,-3px);opacity:1}
+
+.contact-booking{padding:var(--section-gap) var(--page-pad);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(3rem,6vw,6rem);border-top:1px solid rgba(244,240,232,.12)}
+.contact-intro{max-width:440px;color:rgba(244,240,232,.65);line-height:1.65;margin:1.6rem 0 2.6rem;font-size:var(--text-md)}
+.contact-links{display:grid;gap:1.15rem}
+.contact-links a,.contact-location{display:flex;align-items:center;gap:1.1rem;color:inherit;text-decoration:none}
+.contact-links small,.contact-location small{display:block;margin-bottom:.25rem;font-size:.55rem;letter-spacing:.17em;color:rgba(244,240,232,.45)}
+.contact-links strong,.contact-location strong{font-size:.95rem;font-weight:400;font-family:var(--serif);overflow-wrap:anywhere}
+.contact-links span:first-child,.contact-location>span{font-size:1.1rem;width:1.4rem;flex-shrink:0}
+
+.inquiry-form{padding:clamp(1.5rem,3vw,2.5rem);border:1px solid rgba(244,240,232,.14);background:rgba(244,240,232,.025)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.inquiry-form label{display:grid;gap:.55rem;margin-bottom:1rem;font-size:.67rem;letter-spacing:.08em;color:rgba(244,240,232,.6)}
+.inquiry-form input,.inquiry-form select,.inquiry-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(244,240,232,.2);background:transparent;color:#f4f0e8;font:400 15px/1.5 var(--sans);min-height:48px;padding:.8rem .9rem}
+.inquiry-form textarea{min-height:150px;resize:vertical}
+.inquiry-form select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#f4f0e8 50%),linear-gradient(135deg,#f4f0e8 50%,transparent 50%);background-position:calc(100% - 6px) 55%,calc(100% - 11px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+.inquiry-form select option{background:#111;color:#fff}
+.inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:0;border-color:#f4f0e8}
+.submit-button{width:100%;min-height:54px;border:0;margin-top:.4rem;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;background:#f4f0e8;color:#090b0b;cursor:pointer;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s var(--ease-editorial)}
+.submit-button:hover{background:#fff}
+.form-note{margin:1rem 0 0;text-align:center;font-size:.68rem;color:rgba(244,240,232,.42)}
+
+.collab-section{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(244,240,232,.12)}
+.collab-visual{min-height:460px;overflow:hidden;background:#111}
+.collab-visual img{width:100%;height:100%;object-fit:cover}
+.collab-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(3rem,7vw,7rem)}
+.collab-copy p:not(.eyebrow){max-width:460px;margin:1.6rem 0 2.2rem;color:rgba(244,240,232,.66);line-height:1.7;font-size:var(--text-md)}
+
+@media (max-width:900px){
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-booking{grid-template-columns:1fr}
+  .collab-section{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .services-section,.contact-booking{padding:clamp(3.5rem,12vw,5rem) 6vw}
+  .hero-content{width:auto;padding:5.5rem 6vw 3rem}
+  .section-heading{grid-template-columns:1fr;gap:1rem}
+  .section-copy{margin:0}
+  .services-grid{grid-template-columns:1fr}
+  .service-card{min-height:150px}
+  .form-row{grid-template-columns:1fr}
+  .collab-visual{min-height:320px}
+}
+@media (prefers-reduced-motion:reduce){
+  .service-card img,.service-copy>span{transition:none}
+}
+</style>
 </Layout>
