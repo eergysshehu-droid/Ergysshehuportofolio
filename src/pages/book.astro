@@ -146,11 +146,10 @@ root?.querySelectorAll('[data-project]').forEach(el => {
   });
 });
 
-// No backend: on submit, open a pre-filled WhatsApp chat AND a pre-filled
-// mailto in one go, so the visitor only has to hit "send" in each app —
-// this is the closest a static site with no server can get to "sends to
-// WhatsApp and email at the same time" without wiring up a paid backend.
-const WHATSAPP_NUMBER = '355693310202';
+// No backend: a WhatsApp link can only open a pre-filled chat on the
+// visitor's own phone — it can never land in Ergys's WhatsApp automatically,
+// so the form goes straight to the official inbox instead, pre-filled and
+// ready to send.
 const form = document.querySelector('#inquiry');
 form?.addEventListener('submit', e => {
   e.preventDefault();
@@ -164,9 +163,6 @@ form?.addEventListener('submit', e => {
   const projectLabel = (lang === 'sq' ? selectedOption?.dataset.sq : selectedOption?.dataset.en) || '';
   const subject = `${projectLabel || 'Project inquiry'} — ${name}`;
   const bodyLines = [`Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project Type: ${projectLabel}`, '', message].filter(Boolean).join('\n');
-
-  const waLines = [`New inquiry via ergysshehu.com`, `Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project: ${projectLabel}`, '', message].filter(Boolean).join('\n');
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waLines)}`, '_blank', 'noopener');
   window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
 });
 </script>
