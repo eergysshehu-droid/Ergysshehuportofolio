@@ -1,26 +1,9 @@
 ---
 import {instagramMedia} from '../lib/instagram';
 
-// Instagram is an external, untrusted content source — a malformed item
-// (missing/empty media_url, non-URL permalink) must be skipped, never
-// crash the homepage prerender.
-function isValidHttpUrl(value?: string | null) {
-  if (!value) return false;
-  try {
-    const url = new URL(value);
-    return url.protocol === 'https:' || url.protocol === 'http:';
-  } catch {
-    return false;
-  }
-}
-
-const items = await instagramMedia(9);
-const usableItems = items
-  .map(item => {
-    const cover = item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url;
-    return {...item, cover};
-  })
-  .filter(item => isValidHttpUrl(item.cover) && isValidHttpUrl(item.permalink));
+// instagramMedia() already validates every item (see src/lib/instagram.ts) —
+// cover and permalink are guaranteed to be well-formed http(s) URLs here.
+const usableItems = (await instagramMedia(24)).slice(0, 18);
 ---
 {usableItems.length > 0 && <section class="latest-section" id="latest"><div class="work-heading" data-reveal><div><p class="kicker">LATEST · CURRENT WORK</p><h2>Right now.</h2></div></div><div class="latest-grid">{usableItems.map(item =>
   <a class="latest-card" data-image-reveal href={item.permalink} target="_blank" rel="noopener noreferrer" aria-label={item.caption?.slice(0,140) || 'View recent work on Instagram'}><img src={item.cover} alt="" loading="lazy" width="800" height="800"/>{item.media_type === 'VIDEO' && <span class="icon-badge latest-icon" aria-hidden="true">▶</span>}{item.media_type === 'CAROUSEL_ALBUM' && <span class="icon-badge latest-icon-carousel" aria-hidden="true">⧉</span>}</a>

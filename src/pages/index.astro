@@ -12,12 +12,19 @@ const selected=[...featuredAlbums,...albums.filter(a=>!a.featured)];
 const reel=safeUrl(saved.reelUrl);
 const heroSeen=new Set<string>();
 const photoKey=(p?:{localBase?:string;src?:string;asset?:{_ref:string}})=>p?.localBase||p?.src||p?.asset?._ref||'';
-const heroSlides=featuredAlbums.filter(a=>photoUrl(a.cover)).filter(a=>{const key=photoKey(a.cover);if(!key||heroSeen.has(key))return false;heroSeen.add(key);return true}).slice(0,5).map(a=>({photo:a.cover!,title:a.title,href:`/portfolio/${a.slug}/`}));
-if(hero && photoUrl(hero)){const key=photoKey(hero);if(key && !heroSeen.has(key)){heroSeen.add(key);heroSlides.unshift({photo:hero,title:featuredAlbums[0]?.title || settings.name,href:featuredAlbums[0]?`/portfolio/${featuredAlbums[0].slug}/`:'#selected'});heroSlides.length=Math.min(heroSlides.length,5)}}
+// The hero is a full-bleed, wide cinematic strip — a tall portrait crop
+// (object-fit:cover) into that shape almost always crops badly. Only
+// landscape/near-square covers are eligible for the rotation.
+const isHeroShaped=(p?:{width?:number;height?:number})=>Boolean(p?.width && p?.height && p.width/p.height >= 0.95);
+const heroPosition=(p?:{hotspot?:{x?:number;y?:number}})=>p?.hotspot?.x!=null && p?.hotspot?.y!=null?`${(p.hotspot.x*100).toFixed(1)}% ${(p.hotspot.y*100).toFixed(1)}%`:'50% 43%';
+const heroEligible=featuredAlbums.filter(a=>photoUrl(a.cover) && isHeroShaped(a.cover));
+const heroCandidates=heroEligible.length?heroEligible:featuredAlbums.filter(a=>photoUrl(a.cover));
+const heroSlides=heroCandidates.filter(a=>{const key=photoKey(a.cover);if(!key||heroSeen.has(key))return false;heroSeen.add(key);return true}).slice(0,5).map(a=>({photo:a.cover!,title:a.title,href:`/portfolio/${a.slug}/`}));
+if(hero && photoUrl(hero) && isHeroShaped(hero)){const key=photoKey(hero);if(key && !heroSeen.has(key)){heroSeen.add(key);heroSlides.unshift({photo:hero,title:featuredAlbums[0]?.title || settings.name,href:featuredAlbums[0]?`/portfolio/${featuredAlbums[0].slug}/`:'#selected'});heroSlides.length=Math.min(heroSlides.length,5)}}
 ---
 <Layout home name={settings.name} description={settings.seoDescription} image={hero && photoUrl(hero,1800)}>
 <div class="hero-scroll-scene"><section class="opening cinematic-opening" aria-label="Selected photography" data-hero-rotator>
-<div class="opening-image">{heroSlides.map((slide,i)=><picture class:list={['opening-frame',{'is-active':i===0}]} data-href={slide.href} data-title={slide.title}>{i===0 && slide.photo.localBase && <source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(slide.photo,1800)} srcset={photoSet(slide.photo)} sizes="100vw" alt={slide.photo.alt || slide.title} loading={i===0?undefined:'lazy'} fetchpriority={i===0?'high':undefined} width={slide.photo.width} height={slide.photo.height}/></picture>)}</div>
+<div class="opening-image">{heroSlides.map((slide,i)=><picture class:list={['opening-frame',{'is-active':i===0}]} data-href={slide.href} data-title={slide.title} style={`--slide-pos:${heroPosition(slide.photo)}`}>{i===0 && slide.photo.localBase && <source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(slide.photo,1800)} srcset={photoSet(slide.photo)} sizes="100vw" alt={slide.photo.alt || slide.title} loading={i===0?undefined:'lazy'} fetchpriority={i===0?'high':undefined} width={slide.photo.width} height={slide.photo.height}/></picture>)}</div>
 <h1 class="sr-only">{settings.name}</h1>
 <div class="hero-topline"><span>Photographer / Director</span><span>Albania · Available worldwide</span></div>
 <div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label">Selected work</span><span class="hero-project-title"><span data-slide-title>{heroSlides[0]?.title}</span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}</div>
