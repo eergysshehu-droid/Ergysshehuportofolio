@@ -69,11 +69,23 @@ if('IntersectionObserver' in window){
   if(stackGrid && window.matchMedia('(max-width: 700px)').matches){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
+      // One IntersectionObserver drives both effects off the same signal —
+      // whichever card is most prominently on screen right now: it sets the
+      // page background to that card's color AND marks it "in focus" (kept
+      // sharp), while every other revealed card is dimmed + blurred. This
+      // doesn't depend on getBoundingClientRect()/offsetTop tracking scroll
+      // math (which broke down once a card was actually pinned by position:
+      // sticky in this browser — both start mirroring scrollY once "stuck",
+      // making every card look permanently covered) — isIntersecting alone
+      // is enough to say "this one's current" regardless of what the sticky
+      // positioning is really doing under the hood.
       const bgIo=new IntersectionObserver(entries=>{
         entries.forEach(entry=>{
           if(entry.isIntersecting){
-            const color=(entry.target as HTMLElement).style.getPropertyValue('--frame-color');
+            const el=entry.target as HTMLElement;
+            const color=el.style.getPropertyValue('--frame-color');
             if(color)document.body.style.setProperty('background-color',color);
+            cards.forEach(c=>c.classList.toggle('is-focused',c===el));
           }
         });
       },{threshold:0.55});
@@ -82,34 +94,6 @@ if('IntersectionObserver' in window){
         entries.forEach(entry=>{if(!entry.isIntersecting)document.body.style.removeProperty('background-color')});
       },{threshold:0});
       gridIo.observe(stackGrid);
-
-      // Melt a card away (dim + blur) continuously as it scrolls out from
-      // under the next sticky card, rather than a hard cut. --melt goes from
-      // 0 (pinned at top, sharp) to 1 (fully scrolled past its own height).
-      //
-      // This deliberately does NOT read getBoundingClientRect()/offsetTop on
-      // every frame: once a position:sticky element is actually stuck, both
-      // of those start reporting its *current scrolled* position instead of
-      // its static one (offsetTop drifts to equal window.scrollY) in this
-      // browser, which fed back into itself and made every card look stuck
-      // at the top forever. Reading each card's offsetTop exactly once,
-      // before any scrolling has happened, captures its true static
-      // position; comparing that fixed number against live scrollY avoids
-      // the feedback loop entirely.
-      const staticTops=cards.map(c=>c.offsetTop);
-      let meltTicking=false;
-      const updateMelt=()=>{
-        const scrollY=window.scrollY;
-        cards.forEach((c,i)=>{
-          if(!c.classList.contains('is-visible'))return;
-          const h=c.offsetHeight||1;
-          const covered=Math.min(Math.max((scrollY-staticTops[i])/h,0),1);
-          c.style.setProperty('--melt',covered.toFixed(3));
-        });
-        meltTicking=false;
-      };
-      updateMelt();
-      document.addEventListener('scroll',()=>{if(!meltTicking){requestAnimationFrame(updateMelt);meltTicking=true}},{passive:true});
     }
   }
 }
