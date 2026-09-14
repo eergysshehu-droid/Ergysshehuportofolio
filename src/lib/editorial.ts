@@ -18,3 +18,26 @@ export const sections = [
   {slug:'portraits', title:'Portraits', subtitle:'Beauty in reality', texture:'t-portrait'},
   {slug:'films', title:'Film & Video', subtitle:'Music videos, short films and visual stories.', texture:'film-image'}
 ] as const;
+
+// Deterministic editorial pacing for a project's photo essay: a strong opening
+// frame, portrait pairs where the sequence allows it, periodic full-bleed
+// breaks, and alternating intimate solo frames — instead of a flat, uniform grid.
+export interface GalleryPhoto {width?: number; height?: number}
+export interface GalleryRow<T> {type: 'full' | 'pair' | 'solo'; align?: 'left' | 'right'; items: T[]}
+function isPortrait(photo: GalleryPhoto) {
+  return Boolean(photo.height && photo.width && photo.height > photo.width);
+}
+export function paceGallery<T extends GalleryPhoto>(photos: T[]): GalleryRow<T>[] {
+  const rows: GalleryRow<T>[] = [];
+  let i = 0;
+  while (i < photos.length) {
+    const a = photos[i];
+    if (i === 0) { rows.push({type: 'full', items: [a]}); i++; continue; }
+    const b = photos[i + 1];
+    if (b && isPortrait(a) && isPortrait(b)) { rows.push({type: 'pair', items: [a, b]}); i += 2; continue; }
+    if (rows.length % 4 === 3) { rows.push({type: 'full', items: [a]}); i++; continue; }
+    rows.push({type: 'solo', align: rows.length % 2 === 0 ? 'left' : 'right', items: [a]});
+    i++;
+  }
+  return rows;
+}

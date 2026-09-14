@@ -1,13 +1,62 @@
 ---
 import '../styles/portfolio.css';
 import {defaults} from '../lib/editorial';
-interface Props {title?:string;description?:string;name?:string;home?:boolean}
-const {title='Ergys Shehu — Photographer / Director',description=defaults.seoDescription,name=defaults.name,home=false}=Astro.props;
+interface Props {title?:string;description?:string;name?:string;home?:boolean;image?:string}
+const {title='Ergys Shehu — Photographer / Director',description=defaults.seoDescription,name=defaults.name,home=false,image='/images/ergys-shehu-logo.png'}=Astro.props;
+const pageUrl=Astro.site?new URL(Astro.url.pathname,Astro.site):undefined;
+const imageUrl=Astro.site?new URL(image,Astro.site):undefined;
+const personLd={'@context':'https://schema.org','@type':'Person',name:defaults.name,jobTitle:'Photographer & Director',url:'https://ergysshehu.com',sameAs:[defaults.instagram].filter(Boolean),description:defaults.seoDescription};
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/>{Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname,Astro.site)}/>}</head>
-<body class:list={[{'is-home':home}]}><a class="skip" href="#main">Skip to content</a><header class="site-header"><a class="brand" href="/" aria-label={name+' home'}><img src="/images/ergys-shehu-logo.png" alt={name} width="98" height="67"/></a><nav class="desktop-nav" aria-label="Primary"><a href="/#selected">Photography</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact ↗</a></nav><span class="location">ALBANIA · WORLDWIDE</span><details class="mobile-menu"><summary>MENU <span>＋</span></summary><nav aria-label="Mobile navigation"><a href="/#selected">Photography</a><a href="/fashion/">Fashion</a><a href="/portraits/">Portraits</a><a href="/weddings/">Weddings</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact ↗</a></nav></details></header>
-<main id="main"><slot/></main><footer><a href="/" class="footer-name">{name}</a><span>© {new Date().getFullYear()} · PHOTOGRAPHER & DIRECTOR</span><a href="#main">BACK TO TOP ↑</a></footer>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><link rel="icon" href="/favicon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>{pageUrl && <link rel="canonical" href={pageUrl}/>}<meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta property="og:site_name" content="Ergys Shehu"/>{pageUrl && <meta property="og:url" content={pageUrl}/>}{imageUrl && <meta property="og:image" content={imageUrl}/>}<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>{imageUrl && <meta name="twitter:image" content={imageUrl}/>}<script type="application/ld+json" is:inline set:html={JSON.stringify(personLd)}/></head>
+<body class:list={[{'is-home':home}]}><a class="skip" href="#main">Skip to content</a><div class="scroll-progress" aria-hidden="true"></div><header class="site-header"><a class="ergys-wordmark" href="/" aria-label={name+' home'}><span class="ergys-wordmark-strong">ERGYS</span><span class="ergys-wordmark-light">SHEHU</span></a><nav class="desktop-nav" aria-label="Primary"><a href="/#selected">Photography</a><a href="/fashion/">Fashion</a><a href="/portraits/">Portraits</a><a href="/weddings/">Weddings</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a class="nav-book" href="/#contact">Book now ↗</a></nav><details class="mobile-menu"><summary aria-label="Open navigation"><span class="hamburger"></span></summary><div class="mobile-menu-screen"><nav aria-label="Mobile navigation"><a href="/#selected">Photography</a><a href="/fashion/">Fashion</a><a href="/portraits/">Portraits</a><a href="/weddings/">Weddings</a><a href="/films/">Motion</a><a href="/projects/">Index</a><a href="/about/">About</a><a href="/#contact">Contact</a></nav><div class="mobile-menu-footer"><a class="mobile-book" href="/#contact">Book now ↗</a><div class="mobile-location"><span>Albania</span><span>Available worldwide</span></div></div></div></details></header>
+<main id="main"><slot/></main><footer><a href="/" class="footer-name" data-reveal>{name}</a><span data-reveal>© {new Date().getFullYear()} · PHOTOGRAPHER & DIRECTOR</span><a href="#main" data-reveal>BACK TO TOP ↑</a></footer>
 <script>
-document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>{const d=a.closest('details');if(d)d.open=false}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll<HTMLDetailsElement>('.mobile-menu[open]').forEach(d=>{d.open=false;d.querySelector('summary')?.focus()})});
+document.documentElement.classList.add('motion-ready');
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Mobile menu: close on link click, Escape, and lock body scroll while open.
+const mobileMenu=document.querySelector<HTMLDetailsElement>('.mobile-menu');
+document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>{if(mobileMenu)mobileMenu.open=false}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape' && mobileMenu?.open){mobileMenu.open=false;mobileMenu.querySelector('summary')?.focus()}});
+mobileMenu?.addEventListener('toggle',()=>document.documentElement.classList.toggle('mobile-menu-open',mobileMenu.open));
+
+// Section / element reveals — safe by construction: the CSS only hides content
+// once 'motion-ready' is set, and everything is force-shown after a short delay
+// regardless of scroll or observer behaviour, so nothing can stay permanently hidden.
+if('IntersectionObserver' in window){
+  const revealTargets=document.querySelectorAll<HTMLElement>('[data-reveal],[data-image-reveal]');
+  if(revealTargets.length){
+    const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}})},{threshold:0,rootMargin:'0px 0px -5% 0px'});
+    revealTargets.forEach(el=>io.observe(el));
+    setTimeout(()=>revealTargets.forEach(el=>el.classList.add('is-visible')),4000);
+  }
+}
+
+// Desktop-only, fine-pointer tilt on project cards — a few px, no rotation.
+if(!reducedMotion.matches && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+  document.querySelectorAll<HTMLElement>('.project-card').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-.5)*8;
+      const y=((e.clientY-r.top)/r.height-.5)*8;
+      card.style.setProperty('--tilt-x',x.toFixed(2)+'px');
+      card.style.setProperty('--tilt-y',y.toFixed(2)+'px');
+    });
+    card.addEventListener('pointerleave',()=>{card.style.setProperty('--tilt-x','0px');card.style.setProperty('--tilt-y','0px')});
+  });
+}
+
+// Thin scroll-progress line.
+const progress=document.querySelector<HTMLElement>('.scroll-progress');
+if(progress && !reducedMotion.matches){
+  let ticking=false;
+  const update=()=>{
+    const doc=document.documentElement;
+    const max=doc.scrollHeight-doc.clientHeight;
+    progress.style.transform=`scaleX(${max>0?Math.min(doc.scrollTop/max,1):0})`;
+    ticking=false;
+  };
+  update();
+  document.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});
+}
 </script></body></html>

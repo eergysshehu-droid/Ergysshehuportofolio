@@ -1,0 +1,10 @@
+{
+  "name": "ergysshehuportofolio",
+  // Set this to today's date when bumping.
+  "compatibility_date": "2026-09-14",
+  "assets": {
+    "directory": "./dist",
+    // Real multi-page static site with its own 404.astro — not a single-page app.
+    "not_found_handling": "404-page"
+  }
+}

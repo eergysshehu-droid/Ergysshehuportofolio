@@ -16,7 +16,7 @@ export function content(): Promise<{settings: Settings; albums: Album[]}> {
   return cached ??= (client ? client.fetch(`{
     "settings": *[_type == "siteSettings" && _id == "siteSettings"][0],
     "albums": *[_type == "album" && defined(slug.current)] | order(order asc, _createdAt desc) {title, "slug": slug.current, description, "category": category->title, kind, featured, videoUrl, credits, cover, photos, location, year}
-  }`).then(data => ({settings: {...localPortfolio.settings, ...Object.fromEntries(Object.entries(data.settings || {}).filter(([,v]) => v != null))}, albums: [...new Map([...localPortfolio.albums, ...(data.albums || [])].map(a => [a.slug,a])).values()]})) : Promise.resolve(localPortfolio));
+  }`).then(data => ({settings: {...localPortfolio.settings, ...Object.fromEntries(Object.entries(data.settings || {}).filter(([,v]) => v != null))}, albums: [...new Map([...localPortfolio.albums, ...(data.albums || [])].map(a => [a.slug,a])).values()]})).catch(() => localPortfolio) : Promise.resolve(localPortfolio));
 }
 export function photoUrl(photo: Photo | undefined, width = 1400) {
   if (photo?.localBase) return `${photo.localBase}-${width <= 480 ? 480 : width <= 1000 ? 1000 : 1800}.webp`;
