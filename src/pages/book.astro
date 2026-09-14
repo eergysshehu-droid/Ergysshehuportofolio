@@ -146,7 +146,11 @@ root?.querySelectorAll('[data-project]').forEach(el => {
   });
 });
 
-// No backend: fall back to a pre-filled mailto. Never shows a fake success state.
+// No backend: on submit, open a pre-filled WhatsApp chat AND a pre-filled
+// mailto in one go, so the visitor only has to hit "send" in each app —
+// this is the closest a static site with no server can get to "sends to
+// WhatsApp and email at the same time" without wiring up a paid backend.
+const WHATSAPP_NUMBER = '355693310202';
 const form = document.querySelector('#inquiry');
 form?.addEventListener('submit', e => {
   e.preventDefault();
@@ -156,10 +160,13 @@ form?.addEventListener('submit', e => {
   const phone = String(data.get('phone') || '').trim();
   const message = String(data.get('message') || '').trim();
   const selectedOption = projectSelect?.selectedOptions[0];
-  const lang = currentLang();
+  const lang = typeof currentLang === 'function' ? currentLang() : (document.documentElement.lang || 'en');
   const projectLabel = (lang === 'sq' ? selectedOption?.dataset.sq : selectedOption?.dataset.en) || '';
   const subject = `${projectLabel || 'Project inquiry'} — ${name}`;
   const bodyLines = [`Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project Type: ${projectLabel}`, '', message].filter(Boolean).join('\n');
+
+  const waLines = [`New inquiry via ergysshehu.com`, `Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project: ${projectLabel}`, '', message].filter(Boolean).join('\n');
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waLines)}`, '_blank', 'noopener');
   window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
 });
 </script>
@@ -169,7 +176,7 @@ form?.addEventListener('submit', e => {
 
 .book-hero{position:relative;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden;background:#080a0a}
 .book-hero-media,.book-hero-media img{position:absolute;inset:0;width:100%;height:100%}
-.book-hero-media img{object-fit:cover;object-position:center}
+.book-hero-media img{object-fit:cover;object-position:center 68%}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,7,7,.91) 0%,rgba(5,7,7,.68) 38%,rgba(5,7,7,.14) 72%,rgba(5,7,7,.26) 100%),linear-gradient(0deg,rgba(5,7,7,.75),transparent 50%)}
 .hero-content{position:relative;z-index:1;width:min(760px,70vw);padding:clamp(4rem,8vh,7rem) clamp(1.5rem,5vw,6rem) clamp(4rem,8vh,7rem)}
 .eyebrow{margin:0 0 1.25rem;font-size:.69rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(244,240,232,.7)}
