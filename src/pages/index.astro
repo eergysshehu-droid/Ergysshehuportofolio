@@ -29,8 +29,8 @@ if(hero && photoUrl(hero) && isHeroShaped(hero)){const key=photoKey(hero);if(key
 <div class="hero-light-sweep" data-hero-sweep aria-hidden="true"></div>
 <h1 class="sr-only">{settings.name}</h1>
 <div class="hero-topline"><span>Photographer / Director</span><span>Albania · Available worldwide</span></div>
-<div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label">Selected work</span><span class="hero-project-title"><span class="title-mask"><span data-slide-title>{heroSlides[0]?.title}</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}</div>
-<div class="hero-bottom">{heroSlides.length>1 && <div class="slide-dots" role="tablist" aria-label="Hero slides">{heroSlides.map((_,i)=><button type="button" role="tab" aria-current={i===0?'true':'false'} aria-label={`Go to slide ${i+1}`} data-slide-dot={i}></button>)}</div>}{heroSlides.length>1 && <button type="button" class="slide-pause" data-slide-pause aria-pressed="false">Pause</button>}<a class="scroll-invitation" href="#selected">View work <span aria-hidden="true">↓</span></a></div>
+<div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label">Selected work</span><span class="hero-project-title"><span class="title-mask"><span data-slide-title>{heroSlides[0]?.title}</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}{heroSlides.length>1 && <div class="hero-progress" aria-hidden="true"><span data-hero-progress></span></div>}<div class="hero-controls"><a class="hero-explore" href={heroSlides[0]?.href || '#selected'} data-slide-link>Explore the story</a>{heroSlides.length>1 && <div class="hero-nav-arrows"><button type="button" data-slide-prev aria-label="Previous project">←</button><span aria-hidden="true"></span><button type="button" data-slide-next aria-label="Next project">→</button></div>}</div></div>
+<a class="scroll-indicator" href="#selected"><span>Scroll</span><i aria-hidden="true"></i></a>
 </section>
 <section class="work-section" id="selected"><div class="work-heading" data-reveal><div><p class="kicker">A SELECTED PERSPECTIVE</p><h2>Still. <em>Never silent.</em></h2></div><span class="work-count">{String(albums.length).padStart(2,'0')} COLLECTIONS</span></div><div class="work-toolbar" data-reveal><div class="filters" role="group" aria-label="Filter projects"><button data-filter="all" aria-pressed="true">All work</button><button data-filter="fashion" aria-pressed="false">Fashion</button><button data-filter="portraits" aria-pressed="false">Portraits</button><button data-filter="weddings" aria-pressed="false">Weddings</button><button data-filter="projects" aria-pressed="false">Personal</button></div><a class="index-link" href="/projects/">PROJECT INDEX ↗</a></div><ProjectGrid albums={selected}/><p class="work-empty" hidden>No projects in this selection yet.</p></section>
 </div>
@@ -86,13 +86,18 @@ if(introEl){
 
 const heroRoot=document.querySelector<HTMLElement>('[data-hero-rotator]');
 const heroFrameEls=heroRoot?Array.from(heroRoot.querySelectorAll<HTMLElement>('.opening-frame')):[];
-const slideLink=document.querySelector<HTMLAnchorElement>('[data-slide-link]');
+const slideLinks=Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-slide-link]'));
 const slideTitle=document.querySelector<HTMLElement>('[data-slide-title]');
 const slideCount=document.querySelector<HTMLElement>('[data-slide-count]');
-const slideDots=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-slide-dot]'));
-const pauseBtn=document.querySelector<HTMLButtonElement>('[data-slide-pause]');
+const heroProgress=document.querySelector<HTMLElement>('[data-hero-progress]');
+let heroProgressAnim:Animation|undefined;
 let heroActive=0;
 let heroTimer:ReturnType<typeof setInterval>|undefined;
+function playHeroProgress(){
+  if(!heroProgress || reducedMotion.matches || heroFrameEls.length<2)return;
+  heroProgressAnim?.cancel();
+  heroProgressAnim=heroProgress.animate([{width:'0%'},{width:'100%'}],{duration:7000,easing:'linear',fill:'forwards'});
+}
 function showSlide(index:number){
   if(!heroFrameEls.length)return;
   heroFrameEls[heroActive]?.classList.remove('is-active');
@@ -101,19 +106,17 @@ function showSlide(index:number){
   el.classList.add('is-active');
   const href=el.dataset.href;
   const title=el.dataset.title;
-  if(slideLink && href){slideLink.href=href;slideLink.setAttribute('aria-label','Selected work: '+(title||''))}
+  if(href){slideLinks.forEach(link=>{link.href=href;if(link.classList.contains('hero-project'))link.setAttribute('aria-label','Selected work: '+(title||''))})}
   if(slideTitle && title)slideTitle.textContent=title;
   if(slideCount)slideCount.textContent=String(heroActive+1).padStart(2,'0');
-  slideDots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===heroActive)));
+  playHeroProgress();
 }
 function startHero(){if(heroFrameEls.length>1 && !heroTimer)heroTimer=setInterval(()=>showSlide(heroActive+1),7000)}
 function stopHero(){if(heroTimer){clearInterval(heroTimer);heroTimer=undefined}}
 if(!reducedMotion.matches)startHero();
-slideDots.forEach((dot,i)=>dot.addEventListener('click',()=>{stopHero();showSlide(i);startHero()}));
-pauseBtn?.addEventListener('click',()=>{
-  if(heroTimer){stopHero();pauseBtn.textContent='Play';pauseBtn.setAttribute('aria-pressed','true')}
-  else{startHero();pauseBtn.textContent='Pause';pauseBtn.setAttribute('aria-pressed','false')}
-});
+playHeroProgress();
+document.querySelector('[data-slide-prev]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive-1);startHero()});
+document.querySelector('[data-slide-next]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive+1);startHero()});
 
 // Subtle hero parallax, driven by scroll progress through the sticky scene.
 const heroScene=document.querySelector<HTMLElement>('.hero-scroll-scene');

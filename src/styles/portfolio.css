@@ -166,7 +166,7 @@ html.mobile-menu-open{overflow:hidden}
 .opening-frame{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease-editorial)}
 .opening-frame.is-active{opacity:1}
 .opening:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0004 0%,#0000 32%,#0000 55%,#0009 100%)}
-.hero-topline,.hero-feature,.hero-bottom{
+.hero-topline,.hero-feature,.scroll-indicator{
   transform:translate3d(0,var(--hero-content-shift,0px),0);
   opacity:var(--hero-content-opacity,1);
 }
@@ -188,24 +188,16 @@ html.mobile-menu-open{overflow:hidden}
 .hero-project-arrow{font-size:.4em;transition:transform .3s var(--ease-editorial)}
 .hero-project:hover .hero-project-arrow{transform:translate(3px,-3px)}
 .hero-meta{margin-top:18px;font-size:var(--text-xs);letter-spacing:.1em;color:rgba(255,255,255,.7)}
-.hero-bottom{
-  position:absolute;
-  left:var(--page-pad);
-  right:var(--page-pad);
-  bottom:28px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  font-size:var(--text-xs);
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-.slide-dots{display:flex;align-items:center;gap:10px}
-.slide-dots button{width:7px;height:7px;border-radius:50%;padding:0;border:1px solid rgba(255,255,255,.6);background:transparent;cursor:pointer;transition:background .25s,transform .25s}
-.slide-dots button[aria-current=true]{background:#fff;transform:scale(1.2)}
-.slide-pause{border:1px solid rgba(255,255,255,.5);padding:8px 16px;cursor:pointer;color:#fff;letter-spacing:.12em}
-.scroll-invitation{display:inline-flex;align-items:center;gap:8px;color:#fff}
+.hero-progress{width:min(350px,60vw);max-width:300px;height:1px;margin-top:clamp(20px,2.2vw,32px);background:rgba(255,255,255,.28)}
+.hero-progress span{display:block;width:0;height:100%;background:#fff}
+.hero-controls{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(350px,60vw);max-width:300px}
+.hero-explore{color:#fff;font-size:var(--text-xs);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.hero-nav-arrows{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.hero-nav-arrows button{border:0;background:transparent;color:#fff;font-size:1.3rem;line-height:1;cursor:pointer;padding:4px}
+.hero-nav-arrows span{width:1px;height:22px;background:rgba(255,255,255,.4)}
+.scroll-indicator{position:absolute;z-index:2;right:var(--page-pad);bottom:28px;display:grid;place-items:center;gap:10px;color:#fff;text-decoration:none}
+.scroll-indicator span{font-size:var(--text-2xs);letter-spacing:.25em;text-transform:uppercase}
+.scroll-indicator i{width:1px;height:34px;background:rgba(255,255,255,.7);display:block;font-style:normal}
 
 /* ==========================================================================
    CINEMATIC INTRO — homepage only, plays once per browser session (gated by
@@ -450,8 +442,8 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .hero-topline{top:96px}
   .hero-feature{bottom:96px;max-width:88vw}
   .hero-project-title{font-size:clamp(40px,12vw,60px)}
-  .hero-bottom{bottom:20px;flex-wrap:wrap;gap:12px}
-  .scroll-invitation{display:none}
+  .hero-controls,.hero-progress{width:min(280px,68vw)}
+  .scroll-indicator{display:none}
   :root{--hero-overlap:clamp(40px,10vw,70px)}
   .work-section,.motion-section,.artist-section{border-radius:clamp(12px,4vw,18px) clamp(12px,4vw,18px) 0 0}
   .work-section{padding:55px 5vw 45px}
@@ -507,7 +499,7 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .cinematic-intro{display:none!important}
   .hero-light-sweep{display:none!important}
   .title-mask [data-slide-title]{transform:none!important}
-  [data-reveal],[data-image-reveal] img,.opening-image img,.hero-topline,.hero-feature,.hero-bottom{
+  [data-reveal],[data-image-reveal] img,.opening-image img,.hero-topline,.hero-feature,.scroll-indicator{
     opacity:1!important;
     transform:none!important;
     clip-path:none!important;
