@@ -36,6 +36,15 @@ export function albumKind(album: Album) {
 export function safeUrl(value?: string) {
   try { const url = new URL(value || ''); return url.protocol === 'https:' ? url.href : undefined; } catch { return undefined; }
 }
+// Sanity's hotspot marks where the subject actually is in a photo (usually
+// the face) — used as object-position/transform-origin wherever a photo gets
+// cropped or zoomed, so crops and reveal animations converge on the subject
+// instead of a generic center point. Falls back to a bias toward the upper
+// third, since an uncropped portrait's subject is rarely dead-center.
+export function photoPosition(photo: Photo | undefined, fallback = '50% 32%') {
+  if (photo?.hotspot?.x != null && photo?.hotspot?.y != null) return `${(photo.hotspot.x * 100).toFixed(1)}% ${(photo.hotspot.y * 100).toFixed(1)}%`;
+  return fallback;
+}
 export function photoSet(photo: Photo | undefined) {
   if (photo?.localBase) return [480,1000,1800].filter(w => w <= (photo.width || 1800)).map(w => `${photoUrl(photo,w)} ${w}w`).join(', ') || undefined;
   return photo?.asset?._ref ? [480, 800, 1200, 1800, 2400].map(w => `${photoUrl(photo,w)} ${w}w`).join(', ') : undefined;

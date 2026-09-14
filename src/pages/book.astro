@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {content, photoUrl, photoSet, albumKind, safeUrl} from '../lib/content';
+import {content, photoUrl, photoSet, photoPosition, albumKind, safeUrl} from '../lib/content';
 import {defaults} from '../lib/editorial';
 
 const {settings: saved, albums} = await content();
@@ -67,7 +67,9 @@ const instagram = safeUrl(settings.instagram);
   </div>
   <div class="services-grid">{services.map(s =>
     <a class="service-card" href={s.href} data-reveal>
-      {s.photo && photoUrl(s.photo) && <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/>}
+      <div class="service-image" data-image-reveal style={s.photo ? `--focal-point:${photoPosition(s.photo)}` : undefined}>
+        {s.photo && photoUrl(s.photo) ? <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/> : <svg class="service-fallback-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="4" y="12" width="40" height="26" rx="3"/><path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/><circle cx="24" cy="27" r="7"/></svg>}
+      </div>
       <div class="service-overlay" aria-hidden="true"></div>
       <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span class="service-view" data-en="View work ↗" data-sq="Shiko punën ↗">View work ↗</span></div>
     </a>
@@ -205,8 +207,10 @@ form?.addEventListener('submit', e => {
 .section-copy{max-width:520px;margin:0 0 .4rem auto;color:rgba(244,240,232,.66);line-height:1.65;font-size:var(--text-md)}
 .services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(244,240,232,.12)}
 .service-card{position:relative;min-height:340px;overflow:hidden;color:#fff;text-decoration:none;background:#111312;display:block}
-.service-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease-editorial)}
-.service-card:hover img{transform:scale(1.045)}
+.service-image{position:absolute;inset:0;overflow:hidden;display:grid;place-items:center}
+.service-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--focal-point,50% 32%);transition:transform .7s var(--ease-editorial)}
+.service-card:hover .service-image img{transform:scale(1.045)}
+.service-fallback-icon{width:38%;max-width:70px;color:rgba(244,240,232,.28)}
 .service-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,7,.96) 0%,rgba(5,7,7,.25) 62%,rgba(5,7,7,.06) 100%)}
 .service-copy{position:absolute;z-index:1;left:1.4rem;right:1.4rem;bottom:1.4rem}
 .service-copy h3{margin:0 0 .55rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,1.5vw,1.5rem);line-height:1.08}
