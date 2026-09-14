@@ -105,10 +105,19 @@ if('IntersectionObserver' in window){
         }
       },{threshold:steps});
       cards.forEach(c=>meltIo.observe(c));
+      // The black stacking panel (.work-section/.collection-body) has no
+      // background of its own — body.in-stack-grid paints it black for as
+      // long as any part of that panel is on screen, watched here instead
+      // of just the grid so the heading above the cards turns black at the
+      // same moment as the grid, not a beat later.
+      const stackSection=stackGrid.closest<HTMLElement>('.work-section, .collection-body') || stackGrid;
       const gridIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{if(!entry.isIntersecting)document.body.classList.remove('has-frame-color')});
+        entries.forEach(entry=>{
+          document.body.classList.toggle('in-stack-grid',entry.isIntersecting);
+          if(!entry.isIntersecting)document.body.classList.remove('has-frame-color');
+        });
       },{threshold:0});
-      gridIo.observe(stackGrid);
+      gridIo.observe(stackSection);
     }
   }
 }
