@@ -104,6 +104,27 @@ if(!reducedMotion.matches && window.matchMedia('(hover: hover) and (pointer: fin
     });
     card.addEventListener('pointerleave',()=>{card.style.setProperty('--tilt-x','0px');card.style.setProperty('--tilt-y','0px')});
   });
+
+  // Grid spotlight: dim every card except the one under the pointer. Tracked
+  // per-grid with a short grace delay before clearing, so drifting through
+  // the gap between two cards doesn't flash the whole grid back to normal
+  // and immediately re-dim — that flicker is what read as "glitchy".
+  document.querySelectorAll<HTMLElement>('.project-grid').forEach(grid=>{
+    let clearTimer:number|undefined;
+    grid.addEventListener('pointerover',e=>{
+      const card=(e.target as HTMLElement).closest('.project-card');
+      if(!card)return;
+      clearTimeout(clearTimer);
+      grid.classList.add('is-spotlighting');
+      grid.querySelectorAll('.project-card').forEach(c=>c.classList.toggle('is-focused',c===card));
+    });
+    grid.addEventListener('pointerleave',()=>{
+      clearTimer=window.setTimeout(()=>{
+        grid.classList.remove('is-spotlighting');
+        grid.querySelectorAll('.project-card').forEach(c=>c.classList.remove('is-focused'));
+      },220);
+    });
+  });
 }
 
 // Thin scroll-progress line.
