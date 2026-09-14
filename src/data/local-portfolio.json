@@ -47,7 +47,8 @@
         "width": 5839,
         "height": 3892,
         "alt": "Dance in the elements — photography by Ergys Shehu",
-        "sourceFile": "ESH03139 first.jpg"
+        "sourceFile": "ESH03139 first.jpg",
+        "color": "#7d7d7c"
       },
       "photos": [
         {
@@ -56,7 +57,8 @@
           "width": 5839,
           "height": 3892,
           "alt": "Dance in the elements — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH03139 first.jpg"
+          "sourceFile": "ESH03139 first.jpg",
+          "color": "#7d7d7c"
         },
         {
           "src": "/images/eb68d69795eddd-1800.webp",
@@ -64,7 +66,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Dance in the elements — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH03058 low.jpg"
+          "sourceFile": "ESH03058 low.jpg",
+          "color": "#717171"
         },
         {
           "src": "/images/f7a610eb535430-1800.webp",
@@ -72,7 +75,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Dance in the elements — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH03185 low.jpg"
+          "sourceFile": "ESH03185 low.jpg",
+          "color": "#8a9a9d"
         }
       ]
     },
@@ -89,7 +93,8 @@
         "width": 1462,
         "height": 2048,
         "alt": "Adel Lami — photography by Ergys Shehu",
-        "sourceFile": "Adel Lami\\ESH05529 low.jpg"
+        "sourceFile": "Adel Lami\\ESH05529 low.jpg",
+        "color": "#676d9a"
       },
       "photos": [
         {
@@ -98,7 +103,8 @@
           "width": 1462,
           "height": 2048,
           "alt": "Adel Lami — photograph 1 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05529 low.jpg"
+          "sourceFile": "Adel Lami\\ESH05529 low.jpg",
+          "color": "#676d9a"
         },
         {
           "src": "/images/5ef79d674aabf3-1800.webp",
@@ -106,7 +112,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Adel Lami — photograph 2 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05349 v2 web.jpg"
+          "sourceFile": "Adel Lami\\ESH05349 v2 web.jpg",
+          "color": "#867061"
         },
         {
           "src": "/images/57fb66a29b09ee-1800.webp",
@@ -114,7 +121,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Adel Lami — photograph 3 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05369 low.jpg"
+          "sourceFile": "Adel Lami\\ESH05369 low.jpg",
+          "color": "#806f5f"
         },
         {
           "src": "/images/579eb1884a6191-1800.webp",
@@ -122,7 +130,8 @@
           "width": 4000,
           "height": 6000,
           "alt": "Adel Lami — photograph 4 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05547 web.jpg"
+          "sourceFile": "Adel Lami\\ESH05547 web.jpg",
+          "color": "#aea299"
         },
         {
           "src": "/images/0e802b3b2a388c-1800.webp",
@@ -130,7 +139,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Adel Lami — photograph 5 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05552 web.jpg"
+          "sourceFile": "Adel Lami\\ESH05552 web.jpg",
+          "color": "#aa9482"
         },
         {
           "src": "/images/5beed3c0759e02-1800.webp",
@@ -138,7 +148,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Adel Lami — photograph 6 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05590 web.jpg"
+          "sourceFile": "Adel Lami\\ESH05590 web.jpg",
+          "color": "#b6ada2"
         },
         {
           "src": "/images/8043b7f053e322-1800.webp",
@@ -146,7 +157,8 @@
           "width": 1384,
           "height": 2048,
           "alt": "Adel Lami — photograph 7 by Ergys Shehu",
-          "sourceFile": "Adel Lami\\ESH05628 web.jpg"
+          "sourceFile": "Adel Lami\\ESH05628 web.jpg",
+          "color": "#bcb1aa"
         }
       ]
     },
@@ -163,7 +175,8 @@
         "width": 1639,
         "height": 2048,
         "alt": "Megan Mersinaj — photography by Ergys Shehu",
-        "sourceFile": "ESH07048 Low.jpg"
+        "sourceFile": "ESH07048 Low.jpg",
+        "color": "#544c45"
       },
       "photos": [
         {
@@ -172,7 +185,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH07048 Low.jpg"
+          "sourceFile": "ESH07048 Low.jpg",
+          "color": "#544c45"
         },
         {
           "src": "/images/b789b60ef6520c-1800.webp",
@@ -180,7 +194,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Megan Mersinaj — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH06873 Low.jpg"
+          "sourceFile": "ESH06873 Low.jpg",
+          "color": "#828c90"
         },
         {
           "src": "/images/cc3d7e1cfc9cf7-1800.webp",
@@ -188,7 +203,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Megan Mersinaj — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH06885 low.jpg"
+          "sourceFile": "ESH06885 low.jpg",
+          "color": "#7f8484"
         },
         {
           "src": "/images/0bc3b20b4b8918-1800.webp",
@@ -196,7 +212,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH06890 low.jpg"
+          "sourceFile": "ESH06890 low.jpg",
+          "color": "#4a4f52"
         },
         {
           "src": "/images/8626b4dc9c7830-1800.webp",
@@ -204,7 +221,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH06891 Low Web.jpg"
+          "sourceFile": "ESH06891 Low Web.jpg",
+          "color": "#6c6b6e"
         },
         {
           "src": "/images/db4014724c2310-1800.webp",
@@ -212,7 +230,8 @@
           "width": 4000,
           "height": 5000,
           "alt": "Megan Mersinaj — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH06971 v2.jpg"
+          "sourceFile": "ESH06971 v2.jpg",
+          "color": "#494232"
         },
         {
           "src": "/images/0ce1dbf084b9b5-1800.webp",
@@ -220,7 +239,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 7 by Ergys Shehu",
-          "sourceFile": "ESH07052 Low.jpg"
+          "sourceFile": "ESH07052 Low.jpg",
+          "color": "#6b6962"
         },
         {
           "src": "/images/91d4516a58fea2-1800.webp",
@@ -228,7 +248,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 8 by Ergys Shehu",
-          "sourceFile": "ESH07078-Low.jpg"
+          "sourceFile": "ESH07078-Low.jpg",
+          "color": "#62574c"
         },
         {
           "src": "/images/d0840f6a7fb8fa-1800.webp",
@@ -236,7 +257,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Megan Mersinaj — photograph 9 by Ergys Shehu",
-          "sourceFile": "ESH07224 Low.jpg"
+          "sourceFile": "ESH07224 Low.jpg",
+          "color": "#433a33"
         },
         {
           "src": "/images/c4a3dfab55171c-1800.webp",
@@ -244,7 +266,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Megan Mersinaj — photograph 10 by Ergys Shehu",
-          "sourceFile": "ESH07261 Low.jpg"
+          "sourceFile": "ESH07261 Low.jpg",
+          "color": "#645556"
         },
         {
           "src": "/images/35b8da6ab1a741-1800.webp",
@@ -252,7 +275,8 @@
           "width": 1080,
           "height": 1350,
           "alt": "Megan Mersinaj — photograph 11 by Ergys Shehu",
-          "sourceFile": "Instagram V2.jpg"
+          "sourceFile": "Instagram V2.jpg",
+          "color": "#6c6c6e"
         },
         {
           "src": "/images/cbdb92e661b3a1-1800.webp",
@@ -260,7 +284,8 @@
           "width": 1080,
           "height": 1920,
           "alt": "Megan Mersinaj — photograph 12 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\behance_download_1584826735577.png"
+          "sourceFile": "Mobile Uploads\\behance_download_1584826735577.png",
+          "color": "#494e50"
         }
       ]
     },
@@ -277,7 +302,8 @@
         "width": 1365,
         "height": 2048,
         "alt": "Livia Sinani — photography by Ergys Shehu",
-        "sourceFile": "Livia sinani\\ESH01380 cc.jpg"
+        "sourceFile": "Livia sinani\\ESH01380 cc.jpg",
+        "color": "#494540"
       },
       "photos": [
         {
@@ -286,7 +312,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Livia Sinani — photograph 1 by Ergys Shehu",
-          "sourceFile": "Livia sinani\\ESH01380 cc.jpg"
+          "sourceFile": "Livia sinani\\ESH01380 cc.jpg",
+          "color": "#494540"
         },
         {
           "src": "/images/9cc6f3e8469bf2-1800.webp",
@@ -294,7 +321,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Livia Sinani — photograph 2 by Ergys Shehu",
-          "sourceFile": "Livia sinani\\ESH00013 Insta.jpg"
+          "sourceFile": "Livia sinani\\ESH00013 Insta.jpg",
+          "color": "#b1a8a1"
         },
         {
           "src": "/images/eebef988b591ec-1800.webp",
@@ -302,7 +330,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Livia Sinani — photograph 3 by Ergys Shehu",
-          "sourceFile": "Livia sinani\\ESH01431 low.jpg"
+          "sourceFile": "Livia sinani\\ESH01431 low.jpg",
+          "color": "#333631"
         }
       ]
     },
@@ -319,7 +348,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Margaret Shllaku — photography by Ergys Shehu",
-        "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg"
+        "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg",
+        "color": "#473126"
       },
       "photos": [
         {
@@ -328,7 +358,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Margaret Shllaku — photograph 1 by Ergys Shehu",
-          "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg"
+          "sourceFile": "Margaret Shllaku\\ESH07725-Recovered Low.jpg",
+          "color": "#473126"
         },
         {
           "src": "/images/cd70deb784d70f-1800.webp",
@@ -336,7 +367,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Margaret Shllaku — photograph 2 by Ergys Shehu",
-          "sourceFile": "Margaret Shllaku\\ESH07775  cc 2.jpg"
+          "sourceFile": "Margaret Shllaku\\ESH07775  cc 2.jpg",
+          "color": "#41291a"
         },
         {
           "src": "/images/a20806ce7b4528-1800.webp",
@@ -344,7 +376,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Margaret Shllaku — photograph 3 by Ergys Shehu",
-          "sourceFile": "Margaret Shllaku\\ESH07946 low.jpg"
+          "sourceFile": "Margaret Shllaku\\ESH07946 low.jpg",
+          "color": "#b39684"
         }
       ]
     },
@@ -361,7 +394,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Sara Fani — photography by Ergys Shehu",
-        "sourceFile": "Sara Fani\\2 web.jpg"
+        "sourceFile": "Sara Fani\\2 web.jpg",
+        "color": "#9c8c84"
       },
       "photos": [
         {
@@ -370,7 +404,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Sara Fani — photograph 1 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\2 web.jpg"
+          "sourceFile": "Sara Fani\\2 web.jpg",
+          "color": "#9c8c84"
         },
         {
           "src": "/images/2cc65ebbd704ab-1800.webp",
@@ -378,7 +413,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Sara Fani — photograph 2 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01257 low.jpg"
+          "sourceFile": "Sara Fani\\ESH01257 low.jpg",
+          "color": "#826f68"
         },
         {
           "src": "/images/e156afb0b8a4b4-1800.webp",
@@ -386,7 +422,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Sara Fani — photograph 3 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01277 Low.jpg"
+          "sourceFile": "Sara Fani\\ESH01277 Low.jpg",
+          "color": "#6e6868"
         },
         {
           "src": "/images/b4bbd87a0fa1ec-1800.webp",
@@ -394,7 +431,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Sara Fani — photograph 4 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01483 low fin.jpg"
+          "sourceFile": "Sara Fani\\ESH01483 low fin.jpg",
+          "color": "#735f54"
         },
         {
           "src": "/images/efc8059db5289d-1800.webp",
@@ -402,7 +440,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Sara Fani — photograph 5 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01501 3 low.jpg"
+          "sourceFile": "Sara Fani\\ESH01501 3 low.jpg",
+          "color": "#4b463f"
         },
         {
           "src": "/images/9820f20131a995-1800.webp",
@@ -410,7 +449,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Sara Fani — photograph 6 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01692 Low.jpg"
+          "sourceFile": "Sara Fani\\ESH01692 Low.jpg",
+          "color": "#1b1816"
         },
         {
           "src": "/images/e8b2a7e2016a10-1800.webp",
@@ -418,7 +458,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Sara Fani — photograph 7 by Ergys Shehu",
-          "sourceFile": "Sara Fani\\ESH01739 2.jpg"
+          "sourceFile": "Sara Fani\\ESH01739 2.jpg",
+          "color": "#464242"
         }
       ]
     },
@@ -435,7 +476,8 @@
         "width": 1639,
         "height": 2048,
         "alt": "Eli — photography by Ergys Shehu",
-        "sourceFile": "Eli (1)\\ESH_0974 low.jpg"
+        "sourceFile": "Eli (1)\\ESH_0974 low.jpg",
+        "color": "#354343"
       },
       "photos": [
         {
@@ -444,7 +486,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Eli — photograph 1 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0974 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_0974 low.jpg",
+          "color": "#354343"
         },
         {
           "src": "/images/31944828b99743-1800.webp",
@@ -452,7 +495,8 @@
           "width": 2048,
           "height": 1367,
           "alt": "Eli — photograph 2 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0746 Progress low.jpg"
+          "sourceFile": "Eli (1)\\ESH_0746 Progress low.jpg",
+          "color": "#5f4e55"
         },
         {
           "src": "/images/3914f8274ce92d-1800.webp",
@@ -460,7 +504,8 @@
           "width": 3077,
           "height": 4614,
           "alt": "Eli — photograph 3 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0884 ccr.jpg"
+          "sourceFile": "Eli (1)\\ESH_0884 ccr.jpg",
+          "color": "#5a4f4f"
         },
         {
           "src": "/images/86dbb5e8c21fe4-1800.webp",
@@ -468,7 +513,8 @@
           "width": 2048,
           "height": 1516,
           "alt": "Eli — photograph 4 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0912.jpg"
+          "sourceFile": "Eli (1)\\ESH_0912.jpg",
+          "color": "#433c3e"
         },
         {
           "src": "/images/e80b07f231bf6d-1800.webp",
@@ -476,7 +522,8 @@
           "width": 2048,
           "height": 1321,
           "alt": "Eli — photograph 5 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0920 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_0920 low.jpg",
+          "color": "#56484a"
         },
         {
           "src": "/images/1b0a4aeb00389c-1800.webp",
@@ -484,7 +531,8 @@
           "width": 2048,
           "height": 1638,
           "alt": "Eli — photograph 6 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0957 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_0957 low.jpg",
+          "color": "#4f2127"
         },
         {
           "src": "/images/c9cc1ca4ebc236-1800.webp",
@@ -492,7 +540,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Eli — photograph 7 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_0974 red low.jpg"
+          "sourceFile": "Eli (1)\\ESH_0974 red low.jpg",
+          "color": "#513635"
         },
         {
           "src": "/images/bd848dbd85c04a-1800.webp",
@@ -500,7 +549,8 @@
           "width": 1503,
           "height": 2048,
           "alt": "Eli — photograph 8 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1025 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1025 low.jpg",
+          "color": "#e4e7e5"
         },
         {
           "src": "/images/3547a7d5f26e73-1800.webp",
@@ -508,7 +558,8 @@
           "width": 1530,
           "height": 2048,
           "alt": "Eli — photograph 9 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1051 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1051 low.jpg",
+          "color": "#6e5555"
         },
         {
           "src": "/images/8f51499ec8140e-1800.webp",
@@ -516,7 +567,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Eli — photograph 10 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1057 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1057 low.jpg",
+          "color": "#82635a"
         },
         {
           "src": "/images/63a9dd27aab350-1800.webp",
@@ -524,7 +576,8 @@
           "width": 1514,
           "height": 2048,
           "alt": "Eli — photograph 11 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1088 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1088 low.jpg",
+          "color": "#5a3737"
         },
         {
           "src": "/images/abcdea6e850a7a-1800.webp",
@@ -532,7 +585,8 @@
           "width": 2048,
           "height": 1367,
           "alt": "Eli — photograph 12 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1245-low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1245-low.jpg",
+          "color": "#402c2d"
         },
         {
           "src": "/images/0b8b782bf2c85f-1800.webp",
@@ -540,7 +594,8 @@
           "width": 2048,
           "height": 1388,
           "alt": "Eli — photograph 13 by Ergys Shehu",
-          "sourceFile": "Eli (1)\\ESH_1253 low.jpg"
+          "sourceFile": "Eli (1)\\ESH_1253 low.jpg",
+          "color": "#694740"
         }
       ]
     },
@@ -557,7 +612,8 @@
         "width": 2048,
         "height": 1638,
         "alt": "Coastal colour — photography by Ergys Shehu",
-        "sourceFile": "ESH03400 hat instagram.jpg"
+        "sourceFile": "ESH03400 hat instagram.jpg",
+        "color": "#aa9082"
       },
       "photos": [
         {
@@ -566,7 +622,8 @@
           "width": 2048,
           "height": 1638,
           "alt": "Coastal colour — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH03400 hat instagram.jpg"
+          "sourceFile": "ESH03400 hat instagram.jpg",
+          "color": "#aa9082"
         },
         {
           "src": "/images/df79da6af149d3-1800.webp",
@@ -574,7 +631,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH03212 low.jpg"
+          "sourceFile": "ESH03212 low.jpg",
+          "color": "#b7a89f"
         },
         {
           "src": "/images/26ee266dfb6dd2-1800.webp",
@@ -582,7 +640,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH03234 low.jpg"
+          "sourceFile": "ESH03234 low.jpg",
+          "color": "#c2b2ab"
         },
         {
           "src": "/images/2c609baca2d619-1800.webp",
@@ -590,7 +649,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH03238 low.jpg"
+          "sourceFile": "ESH03238 low.jpg",
+          "color": "#b2aaac"
         },
         {
           "src": "/images/431a89b2281f5c-1800.webp",
@@ -598,7 +658,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH03414 low.jpg"
+          "sourceFile": "ESH03414 low.jpg",
+          "color": "#b99987"
         },
         {
           "src": "/images/1b4cf46cdf211f-1800.webp",
@@ -606,7 +667,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH03415 isida low.jpg"
+          "sourceFile": "ESH03415 isida low.jpg",
+          "color": "#b08b74"
         },
         {
           "src": "/images/efabcbb8c442a5-1800.webp",
@@ -614,7 +676,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 7 by Ergys Shehu",
-          "sourceFile": "ESH06097 web.jpg"
+          "sourceFile": "ESH06097 web.jpg",
+          "color": "#6d563e"
         },
         {
           "src": "/images/bdd1c4df0df62c-1800.webp",
@@ -622,7 +685,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Coastal colour — photograph 8 by Ergys Shehu",
-          "sourceFile": "ESH06257 web.jpg"
+          "sourceFile": "ESH06257 web.jpg",
+          "color": "#9e8275"
         },
         {
           "src": "/images/c4375c2050375c-1800.webp",
@@ -630,7 +694,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Coastal colour — photograph 9 by Ergys Shehu",
-          "sourceFile": "ESH06460 cc low.jpg"
+          "sourceFile": "ESH06460 cc low.jpg",
+          "color": "#796f64"
         },
         {
           "src": "/images/4140fd44889912-1800.webp",
@@ -638,7 +703,8 @@
           "width": 1416,
           "height": 2048,
           "alt": "Coastal colour — photograph 10 by Ergys Shehu",
-          "sourceFile": "ESH_1977 low.jpg"
+          "sourceFile": "ESH_1977 low.jpg",
+          "color": "#3b567b"
         },
         {
           "src": "/images/b6587f47f09e35-1800.webp",
@@ -646,7 +712,8 @@
           "width": 1173,
           "height": 1466,
           "alt": "Coastal colour — photograph 11 by Ergys Shehu",
-          "sourceFile": "ESH_2124 Final Insta.jpg"
+          "sourceFile": "ESH_2124 Final Insta.jpg",
+          "color": "#b9b99c"
         },
         {
           "src": "/images/9f1aa2426263ac-1800.webp",
@@ -654,7 +721,8 @@
           "width": 805,
           "height": 1080,
           "alt": "Coastal colour — photograph 12 by Ergys Shehu",
-          "sourceFile": "ESH_2125 Final no blue insta.jpg"
+          "sourceFile": "ESH_2125 Final no blue insta.jpg",
+          "color": "#917e57"
         },
         {
           "src": "/images/3c2c0e1ca9fa81-1800.webp",
@@ -662,7 +730,8 @@
           "width": 1365,
           "height": 1706,
           "alt": "Coastal colour — photograph 13 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH08285+instav2-1.jpg"
+          "sourceFile": "Mobile Uploads\\ESH08285+instav2-1.jpg",
+          "color": "#655451"
         }
       ]
     },
@@ -679,7 +748,8 @@
         "width": 2048,
         "height": 1365,
         "alt": "The red room — photography by Ergys Shehu",
-        "sourceFile": "ESH08511 low.jpg"
+        "sourceFile": "ESH08511 low.jpg",
+        "color": "#5f2715"
       },
       "photos": [
         {
@@ -688,7 +758,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "The red room — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH08511 low.jpg"
+          "sourceFile": "ESH08511 low.jpg",
+          "color": "#5f2715"
         },
         {
           "src": "/images/59182db5d92518-1800.webp",
@@ -696,7 +767,8 @@
           "width": 1385,
           "height": 2048,
           "alt": "The red room — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH04601web.jpg"
+          "sourceFile": "ESH04601web.jpg",
+          "color": "#77513c"
         },
         {
           "src": "/images/2f009d427535b4-1800.webp",
@@ -704,7 +776,8 @@
           "width": 3982,
           "height": 4977,
           "alt": "The red room — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH07430 cc f.jpg"
+          "sourceFile": "ESH07430 cc f.jpg",
+          "color": "#683d3d"
         },
         {
           "src": "/images/95df597b0970d4-1800.webp",
@@ -712,7 +785,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "The red room — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH07485 cc2 low.jpg"
+          "sourceFile": "ESH07485 cc2 low.jpg",
+          "color": "#493936"
         },
         {
           "src": "/images/24f17d12f20f69-1800.webp",
@@ -720,7 +794,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "The red room — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH08310 low.jpg"
+          "sourceFile": "ESH08310 low.jpg",
+          "color": "#733d37"
         },
         {
           "src": "/images/43077f8b3cfef5-1800.webp",
@@ -728,7 +803,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "The red room — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH08340 v2 low.jpg"
+          "sourceFile": "ESH08340 v2 low.jpg",
+          "color": "#82373a"
         },
         {
           "src": "/images/6f74a964ece069-1800.webp",
@@ -736,7 +812,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "The red room — photograph 7 by Ergys Shehu",
-          "sourceFile": "ESH08421 web.jpg"
+          "sourceFile": "ESH08421 web.jpg",
+          "color": "#8d4436"
         }
       ]
     },
@@ -753,7 +830,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "In the woods — photography by Ergys Shehu",
-        "sourceFile": "ESH09430web.jpg"
+        "sourceFile": "ESH09430web.jpg",
+        "color": "#493727"
       },
       "photos": [
         {
@@ -762,7 +840,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "In the woods — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH09430web.jpg"
+          "sourceFile": "ESH09430web.jpg",
+          "color": "#493727"
         },
         {
           "src": "/images/c77fab16901d69-1800.webp",
@@ -770,7 +849,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "In the woods — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH09300 final.jpg"
+          "sourceFile": "ESH09300 final.jpg",
+          "color": "#463a30"
         },
         {
           "src": "/images/445f6c3afb5d97-1800.webp",
@@ -778,7 +858,8 @@
           "width": 5937,
           "height": 4000,
           "alt": "In the woods — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH09359 Low.jpg"
+          "sourceFile": "ESH09359 Low.jpg",
+          "color": "#2e2a18"
         },
         {
           "src": "/images/2a13a668afd088-1800.webp",
@@ -786,7 +867,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "In the woods — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH09482-web.jpg"
+          "sourceFile": "ESH09482-web.jpg",
+          "color": "#322823"
         },
         {
           "src": "/images/2304c8efad0107-1800.webp",
@@ -794,7 +876,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "In the woods — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH09555 web.jpg"
+          "sourceFile": "ESH09555 web.jpg",
+          "color": "#454035"
         },
         {
           "src": "/images/fe65ecc62b0da6-1800.webp",
@@ -802,7 +885,8 @@
           "width": 2048,
           "height": 1314,
           "alt": "In the woods — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH09589 LOw.jpg"
+          "sourceFile": "ESH09589 LOw.jpg",
+          "color": "#443c28"
         }
       ]
     },
@@ -819,7 +903,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "City studies — photography by Ergys Shehu",
-        "sourceFile": "ESH07318 web.jpg"
+        "sourceFile": "ESH07318 web.jpg",
+        "color": "#9d8186"
       },
       "photos": [
         {
@@ -828,7 +913,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "City studies — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH07318 web.jpg"
+          "sourceFile": "ESH07318 web.jpg",
+          "color": "#9d8186"
         },
         {
           "src": "/images/bcc81c84d70232-1800.webp",
@@ -836,7 +922,8 @@
           "width": 1588,
           "height": 2048,
           "alt": "City studies — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH07134web.jpg"
+          "sourceFile": "ESH07134web.jpg",
+          "color": "#a69c94"
         },
         {
           "src": "/images/36441463c73a57-1800.webp",
@@ -844,7 +931,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "City studies — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH07415 web.jpg"
+          "sourceFile": "ESH07415 web.jpg",
+          "color": "#b6aba2"
         },
         {
           "src": "/images/1e170ac24b53bc-1800.webp",
@@ -852,7 +940,8 @@
           "width": 1429,
           "height": 2048,
           "alt": "City studies — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH07423 web.jpg"
+          "sourceFile": "ESH07423 web.jpg",
+          "color": "#6a6a65"
         },
         {
           "src": "/images/059f7c730d1f77-1800.webp",
@@ -860,7 +949,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "City studies — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH07970 Low.jpg"
+          "sourceFile": "ESH07970 Low.jpg",
+          "color": "#6d635a"
         },
         {
           "src": "/images/4ae1be4408e354-1800.webp",
@@ -868,7 +958,8 @@
           "width": 2048,
           "height": 2560,
           "alt": "City studies — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH09850 web.jpg"
+          "sourceFile": "ESH09850 web.jpg",
+          "color": "#b3ada2"
         },
         {
           "src": "/images/46b21ba15a6098-1800.webp",
@@ -876,7 +967,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "City studies — photograph 7 by Ergys Shehu",
-          "sourceFile": "ESH09856 web v2.jpg"
+          "sourceFile": "ESH09856 web v2.jpg",
+          "color": "#b6b1a7"
         },
         {
           "src": "/images/e9c862ee6b0c88-1800.webp",
@@ -884,7 +976,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "City studies — photograph 8 by Ergys Shehu",
-          "sourceFile": "ESH09866 web.jpg"
+          "sourceFile": "ESH09866 web.jpg",
+          "color": "#a2a09a"
         },
         {
           "src": "/images/dc6586b51c707f-1800.webp",
@@ -892,7 +985,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "City studies — photograph 9 by Ergys Shehu",
-          "sourceFile": "ESH09876-web.jpg"
+          "sourceFile": "ESH09876-web.jpg",
+          "color": "#a09e99"
         },
         {
           "src": "/images/c8a9ac7c693f0b-1800.webp",
@@ -900,7 +994,8 @@
           "width": 2048,
           "height": 1330,
           "alt": "City studies — photograph 10 by Ergys Shehu",
-          "sourceFile": "ESH09902-web.jpg"
+          "sourceFile": "ESH09902-web.jpg",
+          "color": "#9e8c7f"
         },
         {
           "src": "/images/1c67e8960fb3a8-1800.webp",
@@ -908,7 +1003,8 @@
           "width": 1080,
           "height": 1920,
           "alt": "City studies — photograph 11 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\behance_download_1581932623102.png"
+          "sourceFile": "Mobile Uploads\\behance_download_1581932623102.png",
+          "color": "#929490"
         },
         {
           "src": "/images/0fb376de66bf7a-1800.webp",
@@ -916,7 +1012,8 @@
           "width": 6000,
           "height": 4000,
           "alt": "City studies — photograph 12 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH09876.jpg"
+          "sourceFile": "Mobile Uploads\\ESH09876.jpg",
+          "color": "#a09e99"
         }
       ]
     },
@@ -933,7 +1030,8 @@
         "width": 3528,
         "height": 4410,
         "alt": "Beauty studies — photography by Ergys Shehu",
-        "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+        "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg",
+        "color": "#875838"
       },
       "photos": [
         {
@@ -942,7 +1040,8 @@
           "width": 3528,
           "height": 4410,
           "alt": "Beauty studies — photograph 1 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg",
+          "color": "#875838"
         },
         {
           "src": "/images/6057419de67e68-1800.webp",
@@ -950,7 +1049,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Beauty studies — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH07508 cc web.jpg"
+          "sourceFile": "ESH07508 cc web.jpg",
+          "color": "#9a7f70"
         },
         {
           "src": "/images/77fac6a4db4901-1800.webp",
@@ -958,7 +1058,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Beauty studies — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH07641 web.jpg"
+          "sourceFile": "ESH07641 web.jpg",
+          "color": "#7c6659"
         },
         {
           "src": "/images/ff9f92093064be-1800.webp",
@@ -966,7 +1067,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Beauty studies — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH09763 low.jpg"
+          "sourceFile": "ESH09763 low.jpg",
+          "color": "#624c3f"
         },
         {
           "src": "/images/44bd3dd8f3e059-1800.webp",
@@ -974,7 +1076,8 @@
           "width": 5188,
           "height": 3459,
           "alt": "Beauty studies — photograph 5 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04921-Edit+v23+final1609443166839.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04921-Edit+v23+final1609443166839.jpg",
+          "color": "#714d39"
         },
         {
           "src": "/images/6001cb9264ee07-1800.webp",
@@ -982,7 +1085,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Beauty studies — photograph 6 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH08995+low.jpg"
+          "sourceFile": "Mobile Uploads\\ESH08995+low.jpg",
+          "color": "#90796e"
         }
       ]
     },
@@ -999,7 +1103,8 @@
         "width": 4800,
         "height": 3840,
         "alt": "Intimate light — photography by Ergys Shehu",
-        "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg"
+        "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg",
+        "color": "#62493d"
       },
       "photos": [
         {
@@ -1008,7 +1113,8 @@
           "width": 4800,
           "height": 3840,
           "alt": "Intimate light — photograph 1 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg",
+          "color": "#62493d"
         },
         {
           "src": "/images/61e29d86bc0f9e-1800.webp",
@@ -1016,7 +1122,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Intimate light — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH00015-Edit Low.jpg"
+          "sourceFile": "ESH00015-Edit Low.jpg",
+          "color": "#615349"
         },
         {
           "src": "/images/6022e2bce4a82f-1800.webp",
@@ -1024,7 +1131,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Intimate light — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH00060  low 2.jpg"
+          "sourceFile": "ESH00060  low 2.jpg",
+          "color": "#b2b5b1"
         },
         {
           "src": "/images/fb2f848e9f39c9-1800.webp",
@@ -1032,7 +1140,8 @@
           "width": 1639,
           "height": 2048,
           "alt": "Intimate light — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH00708 web.jpg"
+          "sourceFile": "ESH00708 web.jpg",
+          "color": "#4d5553"
         },
         {
           "src": "/images/25c891a8e1eb5d-1800.webp",
@@ -1040,7 +1149,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Intimate light — photograph 5 by Ergys Shehu",
-          "sourceFile": "ESH00745 web.jpg"
+          "sourceFile": "ESH00745 web.jpg",
+          "color": "#394234"
         },
         {
           "src": "/images/9f875ad91431db-1800.webp",
@@ -1048,7 +1158,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Intimate light — photograph 6 by Ergys Shehu",
-          "sourceFile": "ESH00864 low.jpg"
+          "sourceFile": "ESH00864 low.jpg",
+          "color": "#8f8379"
         },
         {
           "src": "/images/61071cabdcaf03-1800.webp",
@@ -1056,7 +1167,8 @@
           "width": 1576,
           "height": 2048,
           "alt": "Intimate light — photograph 7 by Ergys Shehu",
-          "sourceFile": "ESH01014 2cv.jpg"
+          "sourceFile": "ESH01014 2cv.jpg",
+          "color": "#433836"
         },
         {
           "src": "/images/0e005311c156bf-1800.webp",
@@ -1064,7 +1176,8 @@
           "width": 1894,
           "height": 2048,
           "alt": "Intimate light — photograph 8 by Ergys Shehu",
-          "sourceFile": "ESH04087 low v2.jpg"
+          "sourceFile": "ESH04087 low v2.jpg",
+          "color": "#98968c"
         },
         {
           "src": "/images/ee4c72472284a3-1800.webp",
@@ -1072,7 +1185,8 @@
           "width": 1303,
           "height": 2048,
           "alt": "Intimate light — photograph 9 by Ergys Shehu",
-          "sourceFile": "ESH04841-web.jpg"
+          "sourceFile": "ESH04841-web.jpg",
+          "color": "#827e70"
         },
         {
           "src": "/images/529a5f26d5962e-1800.webp",
@@ -1080,7 +1194,8 @@
           "width": 1488,
           "height": 2048,
           "alt": "Intimate light — photograph 10 by Ergys Shehu",
-          "sourceFile": "ESH05026web.jpg"
+          "sourceFile": "ESH05026web.jpg",
+          "color": "#735346"
         },
         {
           "src": "/images/d53f37c4f86f1d-1800.webp",
@@ -1088,7 +1203,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Intimate light — photograph 11 by Ergys Shehu",
-          "sourceFile": "ESH09685 low.jpg"
+          "sourceFile": "ESH09685 low.jpg",
+          "color": "#957e74"
         },
         {
           "src": "/images/353db151f53243-1800.webp",
@@ -1096,7 +1212,8 @@
           "width": 1476,
           "height": 2048,
           "alt": "Intimate light — photograph 12 by Ergys Shehu",
-          "sourceFile": "ESH09690 low.jpg"
+          "sourceFile": "ESH09690 low.jpg",
+          "color": "#85868b"
         },
         {
           "src": "/images/07d0b9c8963558-1800.webp",
@@ -1104,7 +1221,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Intimate light — photograph 13 by Ergys Shehu",
-          "sourceFile": "ESH09752 face  low.jpg"
+          "sourceFile": "ESH09752 face  low.jpg",
+          "color": "#423029"
         },
         {
           "src": "/images/a346c9f10d3668-1800.webp",
@@ -1112,7 +1230,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Intimate light — photograph 14 by Ergys Shehu",
-          "sourceFile": "ESH09786 low.jpg"
+          "sourceFile": "ESH09786 low.jpg",
+          "color": "#48352a"
         },
         {
           "src": "/images/8ce1e1bbd83a8d-1800.webp",
@@ -1120,7 +1239,8 @@
           "width": 2048,
           "height": 1638,
           "alt": "Intimate light — photograph 15 by Ergys Shehu",
-          "sourceFile": "ESH09814web.jpg"
+          "sourceFile": "ESH09814web.jpg",
+          "color": "#655755"
         },
         {
           "src": "/images/62ae9f04422b8e-1800.webp",
@@ -1128,7 +1248,8 @@
           "width": 3240,
           "height": 2160,
           "alt": "Intimate light — photograph 16 by Ergys Shehu",
-          "sourceFile": "ESH09883 cc.jpg"
+          "sourceFile": "ESH09883 cc.jpg",
+          "color": "#4c3c3a"
         },
         {
           "src": "/images/cebdc4ba62e0a1-1800.webp",
@@ -1136,7 +1257,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Intimate light — photograph 17 by Ergys Shehu",
-          "sourceFile": "ig v2.jpg"
+          "sourceFile": "ig v2.jpg",
+          "color": "#827774"
         },
         {
           "src": "/images/c843858c582d50-1800.webp",
@@ -1144,7 +1266,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Intimate light — photograph 18 by Ergys Shehu",
-          "sourceFile": "Instagram cc Bright,.jpg"
+          "sourceFile": "Instagram cc Bright,.jpg",
+          "color": "#aa928e"
         },
         {
           "src": "/images/426fce7c2509a3-1800.webp",
@@ -1152,7 +1275,8 @@
           "width": 1080,
           "height": 1350,
           "alt": "Intimate light — photograph 19 by Ergys Shehu",
-          "sourceFile": "Instagram.jpg"
+          "sourceFile": "Instagram.jpg",
+          "color": "#6c6763"
         },
         {
           "src": "/images/3647d236a3a0a3-1800.webp",
@@ -1160,7 +1284,8 @@
           "width": 3667,
           "height": 4584,
           "alt": "Intimate light — photograph 20 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04623-Edit1607881806791.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04623-Edit1607881806791.jpg",
+          "color": "#7e614a"
         },
         {
           "src": "/images/28acfaead4827c-1800.webp",
@@ -1168,7 +1293,8 @@
           "width": 5181,
           "height": 3811,
           "alt": "Intimate light — photograph 21 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04805-Edit+v231609434742216.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04805-Edit+v231609434742216.jpg",
+          "color": "#bb9c83"
         },
         {
           "src": "/images/b5a0b3eb1ab1ba-1800.webp",
@@ -1176,7 +1302,8 @@
           "width": 4000,
           "height": 5000,
           "alt": "Intimate light — photograph 22 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH08739-Edit-+Full+Size.jpg"
+          "sourceFile": "Mobile Uploads\\ESH08739-Edit-+Full+Size.jpg",
+          "color": "#b5adac"
         },
         {
           "src": "/images/f1be13a6e30c80-1800.webp",
@@ -1184,7 +1311,8 @@
           "width": 2800,
           "height": 3500,
           "alt": "Intimate light — photograph 23 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH08796-Edit.jpg"
+          "sourceFile": "Mobile Uploads\\ESH08796-Edit.jpg",
+          "color": "#948c7e"
         },
         {
           "src": "/images/ed476a98de12a0-1800.webp",
@@ -1192,7 +1320,8 @@
           "width": 5250,
           "height": 3500,
           "alt": "Intimate light — photograph 24 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH08881+Low.jpg"
+          "sourceFile": "Mobile Uploads\\ESH08881+Low.jpg",
+          "color": "#b0a4a0"
         },
         {
           "src": "/images/d7009a9f022954-1800.webp",
@@ -1200,7 +1329,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Intimate light — photograph 25 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH09831+low-1.jpg"
+          "sourceFile": "Mobile Uploads\\ESH09831+low-1.jpg",
+          "color": "#5d524b"
         }
       ]
     },
@@ -1217,7 +1347,8 @@
         "width": 4000,
         "height": 5000,
         "alt": "Evening silhouettes — photography by Ergys Shehu",
-        "sourceFile": "ESH07553 v2.jpg"
+        "sourceFile": "ESH07553 v2.jpg",
+        "color": "#4e3b28"
       },
       "photos": [
         {
@@ -1226,7 +1357,8 @@
           "width": 4000,
           "height": 5000,
           "alt": "Evening silhouettes — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH07553 v2.jpg"
+          "sourceFile": "ESH07553 v2.jpg",
+          "color": "#4e3b28"
         },
         {
           "src": "/images/53a0aca1b1780e-1800.webp",
@@ -1234,7 +1366,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Evening silhouettes — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH07560-Recovered low.jpg"
+          "sourceFile": "ESH07560-Recovered low.jpg",
+          "color": "#5b5045"
         },
         {
           "src": "/images/ddde5330bbd88e-1800.webp",
@@ -1242,7 +1375,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Evening silhouettes — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH07629 fix low.jpg"
+          "sourceFile": "ESH07629 fix low.jpg",
+          "color": "#584641"
         },
         {
           "src": "/images/129550a3b0552c-1800.webp",
@@ -1250,7 +1384,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Evening silhouettes — photograph 4 by Ergys Shehu",
-          "sourceFile": "ESH07680 Low.jpg"
+          "sourceFile": "ESH07680 Low.jpg",
+          "color": "#56565d"
         }
       ]
     },
@@ -1267,7 +1402,8 @@
         "width": 1638,
         "height": 2048,
         "alt": "Character studies — photography by Ergys Shehu",
-        "sourceFile": "ESH00013web.jpg"
+        "sourceFile": "ESH00013web.jpg",
+        "color": "#5b514d"
       },
       "photos": [
         {
@@ -1276,7 +1412,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Character studies — photograph 1 by Ergys Shehu",
-          "sourceFile": "ESH00013web.jpg"
+          "sourceFile": "ESH00013web.jpg",
+          "color": "#5b514d"
         },
         {
           "src": "/images/d2f954e4f34b2c-1800.webp",
@@ -1284,7 +1421,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Character studies — photograph 2 by Ergys Shehu",
-          "sourceFile": "ESH09740-cc-web.jpg"
+          "sourceFile": "ESH09740-cc-web.jpg",
+          "color": "#90918f"
         },
         {
           "src": "/images/3c89eee303ab2d-1800.webp",
@@ -1292,7 +1430,8 @@
           "width": 2048,
           "height": 1365,
           "alt": "Character studies — photograph 3 by Ergys Shehu",
-          "sourceFile": "ESH09844 low web2.jpg"
+          "sourceFile": "ESH09844 low web2.jpg",
+          "color": "#978d88"
         }
       ]
     },
@@ -1309,7 +1448,8 @@
         "width": 2048,
         "height": 1273,
         "alt": "Wedding stories — photography by Ergys Shehu",
-        "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+        "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg",
+        "color": "#624b46"
       },
       "photos": [
         {
@@ -1318,7 +1458,8 @@
           "width": 2048,
           "height": 1273,
           "alt": "Wedding stories — photograph 1 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+          "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg",
+          "color": "#624b46"
         },
         {
           "src": "/images/99c5fef509fae2-1800.webp",
@@ -1326,7 +1467,8 @@
           "width": 1638,
           "height": 2048,
           "alt": "Wedding stories — photograph 2 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH_8943cc.jpg"
+          "sourceFile": "Mobile Uploads\\ESH_8943cc.jpg",
+          "color": "#85a6a2"
         },
         {
           "src": "/images/08e4c3196ed78b-1800.webp",
@@ -1334,7 +1476,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Wedding stories — photograph 3 by Ergys Shehu",
-          "sourceFile": "Mobile Uploads\\ESH04992-web.jpg"
+          "sourceFile": "Mobile Uploads\\ESH04992-web.jpg",
+          "color": "#877a73"
         }
       ]
     }

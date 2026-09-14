@@ -2,13 +2,14 @@
 import Layout from '../../layouts/Layout.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import {content, photoUrl, photoSet, safeUrl, type Album, type Settings} from '../../lib/content';
-import {paceGallery} from '../../lib/editorial';
 export async function getStaticPaths() {const {albums, settings} = await content(); return albums.map(album => ({params: {slug: album.slug}, props: {album, settings}}));}
 interface Props {album: Album; settings: Settings}
 const {album, settings} = Astro.props;
-const rows = paceGallery((album.photos || []).filter(p => photoUrl(p)));
+const photos = (album.photos || []).filter(p => photoUrl(p));
 ---
 <Layout title={`${album.title} — ${settings.name || 'Ergys Shehu'}`} name={settings.name} description={album.description} image={photoUrl(album.cover,1800)}>
 <section class="collection-intro"><a class="back-link" data-reveal href="/projects/">← All projects</a><p class="kicker" data-reveal>{[album.category, album.location, album.year].filter(Boolean).join(' / ')}</p><h1 data-reveal>{album.title}</h1>{album.description && <p class="bio" data-reveal>{album.description}</p>}{safeUrl(album.videoUrl) && <a class="cta-row video-link" data-reveal href={safeUrl(album.videoUrl)} target="_blank" rel="noopener noreferrer"><span class="circle-btn" aria-hidden="true">↗</span><span>WATCH FILM</span></a>}{album.credits && <p class="credits" data-reveal>{album.credits}</p>}</section>
-<section class="gallery collection-body" aria-label={album.title}>{rows.map((row,ri) => <div class:list={[`row-${row.type}`, row.align && `align-${row.align}`]}>{row.items.map((photo,pi) => {const i=ri===0 && pi===0?0:1; return <figure data-reveal><a href={photoUrl(photo,2400)} target="_blank" rel="noopener noreferrer" aria-label={`Open photograph: ${photo.alt || album.title}`}><div data-image-reveal><img src={photoUrl(photo,row.type==='full'?2400:1800)} srcset={photoSet(photo)} sizes={row.type==='full'?'100vw':row.type==='pair'?'(max-width:700px) 90vw, 44vw':'(max-width:700px) 90vw, 60vw'} width={photo.width} height={photo.height} alt={photo.alt || album.title} loading={i === 0 ? 'eager' : 'lazy'}/></div></a>{(photo.caption || photo.credit) && <figcaption>{photo.caption}{photo.credit && <span> © {photo.credit}</span>}</figcaption>}</figure>;})}</div>)}</section><Lightbox/>
+<section class="gallery photo-stack" aria-label={album.title}>{photos.map((photo,i) => <figure class="stack-frame" data-reveal style={`--frame-color:${photo.color || '#141412'}`}><a class="stack-photo" data-stack-photo href={photoUrl(photo,2400)} target="_blank" rel="noopener noreferrer" aria-label={`Open photograph: ${photo.alt || album.title}`}><img src={photoUrl(photo,1800)} srcset={photoSet(photo)} sizes="92vw" width={photo.width} height={photo.height} alt={photo.alt || album.title} loading={i === 0 ? 'eager' : 'lazy'}/></a>{(photo.caption || photo.credit) && <figcaption>{photo.caption}{photo.credit && <span> © {photo.credit}</span>}</figcaption>}<span class="stack-index">{String(i+1).padStart(2,'0')} / {String(photos.length).padStart(2,'0')}</span></figure>)}</section>
+<a class="gallery-cta" href="/book/" data-en="Book now ↗" data-sq="Rezervo ↗">Book now ↗</a>
+<Lightbox/>
 </Layout>

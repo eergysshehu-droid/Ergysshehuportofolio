@@ -426,16 +426,13 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 .cta-row{display:inline-flex;align-items:center;gap:20px;font-size:var(--text-xs);letter-spacing:.1em;margin-top:25px}
 .circle-btn{border:1px solid currentColor;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;font-size:21px}
 
-.gallery{display:flex;flex-direction:column;gap:clamp(50px,7vw,120px)}
-.gallery figure{margin:0}
-.gallery img{width:100%;height:auto;display:block}
-.gallery figcaption{font-size:var(--text-sm);color:var(--muted);padding-top:12px}
-.row-full img{max-height:92vh;object-fit:cover}
-.row-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,32px)}
-.row-solo{display:flex}
-.row-solo.align-left{justify-content:flex-start}
-.row-solo.align-right{justify-content:flex-end}
-.row-solo figure{width:min(620px,68%)}
+.photo-stack{position:relative}
+.stack-frame{position:sticky;top:0;height:100svh;margin:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--frame-color);padding:9vh 6vw}
+.stack-photo{display:block;line-height:0}
+.stack-photo img{display:block;max-width:100%;max-height:calc(100svh - 18vh);width:auto;height:auto;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.stack-frame figcaption{position:absolute;right:5vw;bottom:5vh;max-width:320px;font-size:var(--text-xs);color:#fff;opacity:.85;text-align:right;mix-blend-mode:difference}
+.stack-index{position:absolute;left:5vw;bottom:5vh;font-size:var(--text-xs);letter-spacing:.14em;color:#fff;opacity:.85;mix-blend-mode:difference}
+.gallery-cta{position:fixed;right:22px;bottom:22px;z-index:500;padding:.75em 1.3em;border-radius:30px;background:var(--accent);color:#171714;font-size:var(--text-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .credits{font-size:var(--text-sm)!important}
 
 .biography-layout{display:grid;grid-template-columns:1fr 1.7fr;gap:10vw}
@@ -463,6 +460,7 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 .lightbox-toolbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;font-size:var(--text-sm)}
 .lightbox button{background:transparent;color:white;border:1px solid #777;padding:10px 16px;cursor:pointer}
 .lightbox-controls{display:flex;gap:12px}
+.lightbox-book{color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:var(--text-xs);white-space:nowrap}
 .lightbox-caption{text-align:center;font-size:var(--text-sm);margin:0}
 .lightbox-open{overflow:hidden}
 
@@ -551,9 +549,9 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
   .collection-intro .kicker{margin-top:15px}
   .collection-intro h1{font-size:52px}
   .collection-body{padding-bottom:50px}
-  .gallery{gap:clamp(36px,10vw,64px)}
-  .row-pair{grid-template-columns:1fr;gap:36px}
-  .row-solo figure{width:100%}
+  .stack-frame{padding:7vh 6vw}
+  .stack-photo img{max-height:calc(100svh - 22vh)}
+  .gallery-cta{right:16px;bottom:16px;padding:.65em 1.1em;font-size:var(--text-2xs)}
   .biography-layout{grid-template-columns:1fr;gap:35px}
   .biography-layout blockquote{font-size:26px}
   .bio-language p{font-size:13px}

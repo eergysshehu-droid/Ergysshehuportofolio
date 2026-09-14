@@ -1,7 +1,7 @@
 import {createClient} from '@sanity/client';
 import {createImageUrlBuilder} from '@sanity/image-url';
 import localPortfolio from '../data/local-portfolio.json';
-export interface Photo {asset?: {_ref: string}; src?: string; localBase?: string; width?: number; height?: number; alt?: string; caption?: string; credit?: string; crop?: any; hotspot?: any}
+export interface Photo {asset?: {_ref: string}; src?: string; localBase?: string; width?: number; height?: number; alt?: string; caption?: string; credit?: string; crop?: any; hotspot?: any; color?: string}
 export interface Album {title: string; slug: string; description?: string; category?: string; kind?: string; featured?: boolean; videoUrl?: string; credits?: string; cover?: Photo; photos?: Photo[]; location?: string; year?: number}
 export interface Settings {name?: string; headline?: string; intro?: string; aboutHeading?: string; bio?: string; biographyEn?: string; biographySq?: string; artistQuote?: string; portrait?: Photo; heroImage?: Photo; fashionCover?: Photo; weddingsCover?: Photo; portraitsCover?: Photo; filmCover?: Photo; reelUrl?: string; email?: string; instagram?: string; seoDescription?: string}
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || '46mghxoy';
