@@ -158,7 +158,7 @@ html.mobile-menu-open{overflow:hidden}
 /* ==========================================================================
    HERO — sticky cinematic scene
    ========================================================================== */
-.hero-scroll-scene{position:relative;height:calc(100svh + var(--hero-overlap))}
+.hero-scroll-scene{position:relative;min-height:calc(100svh + var(--hero-overlap))}
 .opening{
   position:sticky;
   top:0;
@@ -358,6 +358,11 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 
 /* JOURNAL */
 .journal-list{padding:0 5vw 100px;min-height:35vh;display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(30px,4vw,60px)}
+.journal-feature{position:relative;z-index:2;background:var(--paper);padding:70px 6vw 90px;margin-top:clamp(-32px,-2.4vw,-20px);border-radius:var(--radius-panel) var(--radius-panel) 0 0}
+.journal-feature-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:40px}
+.journal-feature-heading h2{font:400 clamp(32px,4vw,56px)/1.15 var(--serif);letter-spacing:-.03em;margin:16px 0 0}
+.journal-feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,40px)}
+@media (max-width:900px){.journal-feature-grid{grid-template-columns:1fr;gap:36px}.journal-feature-heading{align-items:start}.journal-feature-heading .index-link{display:none}}
 .journal-card{display:block}
 .journal-card-image{overflow:hidden;border-radius:6px;margin-bottom:20px}
 .journal-card-image img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:var(--focal-point,50% 32%);transition:transform .6s var(--ease-editorial)}
@@ -491,7 +496,7 @@ footer>span,footer>a:last-child{font-size:var(--text-2xs);letter-spacing:.08em}
 
 @media(max-width:700px){
   .site-header{padding-inline:5vw}
-  .hero-scroll-scene{height:calc(100svh + var(--hero-overlap))}
+  .hero-scroll-scene{min-height:calc(100svh + var(--hero-overlap))}
   .opening{min-height:560px}
   .hero-topline{top:96px}
   .hero-feature{bottom:130px;max-width:88vw}

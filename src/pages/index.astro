@@ -2,9 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 import LatestWork from '../components/LatestWork.astro';
-import {content,photoUrl,photoSet,safeUrl} from '../lib/content';
+import {content,photoUrl,photoSet,photoPosition,safeUrl} from '../lib/content';
+import {journal} from '../lib/journal';
 import {defaults} from '../lib/editorial';
 const {settings:saved,albums}=await content();
+const journalFeature=(await journal()).slice(0,3);
+const journalDate=(iso:string)=>new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 const settings={...defaults,...Object.fromEntries(Object.entries(saved).filter(([,v])=>v!=null))};
 const featuredAlbums=albums.filter(a=>a.featured);
 const hero=saved.heroImage || featuredAlbums[0]?.cover;
@@ -36,6 +39,7 @@ if(hero && photoUrl(hero) && isHeroShaped(hero)){const key=photoKey(hero);if(key
 </div>
 {reel && <section class="motion-section"><p class="kicker" data-reveal>MOVING IMAGE</p><h2 data-reveal>Beyond the still.</h2><a data-reveal href={reel} target="_blank" rel="noopener noreferrer">WATCH THE REEL ↗</a></section>}
 <LatestWork/>
+{journalFeature.length>0 && <section class="journal-feature"><div class="journal-feature-heading" data-reveal><div><p class="kicker">THE JOURNAL</p><h2>Beyond the frame.</h2></div><a class="index-link" href="/journal/">READ THE JOURNAL ↗</a></div><div class="journal-feature-grid">{journalFeature.map(post=><a class="journal-card" data-reveal href={`/journal/${post.slug}/`}>{post.cover && photoUrl(post.cover) && <div class="journal-card-image" data-image-reveal style={`--focal-point:${photoPosition(post.cover)}`}><img src={photoUrl(post.cover,700)} srcset={photoSet(post.cover)} sizes="(max-width:700px) 90vw, 30vw" alt={post.cover.alt || post.title} loading="lazy"/></div>}<div class="journal-card-copy"><span class="journal-date">{post.category?`${post.category} / `:''}{journalDate(post.publishedAt)}</span><h2>{post.title}</h2><p>{post.excerpt}</p><span class="journal-read">Read <span aria-hidden="true">↗</span></span></div></a>)}</div></section>}
 <section class="artist-section" id="about"><div class="artist-label" data-reveal><span class="kicker">BEHIND THE LENS</span><span class="artist-number">ES / 01</span></div><div class="artist-copy"><h2 data-reveal>Purity.<br/>Simplicity.<br/><em>Honesty.</em></h2><p data-reveal>{settings.bio}</p><a class="text-link" data-reveal href="/about/">THE ARTIST · EN / SQ <span>↗</span></a></div></section>
 <section class="contact-section" id="contact"><div data-reveal><p class="kicker">FOR COMMISSIONS & COLLABORATIONS</p><h2>Let’s make<br/><em>something matter.</em></h2></div><div class="contact-details" data-reveal>{settings.email && <a class="email" href={`mailto:${settings.email}`}>{settings.email} ↗</a>}<p>Based in Albania.<br/>Available worldwide.</p>{safeUrl(settings.instagram) && <a href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>}</div></section>
 <script>

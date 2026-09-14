@@ -10,6 +10,10 @@
       "width": 1639,
       "height": 2048,
       "alt": "Portrait against a graffiti-covered railway carriage",
+      "hotspot": {
+        "x": 0.4,
+        "y": 0.25
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -143,6 +147,10 @@
       "width": 4000,
       "height": 5000,
       "alt": "Editorial portrait at golden hour against mountains",
+      "hotspot": {
+        "x": 0.42,
+        "y": 0.13
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -246,6 +254,10 @@
       "width": 1638,
       "height": 2048,
       "alt": "Close, moody character portrait",
+      "hotspot": {
+        "x": 0.58,
+        "y": 0.3
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -369,6 +381,10 @@
       "width": 2048,
       "height": 1365,
       "alt": "Editorial portrait in a warm, lit interior",
+      "hotspot": {
+        "x": 0.62,
+        "y": 0.2
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -482,6 +498,10 @@
       "width": 5839,
       "height": 3892,
       "alt": "A dancer suspended mid-leap against a dramatic sky",
+      "hotspot": {
+        "x": 0.46,
+        "y": 0.42
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -633,6 +653,10 @@
       "width": 2048,
       "height": 1365,
       "alt": "Editorial portrait of a couple at the shoreline",
+      "hotspot": {
+        "x": 0.66,
+        "y": 0.18
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
@@ -756,6 +780,10 @@
       "width": 3528,
       "height": 4410,
       "alt": "Close beauty portrait, magazine-cover style",
+      "hotspot": {
+        "x": 0.5,
+        "y": 0.3
+      },
       "_type": "portfolioPhoto"
     },
     "body": [
