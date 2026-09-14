@@ -4,7 +4,7 @@ import {content, photoUrl, photoSet} from '../lib/content';
 import {defaults, biography} from '../lib/editorial';
 const {settings} = await content();
 ---
-<Layout title="About — Ergys Shehu" name={settings.name}>
+<Layout title="About — Ergys Shehu" name={settings.name} image={settings.portrait && photoUrl(settings.portrait,1200)}>
 <section class="collection-intro"><a class="back-link" href="/">← Selected work</a><p class="kicker">PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST</p><h1>Ergys Shehu.</h1><p>{settings.bio || defaults.bio}</p></section>
 <section class="biography-layout collection-body">
 <aside>{settings.portrait && <img src={photoUrl(settings.portrait,1200)} srcset={photoSet(settings.portrait)} sizes="(max-width: 700px) 90vw, 35vw" alt={settings.portrait.alt || 'Ergys Shehu'}/>}<p class="kicker">ALBANIA / WORLDWIDE</p><p>Photography<br/>Film & creative direction<br/>Painting & decorative arts<br/>Cultural curation</p><a href="/#contact">Enquiries ↗</a></aside>

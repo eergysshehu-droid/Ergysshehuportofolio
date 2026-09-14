@@ -8,4 +8,5 @@ design-preview/
 .env
 .env.*
 !.env.example
+instagram-media.json
 *.log

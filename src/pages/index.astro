@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
+import LatestWork from '../components/LatestWork.astro';
 import {content,photoUrl,photoSet,safeUrl} from '../lib/content';
 import {defaults} from '../lib/editorial';
 const {settings:saved,albums}=await content();
@@ -9,11 +10,12 @@ const hero=saved.heroImage || albums.find(a=>a.featured)?.cover;
 const selected=[...albums.filter(a=>a.featured),...albums.filter(a=>!a.featured)];
 const reel=safeUrl(saved.reelUrl);
 ---
-<Layout home name={settings.name} description={settings.seoDescription}>
+<Layout home name={settings.name} description={settings.seoDescription} image={hero && photoUrl(hero,1800)}>
 <section class="opening" aria-label="Selected photography"><div class="opening-image">{hero && <picture>{hero.localBase && <source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(hero,1800)} srcset={photoSet(hero)} sizes="100vw" alt={hero.alt || 'Dance in the elements — Ergys Shehu'} fetchpriority="high" width={hero.width} height={hero.height}/></picture>}</div><div class="opening-caption"><span>PHOTOGRAPHY & MOVING IMAGE</span><a href="#selected">EXPLORE THE WORK ↓</a></div><h1 class="sr-only">{settings.name}</h1><div class="opening-foot"><span>FASHION · BEAUTY · HUMAN STORIES</span><span>EST. 2017</span></div></section>
 <section class="work-section" id="selected"><div class="work-heading"><div><p class="kicker">A SELECTED PERSPECTIVE</p><h2>Still. <em>Never silent.</em></h2></div><span class="work-count">{String(albums.length).padStart(2,'0')} COLLECTIONS</span></div><div class="work-toolbar"><div class="filters" role="group" aria-label="Filter projects"><button data-filter="all" aria-pressed="true">All work</button><button data-filter="fashion" aria-pressed="false">Fashion</button><button data-filter="portraits" aria-pressed="false">Portraits</button><button data-filter="weddings" aria-pressed="false">Weddings</button><button data-filter="projects" aria-pressed="false">Personal</button></div><a class="index-link" href="/projects/">PROJECT INDEX ↗</a></div><ProjectGrid albums={selected}/><p class="work-empty" hidden>No projects in this selection yet.</p></section>
-<section class="artist-section" id="about"><div class="artist-label"><span class="kicker">BEHIND THE LENS</span><span class="artist-number">ES / 01</span></div><div class="artist-copy"><h2>Purity.<br/>Simplicity.<br/><em>Honesty.</em></h2><p>{settings.bio}</p><a class="text-link" href="/about/">THE ARTIST · EN / SQ <span>↗</span></a></div></section>
 {reel && <section class="motion-section"><p class="kicker">MOVING IMAGE</p><h2>Beyond the still.</h2><a href={reel} target="_blank" rel="noopener noreferrer">WATCH THE REEL ↗</a></section>}
+<LatestWork/>
+<section class="artist-section" id="about"><div class="artist-label"><span class="kicker">BEHIND THE LENS</span><span class="artist-number">ES / 01</span></div><div class="artist-copy"><h2>Purity.<br/>Simplicity.<br/><em>Honesty.</em></h2><p>{settings.bio}</p><a class="text-link" href="/about/">THE ARTIST · EN / SQ <span>↗</span></a></div></section>
 <section class="contact-section" id="contact"><div><p class="kicker">FOR COMMISSIONS & COLLABORATIONS</p><h2>Let’s make<br/><em>something matter.</em></h2></div><div class="contact-details">{settings.email && <a class="email" href={`mailto:${settings.email}`}>{settings.email} ↗</a>}<p>Based in Albania.<br/>Available worldwide.</p>{safeUrl(settings.instagram) && <a href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>}</div></section>
 <script>
 const buttons=document.querySelectorAll<HTMLButtonElement>('[data-filter]');
