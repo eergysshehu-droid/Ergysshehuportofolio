@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 import {content, albumKind, photoUrl, type Album, type Settings} from '../lib/content';
-import {sections} from '../lib/editorial';
+import {sections, films, defaults} from '../lib/editorial';
 export async function getStaticPaths() {
   const {settings,albums} = await content();
   return [...sections,{slug:'projects',title:'Projects',subtitle:'Selected stories, still and moving.'}].map(section => ({params:{section:section.slug},props:{section,settings,albums:section.slug === 'projects' ? albums : albums.filter(a => albumKind(a) === section.slug)}}));
@@ -10,4 +10,18 @@ export async function getStaticPaths() {
 interface Props {section:{slug:string;title:string;subtitle:string};settings:Settings;albums:Album[]}
 const {section,settings,albums} = Astro.props;
 ---
-<Layout title={`${section.title} — Ergys Shehu`} name={settings.name} description={section.subtitle} image={albums[0] && photoUrl(albums[0].cover,1800)}><section class="collection-intro"><a class="back-link" data-reveal href="/">← Home</a><p class="kicker" data-reveal>THE PORTFOLIO / {String(albums.length).padStart(2,'0')} PROJECTS</p><h1 data-reveal>{section.title}</h1><p data-reveal>{section.subtitle}</p></section><section class="collection-body">{albums.length ? <ProjectGrid albums={albums}/> : <div class="collection-empty" data-reveal><p class="kicker">COMING SOON</p><h2>A new story is taking shape.</h2><p>Selected work will appear here soon.</p><a class="cta-row" href="/#contact"><span class="circle-btn" aria-hidden="true">↗</span><span>GET IN TOUCH</span></a></div>}</section></Layout>
+<Layout title={`${section.title} — Ergys Shehu`} name={settings.name} description={section.subtitle} image={albums[0] && photoUrl(albums[0].cover,1800)}><section class="collection-intro"><a class="back-link" data-reveal href="/">← Home</a><p class="kicker" data-reveal>THE PORTFOLIO / {String(albums.length).padStart(2,'0')} PROJECTS</p><h1 data-reveal>{section.title}</h1><p data-reveal>{section.subtitle}</p></section><section class="collection-body">{albums.length ? <ProjectGrid albums={albums}/> : <div class="collection-empty" data-reveal><p class="kicker">COMING SOON</p><h2>A new story is taking shape.</h2><p>Selected work will appear here soon.</p><a class="cta-row" href="/#contact"><span class="circle-btn" aria-hidden="true">↗</span><span>GET IN TOUCH</span></a></div>}</section>{section.slug === 'films' && films.length > 0 && <section class="films-video-section"><p class="kicker" data-reveal>WATCH</p><h2 data-reveal>On YouTube.</h2><div class="yt-grid">{films.map(video => <div class="yt-embed" data-yt-id={video.id} data-reveal><button type="button" class="yt-thumb" aria-label={`Play ${('label' in video && video.label) || 'video'}`}><img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360"/><span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{'label' in video && video.label && <span class="yt-label">{video.label}</span>}</button></div>)}</div><a class="films-more-link" data-reveal href={defaults.youtube} target="_blank" rel="noopener noreferrer">MORE ON YOUTUBE <span>↗</span></a></section>}
+<script>
+document.querySelectorAll<HTMLElement>('[data-yt-id]').forEach(wrap => {
+  wrap.querySelector('.yt-thumb')?.addEventListener('click', () => {
+    const id = wrap.dataset.ytId;
+    if (!id) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    iframe.title = 'YouTube video player';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.allowFullscreen = true;
+    wrap.replaceChildren(iframe);
+  }, {once: true});
+});
+</script></Layout>

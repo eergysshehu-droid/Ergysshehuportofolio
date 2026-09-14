@@ -6,8 +6,18 @@ export const defaults = {
   bio: 'Since 2017, Ergys Shehu has worked as a freelance fashion and beauty photographer, collaborating with celebrities, models and national and international clients. Purity, simplicity and honesty characterise his photographic style. He lives and works in Albania.',
   email: 'e.ergysshehu@gmail.com', instagram: 'https://instagram.com/ergys.shehu',
   youtube: 'https://www.youtube.com/@ErgysShehu', kult360: 'https://kult360.com',
+  linkedin: 'https://www.linkedin.com/in/ergysshehu/', facebook: 'https://www.facebook.com/ergysshehuphotography',
   seoDescription: 'Ergys Shehu — Photographer and Director. Fashion, editorial weddings, film and music videos. Albania / Worldwide.'
 };
+// Featured YouTube films — shown on the /films/ page. IDs only; each video's
+// own title renders inside the YouTube player once played, so we don't need
+// to hardcode titles we can't verify. Where the client gave us a real title
+// (from their own Instagram caption for this same edit) we use it as the label.
+export const films = [
+  {id: '_yur69PW-10', label: 'Kujtimi (Remix)'},
+  {id: 'o01_26Q2SfY'},
+  {id: '3WgyoTNFw7I'}
+] as const;
 export const biography = {
   en: 'Born in Shkodër, Ergys Shehu brings a background in painting and graphic design to photography, film and creative direction. His work moves between fashion and beauty, commercial campaigns, music videos and cultural projects.\n\nIn 2017, he founded ALERDIGITALMEDIA. In 2020, he received the Best Director award at Netët e Klipit Shqiptar. Alongside his photographic practice, he has worked on Islamic decorative art and murals in more than 40 places of worship across the Balkans and Europe, combining calligraphy, geometric patterns and arabesque motifs.\n\nAs Executive Director of the Kult 360 Foundation, he connects cultural heritage with contemporary visual production and immersive technologies. He lives and works in Albania.',
   sq: 'Ergys Shehu ka lindur në Shkodër. Që në moshë të re, ai shfaqi pasion për pikturën. Në vitin 2005 nisi mësimet në degën e pikturës në liceun artistik në Shkodër, për të vazhduar më pas studimet në arte pranë Universitetit të Shkodrës, me formim në pikturë, grafikë, fotografi dhe teknika digjitale.\n\nI specializuar në fotografinë e modës dhe bukurisë, Shehu ka zhvilluar një stil të dallueshëm dhe bashkëpunon me agjenci, modele, artistë dhe profesionistë të grimit e stilimit. Në vitin 2017 themeloi ALERDIGITALMEDIA, kushtuar fotografisë, videove muzikore dhe ceremonive martesore. Në vitin 2020 u vlerësua me çmimin Best Director në Netët e Klipit Shqiptar.\n\nPraktika e tij përfshin gjithashtu artin dekorativ islam, me murale në mbi 40 objekte kulti në Ballkan dhe Europë. Në rolin e Drejtorit Ekzekutiv të Fondacionit Kult 360, ai ndërthur trashëgiminë kulturore me prodhimin vizual dhe teknologjitë immersive. Jeton dhe punon në Shqipëri.',
