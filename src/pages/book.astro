@@ -45,10 +45,6 @@ const instagram = safeUrl(settings.instagram);
   {hero && photoUrl(hero) && <picture class="book-hero-media" data-image-reveal><img src={photoUrl(hero, 1800)} srcset={photoSet(hero)} sizes="100vw" alt="" fetchpriority="high" width={hero.width} height={hero.height}/></picture>}
   <div class="hero-shade" aria-hidden="true"></div>
 
-  <div class="language-switch" role="group" aria-label="Language / Gjuha">
-    <button type="button" data-lang="en" class="is-active" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="sq" aria-pressed="false">SQ</button>
-  </div>
-
   <div class="hero-content">
     <p class="eyebrow" data-en="LET’S CREATE TOGETHER" data-sq="LE TË KRIJOJMË BASHKË">LET’S CREATE TOGETHER</p>
     <h1 data-en="Book a Shoot" data-sq="Rezervo një Sesion">Book a Shoot</h1>
@@ -123,34 +119,12 @@ const instagram = safeUrl(settings.instagram);
 </div>
 
 <script define:vars={{email}} is:inline>
-const STORAGE_KEY = 'book-lang';
 const root = document.querySelector('.booking-page');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-function currentLang() {
-  try { return localStorage.getItem(STORAGE_KEY) || 'en'; } catch { return 'en'; }
-}
-
-function applyLang(lang) {
-  if (!root) return;
-  root.querySelectorAll('[data-en]').forEach(el => {
-    const text = lang === 'sq' ? el.dataset.sq : el.dataset.en;
-    if (text != null) el.textContent = text;
-  });
-  root.querySelectorAll('[data-en-placeholder]').forEach(el => {
-    const text = lang === 'sq' ? el.dataset.sqPlaceholder : el.dataset.enPlaceholder;
-    if (text != null) el.placeholder = text;
-  });
-  root.querySelectorAll('[data-lang]').forEach(btn => {
-    btn.classList.toggle('is-active', btn.dataset.lang === lang);
-    btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
-  });
-  document.documentElement.lang = lang;
-  try { localStorage.setItem(STORAGE_KEY, lang); } catch {}
-}
-
-applyLang(currentLang());
-root?.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang || 'en')));
+// EN/SQ translation for this page's [data-en]/[data-sq] content is handled
+// by the site-wide toggle in Layout.astro (it queries the whole document,
+// not just this page), so there's no language logic here anymore.
 
 // Service cards and the collaboration CTA preselect the project type and
 // scroll to the form (the #inquiry anchor already scrolls without JS).
@@ -196,10 +170,6 @@ form?.addEventListener('submit', e => {
 .button{min-height:52px;padding:0 2rem;display:inline-flex;align-items:center;justify-content:center;gap:.9rem;border:1px solid rgba(255,255,255,.45);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:#fff;transition:background .25s var(--ease-editorial),color .25s var(--ease-editorial)}
 .button-light{background:#f4f0e8;color:#090b0b;border-color:#f4f0e8}
 .button:hover{background:#fff;color:#080a0a;border-color:#fff}
-.language-switch{position:absolute;z-index:2;top:1.6rem;right:clamp(1.25rem,4vw,3rem);display:flex;gap:.5rem;align-items:center;font-size:.7rem;letter-spacing:.13em}
-.language-switch button{border:0;padding:0;background:transparent;color:rgba(255,255,255,.52);cursor:pointer}
-.language-switch button.is-active{color:#fff}
-.language-switch span{color:rgba(255,255,255,.3)}
 
 .services-section{padding:var(--section-gap) var(--page-pad)}
 .section-heading{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;margin-bottom:clamp(2rem,4vw,3rem)}

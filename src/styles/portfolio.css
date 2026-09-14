@@ -97,6 +97,11 @@ img{display:block;max-width:100%}
 .desktop-nav a:after{content:'';position:absolute;bottom:-6px;height:1px;left:0;width:0;background:currentColor;transition:width .25s}
 .desktop-nav a:hover:after{width:100%}
 .desktop-nav .nav-book{font-weight:500;opacity:1}
+.language-switch{display:flex;align-items:center;gap:.45em;font-size:var(--text-xs);letter-spacing:.13em}
+.desktop-nav .language-switch{color:var(--header-fg)}
+.language-switch button{border:0;padding:0;background:transparent;font:inherit;letter-spacing:inherit;color:inherit;opacity:.55;cursor:pointer}
+.language-switch button.is-active{opacity:1}
+.language-switch span{opacity:.35}
 
 /* ==========================================================================
    MOBILE MENU — full-screen black takeover
@@ -146,6 +151,7 @@ img{display:block;max-width:100%}
 }
 .mobile-menu-screen nav a:hover{opacity:1}
 .mobile-menu-footer{display:flex;flex-direction:column;gap:22px}
+.mobile-menu-footer .language-switch{color:#f4f2ed}
 .mobile-book{font-size:var(--text-sm);letter-spacing:.13em;text-transform:uppercase;font-weight:500;color:#f4f2ed}
 .mobile-footer-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
 .mobile-social{display:flex;align-items:center;gap:18px}
