@@ -83,17 +83,33 @@ if('IntersectionObserver' in window){
       },{threshold:0});
       gridIo.observe(stackGrid);
 
-      // Melt a card away (dim + blur) once it's mostly covered by the next
-      // one sliding up, rather than the hard cut a plain sticky stack gives.
-      // Only applies once a card has actually been revealed (is-visible),
-      // so a card further down the page isn't dimmed before you reach it.
-      const exitIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          const el=entry.target as HTMLElement;
-          if(el.classList.contains('is-visible'))el.classList.toggle('is-leaving',entry.intersectionRatio<0.5);
+      // Melt a card away (dim + blur) continuously as it scrolls out from
+      // under the next sticky card, rather than a hard cut. --melt goes from
+      // 0 (pinned at top, sharp) to 1 (fully scrolled past its own height).
+      //
+      // This deliberately does NOT read getBoundingClientRect()/offsetTop on
+      // every frame: once a position:sticky element is actually stuck, both
+      // of those start reporting its *current scrolled* position instead of
+      // its static one (offsetTop drifts to equal window.scrollY) in this
+      // browser, which fed back into itself and made every card look stuck
+      // at the top forever. Reading each card's offsetTop exactly once,
+      // before any scrolling has happened, captures its true static
+      // position; comparing that fixed number against live scrollY avoids
+      // the feedback loop entirely.
+      const staticTops=cards.map(c=>c.offsetTop);
+      let meltTicking=false;
+      const updateMelt=()=>{
+        const scrollY=window.scrollY;
+        cards.forEach((c,i)=>{
+          if(!c.classList.contains('is-visible'))return;
+          const h=c.offsetHeight||1;
+          const covered=Math.min(Math.max((scrollY-staticTops[i])/h,0),1);
+          c.style.setProperty('--melt',covered.toFixed(3));
         });
-      },{threshold:[0,0.25,0.5,0.75,1]});
-      cards.forEach(c=>exitIo.observe(c));
+        meltTicking=false;
+      };
+      updateMelt();
+      document.addEventListener('scroll',()=>{if(!meltTicking){requestAnimationFrame(updateMelt);meltTicking=true}},{passive:true});
     }
   }
 }
