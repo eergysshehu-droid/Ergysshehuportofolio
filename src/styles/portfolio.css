@@ -17,6 +17,14 @@
   --text-md:clamp(14px,.9vw,19px);
   --radius-panel:clamp(16px,1.5vw,28px);
   --hero-overlap:clamp(120px,8vw,200px);
+  /* The filmstrip panel used to share --hero-overlap directly with the
+     hero-scroll-scene sizing, but once the top edge became an asymmetric
+     curve that also rises on the left (over "Explore the story"), that
+     much overlap started covering the hero controls. This is deliberately
+     smaller: the flat panel body sits lower, clear of hero-controls, and
+     only the decorative curve on top of it reaches back up toward the
+     hero — not the panel's actual content. */
+  --panel-overlap:calc(var(--hero-overlap) * .55);
   --content-max:1760px;
   /* Header/section content sits in a --content-max box centered with
      margin-inline:auto, so past that width its edge sits inboard of the
@@ -217,6 +225,11 @@ html.mobile-menu-open{overflow:hidden}
 .hero-topline,.hero-feature{
   transform:translate3d(0,var(--hero-content-shift,0px),0);
   opacity:var(--hero-content-opacity,1);
+  /* Safety net above the filmstrip panel's z-index:6 (its curve now rises
+     on the left too, over this text) — the panel is lowered to clear
+     these in normal use, this just guarantees legibility either way. */
+  position:relative;
+  z-index:7;
 }
 .hero-topline{
   position:absolute;
@@ -244,7 +257,7 @@ html.mobile-menu-open{overflow:hidden}
 .hero-nav-arrows button{border:0;background:transparent;color:#fff;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center}
 .hero-nav-arrows button svg{display:block;width:16px;height:16px}
 .hero-nav-arrows span{width:1px;height:22px;background:rgba(255,255,255,.4)}
-.scroll-indicator{position:absolute;z-index:2;right:var(--gutter);bottom:calc(var(--hero-overlap) + 14px);display:grid;place-items:center;gap:8px;color:#fff;text-decoration:none}
+.scroll-indicator{position:absolute;z-index:7;right:var(--gutter);bottom:calc(var(--panel-overlap) + 14px);display:grid;place-items:center;gap:8px;color:#fff;text-decoration:none}
 .scroll-indicator span{font-size:var(--text-2xs);letter-spacing:.25em;text-transform:uppercase}
 .scroll-indicator svg{display:block;width:14px;height:14px;animation:scroll-bounce 1.8s ease-in-out infinite}
 @keyframes scroll-bounce{0%,100%{transform:translateY(0);opacity:.65}50%{transform:translateY(7px);opacity:1}}
@@ -342,28 +355,18 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
   position:relative;
   z-index:6;
   background:var(--paper);
-  margin-top:calc(-1 * var(--hero-overlap));
+  margin-top:calc(-1 * var(--panel-overlap));
   border-radius:0;
   padding:76px 0 90px;
 }
-/* An asymmetric editorial "page curl" instead of two matching rounded
-   corners: flat across the left and center, and only the right portion
-   rises in one smooth curve. A single pseudo-element does this — a wide,
-   short box tucked just above the section's flat top edge, with only its
-   bottom-left corner rounded at 100%. That turns the whole box into one
-   continuous curve running from a point on the flat edge up to the top
-   of the section's right edge, instead of a border-radius corner. */
-.filmstrip-section:before{
-  content:'';
-  position:absolute;
-  top:-40px;
-  right:0;
-  width:clamp(140px,22vw,320px);
-  height:40px;
-  background:var(--paper);
-  border-radius:0 0 0 100%;
-  pointer-events:none;
-}
+/* Editorial top edge: low on the left, rising into a near-flat plateau
+   through the middle, then rising again toward the right — an SVG path
+   instead of border-radius/a boxed pseudo-element, since that's the only
+   way to get a continuous asymmetric wave rather than one rounded corner.
+   The panel itself stays a plain rectangle (background/margin-top above);
+   only this decorative sliver reaches up over the hero. */
+.filmstrip-curve{position:absolute;left:0;right:0;bottom:100%;width:100%;height:clamp(64px,7vw,108px);display:block;pointer-events:none;z-index:1}
+.filmstrip-curve path{fill:var(--paper)}
 .filmstrip-heading{max-width:var(--content-max);margin:0 auto 36px;padding:0 var(--page-pad)}
 .filmstrip-heading h2{font:400 clamp(36px,4.5vw,68px)/1.15 var(--serif);letter-spacing:-.035em;margin:16px 0 20px;max-width:640px}
 .filmstrip-copy{max-width:480px;font-size:var(--text-sm);color:var(--muted);line-height:1.7;margin:0 0 24px}
@@ -380,7 +383,7 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 .filmstrip-next:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-50%) scale(1.06)}
 @media(max-width:700px){
   .filmstrip-section{padding:50px 0 60px}
-  .filmstrip-section:before{top:-28px;width:38vw;height:28px}
+  .filmstrip-curve{height:clamp(30px,9vw,46px)}
   .filmstrip-heading{padding:0 5vw;margin-bottom:26px}
   .filmstrip-heading h2{font-size:34px}
   .filmstrip-item{width:86vw}
@@ -673,7 +676,7 @@ footer>a:last-child{justify-self:end}
   .hero-feature{bottom:130px;max-width:88vw}
   .hero-project-title{font-size:clamp(40px,12vw,60px)}
   .hero-controls,.hero-progress{width:min(280px,68vw)}
-  .scroll-indicator{right:auto;left:50%;transform:translateX(-50%);bottom:calc(var(--hero-overlap) + 8px)}
+  .scroll-indicator{right:auto;left:50%;transform:translateX(-50%);bottom:calc(var(--panel-overlap) + 8px)}
   :root{--hero-overlap:clamp(40px,10vw,70px)}
   .motion-section,.artist-section{border-radius:clamp(12px,4vw,18px) clamp(12px,4vw,18px) 0 0}
   /* The mobile stacking grid gets its own straight-edged black panel — no
