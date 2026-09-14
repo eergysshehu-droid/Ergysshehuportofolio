@@ -10,7 +10,8 @@ export async function getStaticPaths() {
 interface Props {section:{slug:string;title:string;subtitle:string};settings:Settings;albums:Album[]}
 const {section,settings,albums} = Astro.props;
 ---
-<Layout title={`${section.title} — Ergys Shehu`} name={settings.name} description={section.subtitle} image={albums[0] && photoUrl(albums[0].cover,1800)}><section class="collection-intro"><a class="back-link" data-reveal href="/">← Home</a><p class="kicker" data-reveal>THE PORTFOLIO / {String(albums.length).padStart(2,'0')} PROJECTS</p><h1 data-reveal>{section.title}</h1><p data-reveal>{section.subtitle}</p></section>{section.slug === 'films' && films.length > 0 && <section class="films-hero-video"><div class="yt-embed yt-hero" data-yt-id={films[0].id} data-reveal><button type="button" class="yt-thumb" aria-label={`Play ${('label' in films[0] && films[0].label) || 'video'}`}><img src={`https://i.ytimg.com/vi/${films[0].id}/hqdefault.jpg`} alt="" loading="eager" width="1280" height="720"/><span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{'label' in films[0] && films[0].label && <span class="yt-label">{films[0].label}</span>}</button></div><a class="films-more-link" data-reveal href={defaults.youtube} target="_blank" rel="noopener noreferrer">MORE ON YOUTUBE <span>↗</span></a></section>}<section class="collection-body">{albums.length ? <ProjectGrid albums={albums}/> : <div class="collection-empty" data-reveal><p class="kicker">COMING SOON</p><h2>A new story is taking shape.</h2><p>Selected work will appear here soon.</p><a class="cta-row" href="/#contact"><span class="circle-btn" aria-hidden="true">↗</span><span>GET IN TOUCH</span></a></div>}</section>{section.slug === 'films' && films.length > 1 && <section class="films-more-videos"><p class="kicker" data-reveal>MORE ON YOUTUBE</p><div class="yt-grid">{films.slice(1).map(video => <div class="yt-embed" data-yt-id={video.id} data-reveal><button type="button" class="yt-thumb" aria-label={`Play ${('label' in video && video.label) || 'video'}`}><img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360"/><span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{'label' in video && video.label && <span class="yt-label">{video.label}</span>}</button></div>)}</div></section>}
+<Layout title={`${section.title} — Ergys Shehu`} name={settings.name} description={section.subtitle} image={albums[0] && photoUrl(albums[0].cover,1800)}><section class="collection-intro"><a class="back-link" data-reveal href="/">← Home</a><p class="kicker" data-reveal>THE PORTFOLIO / {String(albums.length).padStart(2,'0')} PROJECTS</p><h1 data-reveal>{section.title}</h1><p data-reveal>{section.subtitle}</p></section>{section.slug === 'films' && films.length > 0 && <section class="films-hero-video"><div class="yt-hero-wrap" data-reveal><div class="yt-embed yt-hero" data-yt-id={films[0].id}><button type="button" class="yt-thumb" aria-label={`Play ${('label' in films[0] && films[0].label) || 'video'}`}><img src={`https://i.ytimg.com/vi/${films[0].id}/hqdefault.jpg`} alt="" loading="eager" width="1280" height="720"/><span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{'label' in films[0] && films[0].label && <span class="yt-label">{films[0].label}</span>}</button></div><button type="button" class="yt-sound-cta" data-video-id={films[0].id} aria-label="Play with sound, fullscreen"><span aria-hidden="true">🔊</span><span data-en="Play with sound" data-sq="Luaj me zë">Play with sound</span></button></div><a class="films-more-link" data-reveal href={defaults.youtube} target="_blank" rel="noopener noreferrer">MORE ON YOUTUBE <span>↗</span></a></section>}
+<dialog class="video-theater" aria-label="Video player" data-video-theater><button type="button" class="video-theater-close" data-video-close aria-label="Close video">CLOSE ×</button><div class="video-theater-frame" data-video-frame></div></dialog><section class="collection-body">{albums.length ? <ProjectGrid albums={albums}/> : <div class="collection-empty" data-reveal><p class="kicker">COMING SOON</p><h2>A new story is taking shape.</h2><p>Selected work will appear here soon.</p><a class="cta-row" href="/#contact"><span class="circle-btn" aria-hidden="true">↗</span><span>GET IN TOUCH</span></a></div>}</section>{section.slug === 'films' && films.length > 1 && <section class="films-more-videos"><p class="kicker" data-reveal>MORE ON YOUTUBE</p><div class="yt-grid">{films.slice(1).map(video => <div class="yt-embed" data-yt-id={video.id} data-reveal><button type="button" class="yt-thumb" aria-label={`Play ${('label' in video && video.label) || 'video'}`}><img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360"/><span class="yt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>{'label' in video && video.label && <span class="yt-label">{video.label}</span>}</button></div>)}</div></section>}
 <script>
 function embedVideo(wrap: HTMLElement, opts: {muted: boolean}) {
   const id = wrap.dataset.ytId;
@@ -20,17 +21,47 @@ function embedVideo(wrap: HTMLElement, opts: {muted: boolean}) {
   iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
   iframe.title = 'YouTube video player';
   iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  // Only swap out the static thumbnail button — anything else in the wrap
+  // (like the "play with sound" CTA next to the hero) stays put.
   iframe.allowFullscreen = true;
-  wrap.replaceChildren(iframe);
+  wrap.querySelector('.yt-thumb')?.remove();
+  wrap.prepend(iframe);
 }
 
+// Clicking a thumbnail plays it inline, muted-first-frame style, in place —
+// still useful for the smaller "more videos" grid where a full takeover is
+// overkill. The hero's own big "play with sound" button opens the theater
+// below instead, since audio only survives if it starts on a real click.
 document.querySelectorAll<HTMLElement>('[data-yt-id]').forEach(wrap => {
-  wrap.querySelector('.yt-thumb')?.addEventListener('click', () => embedVideo(wrap, {muted: false}), {once: true});
+  wrap.querySelector('.yt-thumb')?.addEventListener('click', () => openTheater(wrap.dataset.ytId), {once: true});
 });
 
-// The featured video (Kujtimi) autoplays muted on load — YouTube/browsers
-// require muted for unattended autoplay to be allowed at all. Skipped
-// entirely under reduced motion, where it stays a normal click-to-play card.
+// Video theater: a full black takeover, video large and centered, background
+// dimmed to black — the closest a plain <dialog> can get to "roll film"
+// drama without a custom canvas/WebGL background.
+const theater = document.querySelector<HTMLDialogElement>('dialog.video-theater');
+const theaterFrame = theater?.querySelector<HTMLElement>('[data-video-frame]');
+function openTheater(id?: string) {
+  if (!theater || !theaterFrame || !id) return;
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+  iframe.title = 'YouTube video player';
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  iframe.allowFullscreen = true;
+  theaterFrame.replaceChildren(iframe);
+  theater.showModal();
+  document.documentElement.classList.add('lightbox-open');
+}
+theater?.addEventListener('close', () => {
+  theaterFrame?.replaceChildren();
+  document.documentElement.classList.remove('lightbox-open');
+});
+theater?.querySelector('[data-video-close]')?.addEventListener('click', () => theater.close());
+document.querySelector<HTMLElement>('.yt-sound-cta')?.addEventListener('click', e => openTheater((e.currentTarget as HTMLElement).dataset.videoId));
+
+// The featured video (Kujtimi) autoplays muted on load as an ambient loop —
+// YouTube/browsers require muted for unattended autoplay to be allowed at
+// all. Skipped entirely under reduced motion, where it stays a click card.
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const hero = document.querySelector<HTMLElement>('.yt-hero[data-yt-id]');
 if (hero && !reducedMotion.matches) embedVideo(hero, {muted: true});

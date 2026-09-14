@@ -60,12 +60,13 @@ if('IntersectionObserver' in window){
     setTimeout(()=>revealTargets.forEach(el=>el.classList.add('is-visible')),4000);
   }
 
-  // On the mobile stacked category grid, tint the page background to match
-  // whichever card is currently pinned on top — the cards themselves stay
-  // plain (full photo, no overlay), only the surrounding page background
-  // shifts color as you scroll from one to the next.
+  // On any category grid (mobile's stacked single column and desktop's
+  // multi-column layout alike), tint the page background to match whichever
+  // card is currently most in view — the cards themselves stay plain (full
+  // photo, no overlay, same dimensions as before), only the surrounding
+  // page background shifts color as you scroll from one to the next.
   const stackGrid=document.querySelector<HTMLElement>('.project-grid');
-  if(stackGrid && window.matchMedia('(max-width: 700px)').matches){
+  if(stackGrid){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
       const bgIo=new IntersectionObserver(entries=>{
