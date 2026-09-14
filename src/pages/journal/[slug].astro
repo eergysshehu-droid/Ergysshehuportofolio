@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {content, photoUrl, photoSet} from '../../lib/content';
+import {journal, type PortableSpan, type PortableMarkDef, type PortableItem} from '../../lib/journal';
+
+export async function getStaticPaths() {
+  const posts = await journal();
+  return posts.map(post => ({params: {slug: post.slug}, props: {post}}));
+}
+const {post} = Astro.props;
+const {settings} = await content();
+const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
+
+const escapeHtml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function renderInline(spans: PortableSpan[] = [], markDefs: PortableMarkDef[] = []) {
+  return spans.map(span => {
+    let html = escapeHtml(span.text);
+    for (const mark of span.marks || []) {
+      if (mark === 'strong') html = `<strong>${html}</strong>`;
+      else if (mark === 'em') html = `<em>${html}</em>`;
+      else {
+        const def = markDefs.find(d => d._key === mark);
+        if (def?.href) html = `<a href="${def.href}" target="_blank" rel="noopener noreferrer">${html}</a>`;
+      }
+    }
+    return html;
+  }).join('');
+}
+const blockTag: Record<string, string> = {normal: 'p', h2: 'h2', h3: 'h3', blockquote: 'blockquote'};
+---
+<Layout title={`${post.title} — ${settings.name}`} name={settings.name} description={post.excerpt} image={post.cover && photoUrl(post.cover, 1800)}>
+<article class="journal-post">
+  <section class="collection-intro">
+    <a class="back-link" data-reveal href="/journal/">← Journal</a>
+    <p class="kicker" data-reveal>{formatDate(post.publishedAt)}</p>
+    <h1 data-reveal>{post.title}</h1>
+    <p data-reveal>{post.excerpt}</p>
+  </section>
+  {post.cover && photoUrl(post.cover) && <div class="journal-post-cover" data-image-reveal><img src={photoUrl(post.cover, 1800)} srcset={photoSet(post.cover)} sizes="90vw" alt={post.cover.alt || post.title} loading="eager"/></div>}
+  <div class="journal-post-body" data-reveal>
+    {(post.body as PortableItem[]).map(item => {
+      if (item._type === 'block') {
+        const Tag = blockTag[item.style || 'normal'] || 'p';
+        return <Tag set:html={renderInline(item.children, item.markDefs)} />;
+      }
+      return photoUrl(item) && <img src={photoUrl(item, 1400)} srcset={photoSet(item)} sizes="(max-width:700px) 90vw, 700px" alt={item.alt || ''} loading="lazy"/>;
+    })}
+  </div>
+</article>
+</Layout>

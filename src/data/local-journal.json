@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Welcome to the Journal",
+    "slug": "welcome-to-the-journal",
+    "excerpt": "A new space for behind-the-scenes notes, recent work, and the occasional piece of news — alongside the portfolio.",
+    "publishedAt": "2026-01-01T09:00:00.000Z",
+    "body": [
+      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "This is where I'll be sharing notes from recent shoots, thoughts on the work, and news as it happens — a slower, more personal companion to the portfolio."}]},
+      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "More entries soon."}]}
+    ]
+  },
+  {
+    "title": "Kujtimi (Remix) — filmed in the soul of Shkodër",
+    "slug": "kujtimi-remix",
+    "excerpt": "A short film shot across Shkodër — Gjuhadol, Kinema Republika, and its retro alleys.",
+    "publishedAt": "2026-01-15T09:00:00.000Z",
+    "body": [
+      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "Kujtimi (Remix) was filmed across Shkodër — Gjuhadol, Kinema Republika, and the city's retro alleys — chasing the particular light and texture of a place I know well."}]},
+      {"_type": "block", "style": "normal", "children": [{"_type": "span", "text": "Watch it on "}, {"_type": "span", "text": "YouTube", "marks": ["link1"]}, {"_type": "span", "text": "."}], "markDefs": [{"_key": "link1", "_type": "link", "href": "https://www.youtube.com/watch?v=_yur69PW-10"}]}
+    ]
+  }
+]
