@@ -10,11 +10,11 @@ const featured = albums.filter(a => a.featured);
 const hero = saved.heroImage || featured[0]?.cover || albums.find(a => photoUrl(a.cover))?.cover;
 
 const serviceKinds = [
-  {kind: 'fashion', project: 'fashion', en: 'Fashion Photography', sq: 'Fotografi Mode', subEn: 'EDITORIAL / CAMPAIGNS', subSq: 'EDITORIALE / FUSHATA'},
-  {kind: 'weddings', project: 'wedding', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash', subEn: 'YOUR STORY, TIMELESS', subSq: 'HISTORIA JUAJ, PA KOHË'},
-  {kind: 'films', project: 'music', en: 'Music Videos', sq: 'Videoklipe', subEn: 'ARTISTS / STORYTELLING', subSq: 'ARTISTË / TREGIME'},
-  {kind: 'portraits', project: 'portrait', en: 'Portraits', sq: 'Portrete', subEn: 'INDIVIDUAL / CREATIVE', subSq: 'INDIVIDUALE / KREATIVE'},
-  {kind: 'projects', project: 'commercial', en: 'Commercial & Brand Content', sq: 'Përmbajtje Komerciale & Brand', subEn: 'BUSINESSES / CAMPAIGNS', subSq: 'BIZNESE / FUSHATA'}
+  {kind: 'fashion', project: 'fashion', href: '/fashion/', en: 'Fashion Photography', sq: 'Fotografi Mode', subEn: 'EDITORIAL / CAMPAIGNS', subSq: 'EDITORIALE / FUSHATA'},
+  {kind: 'weddings', project: 'wedding', href: '/weddings/', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash', subEn: 'YOUR STORY, TIMELESS', subSq: 'HISTORIA JUAJ, PA KOHË'},
+  {kind: 'films', project: 'music', href: '/films/', en: 'Music Videos', sq: 'Videoklipe', subEn: 'ARTISTS / STORYTELLING', subSq: 'ARTISTË / TREGIME'},
+  {kind: 'portraits', project: 'portrait', href: '/portraits/', en: 'Portraits', sq: 'Portrete', subEn: 'INDIVIDUAL / CREATIVE', subSq: 'INDIVIDUALE / KREATIVE'},
+  {kind: 'projects', project: 'commercial', href: '/projects/', en: 'Commercial & Brand Content', sq: 'Përmbajtje Komerciale & Brand', subEn: 'BUSINESSES / CAMPAIGNS', subSq: 'BIZNESE / FUSHATA'}
 ] as const;
 const services = serviceKinds.map(s => ({...s, photo: albums.find(a => albumKind(a) === s.kind && photoUrl(a.cover))?.cover}));
 const collabPhoto = albums.find(a => albumKind(a) === 'weddings' && photoUrl(a.cover) && photoKey(a.cover) !== photoKey(hero))?.cover
@@ -66,10 +66,10 @@ const instagram = safeUrl(settings.instagram);
     <p class="section-copy" data-en="From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity." data-sq="Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit.">From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.</p>
   </div>
   <div class="services-grid">{services.map(s =>
-    <a class="service-card" href="#inquiry" data-project={s.project} data-reveal>
+    <a class="service-card" href={s.href} data-reveal>
       {s.photo && photoUrl(s.photo) && <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/>}
       <div class="service-overlay" aria-hidden="true"></div>
-      <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span aria-hidden="true">→</span></div>
+      <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span class="service-view" data-en="View work ↗" data-sq="Shiko punën ↗">View work ↗</span></div>
     </a>
   )}</div>
 </section>
@@ -211,8 +211,8 @@ form?.addEventListener('submit', e => {
 .service-copy{position:absolute;z-index:1;left:1.4rem;right:1.4rem;bottom:1.4rem}
 .service-copy h3{margin:0 0 .55rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,1.5vw,1.5rem);line-height:1.08}
 .service-copy p{margin:0;font-size:.56rem;letter-spacing:.14em;color:rgba(255,255,255,.55)}
-.service-copy>span{position:absolute;right:0;bottom:0;opacity:.65;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
-.service-card:hover .service-copy>span{transform:translate(3px,-3px);opacity:1}
+.service-view{position:absolute;right:0;bottom:0;opacity:0;transform:translateY(4px);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
+.service-card:hover .service-view,.service-card:focus-visible .service-view{opacity:1;transform:translateY(0)}
 
 .contact-booking{padding:var(--section-gap) var(--page-pad);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(3rem,6vw,6rem);border-top:1px solid rgba(244,240,232,.12)}
 .contact-intro{max-width:440px;color:rgba(244,240,232,.65);line-height:1.65;margin:1.6rem 0 2.6rem;font-size:var(--text-md)}
