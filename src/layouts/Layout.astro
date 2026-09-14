@@ -60,13 +60,13 @@ if('IntersectionObserver' in window){
     setTimeout(()=>revealTargets.forEach(el=>el.classList.add('is-visible')),4000);
   }
 
-  // On any category grid (mobile's stacked single column and desktop's
-  // multi-column layout alike), tint the page background to match whichever
-  // card is currently most in view — the cards themselves stay plain (full
-  // photo, no overlay, same dimensions as before), only the surrounding
-  // page background shifts color as you scroll from one to the next.
+  // Mobile-only: on the single-column stacked category grid, tint the page
+  // background to match whichever card is currently most in view. On
+  // desktop's multi-column grid this looked broken on sparse categories (one
+  // or two projects meant a huge flat color filling the whole screen), so
+  // it's scoped back to mobile, where every card has real scroll room first.
   const stackGrid=document.querySelector<HTMLElement>('.project-grid');
-  if(stackGrid){
+  if(stackGrid && window.matchMedia('(max-width: 700px)').matches){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
       const bgIo=new IntersectionObserver(entries=>{
