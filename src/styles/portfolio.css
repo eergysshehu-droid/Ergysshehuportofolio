@@ -368,15 +368,23 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
   .project-card.is-focused .project-image img{transform:scale(1.045);filter:brightness(1.08)}
 }
 .project-overlay{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:26px 20px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;color:#f6f4ee;background:linear-gradient(to top,rgba(9,9,8,.85) 0%,rgba(9,9,8,.5) 45%,transparent 100%);pointer-events:none}
-.project-no{font-size:var(--text-xs);opacity:.7;flex-shrink:0}
-.project-overlay-text h2{font:400 var(--text-md) var(--serif);margin:0 0 5px;letter-spacing:-.01em}
-.project-overlay-text p{display:flex;align-items:baseline;gap:12px;font-size:var(--text-2xs);text-transform:uppercase;letter-spacing:.07em;opacity:.85;margin:0}
-.project-card[data-kind="fashion"] .project-overlay-text p>span:first-child{color:#e0a479}
-.project-card[data-kind="portraits"] .project-overlay-text p>span:first-child{color:#96c1cc}
-.project-card[data-kind="weddings"] .project-overlay-text p>span:first-child{color:#e6b0c0}
-.project-card[data-kind="films"] .project-overlay-text p>span:first-child{color:var(--accent)}
-.project-card[data-kind="projects"] .project-overlay-text p>span:first-child{color:#b0c293}
-.project-total{white-space:nowrap;opacity:.75}
+/* Index number stays a near-invisible reference mark, not a competing
+   piece of type — the title is the thing that should read first. */
+.project-no{font-size:var(--text-2xs);opacity:.42;flex-shrink:0}
+.project-overlay-text h2{font:500 clamp(17px,1.4vw,26px) var(--serif);margin:0 0 6px;letter-spacing:-.015em}
+.project-overlay-text p{display:flex;align-items:baseline;gap:9px;font-size:var(--text-2xs);text-transform:uppercase;letter-spacing:.07em;opacity:.85;margin:0}
+/* Category keeps its per-kind accent color but reads a step quieter than
+   the title; frame count drops the "FRAMES" word for a plain "/ N" —
+   cleaner for a high-end portfolio grid, with "frames" kept for screen
+   readers via .sr-only in the markup. */
+.project-kind{font-size:.9em}
+.project-card[data-kind="fashion"] .project-kind{color:#e0a479}
+.project-card[data-kind="portraits"] .project-kind{color:#96c1cc}
+.project-card[data-kind="weddings"] .project-kind{color:#e6b0c0}
+.project-card[data-kind="films"] .project-kind{color:var(--accent)}
+.project-card[data-kind="projects"] .project-kind{color:#b0c293}
+.project-sep{opacity:.4}
+.project-total{white-space:nowrap;opacity:.5;font-weight:400}
 
 /* ==========================================================================
    FEATURED-WORKS FILMSTRIP — homepage only, sits above the main grid
