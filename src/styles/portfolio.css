@@ -169,8 +169,11 @@ img,picture{-webkit-user-select:none;user-select:none}
 .mobile-menu[open] .mobile-menu-screen{opacity:1;visibility:visible}
 .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .mobile-menu-brand{display:flex;gap:.35em;align-items:baseline;font-family:var(--wordmark-font);letter-spacing:.04em;color:#f4f2ed;line-height:1;min-width:0}
-.mobile-menu-brand-strong{font-size:clamp(18px,5vw,24px);font-weight:600;white-space:nowrap}
-.mobile-menu-brand-light{font-size:clamp(18px,5vw,24px);font-weight:200;white-space:nowrap}
+/* Same clamp() as .ergys-wordmark-strong/-light in the header — at mobile
+   widths the vw term is negligible either way, so both resolve to a flat
+   24px and the name reads the same size open or closed. */
+.mobile-menu-brand-strong{font-size:clamp(24px,1.9vw,44px);font-weight:600;white-space:nowrap}
+.mobile-menu-brand-light{font-size:clamp(24px,1.9vw,44px);font-weight:200;white-space:nowrap}
 .mobile-menu-close{flex-shrink:0;width:40px;height:40px;display:grid;place-items:center;border:0;background:transparent;color:#f4f2ed;font-size:1.2rem;line-height:1;cursor:pointer;opacity:.85}
 .mobile-menu-close:hover{opacity:1}
 .mobile-menu-screen nav{display:flex;flex-direction:column;align-items:flex-start;margin-top:40px}
