@@ -744,7 +744,10 @@ footer>a:last-child{justify-self:end}
      individual galleries, About) keeps the normal light editorial layout
      below — .project-grid/.project-card/.project-image are shared with
      those pages, so the black/sticky/melt treatment must stay scoped here. */
-  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
+  /* Top padding trimmed down from 55px — combined with the section-veil
+     climbing in from above (Layout.astro), the two stacked together read
+     as an oversized empty black band before the heading appeared. */
+  body.is-home .work-section{padding:28px 5vw 45px;color:#f4f2ed;background:#050505}
   /* Black climbs up over the white filmstrip section as it scrolls toward
      the stack below, instead of a static gradient cut — see
      data-section-veil in Layout.astro, which grows this block's height
