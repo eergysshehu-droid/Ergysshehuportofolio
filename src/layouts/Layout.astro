@@ -131,21 +131,26 @@ if('IntersectionObserver' in window){
       cards.forEach(c=>{progress.set(c,0);cardImageEls.set(c,c.querySelector<HTMLElement>('.project-image'))});
 
       // Real geometric overlap, not viewport visibility: how much of the
-      // current card's own height is physically covered by the next card's
-      // top edge sliding up over it, read live via getBoundingClientRect()
-      // every frame. A card entering the viewport is not the same thing as
-      // it covering the card underneath, and intersectionRatio can only ever
-      // tell us the former — hence rect math here instead. A small dead
-      // zone still absorbs sub-pixel/rounding noise right at first contact,
-      // but darkening should read as starting almost as soon as the next
-      // card actually touches — not stay fully sharp through the first
-      // third of the overlap.
+      // current card is physically covered by the next card's top edge
+      // sliding up over it. Deliberately does NOT read the current (being-
+      // covered) card's own rect: a position:sticky element's
+      // getBoundingClientRect() becomes unreliable in this browser once
+      // it's actually stuck (it starts mirroring scrollY instead of
+      // reporting its real box) — with 16 cards in one long stack, by the
+      // time you're partway down, many earlier cards are simultaneously
+      // "stuck" and this showed up as several of them reporting identical,
+      // wrong rects at once (cards going solid black unpredictably,
+      // flicker). Every card is forced to height:100svh (see
+      // portfolio.css), so a genuinely-active/stuck card's bottom edge is
+      // always exactly the viewport height — a known constant, nothing to
+      // read. Only the *next* card's top is measured live, and it's
+      // reliable precisely because it's normally not yet stuck while it's
+      // the one sliding up into view.
       const DEAD_ZONE=0.12;
-      function overlapProgress(cur:HTMLElement,next:HTMLElement):number{
-        const curRect=cur.getBoundingClientRect();
-        const nextRect=next.getBoundingClientRect();
-        const height=curRect.height||1;
-        const raw=(curRect.bottom-nextRect.top)/height;
+      function overlapProgress(next:HTMLElement):number{
+        const vh=window.innerHeight;
+        const nextTop=next.getBoundingClientRect().top;
+        const raw=(vh-nextTop)/vh;
         const clamped=Math.max(0,Math.min(1,raw));
         return clamped<=DEAD_ZONE?0:(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
       }
@@ -159,9 +164,9 @@ if('IntersectionObserver' in window){
         // layout flush between every single card each frame (classic layout
         // thrashing), which is what showed up as jank/flicker while
         // scrolling through the stack.
-        const targets=cards.map((card,i)=>{
+        const targets=cards.map((_,i)=>{
           const nextCard=cards[i+1];
-          return nextCard?overlapProgress(card,nextCard):0;
+          return nextCard?overlapProgress(nextCard):0;
         });
         let settled=true;
         cards.forEach((card,i)=>{
