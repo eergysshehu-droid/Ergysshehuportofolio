@@ -52,6 +52,16 @@ function applyLang(lang:string){
     const text=lang==='sq'?el.dataset.sqPlaceholder:el.dataset.enPlaceholder;
     if(text!=null)el.placeholder=text;
   });
+  // Rich-content blocks (journal article bodies) can't be swapped via plain
+  // textContent — they carry inline HTML (links, bold) via set:html — so
+  // instead of one element with data-en/data-sq, these render as two full
+  // sibling elements, one per language, and this just shows/hides whichever
+  // one matches. The English copy renders unhidden by default (SSR/SEO
+  // default before this script ever runs); the Albanian copy renders
+  // pre-hidden, so there's no flash of duplicated content on first paint.
+  document.querySelectorAll<HTMLElement>('[data-lang-content]').forEach(el=>{
+    el.hidden=el.dataset.langContent!==lang;
+  });
   document.querySelectorAll('[data-lang]').forEach(btn=>{
     btn.classList.toggle('is-active',(btn as HTMLElement).dataset.lang===lang);
     btn.setAttribute('aria-pressed',String((btn as HTMLElement).dataset.lang===lang));

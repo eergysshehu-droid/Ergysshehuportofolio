@@ -12,6 +12,12 @@ const {post} = Astro.props;
 const {settings: saved} = await content();
 const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
 const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
+const monthsSq = ['janar','shkurt','mars','prill','maj','qershor','korrik','gusht','shtator','tetor','nëntor','dhjetor'];
+const formatDateSq = (iso: string) => {const d = new Date(iso); return `${d.getDate()} ${monthsSq[d.getMonth()]} ${d.getFullYear()}`;};
+const dateLine = {
+  en: `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
+  sq: `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`,
+};
 
 const escapeHtml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function renderInline(spans: PortableSpan[] = [], markDefs: PortableMarkDef[] = []) {
@@ -34,16 +40,19 @@ const blockTag: Record<string, string> = {normal: 'p', h2: 'h2', h3: 'h3', block
 <article class="journal-post">
   <section class="collection-intro">
     <a class="back-link" data-reveal href="/journal/" data-en="← Journal" data-sq="← Ditari">← Journal</a>
-    <p class="kicker" data-reveal>{post.category ? `${post.category} / ` : ''}{formatDate(post.publishedAt)}</p>
-    <h1 data-reveal>{post.title}</h1>
-    <p data-reveal>{post.excerpt}</p>
+    <p class="kicker" data-reveal data-en={dateLine.en} data-sq={dateLine.sq}>{dateLine.en}</p>
+    <h1 data-reveal data-en={post.title} data-sq={post.titleSq || post.title}>{post.title}</h1>
+    <p data-reveal data-en={post.excerpt} data-sq={post.excerptSq || post.excerpt}>{post.excerpt}</p>
   </section>
   {post.cover && photoUrl(post.cover) && <div class="journal-post-cover" data-image-reveal style={`--focal-point:${photoPosition(post.cover)}`}><img src={photoUrl(post.cover, 1800)} srcset={photoSet(post.cover)} sizes="90vw" alt={post.cover.alt || post.title} loading="eager"/></div>}
   <div class="journal-post-body" data-reveal>
     {(post.body as PortableItem[]).map(item => {
       if (item._type === 'block') {
-        const Tag = blockTag[item.style || 'normal'] || 'p';
-        return <Tag set:html={renderInline(item.children, item.markDefs)} />;
+        const Tag = (blockTag[item.style || 'normal'] || 'p') as any;
+        return <>
+          <Tag data-lang-content="en" set:html={renderInline(item.children, item.markDefs)} />
+          {item.childrenSq && <Tag data-lang-content="sq" hidden set:html={renderInline(item.childrenSq, item.markDefs)} />}
+        </>;
       }
       return photoUrl(item) && <img src={photoUrl(item, 1400)} srcset={photoSet(item)} sizes="(max-width:700px) 90vw, 700px" alt={item.alt || ''} loading="lazy"/>;
     })}
