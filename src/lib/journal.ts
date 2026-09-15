@@ -4,9 +4,13 @@ import type {Photo} from './content';
 
 export interface PortableSpan {_type: 'span'; text: string; marks?: string[]}
 export interface PortableMarkDef {_key: string; _type: string; href?: string}
-export interface PortableBlock {_type: 'block'; style?: string; children: PortableSpan[]; markDefs?: PortableMarkDef[]}
+// childrenSq is the Albanian translation of the same block, kept as its own
+// span array (not a plain string) so a block with an inline link — see
+// kujtimi-remix's closing "Watch it on YouTube" — can carry that same link
+// in the Albanian text too, reusing markDefs.
+export interface PortableBlock {_type: 'block'; style?: string; children: PortableSpan[]; childrenSq?: PortableSpan[]; markDefs?: PortableMarkDef[]}
 export type PortableItem = PortableBlock | (Photo & {_type: 'portfolioPhoto'});
-export interface Post {title: string; slug: string; excerpt: string; category?: string; cover?: Photo; body: PortableItem[]; publishedAt: string}
+export interface Post {title: string; titleSq?: string; slug: string; excerpt: string; excerptSq?: string; category?: string; categorySq?: string; cover?: Photo; body: PortableItem[]; publishedAt: string}
 
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || '46mghxoy';
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
