@@ -433,6 +433,25 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 }
 
 /* ==========================================================================
+   SELECTED RECOGNITION — quiet editorial index, not a CV/badge list.
+   Same paper background as the work section above it; a single thin rule
+   marks the boundary instead of a color/panel change.
+   ========================================================================== */
+.recognition-section{position:relative;z-index:4;background:var(--paper);padding:0 var(--page-pad) clamp(70px,7vw,110px)}
+.recognition-heading{max-width:var(--content-max);margin-inline:auto;border-top:1px solid var(--line);padding-top:clamp(50px,6vw,80px)}
+.recognition-list{max-width:var(--content-max);margin-inline:auto;margin-top:clamp(30px,4vw,50px)}
+.recognition-row{display:flex;align-items:baseline;gap:24px;padding:clamp(26px,3vw,38px) 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.recognition-list a.recognition-row{transition:opacity .3s var(--ease-editorial)}
+.recognition-list a.recognition-row:hover{opacity:.6}
+.recognition-row:last-child{border-bottom:1px solid var(--line)}
+.recognition-year{flex:0 0 clamp(70px,7vw,120px)}
+.recognition-year{font-size:var(--text-sm);color:var(--muted);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.recognition-body{flex:1 1 auto;display:flex;flex-direction:column;gap:8px}
+.recognition-title{font:400 clamp(20px,2.1vw,30px)/1.3 var(--serif);letter-spacing:-.01em}
+.recognition-sub{font-size:var(--text-sm);color:var(--muted);letter-spacing:.02em}
+.recognition-arrow{flex:0 0 auto;align-self:center;font-size:var(--text-md);color:var(--muted)}
+
+/* ==========================================================================
    MOTION / LATEST WORK
    ========================================================================== */
 .motion-section{position:relative;z-index:2;background:var(--ink);color:var(--paper);padding:90px 6vw;margin-top:clamp(-32px,-2.4vw,-20px);border-radius:var(--radius-panel) var(--radius-panel) 0 0}
@@ -849,6 +868,15 @@ footer>a:last-child{justify-self:end}
   .motion-ready body.is-home .project-card .project-overlay{z-index:2}
   .motion-ready body.is-home .project-card .icon-badge{z-index:3}
   .project-overlay{padding:20px 16px 14px;background:linear-gradient(to top,rgba(9,9,8,.9) 0%,rgba(9,9,8,.55) 45%,transparent 100%)}
+  /* Generous stacking, not a compressed list — year sits above its own
+     entry instead of sharing a fixed-width column, since that column only
+     makes sense with the width a desktop row has to spare. */
+  .recognition-section{padding:0 5vw 60px}
+  .recognition-heading{padding-top:46px}
+  .recognition-row{flex-direction:column;align-items:flex-start;gap:10px;padding:30px 0}
+  .recognition-title{font-size:24px}
+  .recognition-arrow{position:absolute;right:5vw}
+  .recognition-row{position:relative}
   .artist-section{padding:50px 6vw 60px;grid-template-columns:1fr;gap:40px}
   .artist-label{flex-direction:row}
   .artist-copy h2{font-size:65px}

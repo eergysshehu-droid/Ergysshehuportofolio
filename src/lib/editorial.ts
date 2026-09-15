@@ -41,6 +41,22 @@ export const sections = [
   {slug:'films', title:'Film & Video', subtitle:'Music videos, short films and visual stories.', texture:'film-image', seoDescription:'Music videos, short films and visual storytelling directed by Ergys Shehu.'}
 ] as const;
 
+// Selected Recognition — a small, hand-maintained index rather than a CMS
+// collection (see the section's own comment in index.astro for why). Wording
+// is kept exactly as supplied/verified; "secondary" fields (project /
+// organization / note) are alternatives — a row uses whichever one is set.
+export interface Recognition {
+  year: string; title: string;
+  project?: string; organization?: string; note?: string;
+  link?: string;
+}
+export const recognitions: Recognition[] = [
+  {year:'2026', title:'Best Director', project:'“Kujtimi”'},
+  {year:'2026', title:'Best Female Performance / Interpretation', project:'“Kujtimi”'},
+  {year:'2026', title:'Europe Week — Open Space', note:'Selected Project', link:'/journal/europe-week-2026-terminal/'},
+  {year:'2020', title:'“Loving Art”', organization:'Netët e Klipit Shqiptar', link:'/journal/best-director-2020-turning-point/'}
+];
+
 // Deterministic editorial pacing for a project's photo essay: a strong opening
 // frame, portrait pairs where the sequence allows it, periodic full-bleed
 // breaks, and alternating intimate solo frames — instead of a flat, uniform grid.
