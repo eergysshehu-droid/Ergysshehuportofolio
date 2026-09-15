@@ -350,16 +350,15 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
   border-radius:0;
   padding:76px 0 90px;
 }
-/* The curve is no longer part of the panel's own box (no negative
-   margin-top pulling the panel up) — it's a separate decorative overlay
-   living inside the hero itself (.opening, already a positioned ancestor
-   via position:sticky), pinned to the hero's own bottom edge. That keeps
-   the panel's actual content — where it starts, its background — totally
-   decoupled from how far the curve reaches up into the hero, so raising
-   or lowering the curve can never again threaten to cover hero-controls. */
-.ivory-transition{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:120px;overflow:hidden;pointer-events:none;z-index:5}
-.ivory-transition-svg{display:block;width:100%;height:100%}
-.ivory-transition-svg path{fill:var(--paper)}
+/* Back inside .filmstrip-section (not a separate overlay living in the
+   hero) so the arc and the panel are physically one piece — living in two
+   different elements left a visible seam/split line during scroll, since
+   nothing actually guaranteed the two stayed pixel-aligned as the hero
+   unpinned. The curve reaches only 72px above the panel's own top edge
+   (42px on mobile) — well clear of hero-controls, which sit at 105px+/
+   60px+ from the hero's bottom (see .hero-feature/.scroll-indicator). */
+.filmstrip-curve{position:absolute;left:0;bottom:calc(100% - 4px);width:100%;height:72px;display:block;pointer-events:none}
+.filmstrip-curve path{fill:var(--paper);stroke:none}
 .filmstrip-heading{max-width:var(--content-max);margin:0 auto 36px;padding:0 var(--page-pad)}
 .filmstrip-heading h2{font:400 clamp(36px,4.5vw,68px)/1.15 var(--serif);letter-spacing:-.035em;margin:16px 0 20px;max-width:640px}
 .filmstrip-copy{max-width:480px;font-size:var(--text-sm);color:var(--muted);line-height:1.7;margin:0 0 24px}
@@ -376,7 +375,7 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 .filmstrip-next:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-50%) scale(1.06)}
 @media(max-width:700px){
   .filmstrip-section{padding:50px 0 60px}
-  .ivory-transition{height:52px}
+  .filmstrip-curve{height:42px;bottom:calc(100% - 3px)}
   .filmstrip-heading{padding:0 5vw;margin-bottom:26px}
   .filmstrip-heading h2{font-size:34px}
   .filmstrip-item{width:86vw}
@@ -740,17 +739,21 @@ footer>a:last-child{justify-self:end}
      this browser. Out-specificity that rule explicitly, for both states. */
   .motion-ready .project-card[data-reveal]{transform:none}
   .motion-ready .project-card[data-reveal].is-visible{transform:none}
-  /* --stack-blur/--stack-brightness/--stack-scale are written every frame
-     from a rAF loop in Layout.astro (lerped toward each card's real
-     IntersectionObserver ratio — slow while covering up, fast while
-     clearing). Defaults here match the "fully covered" end of that range,
-     so a card that hasn't been touched by JS yet reads as melted rather
-     than flashing sharp for a frame. */
-  .motion-ready .project-card{--stack-blur:8.5px;--stack-brightness:.72;--stack-scale:.982}
+  /* --stack-blur/--stack-brightness/--stack-opacity/--stack-scale are
+     written every frame from a rAF loop in Layout.astro, driven by the
+     NEXT card's ratio (not the card's own) — sharp by default is the
+     correct resting state here, since a card only melts once the one
+     after it actually starts covering it. */
+  .motion-ready .project-card{--stack-blur:0px;--stack-brightness:1;--stack-opacity:1;--stack-scale:1}
+  /* The image's own opacity fades toward this as it melts — needs to be
+     black itself, not the light placeholder gray .project-image uses
+     elsewhere, or a melting card would fade toward grey, not darkness. */
+  .motion-ready .project-card .project-image{background:#050505}
   .motion-ready .project-card .project-image img{
     filter:brightness(var(--stack-brightness,1)) blur(var(--stack-blur,0px));
+    opacity:var(--stack-opacity,1);
     transform:scale(var(--stack-scale,1));
-    transition:filter 120ms linear,transform 180ms ease-out;
+    transition:filter 120ms linear,opacity 120ms linear,transform 180ms ease-out;
   }
   .project-overlay{padding:20px 16px 14px;background:linear-gradient(to top,rgba(9,9,8,.9) 0%,rgba(9,9,8,.55) 45%,transparent 100%)}
   .artist-section{padding:50px 6vw 60px;grid-template-columns:1fr;gap:40px}
