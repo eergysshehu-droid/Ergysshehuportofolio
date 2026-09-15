@@ -125,10 +125,12 @@ if('IntersectionObserver' in window){
       // top edge sliding up over it, read live via getBoundingClientRect()
       // every frame. A card entering the viewport is not the same thing as
       // it covering the card underneath, and intersectionRatio can only ever
-      // tell us the former — hence rect math here instead. A dead zone
-      // means nothing darkens until the next card has actually closed most
-      // of the gap; only the remaining stretch maps to 0→1.
-      const DEAD_ZONE=0.35;
+      // tell us the former — hence rect math here instead. A small dead
+      // zone still absorbs sub-pixel/rounding noise right at first contact,
+      // but darkening should read as starting almost as soon as the next
+      // card actually touches — not stay fully sharp through the first
+      // third of the overlap.
+      const DEAD_ZONE=0.12;
       function overlapProgress(cur:HTMLElement,next:HTMLElement):number{
         const curRect=cur.getBoundingClientRect();
         const nextRect=next.getBoundingClientRect();
@@ -200,7 +202,7 @@ if('IntersectionObserver' in window){
   const sectionVeil=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('[data-section-veil]'):null;
   const veilWorkSection=document.querySelector<HTMLElement>('.work-section');
   if(sectionVeil && veilWorkSection && window.matchMedia('(max-width: 700px)').matches){
-    const MAX_VEIL_PX=150;
+    const MAX_VEIL_PX=70;
     let veilActive=false;
     let veilRafId:number|undefined;
     function updateVeil(){
