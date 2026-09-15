@@ -815,12 +815,16 @@ footer>a:last-child{justify-self:end}
      once underneath it instead of one at a time. That's what was reading
      as cards flickering / going solid black unpredictably: the melt math
      was computing overlap against cards whose rects didn't behave like a
-     normal one-screen-at-a-time stack. Letterboxed (contain, not cover) so
-     no photo gets cropped — the black .project-image background already
-     in place fills the bars, matching the panel's own black. */
+     normal one-screen-at-a-time stack. This height fix (card + image both
+     forced to 100%) is what actually prevents the flicker — it doesn't
+     depend on contain vs cover below, since the overlap math only ever
+     reads the card element's own rect, never the image's. object-fit:cover
+     (crop to fill, no letterbox bars) so each card is just the photo,
+     edge-to-edge, the way the stack looked before any photo with an
+     off-portrait aspect ratio entered the mix. */
   body.is-home .project-card a{height:100%}
   body.is-home .project-image{height:100%}
-  body.is-home .project-image img{height:100%;object-fit:contain}
+  body.is-home .project-image img{height:100%;object-fit:cover}
   /* .project-feature .project-image img above (width:100%;height:100%) needs
      an explicit-height parent to mean anything — with aspect-ratio:auto and
      no height set here, that 100% resolved to nothing usable, leaving the
