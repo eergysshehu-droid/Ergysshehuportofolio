@@ -60,78 +60,83 @@ if('IntersectionObserver' in window){
     setTimeout(()=>revealTargets.forEach(el=>el.classList.add('is-visible')),4000);
   }
 
-  // Mobile-only: on the single-column stacked category grid, tint the page
-  // background to match whichever card is currently most in view. On
-  // desktop's multi-column grid this looked broken on sparse categories (one
-  // or two projects meant a huge flat color filling the whole screen), so
-  // it's scoped back to mobile, where every card has real scroll room first.
-  const stackGrid=document.querySelector<HTMLElement>('.project-grid');
-  if(stackGrid && window.matchMedia('(max-width: 700px)').matches){
+  // Homepage-only: on the single-column stacked "Selected Perspective" grid,
+  // darken + blur each card as the next one physically slides up to cover
+  // it. Scoped to body.is-home and .work-section specifically — .project-
+  // grid/.project-card are shared markup with the category listing pages,
+  // which must stay in normal light, non-sticky, non-stacking layout.
+  const stackSection=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('.work-section'):null;
+  const stackGrid=stackSection?.querySelector<HTMLElement>('.project-grid') ?? null;
+  if(stackGrid && stackSection && window.matchMedia('(max-width: 700px)').matches){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
-      // A single IntersectionObserver with many thresholds gives us each
-      // card's real intersection ratio as it scrolls under the next one —
-      // no getBoundingClientRect()/offsetTop math (which broke down once a
-      // card was pinned by position:sticky in this browser — both start
-      // mirroring scrollY once "stuck").
-      //
-      // Card[i]'s melt is driven ONLY by card[i+1]'s ratio, never its own:
-      // the incoming card is what's covering it, so as card[i+1] rises
-      // into view (ratio 0→1) card[i] melts into darkness underneath it.
-      // The card that's actually on top (whichever one nothing is yet
-      // covering it) always stays a flat, untouched sharp — never blurred
-      // by its own visibility dropping as it scrolls away later, since by
-      // then it's not what's being looked at.
-      const ratios=new Map<HTMLElement,number>();
       const progress=new Map<HTMLElement,number>();
       const cardImgs=new Map<HTMLElement,HTMLElement|null>();
       cards.forEach(c=>{progress.set(c,0);cardImgs.set(c,c.querySelector<HTMLElement>('.project-image img'))});
-      const steps=Array.from({length:41},(_,i)=>i/40);
-      const meltIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{ratios.set(entry.target as HTMLElement,entry.intersectionRatio)});
-      },{threshold:steps});
-      cards.forEach(c=>meltIo.observe(c));
+
+      // Real geometric overlap, not viewport visibility: how much of the
+      // current card's own height is physically covered by the next card's
+      // top edge sliding up over it, read live via getBoundingClientRect()
+      // every frame. A card entering the viewport is not the same thing as
+      // it covering the card underneath, and intersectionRatio can only ever
+      // tell us the former — hence rect math here instead. A dead zone
+      // means nothing darkens until the next card has actually closed most
+      // of the gap; only the remaining stretch maps to 0→1.
+      const DEAD_ZONE=0.35;
+      function overlapProgress(cur:HTMLElement,next:HTMLElement):number{
+        const curRect=cur.getBoundingClientRect();
+        const nextRect=next.getBoundingClientRect();
+        const height=curRect.height||1;
+        const raw=(curRect.bottom-nextRect.top)/height;
+        const clamped=Math.max(0,Math.min(1,raw));
+        return clamped<=DEAD_ZONE?0:(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
+      }
+
+      let stackActive=false;
+      let rafId:number|undefined;
+
       function tickStack(){
+        let settled=true;
         cards.forEach((card,i)=>{
           const nextCard=cards[i+1];
-          const target=nextCard?Math.max(0,Math.min(1,ratios.get(nextCard) ?? 0)):0;
+          const target=nextCard?overlapProgress(card,nextCard):0;
           const prev=progress.get(card) ?? 0;
           // Covering up (target rising) eases in slowly; clearing (target
           // falling) catches up fast — a gradual melt going dark, a near-
           // instant clear coming back so re-checking a photo reads live.
-          const speed=target>prev?0.13:0.4;
+          const speed=target>prev?0.10:0.42;
           const next=prev+(target-prev)*speed;
           progress.set(card,next);
+          if(Math.abs(target-next)>0.003)settled=false;
           const img=cardImgs.get(card);
           if(img){
-            img.style.setProperty('--stack-blur',(next*9).toFixed(2)+'px');
-            img.style.setProperty('--stack-brightness',(1-next*0.72).toFixed(3));
-            img.style.setProperty('--stack-opacity',(1-next*0.28).toFixed(3));
-            img.style.setProperty('--stack-scale',(1-next*0.015).toFixed(4));
+            img.style.setProperty('--stack-blur',(next*3.5).toFixed(2)+'px');
+            img.style.setProperty('--stack-darkness',(next*0.62).toFixed(3));
           }
         });
-        requestAnimationFrame(tickStack);
+        // Once every card's value has converged to its target, stop the
+        // loop — this only ever needs to run again on the next scroll tick
+        // (re-armed below), not forever while the section sits idle.
+        rafId=settled?undefined:requestAnimationFrame(tickStack);
       }
-      requestAnimationFrame(tickStack);
-      // The black stacking panel (.work-section/.collection-body) has no
-      // background of its own — body.in-stack-grid paints it black for as
-      // long as any part of that panel is on screen, watched here instead
-      // of just the grid so the heading above the cards turns black at the
-      // same moment as the grid, not a beat later.
-      const stackSection=stackGrid.closest<HTMLElement>('.work-section, .collection-body') || stackGrid;
-      const gridIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{document.body.classList.toggle('in-stack-grid',entry.isIntersecting)});
-      },{threshold:0});
-      gridIo.observe(stackSection);
+      function schedule(){if(rafId===undefined)rafId=requestAnimationFrame(tickStack)}
+
+      // The whole effect (rAF loop + the black body background) only runs
+      // while the stack section is near/in view — a homepage-only visual
+      // detail has no business burning a rAF slot for the rest of the
+      // visit once the user has scrolled past it.
+      const sectionIo=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          stackActive=entry.isIntersecting;
+          document.body.classList.toggle('in-stack-grid',entry.isIntersecting);
+          if(stackActive)schedule();
+        });
+      },{rootMargin:'100px 0px'});
+      sectionIo.observe(stackSection);
+      document.addEventListener('scroll',()=>{if(stackActive)schedule()},{passive:true});
     }
   }
 }
-
-// Light deterrent only, not real protection: block the right-click menu and
-// drag-out on photos so casual saving takes an extra step. Screenshots and a
-// determined visitor can never be stopped by anything running in the browser.
-document.addEventListener('contextmenu',e=>{if((e.target as HTMLElement)?.closest('img'))e.preventDefault()});
-document.addEventListener('dragstart',e=>{if((e.target as HTMLElement)?.closest('img'))e.preventDefault()});
 
 // Desktop-only, fine-pointer tilt on project cards — a few px, no rotation.
 if(!reducedMotion.matches && window.matchMedia('(hover: hover) and (pointer: fine)').matches){

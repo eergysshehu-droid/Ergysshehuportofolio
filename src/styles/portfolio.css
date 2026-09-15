@@ -32,17 +32,20 @@
    RESET / BASE
    ========================================================================== */
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:24px}
+html{scroll-behavior:smooth;scroll-padding-top:24px;overflow-x:hidden}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;transition:background-color 1.8s var(--ease-editorial)}
 /* Mobile stacking background (see Layout.astro): .in-stack-grid turns the
    body pure neutral black for as long as any part of the black stacking
-   panel (.work-section/.collection-body) is on screen — the panel itself
-   has no background of its own, so this is what actually paints it black
-   behind the heading and the grid together, no mismatched seam between
-   the two. Deliberately NOT tinted toward the active card's color
-   (that read as a blue/purple cast, not black) — flat #050505 throughout. */
+   panel (.work-section) is on screen, homepage only — the panel itself has
+   no background of its own, so this is what actually paints it black behind
+   the heading and the grid together, no mismatched seam between the two.
+   Deliberately NOT tinted toward the active card's color (that read as a
+   blue/purple cast, not black) — flat #050505 throughout. The 1.8s base
+   transition above reads as sluggish for this section entering/leaving on
+   mobile scroll, so it's shortened here. */
 @media(max-width:700px){
-  body.in-stack-grid{background-color:#050505}
+  body.is-home{transition:background-color .25s ease}
+  body.is-home.in-stack-grid{background-color:#050505}
 }
 a{color:inherit;text-decoration:none}
 button,summary{font:inherit}
@@ -699,27 +702,31 @@ footer>a:last-child{justify-self:end}
      the heading and the grid together (see body rules above), so there's
      no mismatched seam between the two. Text flips to light for the same
      reason. */
-  .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
-  .project-grid{background:#050505}
-  .work-heading{align-items:start;margin-bottom:30px}
-  .work-heading .kicker{color:rgba(244,242,237,.78)}
-  .work-heading h2{font-size:36px;color:#f4f2ed}
-  .work-count{color:rgba(244,242,237,.62)}
-  .work-toolbar{display:block;padding:12px 0 22px;border-top-color:rgba(244,242,237,.16)}
-  .filters{gap:22px}
-  .filters button{color:rgba(244,242,237,.48)}
-  .filters button[aria-pressed=true]{color:#fff;border-bottom-color:#fff}
-  .index-link{display:none}
-  .collection-body{color:#f4f2ed;padding-top:45px;margin-top:0;background:#050505}
-  .collection-empty .kicker{color:rgba(244,242,237,.6)}
-  .collection-empty h2{color:#f4f2ed}
-  .collection-empty p{color:rgba(244,242,237,.7)}
+  /* Homepage-only mobile "Selected Perspective" black stacking panel. The
+     geometric-overlap rAF loop in Layout.astro writes --stack-blur and
+     --stack-darkness per frame; every other page (category listings,
+     individual galleries, About) keeps the normal light editorial layout
+     below — .project-grid/.project-card/.project-image are shared with
+     those pages, so the black/sticky/melt treatment must stay scoped here. */
+  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
+  body.is-home .project-grid{background:#050505}
+  body.is-home .work-heading{align-items:start;margin-bottom:30px}
+  body.is-home .work-heading .kicker{color:rgba(244,242,237,.78)}
+  body.is-home .work-heading h2{font-size:36px;color:#f4f2ed}
+  body.is-home .work-count{color:rgba(244,242,237,.62)}
+  body.is-home .work-toolbar{display:block;padding:12px 0 22px;border-top-color:rgba(244,242,237,.16)}
+  body.is-home .filters{gap:22px}
+  body.is-home .filters button{color:rgba(244,242,237,.48)}
+  body.is-home .filters button[aria-pressed=true]{color:#fff;border-bottom-color:#fff}
+  body.is-home .index-link{display:none}
+  .collection-body{padding-top:45px;margin-top:0}
   .project-grid{columns:1}
   /* column-span:all (meaningless with a single column anyway) doesn't play
      well with position:sticky — the feature card would stick and then
      never release as you scrolled past it. Plain block flow instead. */
   .project-feature{column-span:none;margin-bottom:16px}
-  .project-card{position:sticky;top:0;max-height:100svh;margin:0 0 16px;overflow:hidden}
+  .project-card{margin:0 0 16px;overflow:hidden}
+  body.is-home .project-card{position:sticky;top:0;max-height:100svh}
   .project-card a{display:block;width:100%}
   .project-feature .project-image{aspect-ratio:auto}
   .project-image{width:100%}
@@ -730,31 +737,46 @@ footer>a:last-child{justify-self:end}
      photo narrower than the card with page-background bars down both sides.
      Same natural-aspect treatment as every other card fixes it. */
   .project-feature .project-image img{height:auto;object-fit:contain}
-  .motion-ready .project-card{transform:none}
-  /* The real reason cards never released while scrolling: .project-card
+  /* The real reason a sticky card never released while scrolling: .project-card
      also carries [data-reveal], and .motion-ready [data-reveal].is-visible
-     sets transform:translate3d(0,0,0) with higher specificity than the
-     transform:none above — a visually-identical no-op transform, but its
-     mere presence is enough to make position:sticky get stuck forever in
-     this browser. Out-specificity that rule explicitly, for both states. */
-  .motion-ready .project-card[data-reveal]{transform:none}
-  .motion-ready .project-card[data-reveal].is-visible{transform:none}
-  /* --stack-blur/--stack-brightness/--stack-opacity/--stack-scale are
-     written every frame from a rAF loop in Layout.astro, driven by the
-     NEXT card's ratio (not the card's own) — sharp by default is the
-     correct resting state here, since a card only melts once the one
-     after it actually starts covering it. */
-  .motion-ready .project-card{--stack-blur:0px;--stack-brightness:1;--stack-opacity:1;--stack-scale:1}
-  /* The image's own opacity fades toward this as it melts — needs to be
-     black itself, not the light placeholder gray .project-image uses
-     elsewhere, or a melting card would fade toward grey, not darkness. */
-  .motion-ready .project-card .project-image{background:#050505}
-  .motion-ready .project-card .project-image img{
-    filter:brightness(var(--stack-brightness,1)) blur(var(--stack-blur,0px));
-    opacity:var(--stack-opacity,1);
-    transform:scale(var(--stack-scale,1));
-    transition:filter 120ms linear,opacity 120ms linear,transform 180ms ease-out;
+     sets transform:translate3d(0,0,0) with higher specificity than
+     transform:none — a visually-identical no-op transform, but its mere
+     presence is enough to make position:sticky get stuck forever in this
+     browser. Out-specificity that rule explicitly. Only needed where cards
+     are actually sticky (home). */
+  /* .motion-ready lives on <html>, an ancestor of body.is-home, not a
+     descendant of it — "body.is-home .motion-ready ..." can never match, so
+     .motion-ready has to lead these selectors instead. */
+  .motion-ready body.is-home .project-card{transform:none}
+  .motion-ready body.is-home .project-card[data-reveal]{transform:none}
+  .motion-ready body.is-home .project-card[data-reveal].is-visible{transform:none}
+  /* --stack-blur/--stack-darkness are written every frame from a rAF loop in
+     Layout.astro, driven by real getBoundingClientRect() overlap between a
+     card and the next one rising over it — sharp/undarkened by default is
+     the correct resting state, since a card only melts once the one after
+     it is physically covering it (not merely visible in the viewport).
+     Darkness is a black overlay layered above the image, not an opacity/
+     brightness fade on the image itself, with only a light blur on top —
+     keeps the photo readable through most of the transition instead of
+     looking "lost" the moment the next card appears. */
+  .motion-ready body.is-home .project-card{--stack-blur:0px;--stack-darkness:0}
+  .motion-ready body.is-home .project-card .project-image{background:#050505}
+  .motion-ready body.is-home .project-card .project-image img{
+    filter:blur(var(--stack-blur,0px));
+    transition:none;
   }
+  .motion-ready body.is-home .project-card .project-image::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:#000;
+    opacity:var(--stack-darkness,0);
+    pointer-events:none;
+    will-change:opacity;
+  }
+  .motion-ready body.is-home .project-card .project-overlay{z-index:2}
+  .motion-ready body.is-home .project-card .icon-badge{z-index:3}
   .project-overlay{padding:20px 16px 14px;background:linear-gradient(to top,rgba(9,9,8,.9) 0%,rgba(9,9,8,.55) 45%,transparent 100%)}
   .artist-section{padding:50px 6vw 60px;grid-template-columns:1fr;gap:40px}
   .artist-label{flex-direction:row}
