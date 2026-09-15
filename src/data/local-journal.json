@@ -6,16 +6,16 @@
     "category": "RECOGNITION",
     "publishedAt": "2026-09-10T09:00:00.000Z",
     "cover": {
-      "localBase": "/images/3ec9245b1a6e9c",
-      "width": 1639,
-      "height": 2048,
-      "alt": "Portrait against a graffiti-covered railway carriage",
-      "hotspot": {
-        "x": 0.4,
-        "y": 0.25
-      },
+      "localBase": "/images/c58433facbbc6c",
+      "width": 2048,
+      "height": 1365,
+      "alt": "The Terminal creative team, including Ergys Shehu, on a disused railway locomotive",
       "_type": "portfolioPhoto",
-      "color": "#554435"
+      "color": "#767d81",
+      "hotspot": {
+        "x": 0.82,
+        "y": 0.55
+      }
     },
     "body": [
       {
@@ -39,6 +39,14 @@
         ]
       },
       {
+        "localBase": "/images/01d052b8d155a4",
+        "width": 1640,
+        "height": 720,
+        "alt": "Europe Week 2026 \"Open Space\" official event poster, European Union Delegation to Albania",
+        "_type": "portfolioPhoto",
+        "color": "#262122"
+      },
+      {
         "_type": "block",
         "style": "h2",
         "children": [
@@ -59,12 +67,12 @@
         ]
       },
       {
-        "localBase": "/images/cc3d7e1cfc9cf7",
-        "width": 2048,
-        "height": 1365,
-        "alt": "Editorial portrait at dusk by the sea",
+        "localBase": "/images/b136e5c3c7d10f",
+        "width": 1286,
+        "height": 857,
+        "alt": "A disused railway terminal interior, with a stop sign and an old locomotive wheel",
         "_type": "portfolioPhoto",
-        "color": "#688180"
+        "color": "#555555"
       },
       {
         "_type": "block",
@@ -107,6 +115,14 @@
         ]
       },
       {
+        "localBase": "/images/c8852754026901",
+        "width": 2048,
+        "height": 1536,
+        "alt": "The Europe Week 2026 \"Open Space\" launch press conference",
+        "_type": "portfolioPhoto",
+        "color": "#6c625d"
+      },
+      {
         "_type": "block",
         "style": "h2",
         "children": [
@@ -135,6 +151,14 @@
             "text": "More on Terminal — the performance, the site, the rest of the team — will follow here as the project becomes public. For now: selected, not crowned, and glad to be one of the ten."
           }
         ]
+      },
+      {
+        "localBase": "/images/955061f10cda31",
+        "width": 2048,
+        "height": 1152,
+        "alt": "Ergys Shehu with collaborators at the Europe Week 2026 event",
+        "_type": "portfolioPhoto",
+        "color": "#6b6e75"
       }
     ]
   },
