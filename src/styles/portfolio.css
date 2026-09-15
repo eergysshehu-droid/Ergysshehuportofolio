@@ -783,11 +783,25 @@ footer>a:last-child{justify-self:end}
      never release as you scrolled past it. Plain block flow instead. */
   .project-feature{column-span:none;margin-bottom:16px}
   .project-card{margin:0 0 16px;overflow:hidden}
-  body.is-home .project-card{position:sticky;top:0;max-height:100svh}
+  body.is-home .project-card{position:sticky;top:0;height:100svh}
   .project-card a{display:block;width:100%}
   .project-feature .project-image{aspect-ratio:auto}
   .project-image{width:100%}
   .project-image img{width:100%;height:auto;max-height:100svh;object-fit:contain}
+  /* Every sticky card fills exactly one full screen while stuck, regardless
+     of its own photo's aspect ratio. Without this, a wide/landscape photo
+     (height:auto under object-fit:contain) left the card far shorter than
+     the viewport once stuck — so it didn't actually cover the screen, and
+     the next several cards ended up sticking and becoming visible all at
+     once underneath it instead of one at a time. That's what was reading
+     as cards flickering / going solid black unpredictably: the melt math
+     was computing overlap against cards whose rects didn't behave like a
+     normal one-screen-at-a-time stack. Letterboxed (contain, not cover) so
+     no photo gets cropped — the black .project-image background already
+     in place fills the bars, matching the panel's own black. */
+  body.is-home .project-card a{height:100%}
+  body.is-home .project-image{height:100%}
+  body.is-home .project-image img{height:100%;object-fit:contain}
   /* .project-feature .project-image img above (width:100%;height:100%) needs
      an explicit-height parent to mean anything — with aspect-ratio:auto and
      no height set here, that 100% resolved to nothing usable, leaving the
