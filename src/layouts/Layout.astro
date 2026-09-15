@@ -214,7 +214,6 @@ if('IntersectionObserver' in window){
   const sectionVeil=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('[data-section-veil]'):null;
   const veilWorkSection=document.querySelector<HTMLElement>('.work-section');
   if(sectionVeil && veilWorkSection && window.matchMedia('(max-width: 700px)').matches){
-    const MAX_VEIL_PX=70;
     let veilActive=false;
     let veilRafId:number|undefined;
     function updateVeil(){
@@ -222,9 +221,15 @@ if('IntersectionObserver' in window){
       // (just arriving), 1 exactly once it reaches the top — ties the
       // climb to the section's own full approach instead of saturating
       // partway through and sitting at max for an empty scroll stretch.
+      // Written as a 0-1 scaleY (compositor-only) rather than an animated
+      // height — height is a layout property, so recalculating it every
+      // scroll frame forced a real reflow each time, unlike the card
+      // melt's blur/opacity which never touch layout at all. That extra
+      // per-frame reflow next to the stack's own rAF loop is what read as
+      // flicker/jank while scrolling through this section.
       const wsTop=veilWorkSection!.getBoundingClientRect().top;
       const progress=Math.max(0,Math.min(1,1-wsTop/window.innerHeight));
-      sectionVeil!.style.setProperty('--veil-h',(progress*MAX_VEIL_PX).toFixed(1)+'px');
+      sectionVeil!.style.setProperty('--veil-p',progress.toFixed(3));
       veilRafId=undefined;
     }
     function scheduleVeil(){if(veilRafId===undefined)veilRafId=requestAnimationFrame(updateVeil)}
