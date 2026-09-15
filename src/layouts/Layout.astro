@@ -130,27 +130,36 @@ if('IntersectionObserver' in window){
       const cardImageEls=new Map<HTMLElement,HTMLElement|null>();
       cards.forEach(c=>{progress.set(c,0);cardImageEls.set(c,c.querySelector<HTMLElement>('.project-image'))});
 
+      // Each card keeps its own natural height (the photo's real aspect
+      // ratio at full width) rather than being stretched/cropped to fill
+      // the screen — so "how much of this card is covered" has to be
+      // measured against *that* card's own height, not a shared constant.
+      // Read once, right here, before any card has ever been sticky (the
+      // whole section is still in plain normal-flow layout at setup time,
+      // long before the user has scrolled into it) — every img already has
+      // width/height attributes, so the browser has already reserved the
+      // correct intrinsic-aspect-ratio box even if the image itself hasn't
+      // finished loading yet, and this read is accurate immediately.
+      const cardHeights=cards.map(c=>c.getBoundingClientRect().height || 1);
+
       // Real geometric overlap, not viewport visibility: how much of the
       // current card is physically covered by the next card's top edge
       // sliding up over it. Deliberately does NOT read the current (being-
-      // covered) card's own rect: a position:sticky element's
+      // covered) card's own live rect: a position:sticky element's
       // getBoundingClientRect() becomes unreliable in this browser once
       // it's actually stuck (it starts mirroring scrollY instead of
-      // reporting its real box) — with 16 cards in one long stack, by the
+      // reporting its real box) — with 16+ cards in one long stack, by the
       // time you're partway down, many earlier cards are simultaneously
       // "stuck" and this showed up as several of them reporting identical,
       // wrong rects at once (cards going solid black unpredictably,
-      // flicker). Every card is forced to height:100svh (see
-      // portfolio.css), so a genuinely-active/stuck card's bottom edge is
-      // always exactly the viewport height — a known constant, nothing to
-      // read. Only the *next* card's top is measured live, and it's
-      // reliable precisely because it's normally not yet stuck while it's
-      // the one sliding up into view.
+      // flicker). cardHeights[i] is a cached, static number instead —
+      // nothing to re-read, nothing to go stale. Only the *next* card's top
+      // is measured live, and it's reliable precisely because it's normally
+      // not yet stuck while it's the one sliding up into view.
       const DEAD_ZONE=0.12;
-      function overlapProgress(next:HTMLElement):number{
-        const vh=window.innerHeight;
+      function overlapProgress(next:HTMLElement,currentHeight:number):number{
         const nextTop=next.getBoundingClientRect().top;
-        const raw=(vh-nextTop)/vh;
+        const raw=(currentHeight-nextTop)/currentHeight;
         const clamped=Math.max(0,Math.min(1,raw));
         return clamped<=DEAD_ZONE?0:(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
       }
@@ -166,7 +175,7 @@ if('IntersectionObserver' in window){
         // scrolling through the stack.
         const targets=cards.map((_,i)=>{
           const nextCard=cards[i+1];
-          return nextCard?overlapProgress(nextCard):0;
+          return nextCard?overlapProgress(nextCard,cardHeights[i]):0;
         });
         let settled=true;
         cards.forEach((card,i)=>{
