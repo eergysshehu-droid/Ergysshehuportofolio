@@ -73,16 +73,15 @@ if('IntersectionObserver' in window){
       // card's real intersection ratio as it scrolls under the next one —
       // no getBoundingClientRect()/offsetTop math (which broke down once a
       // card was pinned by position:sticky in this browser — both start
-      // mirroring scrollY once "stuck", so a next-card-rect-based progress
-      // calculation reads wrong the moment it's pinned). Ratio is only the
-      // *target*: a rAF loop lerps each card's actual progress toward it
-      // every frame, at a slow rate while it's covering up (a gradual,
-      // cinematic melt) and a much faster rate while it's clearing (so
-      // scrolling back to re-check a photo un-blurs almost immediately).
-      // No page-background tinting from the active card's color anymore —
-      // it read as a blue/purple cast rather than black. The stack section
-      // is flat #050505 throughout (see CSS); this observer now exists
-      // purely to feed the blur rAF loop below with real ratios.
+      // mirroring scrollY once "stuck").
+      //
+      // Card[i]'s melt is driven ONLY by card[i+1]'s ratio, never its own:
+      // the incoming card is what's covering it, so as card[i+1] rises
+      // into view (ratio 0→1) card[i] melts into darkness underneath it.
+      // The card that's actually on top (whichever one nothing is yet
+      // covering it) always stays a flat, untouched sharp — never blurred
+      // by its own visibility dropping as it scrolls away later, since by
+      // then it's not what's being looked at.
       const ratios=new Map<HTMLElement,number>();
       const progress=new Map<HTMLElement,number>();
       const cardImgs=new Map<HTMLElement,HTMLElement|null>();
@@ -93,21 +92,22 @@ if('IntersectionObserver' in window){
       },{threshold:steps});
       cards.forEach(c=>meltIo.observe(c));
       function tickStack(){
-        cards.forEach(card=>{
-          const ratio=ratios.get(card) ?? 1;
-          const target=Math.max(0,Math.min(1,1-ratio));
+        cards.forEach((card,i)=>{
+          const nextCard=cards[i+1];
+          const target=nextCard?Math.max(0,Math.min(1,ratios.get(nextCard) ?? 0)):0;
           const prev=progress.get(card) ?? 0;
           // Covering up (target rising) eases in slowly; clearing (target
-          // falling) catches up fast — kept close to the ~3x split that
-          // read best: gradual melt going one way, near-instant the other.
-          const speed=target>prev?0.13:0.38;
+          // falling) catches up fast — a gradual melt going dark, a near-
+          // instant clear coming back so re-checking a photo reads live.
+          const speed=target>prev?0.13:0.4;
           const next=prev+(target-prev)*speed;
           progress.set(card,next);
           const img=cardImgs.get(card);
           if(img){
-            img.style.setProperty('--stack-blur',(next*8.5).toFixed(2)+'px');
-            img.style.setProperty('--stack-brightness',(1-next*0.28).toFixed(3));
-            img.style.setProperty('--stack-scale',(1-next*0.018).toFixed(4));
+            img.style.setProperty('--stack-blur',(next*9).toFixed(2)+'px');
+            img.style.setProperty('--stack-brightness',(1-next*0.72).toFixed(3));
+            img.style.setProperty('--stack-opacity',(1-next*0.28).toFixed(3));
+            img.style.setProperty('--stack-scale',(1-next*0.015).toFixed(4));
           }
         });
         requestAnimationFrame(tickStack);
