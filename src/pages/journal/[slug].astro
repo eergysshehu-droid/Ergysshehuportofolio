@@ -33,7 +33,7 @@ const blockTag: Record<string, string> = {normal: 'p', h2: 'h2', h3: 'h3', block
 <Layout title={`${post.title} — ${settings.name}`} name={settings.name} description={post.excerpt} image={post.cover && photoUrl(post.cover, 1800)}>
 <article class="journal-post">
   <section class="collection-intro">
-    <a class="back-link" data-reveal href="/journal/">← Journal</a>
+    <a class="back-link" data-reveal href="/journal/" data-en="← Journal" data-sq="← Ditari">← Journal</a>
     <p class="kicker" data-reveal>{post.category ? `${post.category} / ` : ''}{formatDate(post.publishedAt)}</p>
     <h1 data-reveal>{post.title}</h1>
     <p data-reveal>{post.excerpt}</p>

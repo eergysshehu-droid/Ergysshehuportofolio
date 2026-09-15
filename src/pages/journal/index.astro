@@ -11,10 +11,10 @@ const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {d
 ---
 <Layout title={`Journal — ${settings.name}`} name={settings.name} description="An editorial archive of photography, directing, selected cultural work and published pieces by Ergys Shehu.">
 <section class="collection-intro">
-  <a class="back-link" data-reveal href="/">← Home</a>
-  <p class="kicker" data-reveal>THE JOURNAL / {String(posts.length).padStart(2,'0')} ENTRIES</p>
-  <h1 data-reveal>Journal.</h1>
-  <p data-reveal>Photography, directing, recognition and published work — the archive behind the portfolio.</p>
+  <a class="back-link" data-reveal href="/" data-en="← Home" data-sq="← Ballina">← Home</a>
+  <p class="kicker" data-reveal><span data-en="THE JOURNAL" data-sq="DITARI">THE JOURNAL</span> / {String(posts.length).padStart(2,'0')} <span data-en="ENTRIES" data-sq="SHKRIME">ENTRIES</span></p>
+  <h1 data-reveal data-en="Journal." data-sq="Ditari.">Journal.</h1>
+  <p data-reveal data-en="Photography, directing, recognition and published work — the archive behind the portfolio." data-sq="Fotografi, regji, njohje dhe punë e publikuar — arkivi pas portofolit.">Photography, directing, recognition and published work — the archive behind the portfolio.</p>
 </section>
 <section class="journal-list">
   {posts.length ? posts.map(post =>
@@ -24,9 +24,9 @@ const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {d
         <span class="journal-date">{post.category ? `${post.category} / ` : ''}{formatDate(post.publishedAt)}</span>
         <h2>{post.title}</h2>
         <p>{post.excerpt}</p>
-        <span class="journal-read">Read <span aria-hidden="true">↗</span></span>
+        <span class="journal-read"><span data-en="Read" data-sq="Lexo">Read</span> <span aria-hidden="true">↗</span></span>
       </div>
     </a>
-  ) : <div class="collection-empty" data-reveal><p class="kicker">COMING SOON</p><h2>The first entry is on its way.</h2></div>}
+  ) : <div class="collection-empty" data-reveal><p class="kicker" data-en="COMING SOON" data-sq="SË SHPEJTI">COMING SOON</p><h2 data-en="The first entry is on its way." data-sq="Shkrimi i parë po vjen së shpejti.">The first entry is on its way.</h2></div>}
 </section>
 </Layout>
