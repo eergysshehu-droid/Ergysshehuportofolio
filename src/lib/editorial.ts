@@ -1,3 +1,10 @@
+// Single permanent identifiers reused across every page's structured data
+// (Layout.astro, about.astro, …) so every JSON-LD reference resolves to the
+// same Person/WebSite node in Google's graph instead of minting a fresh one
+// per page.
+export const PERSON_ID='https://ergysshehu.com/#ergys-shehu';
+export const WEBSITE_ID='https://ergysshehu.com/#website';
+export const KULT360_ID='https://kult360.com/#organization';
 // User-supplied biography and contact details. Sanity values override these defaults.
 export const defaults = {
   name: 'Ergys Shehu', headline: 'Stories\nin light.',
@@ -23,11 +30,15 @@ export const biography = {
   sq: 'Ergys Shehu ka lindur në Shkodër. Që në moshë të re, ai shfaqi pasion për pikturën. Në vitin 2005 nisi mësimet në degën e pikturës në liceun artistik në Shkodër, për të vazhduar më pas studimet në arte pranë Universitetit të Shkodrës, me formim në pikturë, grafikë, fotografi dhe teknika digjitale.\n\nI specializuar në fotografinë e modës dhe bukurisë, Shehu ka zhvilluar një stil të dallueshëm dhe bashkëpunon me agjenci, modele, artistë dhe profesionistë të grimit e stilimit. Në vitin 2017 themeloi ALERDIGITALMEDIA, kushtuar fotografisë, videove muzikore dhe ceremonive martesore. Në vitin 2020 u vlerësua me çmimin Best Director në Netët e Klipit Shqiptar.\n\nPraktika e tij përfshin gjithashtu artin dekorativ islam, me murale në mbi 40 objekte kulti në Ballkan dhe Europë. Në rolin e Drejtorit Ekzekutiv të Fondacionit Kult 360, ai ndërthur trashëgiminë kulturore me prodhimin vizual dhe teknologjitë immersive. Jeton dhe punon në Shqipëri.',
   quote: 'Vision does not ask for permission. It demands a field of action. In the digital age, man is the important creative mind, not the algorithm. True art is complicated human simplicity; it is the clear voice amidst the noise.'
 };
+// subtitle is the short line rendered on the page itself (kept as-is,
+// unchanged) — seoDescription is a separate, longer line used only for the
+// meta description/OG tags, since a one-word subtitle isn't a real
+// description on its own.
 export const sections = [
-  {slug:'fashion', title:'Fashion', subtitle:'Editorials & Campaigns', texture:'t-fashion'},
-  {slug:'weddings', title:'Weddings', subtitle:'People in love', texture:'t-wedding'},
-  {slug:'portraits', title:'Portraits', subtitle:'Beauty in reality', texture:'t-portrait'},
-  {slug:'films', title:'Film & Video', subtitle:'Music videos, short films and visual stories.', texture:'film-image'}
+  {slug:'fashion', title:'Fashion', subtitle:'Editorials & Campaigns', texture:'t-fashion', seoDescription:'Fashion editorial and campaign photography by Ergys Shehu, based in Albania and available worldwide.'},
+  {slug:'weddings', title:'Weddings', subtitle:'People in love', texture:'t-wedding', seoDescription:'Wedding photography and film by Ergys Shehu — timeless, emotive coverage for couples in Albania and beyond.'},
+  {slug:'portraits', title:'Portraits', subtitle:'Beauty in reality', texture:'t-portrait', seoDescription:'Portrait photography by Ergys Shehu — honest, editorial portraits shot in Albania and worldwide.'},
+  {slug:'films', title:'Film & Video', subtitle:'Music videos, short films and visual stories.', texture:'film-image', seoDescription:'Music videos, short films and visual storytelling directed by Ergys Shehu.'}
 ] as const;
 
 // Deterministic editorial pacing for a project's photo essay: a strong opening
