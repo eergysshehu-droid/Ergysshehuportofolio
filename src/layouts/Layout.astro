@@ -96,10 +96,18 @@ if('IntersectionObserver' in window){
       let rafId:number|undefined;
 
       function tickStack(){
+        // All reads first, then all writes — interleaving
+        // getBoundingClientRect() with style.setProperty() per card forced a
+        // layout flush between every single card each frame (classic layout
+        // thrashing), which is what showed up as jank/flicker while
+        // scrolling through the stack.
+        const targets=cards.map((card,i)=>{
+          const nextCard=cards[i+1];
+          return nextCard?overlapProgress(card,nextCard):0;
+        });
         let settled=true;
         cards.forEach((card,i)=>{
-          const nextCard=cards[i+1];
-          const target=nextCard?overlapProgress(card,nextCard):0;
+          const target=targets[i];
           const prev=progress.get(card) ?? 0;
           // Covering up (target rising) eases in slowly; clearing (target
           // falling) catches up fast — a gradual melt going dark, a near-
