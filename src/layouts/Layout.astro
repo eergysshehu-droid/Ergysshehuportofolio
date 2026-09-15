@@ -79,6 +79,10 @@ if('IntersectionObserver' in window){
       // every frame, at a slow rate while it's covering up (a gradual,
       // cinematic melt) and a much faster rate while it's clearing (so
       // scrolling back to re-check a photo un-blurs almost immediately).
+      // No page-background tinting from the active card's color anymore —
+      // it read as a blue/purple cast rather than black. The stack section
+      // is flat #050505 throughout (see CSS); this observer now exists
+      // purely to feed the blur rAF loop below with real ratios.
       const ratios=new Map<HTMLElement,number>();
       const progress=new Map<HTMLElement,number>();
       const cardImgs=new Map<HTMLElement,HTMLElement|null>();
@@ -86,18 +90,6 @@ if('IntersectionObserver' in window){
       const steps=Array.from({length:41},(_,i)=>i/40);
       const meltIo=new IntersectionObserver(entries=>{
         entries.forEach(entry=>{ratios.set(entry.target as HTMLElement,entry.intersectionRatio)});
-        let current:HTMLElement|null=null;
-        let best=0;
-        for(const [el,ratio] of ratios){
-          if(ratio>best){best=ratio;current=el}
-        }
-        if(current && best>0.4){
-          const color=current.style.getPropertyValue('--frame-color');
-          if(color){
-            document.body.style.setProperty('--frame-color-current',color);
-            document.body.classList.add('has-frame-color');
-          }
-        }
       },{threshold:steps});
       cards.forEach(c=>meltIo.observe(c));
       function tickStack(){
@@ -128,10 +120,7 @@ if('IntersectionObserver' in window){
       // same moment as the grid, not a beat later.
       const stackSection=stackGrid.closest<HTMLElement>('.work-section, .collection-body') || stackGrid;
       const gridIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          document.body.classList.toggle('in-stack-grid',entry.isIntersecting);
-          if(!entry.isIntersecting)document.body.classList.remove('has-frame-color');
-        });
+        entries.forEach(entry=>{document.body.classList.toggle('in-stack-grid',entry.isIntersecting)});
       },{threshold:0});
       gridIo.observe(stackSection);
     }
