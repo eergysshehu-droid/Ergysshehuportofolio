@@ -117,8 +117,18 @@ if('IntersectionObserver' in window){
     const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
     if(cards.length){
       const progress=new Map<HTMLElement,number>();
-      const cardImgs=new Map<HTMLElement,HTMLElement|null>();
-      cards.forEach(c=>{progress.set(c,0);cardImgs.set(c,c.querySelector<HTMLElement>('.project-image img'))});
+      // Custom properties only inherit downward (ancestor -> descendant),
+      // so setting them on the <img> made --stack-blur visible to the img
+      // itself (which reads its own inline style) but invisible to
+      // .project-image::after — a *sibling-ish* pseudo-element of the img,
+      // not a descendant of it — which always fell back to the static 0 on
+      // .project-card. The darkness overlay never actually appeared; only
+      // the blur (applied directly on the element carrying the property)
+      // ever worked. Setting both on .project-image itself fixes it: the
+      // img inherits --stack-blur from its parent as normal, and
+      // .project-image's own ::after now genuinely sees --stack-darkness.
+      const cardImageEls=new Map<HTMLElement,HTMLElement|null>();
+      cards.forEach(c=>{progress.set(c,0);cardImageEls.set(c,c.querySelector<HTMLElement>('.project-image'))});
 
       // Real geometric overlap, not viewport visibility: how much of the
       // current card's own height is physically covered by the next card's
@@ -166,10 +176,10 @@ if('IntersectionObserver' in window){
           const next=prev+(target-prev)*speed;
           progress.set(card,next);
           if(Math.abs(target-next)>0.003)settled=false;
-          const img=cardImgs.get(card);
-          if(img){
-            img.style.setProperty('--stack-blur',(next*3.5).toFixed(2)+'px');
-            img.style.setProperty('--stack-darkness',next.toFixed(3));
+          const imageEl=cardImageEls.get(card);
+          if(imageEl){
+            imageEl.style.setProperty('--stack-blur',(next*3.5).toFixed(2)+'px');
+            imageEl.style.setProperty('--stack-darkness',next.toFixed(3));
           }
         });
         // Once every card's value has converged to its target, stop the
