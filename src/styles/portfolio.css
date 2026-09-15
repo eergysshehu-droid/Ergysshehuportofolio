@@ -802,35 +802,20 @@ footer>a:last-child{justify-self:end}
      never release as you scrolled past it. Plain block flow instead. */
   .project-feature{column-span:none;margin-bottom:16px}
   .project-card{margin:0 0 16px;overflow:hidden}
-  body.is-home .project-card{position:sticky;top:0;height:100svh}
+  body.is-home .project-card{position:sticky;top:0}
   .project-card a{display:block;width:100%}
   .project-feature .project-image{aspect-ratio:auto}
   .project-image{width:100%}
   .project-image img{width:100%;height:auto;max-height:100svh;object-fit:contain}
-  /* Every sticky card fills exactly one full screen while stuck, regardless
-     of its own photo's aspect ratio. Without this, a wide/landscape photo
-     (height:auto under object-fit:contain) left the card far shorter than
-     the viewport once stuck — so it didn't actually cover the screen, and
-     the next several cards ended up sticking and becoming visible all at
-     once underneath it instead of one at a time. That's what was reading
-     as cards flickering / going solid black unpredictably: the melt math
-     was computing overlap against cards whose rects didn't behave like a
-     normal one-screen-at-a-time stack. This height fix (card + image both
-     forced to 100%) is what actually prevents the flicker — it doesn't
-     depend on contain vs cover below, since the overlap math only ever
-     reads the card element's own rect, never the image's. object-fit:cover
-     (crop to fill, no letterbox bars) so each card is just the photo,
-     edge-to-edge, the way the stack looked before any photo with an
-     off-portrait aspect ratio entered the mix. */
-  body.is-home .project-card a{height:100%}
-  body.is-home .project-image{height:100%}
-  body.is-home .project-image img{height:100%;object-fit:cover}
-  /* .project-feature .project-image img above (width:100%;height:100%) needs
-     an explicit-height parent to mean anything — with aspect-ratio:auto and
-     no height set here, that 100% resolved to nothing usable, leaving the
-     photo narrower than the card with page-background bars down both sides.
-     Same natural-aspect treatment as every other card fixes it. */
-  .project-feature .project-image img{height:auto;object-fit:contain}
+  /* Cards are each their own natural height (photo width:100%, height:auto)
+     — not stretched or cropped to fill the screen. The melt math in
+     Layout.astro is height-aware: it caches every card's real height once,
+     up front, before any of them are sticky (a safe, one-time read), and
+     uses that instead of window.innerHeight as the "how much of this card
+     is covered" denominator. That's what keeps this correct without
+     forcing every card to one uniform height — see the comment above
+     overlapProgress() for why reading a *stuck* card's own live rect still
+     has to be avoided regardless. */
   /* The real reason a sticky card never released while scrolling: .project-card
      also carries [data-reveal], and .motion-ready [data-reveal].is-visible
      sets transform:translate3d(0,0,0) with higher specificity than
