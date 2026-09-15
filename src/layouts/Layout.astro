@@ -160,14 +160,16 @@ if('IntersectionObserver' in window){
           // Covering up (target rising) eases in slowly; clearing (target
           // falling) catches up fast — a gradual melt going dark, a near-
           // instant clear coming back so re-checking a photo reads live.
-          const speed=target>prev?0.10:0.42;
+          // Was 0.10 — too slow to visibly catch up to a normal scroll
+          // gesture before the user had already moved on.
+          const speed=target>prev?0.18:0.42;
           const next=prev+(target-prev)*speed;
           progress.set(card,next);
           if(Math.abs(target-next)>0.003)settled=false;
           const img=cardImgs.get(card);
           if(img){
             img.style.setProperty('--stack-blur',(next*3.5).toFixed(2)+'px');
-            img.style.setProperty('--stack-darkness',(next*0.94).toFixed(3));
+            img.style.setProperty('--stack-darkness',next.toFixed(3));
           }
         });
         // Once every card's value has converged to its target, stop the
