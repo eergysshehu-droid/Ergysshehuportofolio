@@ -31,6 +31,14 @@
       "height": 4410,
       "alt": "Portrait photography in Albania by Ergys Shehu",
       "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg"
+    },
+    "portrait": {
+      "src": "/images/074830dd3b36ed-1800.webp",
+      "localBase": "/images/074830dd3b36ed",
+      "width": 1154,
+      "height": 1154,
+      "alt": "Ergys Shehu, studio portrait",
+      "color": "#372926"
     }
   },
   "albums": [
@@ -1506,6 +1514,48 @@
           "alt": "Wedding stories — wedding photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Mobile Uploads\\ESH04992-web.jpg",
           "color": "#886a59"
+        }
+      ]
+    },
+    {
+      "slug": "behind-the-lens",
+      "title": "Behind the Lens",
+      "kind": "projects",
+      "description": "Self-portraits from between the shoots — the photographer, off duty.",
+      "order": 16,
+      "featured": false,
+      "cover": {
+        "src": "/images/5998b542175204-1800.webp",
+        "localBase": "/images/5998b542175204",
+        "width": 1079,
+        "height": 1079,
+        "alt": "Ergys Shehu jumping mid-air with two cameras by the sea",
+        "color": "#7d9ab2"
+      },
+      "photos": [
+        {
+          "src": "/images/5998b542175204-1800.webp",
+          "localBase": "/images/5998b542175204",
+          "width": 1079,
+          "height": 1079,
+          "alt": "Ergys Shehu jumping mid-air with two cameras by the sea, photo 1",
+          "color": "#7d9ab2"
+        },
+        {
+          "src": "/images/19beda948b27e5-1800.webp",
+          "localBase": "/images/19beda948b27e5",
+          "width": 1365,
+          "height": 2048,
+          "alt": "Ergys Shehu in a coat and flat cap beside an ornate stone monument and lamp post, photo 2",
+          "color": "#8e846a"
+        },
+        {
+          "src": "/images/8a3d8d914afd79-1800.webp",
+          "localBase": "/images/8a3d8d914afd79",
+          "width": 1146,
+          "height": 1152,
+          "alt": "Ergys Shehu in a patterned shirt against a graffiti-covered wall, photo 3",
+          "color": "#c2beb6"
         }
       ]
     }
