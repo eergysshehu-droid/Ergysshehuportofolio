@@ -169,6 +169,36 @@ if('IntersectionObserver' in window){
       document.addEventListener('scroll',()=>{if(stackActive)schedule()},{passive:true});
     }
   }
+
+  // Homepage-only: instead of a fixed dissolve, black actually climbs up
+  // over the light filmstrip section as .work-section approaches from
+  // below — the same "physical" language as the card melt above, just
+  // applied to this one section boundary. Progress is read straight off
+  // work-section's live position (0 once it's a full screen below, 1 once
+  // it's reached the top), not eased or eased on a timer.
+  const sectionVeil=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('[data-section-veil]'):null;
+  const veilWorkSection=document.querySelector<HTMLElement>('.work-section');
+  if(sectionVeil && veilWorkSection && window.matchMedia('(max-width: 700px)').matches){
+    const MAX_VEIL_PX=150;
+    let veilActive=false;
+    let veilRafId:number|undefined;
+    function updateVeil(){
+      // 0 while work-section's top sits at the bottom of the viewport
+      // (just arriving), 1 exactly once it reaches the top — ties the
+      // climb to the section's own full approach instead of saturating
+      // partway through and sitting at max for an empty scroll stretch.
+      const wsTop=veilWorkSection!.getBoundingClientRect().top;
+      const progress=Math.max(0,Math.min(1,1-wsTop/window.innerHeight));
+      sectionVeil!.style.setProperty('--veil-h',(progress*MAX_VEIL_PX).toFixed(1)+'px');
+      veilRafId=undefined;
+    }
+    function scheduleVeil(){if(veilRafId===undefined)veilRafId=requestAnimationFrame(updateVeil)}
+    const veilIo=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{veilActive=entry.isIntersecting;if(veilActive)scheduleVeil()});
+    },{rootMargin:'300px 0px'});
+    veilIo.observe(veilWorkSection);
+    document.addEventListener('scroll',()=>{if(veilActive)scheduleVeil()},{passive:true});
+  }
 }
 
 // Desktop-only, fine-pointer tilt on project cards — a few px, no rotation.
