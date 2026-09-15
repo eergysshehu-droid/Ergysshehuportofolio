@@ -744,11 +744,12 @@ footer>a:last-child{justify-self:end}
      individual galleries, About) keeps the normal light editorial layout
      below — .project-grid/.project-card/.project-image are shared with
      those pages, so the black/sticky/melt treatment must stay scoped here. */
-  /* Dissolve into black instead of a hard line where the light filmstrip
-     section ends and the black stack begins — the top of the panel fades
-     from --paper down to #050505 over a short stretch instead of cutting
-     straight from one flat color to the other. */
-  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:linear-gradient(to bottom,var(--paper) 0,#050505 90px,#050505 100%)}
+  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
+  /* Black climbs up over the white filmstrip section as it scrolls toward
+     the stack below, instead of a static gradient cut — see
+     data-section-veil in Layout.astro, which grows this block's height
+     with real scroll position (not a fixed-timing animation). */
+  body.is-home .section-veil{position:absolute;left:0;right:0;bottom:0;height:var(--veil-h,0px);background:#050505;pointer-events:none;z-index:1}
   body.is-home .project-grid{background:#050505}
   body.is-home .work-heading{align-items:start;margin-bottom:30px}
   body.is-home .work-heading .kicker{color:rgba(244,242,237,.78)}
