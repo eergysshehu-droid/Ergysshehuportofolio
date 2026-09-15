@@ -6,28 +6,48 @@ import {instagramMedia} from '../lib/instagram';
 const usableItems = (await instagramMedia(24)).slice(0, 18);
 ---
 {usableItems.length > 0 && <section class="latest-section" id="latest"><div class="work-heading" data-reveal><div><p class="kicker">LATEST · CURRENT WORK</p><h2>Right now.</h2></div></div><div class="latest-grid">{usableItems.map(item =>
-  <a class="latest-card" data-image-reveal href={item.permalink} target="_blank" rel="noopener noreferrer" aria-label={item.caption?.slice(0,140) || 'View recent work on Instagram'}><img src={item.cover} alt="" loading="lazy" width="800" height="800"/>{item.media_type === 'VIDEO' && <span class="icon-badge latest-icon" aria-hidden="true">▶</span>}{item.media_type === 'CAROUSEL_ALBUM' && <span class="icon-badge latest-icon-carousel" aria-hidden="true">⧉</span>}</a>
+  <a class="latest-card" data-image-reveal href={item.permalink} target="_blank" rel="noopener noreferrer" aria-label={item.caption?.slice(0,140) || 'View recent work on Instagram'} data-media-type={item.media_type} data-media-url={item.media_type === 'VIDEO' ? item.media_url : undefined} data-poster={item.media_type === 'VIDEO' ? (item.thumbnail_url || item.cover) : undefined}><img src={item.cover} alt="" loading="lazy" width="800" height="800"/>{item.media_type === 'VIDEO' && <span class="icon-badge latest-icon" aria-hidden="true">▶</span>}{item.media_type === 'CAROUSEL_ALBUM' && <span class="icon-badge latest-icon-carousel" aria-hidden="true">⧉</span>}</a>
 )}</div>
-<dialog class="lightbox latest-lightbox" aria-label="Instagram post viewer"><div class="lightbox-toolbar"><span class="lightbox-counter" aria-live="polite"></span><div class="lightbox-controls"><button type="button" data-prev aria-label="Previous post">←</button><button type="button" data-next aria-label="Next post">→</button><button type="button" data-close aria-label="Close post viewer">CLOSE ×</button></div></div><img class="lightbox-photo" alt=""/><a class="lightbox-book" data-ig-link href="#" target="_blank" rel="noopener noreferrer">View on Instagram ↗</a></dialog>
+<dialog class="lightbox latest-lightbox" aria-label="Instagram post viewer"><div class="lightbox-toolbar"><span class="lightbox-counter" aria-live="polite"></span><button type="button" data-close aria-label="Close post viewer">CLOSE ×</button></div><button type="button" class="lightbox-nav lightbox-prev" data-prev aria-label="Previous post"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4L7 12l8 8"/></svg></button><button type="button" class="lightbox-nav lightbox-next" data-next aria-label="Next post"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button><img class="lightbox-photo" alt=""/><video class="lightbox-video" controls playsinline preload="metadata" hidden></video><a class="lightbox-book" data-ig-link href="#" target="_blank" rel="noopener noreferrer">View on Instagram ↗</a></dialog>
 </section>}
 
 <script>
-// Clicking a card opens the full image in place first — a click straight
-// out to Instagram was too abrupt for just browsing. "View on Instagram"
-// inside the viewer is the deliberate second step to actually leave the
-// site, same two-step feel as the portfolio Lightbox.
+// Clicking a card opens the full image/video in place first — a click
+// straight out to Instagram was too abrupt for just browsing. "View on
+// Instagram" inside the viewer is the deliberate second step to actually
+// leave the site, same two-step feel as the portfolio Lightbox. VIDEO
+// posts play natively here too, instead of just showing a static cover.
 const dialog = document.querySelector<HTMLDialogElement>('.latest-lightbox');
 const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('.latest-card'));
 if (dialog && cards.length) {
   const photo = dialog.querySelector<HTMLImageElement>('.lightbox-photo')!;
+  const video = dialog.querySelector<HTMLVideoElement>('.lightbox-video')!;
   const counter = dialog.querySelector<HTMLElement>('.lightbox-counter')!;
   const igLink = dialog.querySelector<HTMLAnchorElement>('[data-ig-link]')!;
   let active = 0;
+  function stopVideo() {
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    video.hidden = true;
+  }
   function show(index: number) {
     active = (index + cards.length) % cards.length;
     const card = cards[active];
-    photo.src = card.querySelector('img')?.src || '';
-    photo.alt = card.getAttribute('aria-label') || '';
+    const mediaUrl = card.dataset.mediaUrl;
+    if (card.dataset.mediaType === 'VIDEO' && mediaUrl) {
+      photo.hidden = true;
+      video.hidden = false;
+      video.poster = card.dataset.poster || '';
+      video.src = mediaUrl;
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    } else {
+      stopVideo();
+      photo.hidden = false;
+      photo.src = card.querySelector('img')?.src || '';
+      photo.alt = card.getAttribute('aria-label') || '';
+    }
     igLink.href = card.href;
     counter.textContent = (active + 1) + ' / ' + cards.length;
   }
@@ -41,10 +61,25 @@ if (dialog && cards.length) {
   dialog.querySelector('[data-prev]')?.addEventListener('click', () => show(active - 1));
   dialog.querySelector('[data-next]')?.addEventListener('click', () => show(active + 1));
   dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => document.documentElement.classList.remove('lightbox-open'));
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('lightbox-open');
+    stopVideo();
+  });
   dialog.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft') { event.preventDefault(); show(active - 1); }
     if (event.key === 'ArrowRight') { event.preventDefault(); show(active + 1); }
+  });
+  // Pointer-based swipe on whichever media layer is currently visible —
+  // video keeps its own drag-to-seek from native controls, so swipe is
+  // only armed on the image layer to avoid fighting that.
+  let startX = 0, startY = 0, dragging = false;
+  photo.addEventListener('pointerdown', event => { startX = event.clientX; startY = event.clientY; dragging = true; });
+  photo.addEventListener('pointerup', event => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.2) show(active + (dx < 0 ? 1 : -1));
   });
 }
 </script>

@@ -17,14 +17,6 @@
   --text-md:clamp(14px,.9vw,19px);
   --radius-panel:clamp(16px,1.5vw,28px);
   --hero-overlap:clamp(120px,8vw,200px);
-  /* The filmstrip panel used to share --hero-overlap directly with the
-     hero-scroll-scene sizing, but once the top edge became an asymmetric
-     curve that also rises on the left (over "Explore the story"), that
-     much overlap started covering the hero controls. This is deliberately
-     smaller: the flat panel body sits lower, clear of hero-controls, and
-     only the decorative curve on top of it reaches back up toward the
-     hero — not the panel's actual content. */
-  --panel-overlap:calc(var(--hero-overlap) * .55);
   --content-max:1760px;
   /* Header/section content sits in a --content-max box centered with
      margin-inline:auto, so past that width its edge sits inboard of the
@@ -42,17 +34,16 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;transition:background-color 1.8s var(--ease-editorial)}
-/* Mobile stacking background tint (see Layout.astro): .in-stack-grid turns
-   the body black for as long as any part of the black stacking panel
-   (.work-section/.collection-body) is on screen — the panel itself has no
-   background of its own, so this is what actually paints it black behind
-   the heading and the grid together, no mismatched seam between the two.
-   .has-frame-color layers the current card's color moodily into that
-   black rather than a raw, harsh block of the extracted photo color. */
+/* Mobile stacking background (see Layout.astro): .in-stack-grid turns the
+   body pure neutral black for as long as any part of the black stacking
+   panel (.work-section/.collection-body) is on screen — the panel itself
+   has no background of its own, so this is what actually paints it black
+   behind the heading and the grid together, no mismatched seam between
+   the two. Deliberately NOT tinted toward the active card's color
+   (that read as a blue/purple cast, not black) — flat #050505 throughout. */
 @media(max-width:700px){
-  body.in-stack-grid{background-color:#0b0b0a}
+  body.in-stack-grid{background-color:#050505}
 }
-body.in-stack-grid.has-frame-color{background-color:color-mix(in srgb,var(--frame-color-current) 55%,#0b0b0a)}
 a{color:inherit;text-decoration:none}
 button,summary{font:inherit}
 button,a,summary{-webkit-tap-highlight-color:transparent}
@@ -243,7 +234,7 @@ html.mobile-menu-open{overflow:hidden}
   text-transform:uppercase;
   color:rgba(255,255,255,.72);
 }
-.hero-feature{position:absolute;left:var(--gutter);bottom:clamp(110px,8vw,190px);max-width:80vw}
+.hero-feature{position:absolute;left:var(--gutter);bottom:clamp(105px,10vh,145px);max-width:80vw}
 .hero-project-label{display:block;font-size:var(--text-xs);letter-spacing:.17em;text-transform:uppercase;margin-bottom:14px;color:rgba(255,255,255,.8)}
 .hero-project-title{display:flex;align-items:baseline;gap:clamp(10px,1vw,20px);font:400 clamp(52px,5vw,110px)/.95 var(--serif);letter-spacing:-.03em}
 .hero-project-arrow{font-size:.4em;transition:transform .3s var(--ease-editorial)}
@@ -257,7 +248,7 @@ html.mobile-menu-open{overflow:hidden}
 .hero-nav-arrows button{border:0;background:transparent;color:#fff;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center}
 .hero-nav-arrows button svg{display:block;width:16px;height:16px}
 .hero-nav-arrows span{width:1px;height:22px;background:rgba(255,255,255,.4)}
-.scroll-indicator{position:absolute;z-index:7;right:var(--gutter);bottom:calc(var(--panel-overlap) + 14px);display:grid;place-items:center;gap:8px;color:#fff;text-decoration:none}
+.scroll-indicator{position:absolute;z-index:7;right:var(--gutter);bottom:clamp(60px,7vh,85px);display:grid;place-items:center;gap:8px;color:#fff;text-decoration:none}
 .scroll-indicator span{font-size:var(--text-2xs);letter-spacing:.25em;text-transform:uppercase}
 .scroll-indicator svg{display:block;width:14px;height:14px;animation:scroll-bounce 1.8s ease-in-out infinite}
 @keyframes scroll-bounce{0%,100%{transform:translateY(0);opacity:.65}50%{transform:translateY(7px);opacity:1}}
@@ -355,18 +346,20 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
   position:relative;
   z-index:6;
   background:var(--paper);
-  margin-top:calc(-1 * var(--panel-overlap));
+  margin:0;
   border-radius:0;
   padding:76px 0 90px;
 }
-/* Editorial top edge: low on the left, rising into a near-flat plateau
-   through the middle, then rising again toward the right — an SVG path
-   instead of border-radius/a boxed pseudo-element, since that's the only
-   way to get a continuous asymmetric wave rather than one rounded corner.
-   The panel itself stays a plain rectangle (background/margin-top above);
-   only this decorative sliver reaches up over the hero. */
-.filmstrip-curve{position:absolute;left:0;right:0;bottom:100%;width:100%;height:clamp(64px,7vw,108px);display:block;pointer-events:none;z-index:1}
-.filmstrip-curve path{fill:var(--paper)}
+/* The curve is no longer part of the panel's own box (no negative
+   margin-top pulling the panel up) — it's a separate decorative overlay
+   living inside the hero itself (.opening, already a positioned ancestor
+   via position:sticky), pinned to the hero's own bottom edge. That keeps
+   the panel's actual content — where it starts, its background — totally
+   decoupled from how far the curve reaches up into the hero, so raising
+   or lowering the curve can never again threaten to cover hero-controls. */
+.ivory-transition{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:120px;overflow:hidden;pointer-events:none;z-index:5}
+.ivory-transition-svg{display:block;width:100%;height:100%}
+.ivory-transition-svg path{fill:var(--paper)}
 .filmstrip-heading{max-width:var(--content-max);margin:0 auto 36px;padding:0 var(--page-pad)}
 .filmstrip-heading h2{font:400 clamp(36px,4.5vw,68px)/1.15 var(--serif);letter-spacing:-.035em;margin:16px 0 20px;max-width:640px}
 .filmstrip-copy{max-width:480px;font-size:var(--text-sm);color:var(--muted);line-height:1.7;margin:0 0 24px}
@@ -383,7 +376,7 @@ html.intro-running .title-mask [data-slide-title]{display:inline-block;transform
 .filmstrip-next:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-50%) scale(1.06)}
 @media(max-width:700px){
   .filmstrip-section{padding:50px 0 60px}
-  .filmstrip-curve{height:clamp(30px,9vw,46px)}
+  .ivory-transition{height:52px}
   .filmstrip-heading{padding:0 5vw;margin-bottom:26px}
   .filmstrip-heading h2{font-size:34px}
   .filmstrip-item{width:86vw}
@@ -563,20 +556,41 @@ footer>a:last-child{justify-self:end}
 .bio-milestones a:hover span{color:var(--ink)}
 
 /* ==========================================================================
-   LIGHTBOX
+   LIGHTBOX — one cinematic viewer design shared by the portfolio galleries
+   and the Instagram grid: pure black, image/video centered, a quiet top
+   bar (counter + close only), and large circular side arrows instead of
+   toolbar buttons for prev/next.
    ========================================================================== */
-.lightbox{border:0;padding:0;width:100vw;max-width:none;height:100dvh;max-height:none;background:#111;color:white}
-.lightbox::backdrop{background:#111}
-.lightbox img{width:100%;height:calc(100dvh - 150px);object-fit:contain;padding:16px 5vw}
-.lightbox-toolbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;font-size:var(--text-sm)}
-.lightbox button{background:transparent;color:white;border:1px solid #777;padding:10px 16px;cursor:pointer}
-.lightbox-controls{display:flex;gap:12px;margin-left:auto}
-.lightbox-book{display:block;text-align:center;color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:var(--text-xs);white-space:nowrap;margin:10px auto 0}
-.lightbox-caption{text-align:center;font-size:var(--text-sm);margin:0}
+.lightbox{border:0;padding:0;width:100vw;max-width:none;height:100dvh;max-height:none;background:#050505;color:#fff}
+.lightbox::backdrop{background:#050505}
+.lightbox img,.lightbox-video{width:100%;height:calc(100dvh - 150px);object-fit:contain;padding:16px 5vw;touch-action:pan-y}
+.lightbox-video{background:#050505}
+.lightbox-toolbar{position:relative;z-index:1;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,3vw,44px);font-size:var(--text-sm)}
+.lightbox-counter{font-size:11px;letter-spacing:.16em;opacity:.65}
+.lightbox button{background:transparent;color:#fff;border:0;cursor:pointer}
+.lightbox [data-close]{padding:10px 0;letter-spacing:.14em;font-size:11px;text-transform:uppercase;opacity:.75;transition:opacity .2s}
+.lightbox [data-close]:hover{opacity:1}
+/* Side navigation: fixed to the viewport (not the toolbar), vertically
+   centered, so they read as part of the photo/video frame rather than a
+   row of buttons — the same reach on every device regardless of scroll. */
+.lightbox-nav{position:fixed;top:50%;transform:translateY(-50%);width:56px;height:56px;border:1px solid rgba(255,255,255,.28);border-radius:50%;display:grid;place-items:center;background:rgba(5,5,5,.28);color:#fff;backdrop-filter:blur(4px);opacity:.65;transition:opacity .2s ease,background .2s ease,transform .2s ease}
+.lightbox-nav svg{width:20px;height:20px;display:block}
+.lightbox-nav:hover{opacity:1;background:rgba(5,5,5,.65);transform:translateY(-50%) scale(1.05)}
+.lightbox-prev{left:clamp(14px,2vw,32px)}
+.lightbox-next{right:clamp(14px,2vw,32px)}
+.lightbox-book{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:1;color:#fff;opacity:.72;font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:10px;white-space:nowrap;transition:opacity .2s}
+.lightbox-book:hover{opacity:1}
+.lightbox-caption{text-align:center;font-size:var(--text-sm);margin:0;opacity:.75}
 .lightbox-open{overflow:hidden}
 /* No caption row in the Instagram viewer, so it can reclaim the space the
    generic .lightbox img height reserves for one. */
-.latest-lightbox img{height:calc(100dvh - 110px)}
+.latest-lightbox img,.latest-lightbox .lightbox-video{height:calc(100dvh - 110px)}
+@media(max-width:700px){
+  .lightbox-nav{width:44px;height:44px;opacity:.55}
+  .lightbox-nav svg{width:16px;height:16px}
+  .lightbox-prev{left:8px}
+  .lightbox-next{right:8px}
+}
 
 /* ==========================================================================
    VIDEO THEATER — full-black takeover for "play with sound" on /films/
@@ -676,7 +690,7 @@ footer>a:last-child{justify-self:end}
   .hero-feature{bottom:130px;max-width:88vw}
   .hero-project-title{font-size:clamp(40px,12vw,60px)}
   .hero-controls,.hero-progress{width:min(280px,68vw)}
-  .scroll-indicator{right:auto;left:50%;transform:translateX(-50%);bottom:calc(var(--panel-overlap) + 8px)}
+  .scroll-indicator{right:auto;left:50%;transform:translateX(-50%);bottom:40px}
   :root{--hero-overlap:clamp(40px,10vw,70px)}
   .motion-section,.artist-section{border-radius:clamp(12px,4vw,18px) clamp(12px,4vw,18px) 0 0}
   /* The mobile stacking grid gets its own straight-edged black panel — no
@@ -686,16 +700,18 @@ footer>a:last-child{justify-self:end}
      the heading and the grid together (see body rules above), so there's
      no mismatched seam between the two. Text flips to light for the same
      reason. */
-  .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:transparent}
+  .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
+  .project-grid{background:#050505}
   .work-heading{align-items:start;margin-bottom:30px}
+  .work-heading .kicker{color:rgba(244,242,237,.78)}
   .work-heading h2{font-size:36px;color:#f4f2ed}
-  .work-count{color:rgba(244,242,237,.7)}
-  .work-toolbar{display:block;padding:12px 0 22px;border-top-color:rgba(244,242,237,.18)}
+  .work-count{color:rgba(244,242,237,.62)}
+  .work-toolbar{display:block;padding:12px 0 22px;border-top-color:rgba(244,242,237,.16)}
   .filters{gap:22px}
-  .filters button{color:rgba(244,242,237,.5)}
-  .filters button[aria-pressed=true]{color:#f4f2ed}
+  .filters button{color:rgba(244,242,237,.48)}
+  .filters button[aria-pressed=true]{color:#fff;border-bottom-color:#fff}
   .index-link{display:none}
-  .collection-body{color:#f4f2ed;padding-top:45px;margin-top:0}
+  .collection-body{color:#f4f2ed;padding-top:45px;margin-top:0;background:#050505}
   .collection-empty .kicker{color:rgba(244,242,237,.6)}
   .collection-empty h2{color:#f4f2ed}
   .collection-empty p{color:rgba(244,242,237,.7)}
@@ -764,11 +780,9 @@ footer>a:last-child{justify-self:end}
   footer .footer-row{flex-direction:column;align-items:flex-start;gap:16px;justify-self:start}
   footer>span{order:3;justify-self:start;text-align:left}
   footer>a:last-child{justify-self:start;order:4}
-  .lightbox img{padding:10px;height:calc(100dvh - 160px)}
-  .latest-lightbox img{height:calc(100dvh - 120px)}
+  .lightbox img,.lightbox-video{padding:10px;height:calc(100dvh - 160px)}
+  .latest-lightbox img,.latest-lightbox .lightbox-video{height:calc(100dvh - 120px)}
   .lightbox-toolbar{padding:0 15px;gap:10px}
-  .lightbox-controls{gap:6px}
-  .lightbox button{padding:8px 12px}
   .motion-ready [data-reveal]{transform:translate3d(0,14px,0)}
 }
 
