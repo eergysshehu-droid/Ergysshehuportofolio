@@ -49,6 +49,31 @@ document.querySelector('[data-menu-close]')?.addEventListener('click',()=>{if(mo
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && mobileMenu?.open){mobileMenu.open=false;mobileMenu.querySelector('summary')?.focus()}});
 mobileMenu?.addEventListener('toggle',()=>document.documentElement.classList.toggle('mobile-menu-open',mobileMenu.open));
 
+// Fixed header: hides on scroll down, reveals on scroll up, so nav is
+// always one scroll-up away instead of requiring a trip all the way back
+// to the top. On the homepage it also flips from transparent-over-hero to
+// the same solid look every other page uses once scrolled past its own
+// height, so it stays legible over whatever's underneath it further down.
+const siteHeader=document.querySelector<HTMLElement>('.site-header');
+if(siteHeader){
+  const headerH=siteHeader.offsetHeight||90;
+  let lastY=window.scrollY;
+  let headerTicking=false;
+  const updateHeader=()=>{
+    const y=window.scrollY;
+    siteHeader.classList.toggle('is-scrolled',y>headerH);
+    if(!reducedMotion.matches){
+      if(y<=headerH)siteHeader.classList.remove('is-hidden');
+      else if(y>lastY)siteHeader.classList.add('is-hidden');
+      else if(y<lastY)siteHeader.classList.remove('is-hidden');
+    }
+    lastY=y;
+    headerTicking=false;
+  };
+  updateHeader();
+  document.addEventListener('scroll',()=>{if(!headerTicking){requestAnimationFrame(updateHeader);headerTicking=true}},{passive:true});
+}
+
 // Section / element reveals — safe by construction: the CSS only hides content
 // once 'motion-ready' is set, and everything is force-shown after a short delay
 // regardless of scroll or observer behaviour, so nothing can stay permanently hidden.

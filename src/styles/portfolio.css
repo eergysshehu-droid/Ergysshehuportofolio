@@ -18,6 +18,7 @@
   --radius-panel:clamp(16px,1.5vw,28px);
   --hero-overlap:clamp(120px,8vw,200px);
   --content-max:1760px;
+  --header-h:clamp(78px,5vw,110px);
   /* Header/section content sits in a --content-max box centered with
      margin-inline:auto, so past that width its edge sits inboard of the
      raw viewport edge by (100vw - content-max)/2. Hero elements are
@@ -32,7 +33,7 @@
    RESET / BASE
    ========================================================================== */
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:24px;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 24px);overflow-x:hidden}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;transition:background-color 1.8s var(--ease-editorial)}
 /* Mobile stacking background (see Layout.astro): .in-stack-grid turns the
    body pure neutral black for as long as any part of the black stacking
@@ -72,11 +73,12 @@ img,picture{-webkit-user-select:none;user-select:none}
   --header-fg:var(--ink);
   --header-bg:var(--paper);
   --header-line:rgba(23,23,20,.12);
-  position:relative;
+  position:fixed;
+  top:0;left:0;right:0;
   width:100%;
   max-width:var(--content-max);
   margin-inline:auto;
-  height:clamp(78px,5vw,110px);
+  height:var(--header-h);
   padding-inline:var(--page-pad);
   display:flex;
   align-items:center;
@@ -84,22 +86,50 @@ img,picture{-webkit-user-select:none;user-select:none}
   gap:clamp(16px,2vw,40px);
   z-index:5000;
   color:var(--header-fg);
+  transform:translateY(0);
+  transition:transform .3s var(--ease-editorial);
+}
+/* The header itself is capped at --content-max and centered, so its
+   background lives on this full-viewport-width pseudo instead — otherwise
+   on screens wider than --content-max the fixed bar would leave bare gaps
+   at each side with page content showing (and scrolling) underneath them. */
+.site-header:before{
+  content:'';
+  position:absolute;
+  inset:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100vw;
   background:var(--header-bg);
   border-bottom:1px solid var(--header-line);
+  z-index:-1;
+  transition:background-color .25s ease,border-color .25s ease;
 }
+/* Fixed everywhere so nav is always one scroll-up away, not just reachable
+   by scrolling all the way back to the top — see the scroll listener in
+   Layout.astro, which toggles .is-hidden (scrolling down past the header's
+   own height) and .is-scrolled (past it at all, home only). */
+.site-header.is-hidden{transform:translateY(-100%)}
+body:not(.is-home) main{padding-top:var(--header-h)}
 .is-home .site-header{
   --header-fg:#fff;
+  --header-bg:transparent;
   --header-line:transparent;
-  position:absolute;
-  inset:0 0 auto 0;
-  margin-inline:auto;
-  background:transparent;
-  border-bottom:0;
 }
-/* No background strip behind the home header — legibility over the photo
-   comes from a soft text-shadow on the mark/nav themselves instead. */
-.is-home .ergys-wordmark,.is-home .desktop-nav a,.is-home .desktop-nav .language-switch{text-shadow:0 2px 14px rgba(0,0,0,.5)}
-.is-home .mobile-menu summary{filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+/* Transparent-over-hero only while still near the top — past its own
+   height it switches to the same solid look every other page uses, so it
+   stays legible over whichever section (dark or the light contact panel)
+   happens to be scrolled underneath it. */
+.is-home .site-header.is-scrolled{
+  --header-fg:var(--ink);
+  --header-bg:var(--paper);
+  --header-line:rgba(23,23,20,.12);
+}
+/* No background strip behind the transparent home header — legibility over
+   the photo comes from a soft text-shadow on the mark/nav themselves
+   instead, dropped again once it's gone solid. */
+.is-home .site-header:not(.is-scrolled) .ergys-wordmark,.is-home .site-header:not(.is-scrolled) .desktop-nav a,.is-home .site-header:not(.is-scrolled) .desktop-nav .language-switch{text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.is-home .site-header:not(.is-scrolled) .mobile-menu summary{filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
 .ergys-wordmark{
   display:inline-flex;
   align-items:baseline;
@@ -164,9 +194,12 @@ img,picture{-webkit-user-select:none;user-select:none}
   z-index:4000;
   opacity:0;
   visibility:hidden;
-  transition:opacity .3s var(--ease-editorial);
+  /* visibility has no natural mid-point, so give it a matching transition
+     delay: on close it only flips to hidden once the opacity fade below has
+     finished, instead of vanishing instantly the moment [open] is removed. */
+  transition:opacity .25s var(--ease-editorial),visibility 0s .25s;
 }
-.mobile-menu[open] .mobile-menu-screen{opacity:1;visibility:visible}
+.mobile-menu[open] .mobile-menu-screen{opacity:1;visibility:visible;transition:opacity .25s var(--ease-editorial)}
 .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .mobile-menu-brand{display:flex;gap:.35em;align-items:baseline;font-family:var(--wordmark-font);letter-spacing:.04em;color:#f4f2ed;line-height:1;min-width:0}
 /* Same clamp() as .ergys-wordmark-strong/-light in the header — at mobile
@@ -711,7 +744,11 @@ footer>a:last-child{justify-self:end}
      individual galleries, About) keeps the normal light editorial layout
      below — .project-grid/.project-card/.project-image are shared with
      those pages, so the black/sticky/melt treatment must stay scoped here. */
-  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:#050505}
+  /* Dissolve into black instead of a hard line where the light filmstrip
+     section ends and the black stack begins — the top of the panel fades
+     from --paper down to #050505 over a short stretch instead of cutting
+     straight from one flat color to the other. */
+  body.is-home .work-section{padding:55px 5vw 45px;color:#f4f2ed;background:linear-gradient(to bottom,var(--paper) 0,#050505 90px,#050505 100%)}
   body.is-home .project-grid{background:#050505}
   body.is-home .work-heading{align-items:start;margin-bottom:30px}
   body.is-home .work-heading .kicker{color:rgba(244,242,237,.78)}
