@@ -1,84 +1,159 @@
 ---
-import {instagramMedia} from '../lib/instagram';
+import {
+  instagramMedia
+} from '../lib/instagram';
 
-// instagramMedia() already validates every item (see src/lib/instagram.ts) —
+import {
+  languageFromPath
+} from '../lib/i18n';
+
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
+// instagramMedia() already validates every item.
 // cover and permalink are guaranteed to be well-formed http(s) URLs here.
-const usableItems = (await instagramMedia(24)).slice(0, 18);
+const usableItems =
+  (
+    await instagramMedia(
+      24
+    )
+  ).slice(
+    0,
+    18
+  );
 ---
 
 {
-  usableItems.length > 0 && (
-    <section class="latest-section" id="latest">
-      <div class="work-heading" data-reveal>
+  usableItems.length >
+    0 && (
+    <section
+      class="latest-section"
+      id="latest"
+    >
+      <div
+        class="work-heading"
+        data-reveal
+      >
         <div>
-          <p class="kicker">LATEST · CURRENT WORK</p>
-          <h2>Right now.</h2>
+          <p
+            class="kicker"
+            data-en="LATEST · CURRENT WORK"
+            data-sq="MË TË FUNDIT · PUNA AKTUALE"
+          >
+            {
+              isSq
+                ? 'MË TË FUNDIT · PUNA AKTUALE'
+                : 'LATEST · CURRENT WORK'
+            }
+          </p>
+
+          <h2
+            data-en="Right now."
+            data-sq="Tani."
+          >
+            {
+              isSq
+                ? 'Tani.'
+                : 'Right now.'
+            }
+          </h2>
         </div>
       </div>
 
       <div class="latest-grid">
         {
-          usableItems.map(item => (
-            <a
-              class="latest-card"
-              data-image-reveal
-              href={item.permalink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={
-                item.caption?.slice(0, 140) ||
-                'View recent work on Instagram'
-              }
-              data-media-type={item.media_type}
-              data-media-url={
-                item.media_type === 'VIDEO'
-                  ? item.media_url
-                  : undefined
-              }
-              data-poster={
-                item.media_type === 'VIDEO'
-                  ? (item.thumbnail_url || item.cover)
-                  : undefined
-              }
-            >
-              <img
-                src={item.cover}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                width="800"
-                height="800"
-              />
+          usableItems.map(
+            item => (
+              <a
+                class="latest-card"
+                data-image-reveal
+                href={
+                  item.permalink
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={
+                  item.caption?.slice(
+                    0,
+                    140
+                  ) ||
+                  (
+                    isSq
+                      ? 'Shiko punën e fundit në Instagram'
+                      : 'View recent work on Instagram'
+                  )
+                }
+                data-media-type={
+                  item.media_type
+                }
+                data-media-url={
+                  item.media_type ===
+                    'VIDEO'
+                    ? item.media_url
+                    : undefined
+                }
+                data-poster={
+                  item.media_type ===
+                    'VIDEO'
+                    ? (
+                        item.thumbnail_url ||
+                        item.cover
+                      )
+                    : undefined
+                }
+              >
+                <img
+                  src={
+                    item.cover
+                  }
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="800"
+                />
 
-              {
-                item.media_type === 'VIDEO' && (
-                  <span
-                    class="icon-badge latest-icon"
-                    aria-hidden="true"
-                  >
-                    ▶
-                  </span>
-                )
-              }
+                {
+                  item.media_type ===
+                    'VIDEO' && (
+                    <span
+                      class="icon-badge latest-icon"
+                      aria-hidden="true"
+                    >
+                      ▶
+                    </span>
+                  )
+                }
 
-              {
-                item.media_type === 'CAROUSEL_ALBUM' && (
-                  <span
-                    class="icon-badge latest-icon-carousel"
-                    aria-hidden="true"
-                  >
-                    ⧉
-                  </span>
-                )
-              }
-            </a>
-          ))
+                {
+                  item.media_type ===
+                    'CAROUSEL_ALBUM' && (
+                    <span
+                      class="icon-badge latest-icon-carousel"
+                      aria-hidden="true"
+                    >
+                      ⧉
+                    </span>
+                  )
+                }
+              </a>
+            )
+          )
         }
       </div>
 
       <dialog
         class="lightbox latest-lightbox"
-        aria-label="Instagram post viewer"
+        aria-label={
+          isSq
+            ? 'Shikuesi i postimeve në Instagram'
+            : 'Instagram post viewer'
+        }
       >
         <div class="lightbox-toolbar">
           <span
@@ -89,9 +164,17 @@ const usableItems = (await instagramMedia(24)).slice(0, 18);
           <button
             type="button"
             data-close
-            aria-label="Close post viewer"
+            aria-label={
+              isSq
+                ? 'Mbyll postimin'
+                : 'Close post viewer'
+            }
           >
-            CLOSE ×
+            {
+              isSq
+                ? 'MBYLL ×'
+                : 'CLOSE ×'
+            }
           </button>
         </div>
 
@@ -99,7 +182,11 @@ const usableItems = (await instagramMedia(24)).slice(0, 18);
           type="button"
           class="lightbox-nav lightbox-prev"
           data-prev
-          aria-label="Previous post"
+          aria-label={
+            isSq
+              ? 'Postimi i mëparshëm'
+              : 'Previous post'
+          }
         >
           <svg
             viewBox="0 0 24 24"
@@ -118,7 +205,11 @@ const usableItems = (await instagramMedia(24)).slice(0, 18);
           type="button"
           class="lightbox-nav lightbox-next"
           data-next
-          aria-label="Next post"
+          aria-label={
+            isSq
+              ? 'Postimi tjetër'
+              : 'Next post'
+          }
         >
           <svg
             viewBox="0 0 24 24"
@@ -153,8 +244,14 @@ const usableItems = (await instagramMedia(24)).slice(0, 18);
           href="#"
           target="_blank"
           rel="noopener noreferrer"
+          data-en="View on Instagram ↗"
+          data-sq="Shiko në Instagram ↗"
         >
-          View on Instagram ↗
+          {
+            isSq
+              ? 'Shiko në Instagram ↗'
+              : 'View on Instagram ↗'
+          }
         </a>
       </dialog>
     </section>
@@ -174,8 +271,10 @@ const cards =
     )
   );
 
-if(dialog && cards.length){
-
+if (
+  dialog &&
+  cards.length
+) {
   const photo =
     dialog.querySelector<HTMLImageElement>(
       '.lightbox-photo'
@@ -196,130 +295,184 @@ if(dialog && cards.length){
       '[data-ig-link]'
     )!;
 
-  let active=0;
+  let active =
+    0;
 
-  function stopVideo(){
-
+  function stopVideo() {
     video.pause();
-    video.removeAttribute('src');
+
+    video.removeAttribute(
+      'src'
+    );
+
     video.load();
-    video.hidden=true;
+
+    video.hidden =
+      true;
   }
 
-  function show(index:number){
+  function show(
+    index: number
+  ) {
+    active =
+      (
+        index +
+        cards.length
+      ) %
+      cards.length;
 
-    active=
-      (index+cards.length)
-      % cards.length;
+    const card =
+      cards[
+        active
+      ];
 
-    const card=cards[active];
-
-    const mediaUrl=
+    const mediaUrl =
       card.dataset.mediaUrl;
 
-    if(
-      card.dataset.mediaType==='VIDEO'
-      && mediaUrl
-    ){
+    if (
+      card.dataset.mediaType ===
+        'VIDEO' &&
+      mediaUrl
+    ) {
+      photo.hidden =
+        true;
 
-      photo.hidden=true;
-      video.hidden=false;
+      video.hidden =
+        false;
 
-      video.poster=
-        card.dataset.poster||'';
+      video.poster =
+        card.dataset.poster ||
+        '';
 
-      video.src=mediaUrl;
-      video.currentTime=0;
+      video.src =
+        mediaUrl;
+
+      video.currentTime =
+        0;
 
       video
         .play()
-        .catch(()=>{});
-
-    }else{
-
+        .catch(
+          () => {}
+        );
+    } else {
       stopVideo();
 
-      photo.hidden=false;
+      photo.hidden =
+        false;
 
-      photo.src=
+      photo.src =
         card
-          .querySelector('img')
-          ?.src
-        ||'';
+          .querySelector(
+            'img'
+          )
+          ?.src ||
+        '';
 
-      photo.alt=
+      photo.alt =
         card.getAttribute(
           'aria-label'
-        )
-        ||'';
+        ) ||
+        '';
     }
 
-    igLink.href=card.href;
+    igLink.href =
+      card.href;
 
-    counter.textContent=
-      (active+1)
-      +' / '
-      +cards.length;
+    counter.textContent =
+      (
+        active +
+        1
+      ) +
+      ' / ' +
+      cards.length;
   }
 
   cards.forEach(
-    (card,i)=>
+    (
+      card,
+      i
+    ) =>
       card.addEventListener(
         'click',
-        event=>{
 
-          if(
-            event.ctrlKey
-            || event.metaKey
-            || event.shiftKey
-            || event.altKey
-          ){
+        event => {
+          if (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
             return;
           }
 
           event.preventDefault();
 
-          show(i);
+          show(
+            i
+          );
 
           dialog.showModal();
 
           document
             .documentElement
             .classList
-            .add('lightbox-open');
+            .add(
+              'lightbox-open'
+            );
         }
       )
   );
 
   dialog
-    .querySelector('[data-prev]')
+    .querySelector(
+      '[data-prev]'
+    )
     ?.addEventListener(
       'click',
-      ()=>show(active-1)
+
+      () =>
+        show(
+          active -
+          1
+        )
     );
 
   dialog
-    .querySelector('[data-next]')
+    .querySelector(
+      '[data-next]'
+    )
     ?.addEventListener(
       'click',
-      ()=>show(active+1)
+
+      () =>
+        show(
+          active +
+          1
+        )
     );
 
   dialog
-    .querySelector('[data-close]')
+    .querySelector(
+      '[data-close]'
+    )
     ?.addEventListener(
       'click',
-      ()=>dialog.close()
+
+      () =>
+        dialog.close()
     );
 
   dialog.addEventListener(
     'close',
-    ()=>{
 
+    () => {
       document
         .documentElement
         .classList
-        .remove('lightbox-open');
+        .remove(
+          'lightbox-open'
+        );
 
       stopVideo();
     }
@@ -327,63 +480,108 @@ if(dialog && cards.length){
 
   dialog.addEventListener(
     'keydown',
-    event=>{
 
-      if(event.key==='ArrowLeft'){
-
+    event => {
+      if (
+        event.key ===
+        'ArrowLeft'
+      ) {
         event.preventDefault();
-        show(active-1);
+
+        show(
+          active -
+          1
+        );
       }
 
-      if(event.key==='ArrowRight'){
-
+      if (
+        event.key ===
+        'ArrowRight'
+      ) {
         event.preventDefault();
-        show(active+1);
+
+        show(
+          active +
+          1
+        );
       }
     }
   );
 
-  let startX=0;
-  let startY=0;
-  let dragging=false;
+  let startX =
+    0;
+
+  let startY =
+    0;
+
+  let dragging =
+    false;
 
   photo.addEventListener(
     'pointerdown',
-    event=>{
 
-      startX=event.clientX;
-      startY=event.clientY;
-      dragging=true;
+    event => {
+      startX =
+        event.clientX;
+
+      startY =
+        event.clientY;
+
+      dragging =
+        true;
+    }
+  );
+
+  photo.addEventListener(
+    'pointercancel',
+
+    () => {
+      dragging =
+        false;
     }
   );
 
   photo.addEventListener(
     'pointerup',
-    event=>{
 
-      if(!dragging)return;
+    event => {
+      if (
+        !dragging
+      ) {
+        return;
+      }
 
-      dragging=false;
+      dragging =
+        false;
 
-      const dx=
-        event.clientX-startX;
+      const dx =
+        event.clientX -
+        startX;
 
-      const dy=
-        event.clientY-startY;
+      const dy =
+        event.clientY -
+        startY;
 
-      if(
-        Math.abs(dx)>50
-        &&
-        Math.abs(dx)
-          >
-        Math.abs(dy)*1.2
-      ){
+      if (
+        Math.abs(
+          dx
+        ) >
+          50 &&
+        Math.abs(
+          dx
+        ) >
+          Math.abs(
+            dy
+          ) *
+          1.2
+      ) {
         show(
-          active+
+          active +
           (
-            dx<0
-              ?1
-              :-1
+            dx <
+              0
+              ? 1
+              : -1
           )
         );
       }
