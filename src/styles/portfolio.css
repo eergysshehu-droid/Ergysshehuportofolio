@@ -802,7 +802,15 @@ footer>a:last-child{justify-self:end}
      never release as you scrolled past it. Plain block flow instead. */
   .project-feature{column-span:none;margin-bottom:16px}
   .project-card{margin:0 0 16px;overflow:hidden}
-  body.is-home .project-card{position:sticky;top:0}
+  /* iOS Safari has a long-standing bug where a position:sticky element
+     that clips overflow and contains a child with an animated filter
+     (the blur written every frame below) repaints incorrectly while it's
+     stuck — the card flashes/blanks for a frame instead of updating
+     smoothly. backface-visibility:hidden promotes the sticky card to its
+     own GPU compositing layer without an actual transform value, so it
+     survives the .motion-ready rule below that forces transform:none
+     (needed to stop sticky getting stuck — see that rule's comment). */
+  body.is-home .project-card{position:sticky;top:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
   .project-card a{display:block;width:100%}
   .project-feature .project-image{aspect-ratio:auto}
   .project-image{width:100%}
@@ -843,6 +851,7 @@ footer>a:last-child{justify-self:end}
   .motion-ready body.is-home .project-card .project-image img{
     filter:blur(var(--stack-blur,0px));
     transition:none;
+    will-change:filter;
   }
   .motion-ready body.is-home .project-card .project-image::after{
     content:'';
