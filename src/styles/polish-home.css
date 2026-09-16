@@ -1,0 +1,82 @@
+/* ==========================================================================
+   HOMEPAGE TRANSITION POLISH
+   Removes sub-pixel seams/slivers between cinematic sections.
+   ========================================================================== */
+
+body.is-home{
+  --home-black:#050505;
+}
+
+/* Always give the hero transition a dark backing layer.
+   This prevents the cream body from flashing through a fractional pixel. */
+
+body.is-home .hero-scroll-scene{
+  background:var(--home-black);
+}
+
+/* Slight overlap is intentional. Browsers can otherwise expose a 1px seam
+   when sticky/transform layers land on fractional device pixels. */
+
+body.is-home .filmstrip-section{
+  position:relative;
+  z-index:3;
+  margin-top:-2px;
+}
+
+body.is-home .filmstrip-curve{
+  bottom:calc(100% - 4px)!important;
+}
+
+/* Black portfolio section must meet the previous section perfectly. */
+
+body.is-home .work-section{
+  position:relative;
+  margin-top:-2px;
+  box-shadow:
+    0 -3px 0 var(--home-black),
+    0 3px 0 var(--home-black);
+}
+
+/* Existing mobile animated veil remains intact, but always paints
+   the exact same black as the work section. */
+
+body.is-home .section-veil{
+  background:var(--home-black)!important;
+}
+
+/* Avoid a light line around the grid during the mobile stack transition. */
+
+body.is-home .project-grid{
+  background:var(--home-black);
+}
+
+/* Keep heading/grid visually connected. */
+
+body.is-home .work-heading{
+  position:relative;
+  z-index:2;
+}
+
+/* Prevent transformed image edges from exposing their parent background. */
+
+body.is-home .opening-image,
+body.is-home .opening-frame{
+  overflow:hidden;
+}
+
+@media(max-width:700px){
+  body.is-home .filmstrip-section{
+    margin-top:-3px;
+  }
+
+  body.is-home .filmstrip-curve{
+    bottom:calc(100% - 5px)!important;
+  }
+
+  body.is-home .work-section{
+    margin-top:-3px;
+    box-shadow:
+      0 -4px 0 var(--home-black),
+      0 4px 0 var(--home-black);
+  }
+}
