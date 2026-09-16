@@ -65,11 +65,14 @@ const settings = {
   ...defaults,
 
   ...Object.fromEntries(
-    Object.entries(saved)
-      .filter(
-        ([, value]) =>
-          value != null
-      )
+    Object.entries(
+      saved
+    ).filter(
+      (
+        [, value]
+      ) =>
+        value != null
+    )
   )
 };
 
@@ -111,20 +114,21 @@ const body:
 const formatDateEn = (
   iso: string
 ) =>
-  new Date(iso)
-    .toLocaleDateString(
-      'en-GB',
-      {
-        day:
-          'numeric',
+  new Date(
+    iso
+  ).toLocaleDateString(
+    'en-GB',
+    {
+      day:
+        'numeric',
 
-        month:
-          'long',
+      month:
+        'long',
 
-        year:
-          'numeric'
-      }
-    );
+      year:
+        'numeric'
+    }
+  );
 
 const monthsSq = [
   'janar',
@@ -145,7 +149,9 @@ const formatDateSq = (
   iso: string
 ) => {
   const date =
-    new Date(iso);
+    new Date(
+      iso
+    );
 
   return `${date.getDate()} ${monthsSq[date.getMonth()]} ${date.getFullYear()}`;
 };
@@ -208,7 +214,8 @@ function renderInline(
 
         for (
           const mark of
-          span.marks || []
+          span.marks ||
+          []
         ) {
           if (
             mark ===
@@ -247,7 +254,9 @@ function renderInline(
         return html;
       }
     )
-    .join('');
+    .join(
+      ''
+    );
 }
 
 const blockTag:
@@ -280,6 +289,24 @@ const pageUrl =
     'https://ergysshehu.com'
   ).href;
 
+const journalUrl =
+  new URL(
+    localizedPath(
+      '/journal/',
+      lang
+    ),
+    'https://ergysshehu.com'
+  ).href;
+
+const homeUrl =
+  new URL(
+    localizedPath(
+      '/',
+      lang
+    ),
+    'https://ergysshehu.com'
+  ).href;
+
 const coverUrl =
   post.cover
     ? photoUrl(
@@ -306,6 +333,13 @@ const articleLd = {
 
   description:
     excerpt,
+
+  ...(category
+    ? {
+        articleSection:
+          category
+      }
+    : {}),
 
   ...(coverUrl
     ? {
@@ -349,11 +383,67 @@ const articleLd = {
   inLanguage:
     lang
 };
+
+const breadcrumbLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'BreadcrumbList',
+
+  itemListElement: [
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        1,
+
+      name:
+        isSq
+          ? 'Ballina'
+          : 'Home',
+
+      item:
+        homeUrl
+    },
+
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        2,
+
+      name:
+        isSq
+          ? 'Ditari'
+          : 'Journal',
+
+      item:
+        journalUrl
+    },
+
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        3,
+
+      name:
+        title,
+
+      item:
+        pageUrl
+    }
+  ]
+};
 ---
 
 <Layout
   lang={lang}
-  title={`${title} — ${settings.name}`}
+  title={`${title} | ${settings.name}`}
   name={settings.name}
   description={excerpt}
   image={coverUrl}
@@ -364,6 +454,16 @@ const articleLd = {
     set:html={
       JSON.stringify(
         articleLd
+      )
+    }
+  />
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={
+      JSON.stringify(
+        breadcrumbLd
       )
     }
   />
