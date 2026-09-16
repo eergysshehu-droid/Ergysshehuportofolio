@@ -1,11 +1,14 @@
 /* ==========================================================================
-   HOMEPAGE FINAL POLISH
-   Smooth desktop/mobile section rhythm and remove harsh black gaps/seams.
+   HOMEPAGE FINAL PRODUCTION POLISH
+   Smooth section transitions and remove desktop/mobile dead space.
    ========================================================================== */
 
 body.is-home{
-  --home-black:#070807;
-  --home-black-soft:#0b0c0a;
+  --home-black:
+    #080908;
+
+  --home-black-soft:
+    #10110e;
 }
 
 
@@ -14,22 +17,35 @@ body.is-home{
    ========================================================================== */
 
 body.is-home .hero-scroll-scene{
-  background:var(--home-black);
+  background:
+    var(
+      --home-black
+    );
 }
 
 body.is-home .filmstrip-section{
-  position:relative;
-  z-index:3;
-  margin-top:-2px;
+  position:
+    relative;
+
+  z-index:
+    3;
+
+  margin-top:
+    -2px;
 }
 
 body.is-home .filmstrip-curve{
-  bottom:calc(100% - 4px)!important;
+  bottom:
+    calc(
+      100% -
+      4px
+    )!important;
 }
 
 body.is-home .opening-image,
 body.is-home .opening-frame{
-  overflow:hidden;
+  overflow:
+    hidden;
 }
 
 
@@ -38,61 +54,77 @@ body.is-home .opening-frame{
    ========================================================================== */
 
 body.is-home .work-section{
-  position:relative;
+  position:
+    relative;
 
-  width:100%;
+  width:
+    100%;
 
-  overflow:hidden;
+  min-height:
+    0!important;
 
-  margin-top:-2px;
+  overflow:
+    hidden;
+
+  margin-top:
+    -2px;
 
   padding-top:
     clamp(
-      52px,
-      4.8vw,
-      74px
+      48px,
+      4.5vw,
+      70px
     )!important;
 
   padding-bottom:
     clamp(
-      58px,
-      5.5vw,
-      86px
+      48px,
+      4.8vw,
+      72px
     )!important;
 
   box-shadow:
     0 -3px 0
-      var(--home-black),
+      var(
+        --home-black
+      ),
     0 3px 0
-      var(--home-black);
+      var(
+        --home-black
+      );
 }
 
 body.is-home .work-heading{
-  position:relative;
+  position:
+    relative;
 
-  z-index:2;
+  z-index:
+    2;
 
   margin-bottom:
     clamp(
-      30px,
-      3vw,
-      44px
+      26px,
+      2.7vw,
+      40px
     )!important;
 }
 
 body.is-home .work-toolbar{
   padding-top:
-    18px!important;
+    16px!important;
 
   padding-bottom:
-    24px!important;
+    21px!important;
 }
 
 body.is-home .project-grid{
-  width:100%;
+  width:
+    100%;
 
   max-width:
-    var(--content-max);
+    var(
+      --content-max
+    );
 
   margin-inline:
     auto;
@@ -100,8 +132,8 @@ body.is-home .project-grid{
   column-gap:
     clamp(
       16px,
-      1.35vw,
-      24px
+      1.25vw,
+      22px
     );
 
   background:
@@ -111,100 +143,122 @@ body.is-home .project-grid{
 body.is-home .project-card{
   margin-bottom:
     clamp(
-      20px,
-      1.8vw,
-      30px
+      18px,
+      1.6vw,
+      26px
     )!important;
 }
 
 body.is-home .project-feature{
   margin-bottom:
     clamp(
-      28px,
-      2.8vw,
-      44px
+      24px,
+      2.3vw,
+      36px
     )!important;
 }
 
 
 /* ==========================================================================
-   MOBILE STACK VEIL
+   TRANSITION VEIL
    ========================================================================== */
 
 body.is-home .section-veil{
   background:
-    var(--home-black)!important;
+    var(
+      --home-black
+    )!important;
 }
 
 
 /* ==========================================================================
    ARTIST / BEHIND THE LENS
-   Prevent huge dead areas and make the transition deliberate.
    ========================================================================== */
 
 body.is-home .artist-section{
+  min-height:
+    0!important;
+
+  margin-top:
+    -1px!important;
+
   padding-top:
     clamp(
-      70px,
-      6.2vw,
-      92px
+      62px,
+      5.5vw,
+      86px
     )!important;
 
   padding-bottom:
     clamp(
-      74px,
-      6.5vw,
-      98px
+      64px,
+      5.8vw,
+      90px
     )!important;
-
-  margin-top:
-    -1px!important;
 }
 
 body.is-home .artist-copy h2{
   margin-bottom:
     clamp(
-      28px,
-      3vw,
-      42px
+      24px,
+      2.5vw,
+      36px
     )!important;
 }
 
 
 /* ==========================================================================
    CONTACT / COMMISSIONS
-   Screenshot fix:
-   less empty black space, stronger relation with footer.
+   Full-bleed background on desktop so it no longer looks like a floating
+   narrow black rectangle with large black gutters.
    ========================================================================== */
 
 body.is-home .contact-section{
-  width:100%;
+  width:
+    100%!important;
 
   max-width:
-    var(--content-max);
+    none!important;
+
+  min-height:
+    0!important;
 
   margin-inline:
-    auto;
+    0!important;
 
   padding-top:
     clamp(
-      68px,
-      6vw,
-      90px
+      60px,
+      5.5vw,
+      84px
+    )!important;
+
+  padding-right:
+    clamp(
+      28px,
+      11vw,
+      220px
     )!important;
 
   padding-bottom:
     clamp(
-      68px,
-      6vw,
-      92px
+      62px,
+      5.5vw,
+      86px
+    )!important;
+
+  padding-left:
+    clamp(
+      28px,
+      11vw,
+      220px
     )!important;
 
   gap:
     clamp(
-      48px,
-      5vw,
-      86px
+      42px,
+      4.5vw,
+      76px
     )!important;
 
   align-items:
@@ -213,22 +267,22 @@ body.is-home .contact-section{
 
 body.is-home .contact-section h2{
   margin-top:
-    20px!important;
+    18px!important;
 }
 
 body.is-home .contact-details p{
   margin:
-    24px
+    20px
     0!important;
 }
 
 body.is-home .contact-section:after{
   opacity:
-    .018!important;
+    .014!important;
 
   transform:
     translateY(
-      4%
+      2%
     );
 }
 
@@ -238,42 +292,37 @@ body.is-home .contact-section:after{
    ========================================================================== */
 
 body.is-home footer{
+  min-height:
+    0!important;
+
   margin-top:
     0!important;
 
   padding-top:
     clamp(
-      24px,
-      2.6vw,
-      38px
+      22px,
+      2.2vw,
+      34px
     )!important;
 
   padding-bottom:
     clamp(
-      24px,
-      2.6vw,
-      38px
+      22px,
+      2.2vw,
+      34px
     )!important;
 }
 
 
 /* ==========================================================================
-   DESKTOP SAFETY
+   DESKTOP
    ========================================================================== */
 
-@media(min-width:701px){
-
-  body.is-home .work-section,
-  body.is-home .artist-section,
-  body.is-home .contact-section,
-  body.is-home footer{
-    min-height:
-      0!important;
-  }
+@media(min-width:1200px){
 
   body.is-home .project-grid{
-    overflow:
-      visible;
+    column-gap:
+      20px;
   }
 }
 
@@ -294,8 +343,11 @@ body.is-home footer{
   }
 
   body.is-home .contact-section{
-    padding-inline:
-      5vw!important;
+    padding-right:
+      7vw!important;
+
+    padding-left:
+      7vw!important;
   }
 }
 
@@ -324,20 +376,24 @@ body.is-home footer{
       -3px;
 
     padding:
-      52px
+      46px
       5vw
-      62px!important;
+      54px!important;
 
     box-shadow:
       0 -4px 0
-        var(--home-black),
+        var(
+          --home-black
+        ),
       0 4px 0
-        var(--home-black);
+        var(
+          --home-black
+        );
   }
 
   body.is-home .work-heading{
     margin-bottom:
-      28px!important;
+      24px!important;
   }
 
   body.is-home .project-grid{
@@ -347,31 +403,34 @@ body.is-home footer{
 
   body.is-home .project-card{
     margin-bottom:
-      22px!important;
+      18px!important;
   }
 
   body.is-home .artist-section{
     padding:
-      58px
+      52px
       6vw
-      66px!important;
+      58px!important;
   }
 
   body.is-home .contact-section{
+    grid-template-columns:
+      1fr!important;
+
     padding:
-      56px
+      50px
       6vw
-      62px!important;
+      56px!important;
 
     gap:
-      40px!important;
+      34px!important;
   }
 
   body.is-home footer{
     padding-top:
-      26px!important;
+      23px!important;
 
     padding-bottom:
-      28px!important;
+      25px!important;
   }
 }
