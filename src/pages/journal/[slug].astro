@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
 import {
   content,
   photoUrl,
@@ -15,7 +16,11 @@ import {
   type PortableItem
 } from '../../lib/journal';
 
-import {defaults} from '../../lib/editorial';
+import {
+  defaults,
+  PERSON_ID,
+  WEBSITE_ID
+} from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const posts = await journal();
@@ -32,7 +37,8 @@ export async function getStaticPaths() {
 
 const {post} = Astro.props;
 
-const {settings: saved} = await content();
+const {settings: saved} =
+  await content();
 
 const settings = {
   ...defaults,
@@ -67,18 +73,26 @@ const monthsSq = [
   'dhjetor'
 ];
 
-const formatDateSq = (iso: string) => {
-  const d = new Date(iso);
+const formatDateSq = (
+  iso: string
+) => {
+  const d =
+    new Date(iso);
 
   return `${d.getDate()} ${monthsSq[d.getMonth()]} ${d.getFullYear()}`;
 };
 
 const dateLine = {
-  en: `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
-  sq: `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`
+  en:
+    `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
+
+  sq:
+    `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`
 };
 
-const escapeHtml = (text: string) =>
+const escapeHtml = (
+  text: string
+) =>
   text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -92,22 +106,36 @@ function renderInline(
 ) {
   return spans
     .map(span => {
-      let html = escapeHtml(span.text);
+      let html =
+        escapeHtml(span.text);
 
-      for (const mark of span.marks || []) {
-        if (mark === 'strong') {
-          html = `<strong>${html}</strong>`;
-        } else if (mark === 'em') {
-          html = `<em>${html}</em>`;
+      for (
+        const mark of
+        span.marks || []
+      ) {
+        if (
+          mark === 'strong'
+        ) {
+          html =
+            `<strong>${html}</strong>`;
+        } else if (
+          mark === 'em'
+        ) {
+          html =
+            `<em>${html}</em>`;
         } else {
-          const def = markDefs.find(
-            item => item._key === mark
-          );
+          const def =
+            markDefs.find(
+              item =>
+                item._key === mark
+            );
 
-          const href = safeUrl(def?.href);
+          const href =
+            safeUrl(def?.href);
 
           if (href) {
-            html = `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}</a>`;
+            html =
+              `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}</a>`;
           }
         }
       }
@@ -117,11 +145,85 @@ function renderInline(
     .join('');
 }
 
-const blockTag: Record<string, string> = {
-  normal: 'p',
-  h2: 'h2',
-  h3: 'h3',
-  blockquote: 'blockquote'
+const blockTag:
+  Record<string, string> = {
+    normal: 'p',
+    h2: 'h2',
+    h3: 'h3',
+    blockquote: 'blockquote'
+  };
+
+const pageUrl =
+  `https://ergysshehu.com/journal/${post.slug}/`;
+
+const coverUrl =
+  post.cover
+    ? photoUrl(
+        post.cover,
+        1800
+      )
+    : undefined;
+
+const articleLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'Article',
+
+  '@id':
+    `${pageUrl}#article`,
+
+  url:
+    pageUrl,
+
+  headline:
+    post.title,
+
+  description:
+    post.excerpt,
+
+  ...(coverUrl
+    ? {
+        image: [
+          coverUrl
+        ]
+      }
+    : {}),
+
+  author: {
+    '@id':
+      PERSON_ID
+  },
+
+  creator: {
+    '@id':
+      PERSON_ID
+  },
+
+  publisher: {
+    '@id':
+      PERSON_ID
+  },
+
+  isPartOf: {
+    '@id':
+      WEBSITE_ID
+  },
+
+  mainEntityOfPage: {
+    '@type':
+      'WebPage',
+
+    '@id':
+      pageUrl
+  },
+
+  datePublished:
+    post.publishedAt,
+
+  inLanguage:
+    'en'
 };
 ---
 
@@ -129,12 +231,14 @@ const blockTag: Record<string, string> = {
   title={`${post.title} — ${settings.name}`}
   name={settings.name}
   description={post.excerpt}
-  image={
-    post.cover
-      ? photoUrl(post.cover, 1800)
-      : undefined
-  }
+  image={coverUrl}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(articleLd)}
+  />
+
   <article class="journal-post">
     <section class="collection-intro">
       <a
@@ -159,7 +263,10 @@ const blockTag: Record<string, string> = {
       <h1
         data-reveal
         data-en={post.title}
-        data-sq={post.titleSq || post.title}
+        data-sq={
+          post.titleSq ||
+          post.title
+        }
       >
         {post.title}
       </h1>
@@ -167,7 +274,10 @@ const blockTag: Record<string, string> = {
       <p
         data-reveal
         data-en={post.excerpt}
-        data-sq={post.excerptSq || post.excerpt}
+        data-sq={
+          post.excerptSq ||
+          post.excerpt
+        }
       >
         {post.excerpt}
       </p>
@@ -182,12 +292,24 @@ const blockTag: Record<string, string> = {
           style={`--focal-point:${photoPosition(post.cover)}`}
         >
           <img
-            src={photoUrl(post.cover, 1800)}
-            srcset={photoSet(post.cover)}
+            src={photoUrl(
+              post.cover,
+              1800
+            )}
+            srcset={photoSet(
+              post.cover
+            )}
             sizes="90vw"
-            width={post.cover.width}
-            height={post.cover.height}
-            alt={post.cover.alt || post.title}
+            width={
+              post.cover.width
+            }
+            height={
+              post.cover.height
+            }
+            alt={
+              post.cover.alt ||
+              post.title
+            }
             loading="eager"
             fetchpriority="high"
             decoding="sync"
@@ -201,10 +323,19 @@ const blockTag: Record<string, string> = {
       data-reveal
     >
       {
-        (post.body as PortableItem[]).map(item => {
-          if (item._type === 'block') {
+        (
+          post.body as
+          PortableItem[]
+        ).map(item => {
+          if (
+            item._type ===
+            'block'
+          ) {
             const Tag = (
-              blockTag[item.style || 'normal'] || 'p'
+              blockTag[
+                item.style ||
+                'normal'
+              ] || 'p'
             ) as any;
 
             return (
@@ -240,12 +371,23 @@ const blockTag: Record<string, string> = {
           return (
             photoUrl(item) && (
               <img
-                src={photoUrl(item, 1400)}
-                srcset={photoSet(item)}
+                src={photoUrl(
+                  item,
+                  1400
+                )}
+                srcset={
+                  photoSet(item)
+                }
                 sizes="(max-width:700px) 90vw, 700px"
-                width={item.width}
-                height={item.height}
-                alt={item.alt || ''}
+                width={
+                  item.width
+                }
+                height={
+                  item.height
+                }
+                alt={
+                  item.alt || ''
+                }
                 loading="lazy"
                 decoding="async"
               />
