@@ -1,0 +1,165 @@
+/* ==========================================================================
+   BOOKING PAGE POLISH
+   Hero crop + section composition + excessive vertical whitespace.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO
+   Move the focal area upward so the subject isn't cut too aggressively.
+   -------------------------------------------------------------------------- */
+
+.booking-page .book-hero{
+  min-height:clamp(680px,82svh,900px)!important;
+}
+
+.booking-page .book-hero-media img{
+  object-fit:cover!important;
+  object-position:center 48%!important;
+}
+
+.booking-page .hero-content{
+  padding-top:clamp(5rem,8vh,7rem)!important;
+  padding-bottom:clamp(3.6rem,6.5vh,5.5rem)!important;
+}
+
+.booking-page .hero-intro{
+  max-width:560px;
+}
+
+/* --------------------------------------------------------------------------
+   SERVICES
+   -------------------------------------------------------------------------- */
+
+.booking-page .services-section{
+  padding-top:clamp(64px,6.5vw,100px)!important;
+  padding-bottom:clamp(64px,6.5vw,100px)!important;
+}
+
+.booking-page .section-heading{
+  margin-bottom:clamp(28px,3vw,44px)!important;
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT / FORM
+   Reduce the large empty dark areas and keep both columns anchored together.
+   -------------------------------------------------------------------------- */
+
+.booking-page .contact-booking{
+  padding-top:clamp(64px,6.5vw,100px)!important;
+  padding-bottom:clamp(64px,6.5vw,100px)!important;
+  gap:clamp(3rem,5vw,5rem)!important;
+  align-items:start;
+}
+
+.booking-page .contact-intro{
+  margin-top:1.35rem!important;
+  margin-bottom:2.15rem!important;
+}
+
+.booking-page .contact-links{
+  gap:1rem!important;
+}
+
+.booking-page .inquiry-form{
+  align-self:start;
+}
+
+/* --------------------------------------------------------------------------
+   COLLABORATION END SECTION
+   -------------------------------------------------------------------------- */
+
+.booking-page .collab-section{
+  min-height:0;
+}
+
+.booking-page .collab-visual{
+  min-height:clamp(380px,38vw,600px)!important;
+}
+
+.booking-page .collab-copy{
+  padding:clamp(48px,5.5vw,88px)!important;
+}
+
+.booking-page .collab-copy p:not(.eyebrow){
+  margin-top:1.4rem!important;
+  margin-bottom:2rem!important;
+}
+
+/* --------------------------------------------------------------------------
+   TABLET
+   -------------------------------------------------------------------------- */
+
+@media(max-width:900px){
+  .booking-page .contact-booking{
+    gap:3.25rem!important;
+  }
+
+  .booking-page .collab-visual{
+    min-height:420px!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE
+   -------------------------------------------------------------------------- */
+
+@media(max-width:700px){
+  .booking-page .book-hero{
+    min-height:78svh!important;
+  }
+
+  .booking-page .book-hero-media img{
+    object-position:center 42%!important;
+  }
+
+  .booking-page .hero-content{
+    padding:
+      5.2rem
+      6vw
+      2.8rem!important;
+  }
+
+  .booking-page .book-hero h1{
+    font-size:clamp(3rem,14vw,4.8rem)!important;
+    line-height:.94!important;
+  }
+
+  .booking-page .hero-intro{
+    margin-top:1.4rem!important;
+  }
+
+  .booking-page .hero-actions{
+    margin-top:1.8rem!important;
+  }
+
+  .booking-page .services-section,
+  .booking-page .contact-booking{
+    padding:
+      54px
+      6vw!important;
+  }
+
+  .booking-page .contact-booking{
+    gap:2.8rem!important;
+  }
+
+  .booking-page .collab-visual{
+    min-height:300px!important;
+  }
+
+  .booking-page .collab-copy{
+    padding:
+      52px
+      6vw!important;
+  }
+}
+
+@media(max-width:420px){
+  .booking-page .book-hero-media img{
+    object-position:center 39%!important;
+  }
+
+  .booking-page .hero-content{
+    padding-bottom:2.4rem!important;
+  }
+}
