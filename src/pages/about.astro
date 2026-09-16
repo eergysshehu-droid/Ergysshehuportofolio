@@ -1,19 +1,194 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {content, photoUrl, photoSet} from '../lib/content';
-import {defaults, biography, PERSON_ID, WEBSITE_ID} from '../lib/editorial';
-import {safeUrl} from '../lib/content';
+import {
+  content,
+  photoUrl,
+  photoSet,
+  safeUrl
+} from '../lib/content';
+
+import {
+  defaults,
+  biography,
+  PERSON_ID,
+  WEBSITE_ID
+} from '../lib/editorial';
+
 const {settings} = await content();
-const aboutDescription='Ergys Shehu — photographer and director based in Albania since 2017, working across fashion, portrait, wedding and film direction, and Executive Director of the Kult 360 Foundation.';
+
+const aboutDescription =
+  'Ergys Shehu — photographer and director based in Albania since 2017, working across fashion, portrait, wedding and film direction, and Executive Director of the Kult 360 Foundation.';
+
 // /about/ is the authoritative profile page — its mainEntity points at the
 // same Person @id used in Layout.astro's Person/WebSite graph, not a new
 // Person object, so this page reinforces rather than duplicates the entity.
-const profilePageLd={'@context':'https://schema.org','@type':'ProfilePage','@id':'https://ergysshehu.com/about/#profilepage',url:'https://ergysshehu.com/about/',isPartOf:{'@id':WEBSITE_ID},mainEntity:{'@id':PERSON_ID}};
+const profilePageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': 'https://ergysshehu.com/about/#profilepage',
+  url: 'https://ergysshehu.com/about/',
+  isPartOf: {
+    '@id': WEBSITE_ID
+  },
+  mainEntity: {
+    '@id': PERSON_ID
+  }
+};
 ---
-<Layout title="About — Ergys Shehu" description={aboutDescription} name={settings.name} image={settings.portrait && photoUrl(settings.portrait,1200)}>
-<script type="application/ld+json" is:inline set:html={JSON.stringify(profilePageLd)}/>
-<section class="collection-intro"><a class="back-link" data-reveal href="/">← Selected work</a><p class="kicker" data-reveal>PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST</p><h1 data-reveal>Ergys Shehu.</h1><p data-reveal>{settings.bio || defaults.bio}</p></section>
-<section class="biography-layout collection-body">
-<aside data-reveal>{settings.portrait && <div data-image-reveal><img src={photoUrl(settings.portrait,1200)} srcset={photoSet(settings.portrait)} sizes="(max-width: 700px) 90vw, 35vw" alt={settings.portrait.alt || 'Ergys Shehu'}/></div>}<p class="kicker">ALBANIA / WORLDWIDE</p><p>Photography<br/>Film & creative direction<br/>Painting & decorative arts<br/>Cultural curation</p><a href="/#contact">Enquiries ↗</a></aside>
-<div data-reveal><details class="bio-language" open><summary>English <span>EN</span></summary><p lang="en">{settings.biographyEn || biography.en}</p></details><details class="bio-language"><summary>Shqip <span>SQ</span></summary><p lang="sq">{settings.biographySq || biography.sq}</p></details><blockquote>“{settings.artistQuote || biography.quote}”<cite>— Ergys Shehu</cite></blockquote><div class="bio-milestones"><p><span>2017</span>Founded ALERDIGITALMEDIA</p><p><span>2020</span>“Loving Art” · Netët e Klipit Shqiptar</p><p><span>2026</span>Best Director & Best Female Performance · “Kujtimi”</p><p>{safeUrl(defaults.kult360) ? <a href={safeUrl(defaults.kult360)} target="_blank" rel="noopener noreferrer"><span>KULT 360</span>Executive Director ↗</a> : <><span>KULT 360</span>Executive Director</>}</p></div></div>
-</section></Layout>
+
+<Layout
+  title="About — Ergys Shehu"
+  description={aboutDescription}
+  name={settings.name}
+  image={
+    settings.portrait
+      ? photoUrl(settings.portrait, 1200)
+      : undefined
+  }
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(profilePageLd)}
+  />
+
+  <section class="collection-intro">
+    <a
+      class="back-link"
+      data-reveal
+      href="/"
+    >
+      ← Selected work
+    </a>
+
+    <p
+      class="kicker"
+      data-reveal
+    >
+      PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST
+    </p>
+
+    <h1 data-reveal>
+      Ergys Shehu.
+    </h1>
+
+    <p data-reveal>
+      {settings.bio || defaults.bio}
+    </p>
+  </section>
+
+  <section class="biography-layout collection-body">
+    <aside data-reveal>
+      {
+        settings.portrait && (
+          <div data-image-reveal>
+            <img
+              src={photoUrl(settings.portrait, 1200)}
+              srcset={photoSet(settings.portrait)}
+              sizes="(max-width: 700px) 90vw, 35vw"
+              width={settings.portrait.width}
+              height={settings.portrait.height}
+              alt={settings.portrait.alt || 'Ergys Shehu'}
+              loading="eager"
+              fetchpriority="high"
+              decoding="sync"
+            />
+          </div>
+        )
+      }
+
+      <p class="kicker">
+        ALBANIA / WORLDWIDE
+      </p>
+
+      <p>
+        Photography
+        <br/>
+        Film & creative direction
+        <br/>
+        Painting & decorative arts
+        <br/>
+        Cultural curation
+      </p>
+
+      <a href="/#contact">
+        Enquiries ↗
+      </a>
+    </aside>
+
+    <div data-reveal>
+      <details
+        class="bio-language"
+        open
+      >
+        <summary>
+          English <span>EN</span>
+        </summary>
+
+        <p lang="en">
+          {settings.biographyEn || biography.en}
+        </p>
+      </details>
+
+      <details class="bio-language">
+        <summary>
+          Shqip <span>SQ</span>
+        </summary>
+
+        <p lang="sq">
+          {settings.biographySq || biography.sq}
+        </p>
+      </details>
+
+      <blockquote>
+        “{settings.artistQuote || biography.quote}”
+        <cite>
+          — Ergys Shehu
+        </cite>
+      </blockquote>
+
+      <div class="bio-milestones">
+        <p>
+          <span>2017</span>
+          Founded ALERDIGITALMEDIA
+        </p>
+
+        <p>
+          <span>2020</span>
+          “Loving Art” · Netët e Klipit Shqiptar
+        </p>
+
+        <p>
+          <span>2026</span>
+          Best Director & Best Female Performance · “Kujtimi”
+        </p>
+
+        <p>
+          {
+            safeUrl(defaults.kult360)
+              ? (
+                <a
+                  href={safeUrl(defaults.kult360)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>
+                    KULT 360
+                  </span>
+                  Executive Director ↗
+                </a>
+              )
+              : (
+                <>
+                  <span>
+                    KULT 360
+                  </span>
+                  Executive Director
+                </>
+              )
+          }
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
