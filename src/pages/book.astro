@@ -1,296 +1,1289 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {content, photoUrl, photoSet, photoPosition, albumKind, safeUrl} from '../lib/content';
-import {defaults, films} from '../lib/editorial';
+import {
+  content,
+  photoUrl,
+  photoSet,
+  photoPosition,
+  albumKind,
+  safeUrl
+} from '../lib/content';
 
-const {settings: saved, albums} = await content();
-const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
+import {
+  defaults,
+  films,
+  PERSON_ID,
+  WEBSITE_ID
+} from '../lib/editorial';
 
-const featured = albums.filter(a => a.featured);
-const hero = saved.heroImage || featured[0]?.cover || albums.find(a => photoUrl(a.cover))?.cover;
+const {
+  settings: saved,
+  albums
+} = await content();
+
+const settings = {
+  ...defaults,
+  ...Object.fromEntries(
+    Object.entries(saved)
+      .filter(([, value]) => value != null)
+  )
+};
+
+const featured =
+  albums.filter(
+    album => album.featured
+  );
+
+const hero =
+  saved.heroImage ||
+  featured[0]?.cover ||
+  albums.find(
+    album =>
+      photoUrl(album.cover)
+  )?.cover;
 
 const serviceKinds = [
-  {kind: 'fashion', project: 'fashion', href: '/fashion/', en: 'Fashion Photography', sq: 'Fotografi Mode', subEn: 'EDITORIAL / CAMPAIGNS', subSq: 'EDITORIALE / FUSHATA'},
-  {kind: 'weddings', project: 'wedding', href: '/weddings/', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash', subEn: 'YOUR STORY, TIMELESS', subSq: 'HISTORIA JUAJ, PA KOHË'},
-  {kind: 'films', project: 'music', href: '/films/', en: 'Music Videos', sq: 'Videoklipe', subEn: 'ARTISTS / STORYTELLING', subSq: 'ARTISTË / TREGIME'},
-  {kind: 'portraits', project: 'portrait', href: '/portraits/', en: 'Portraits', sq: 'Portrete', subEn: 'INDIVIDUAL / CREATIVE', subSq: 'INDIVIDUALE / KREATIVE'},
-  {kind: 'projects', project: 'commercial', href: '/projects/', en: 'Commercial & Brand Content', sq: 'Përmbajtje Komerciale & Brand', subEn: 'BUSINESSES / CAMPAIGNS', subSq: 'BIZNESE / FUSHATA'}
+  {
+    kind: 'fashion',
+    project: 'fashion',
+    href: '/fashion/',
+    en: 'Fashion Photography',
+    sq: 'Fotografi Mode',
+    subEn: 'EDITORIAL / CAMPAIGNS',
+    subSq: 'EDITORIALE / FUSHATA'
+  },
+  {
+    kind: 'weddings',
+    project: 'wedding',
+    href: '/weddings/',
+    en: 'Wedding Photography & Video',
+    sq: 'Fotografi & Video Dasmash',
+    subEn: 'YOUR STORY, TIMELESS',
+    subSq: 'HISTORIA JUAJ, PA KOHË'
+  },
+  {
+    kind: 'films',
+    project: 'music',
+    href: '/films/',
+    en: 'Music Videos',
+    sq: 'Videoklipe',
+    subEn: 'ARTISTS / STORYTELLING',
+    subSq: 'ARTISTË / TREGIME'
+  },
+  {
+    kind: 'portraits',
+    project: 'portrait',
+    href: '/portraits/',
+    en: 'Portraits',
+    sq: 'Portrete',
+    subEn: 'INDIVIDUAL / CREATIVE',
+    subSq: 'INDIVIDUALE / KREATIVE'
+  },
+  {
+    kind: 'projects',
+    project: 'commercial',
+    href: '/projects/',
+    en: 'Commercial & Brand Content',
+    sq: 'Përmbajtje Komerciale & Brand',
+    subEn: 'BUSINESSES / CAMPAIGNS',
+    subSq: 'BIZNESE / FUSHATA'
+  }
 ] as const;
-const kujtimi = films[0];
-const services = serviceKinds.map(s => {
-  const cover = albums.find(a => albumKind(a) === s.kind && photoUrl(a.cover))?.cover;
-  if (cover) return {...s, photo: cover};
-  // No films album has a cover of its own yet — use the real Kujtimi (Remix)
-  // thumbnail instead of a blank card, since it's the one video we have.
-  if (s.kind === 'films' && kujtimi) return {...s, photo: {src: `https://i.ytimg.com/vi/${kujtimi.id}/hqdefault.jpg`, alt: kujtimi.label || 'Kujtimi (Remix)', width: 480, height: 360}};
-  return {...s, photo: undefined};
-});
-const collabPhoto = albums.find(a => albumKind(a) === 'weddings' && photoUrl(a.cover) && photoKey(a.cover) !== photoKey(hero))?.cover
-  || albums.find(a => photoUrl(a.cover))?.cover;
-function photoKey(p?: {localBase?: string; src?: string; asset?: {_ref: string}}) { return p?.localBase || p?.src || p?.asset?._ref || ''; }
+
+const kujtimi =
+  films[0];
+
+const services =
+  serviceKinds.map(service => {
+    const cover =
+      albums.find(
+        album =>
+          albumKind(album) === service.kind &&
+          photoUrl(album.cover)
+      )?.cover;
+
+    if (cover) {
+      return {
+        ...service,
+        photo: cover
+      };
+    }
+
+    if (
+      service.kind === 'films' &&
+      kujtimi
+    ) {
+      return {
+        ...service,
+        photo: {
+          src:
+            `https://i.ytimg.com/vi/${kujtimi.id}/hqdefault.jpg`,
+          alt:
+            kujtimi.label ||
+            'Kujtimi (Remix)',
+          width: 480,
+          height: 360
+        }
+      };
+    }
+
+    return {
+      ...service,
+      photo: undefined
+    };
+  });
+
+function photoKey(
+  photo?: {
+    localBase?: string;
+    src?: string;
+    asset?: {
+      _ref: string;
+    };
+  }
+) {
+  return (
+    photo?.localBase ||
+    photo?.src ||
+    photo?.asset?._ref ||
+    ''
+  );
+}
+
+const collabPhoto =
+  albums.find(
+    album =>
+      albumKind(album) ===
+        'weddings' &&
+      photoUrl(album.cover) &&
+      photoKey(album.cover) !==
+        photoKey(hero)
+  )?.cover ||
+  albums.find(
+    album =>
+      photoUrl(album.cover)
+  )?.cover;
 
 const projectTypes = [
-  {value: 'fashion', en: 'Fashion Photography', sq: 'Fotografi Mode'},
-  {value: 'wedding', en: 'Wedding Photography & Video', sq: 'Fotografi & Video Dasmash'},
-  {value: 'music', en: 'Music Video', sq: 'Videoklip'},
-  {value: 'portrait', en: 'Portrait Photography', sq: 'Fotografi Portreti'},
-  {value: 'commercial', en: 'Commercial / Brand', sq: 'Komerciale / Brand'},
-  {value: 'collaboration', en: 'Collaboration', sq: 'Bashkëpunim'},
-  {value: 'other', en: 'Other', sq: 'Tjetër'}
+  {
+    value: 'fashion',
+    en: 'Fashion Photography',
+    sq: 'Fotografi Mode'
+  },
+  {
+    value: 'wedding',
+    en: 'Wedding Photography & Video',
+    sq: 'Fotografi & Video Dasmash'
+  },
+  {
+    value: 'music',
+    en: 'Music Video',
+    sq: 'Videoklip'
+  },
+  {
+    value: 'portrait',
+    en: 'Portrait Photography',
+    sq: 'Fotografi Portreti'
+  },
+  {
+    value: 'commercial',
+    en: 'Commercial / Brand',
+    sq: 'Komerciale / Brand'
+  },
+  {
+    value: 'collaboration',
+    en: 'Collaboration',
+    sq: 'Bashkëpunim'
+  },
+  {
+    value: 'other',
+    en: 'Other',
+    sq: 'Tjetër'
+  }
 ] as const;
 
-const email = settings.email || 'e.ergysshehu@gmail.com';
-const phoneTel = 'tel:+355693310202';
-const phoneDisplay = '+355 69 331 0202';
-const whatsapp = "https://wa.me/355693310202?text=Hi%20Ergys%2C%20I%27d%20like%20to%20discuss%20a%20project.";
-const instagram = safeUrl(settings.instagram);
----
-<Layout title={`Book a shoot — ${settings.name}`} description="Book Ergys Shehu for fashion, portrait, wedding, music video or commercial work. Based in Albania, available worldwide." name={settings.name} image={hero && photoUrl(hero, 1800)}>
+const email =
+  settings.email ||
+  'e.ergysshehu@gmail.com';
 
-<div class="booking-page">
+const phoneTel =
+  'tel:+355693310202';
 
-<section class="book-hero">
-  {hero && photoUrl(hero) && <picture class="book-hero-media" data-image-reveal><img src={photoUrl(hero, 1800)} srcset={photoSet(hero)} sizes="100vw" alt="" fetchpriority="high" width={hero.width} height={hero.height}/></picture>}
-  <div class="hero-shade" aria-hidden="true"></div>
+const phoneDisplay =
+  '+355 69 331 0202';
 
-  <div class="hero-content">
-    <p class="eyebrow" data-en="LET’S CREATE TOGETHER" data-sq="LE TË KRIJOJMË BASHKË">LET’S CREATE TOGETHER</p>
-    <h1 data-en="Book a Shoot" data-sq="Rezervo një Sesion">Book a Shoot</h1>
-    <p class="hero-intro" data-en="Photography, video and creative direction for brands, artists and meaningful stories." data-sq="Fotografi, video dhe drejtim kreativ për brande, artistë dhe histori që kanë kuptim.">Photography, video and creative direction for brands, artists and meaningful stories.</p>
-    <div class="hero-actions">
-      <a class="button button-light" href="#inquiry"><span data-en="BOOK NOW" data-sq="REZERVO">BOOK NOW</span><span aria-hidden="true">→</span></a>
-      <a class="button button-outline" href="#contact"><span data-en="GET IN TOUCH" data-sq="NA KONTAKTO">GET IN TOUCH</span></a>
-    </div>
-  </div>
-</section>
+const whatsapp =
+  "https://wa.me/355693310202?text=Hi%20Ergys%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 
-<section class="services-section">
-  <div class="section-heading" data-reveal>
-    <div><p class="eyebrow" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</p><h2 data-en="What I Do" data-sq="Çfarë realizoj">What I Do</h2></div>
-    <p class="section-copy" data-en="From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity." data-sq="Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit.">From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.</p>
-  </div>
-  <div class="services-grid">{services.map(s =>
-    <a class="service-card" href={s.href} data-reveal>
-      <div class="service-image" data-image-reveal style={s.photo ? `--focal-point:${photoPosition(s.photo)}` : undefined}>
-        {s.photo && photoUrl(s.photo) ? <img src={photoUrl(s.photo, 900)} srcset={photoSet(s.photo)} sizes="(max-width:780px) 100vw, 20vw" alt="" loading="lazy"/> : <svg class="service-fallback-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="4" y="12" width="40" height="26" rx="3"/><path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/><circle cx="24" cy="27" r="7"/></svg>}
-        {s.kind === 'films' && <span class="icon-badge project-play" aria-hidden="true">▶</span>}
-      </div>
-      <div class="service-overlay" aria-hidden="true"></div>
-      <div class="service-copy"><h3 data-en={s.en} data-sq={s.sq}>{s.en}</h3><p data-en={s.subEn} data-sq={s.subSq}>{s.subEn}</p><span class="service-view" data-en="View work ↗" data-sq="Shiko punën ↗">View work ↗</span></div>
-    </a>
-  )}</div>
-</section>
+const instagram =
+  safeUrl(
+    settings.instagram
+  );
 
-<section class="contact-booking" id="contact">
-  <div class="direct-contact" data-reveal>
-    <p class="eyebrow" data-en="CONTACT" data-sq="KONTAKT">CONTACT</p>
-    <h2 data-en="Let’s Talk" data-sq="Le të flasim">Let’s Talk</h2>
-    <p class="contact-intro" data-en="Tell me about your project, idea or collaboration. I usually reply within 24 hours." data-sq="Më trego për projektin, idenë ose bashkëpunimin tënd. Zakonisht përgjigjem brenda 24 orësh.">Tell me about your project, idea or collaboration. I usually reply within 24 hours.</p>
-    <div class="contact-links">
-      <a class="contact-fast" href={whatsapp} target="_blank" rel="noopener noreferrer"><svg class="contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3C7 3 3 6.6 3 11c0 2.1 1 4 2.6 5.4L5 21l4.8-1.8c.7.2 1.4.3 2.2.3 5 0 9-3.6 9-8S17 3 12 3Z"/></svg><div><small data-en="FASTEST · WHATSAPP" data-sq="MË SHPEJT · WHATSAPP">FASTEST · WHATSAPP</small><strong data-en="Message on WhatsApp" data-sq="Shkruaj në WhatsApp">Message on WhatsApp</strong></div></a>
-      <a href={phoneTel}><svg class="contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .5 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8Z"/></svg><div><small data-en="CALL" data-sq="TELEFON">CALL</small><strong>{phoneDisplay}</strong></div></a>
-      <a href={`mailto:${email}`}><svg class="contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg><div><small data-en="EMAIL" data-sq="EMAIL">EMAIL</small><strong>{email}</strong></div></a>
-      {instagram && <a href={instagram} target="_blank" rel="noopener noreferrer"><svg class="contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg><div><small data-en="INSTAGRAM" data-sq="INSTAGRAM">INSTAGRAM</small><strong>@ergys.shehu</strong></div></a>}
-      <div class="contact-location"><svg class="contact-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg><div><small data-en="LOCATION" data-sq="VENDNDODHJA">LOCATION</small><strong data-en="Albania · Available worldwide" data-sq="Shqipëri · I disponueshëm në mbarë botën">Albania · Available worldwide</strong></div></div>
-    </div>
-  </div>
+const pageUrl =
+  'https://ergysshehu.com/book/';
 
-  <form class="inquiry-form" id="inquiry" data-reveal>
-    <div class="form-row">
-      <label><span data-en="Name *" data-sq="Emri *">Name *</span><input type="text" name="name" required autocomplete="name"/></label>
-      <label><span data-en="Email *" data-sq="Email *">Email *</span><input type="email" name="email" required autocomplete="email"/></label>
-    </div>
-    <div class="form-row">
-      <label><span data-en="Phone (optional)" data-sq="Telefoni (opsionale)">Phone (optional)</span><input type="tel" name="phone" autocomplete="tel" placeholder="+355 6X XXX XXXX"/></label>
-      <label><span data-en="Type of project *" data-sq="Lloji i projektit *">Type of project *</span>
-        <select name="project" id="project-type" required>
-          <option value="" data-en="Choose a project" data-sq="Zgjidh projektin">Choose a project</option>
-          {projectTypes.map(p => <option value={p.value} data-en={p.en} data-sq={p.sq}>{p.en}</option>)}
-        </select>
-      </label>
-    </div>
-    <label><span data-en="Tell me about your project *" data-sq="Më trego për projektin *">Tell me about your project *</span><textarea name="message" required rows="6" data-en-placeholder="Date, location, idea, style, number of people…" data-sq-placeholder="Data, vendndodhja, ideja, stili, numri i personave…" placeholder="Date, location, idea, style, number of people…"></textarea></label>
-    <button type="submit" class="submit-button"><span data-en="SEND MESSAGE" data-sq="DËRGO MESAZH">SEND MESSAGE</span><span aria-hidden="true">→</span></button>
-    <p class="form-status" data-form-status role="status" aria-live="polite" hidden></p>
-    <p class="form-note" data-en="No long questionnaires. Just tell me what you have in mind." data-sq="Pa formularë të gjatë. Thjesht më trego çfarë ke në mendje.">No long questionnaires. Just tell me what you have in mind.</p>
-  </form>
-</section>
+const description =
+  'Book Ergys Shehu for fashion, portrait, wedding, music video or commercial work. Based in Albania, available worldwide.';
 
-<section class="collab-section">
-  <div class="collab-visual" data-image-reveal>{collabPhoto && photoUrl(collabPhoto) && <img src={photoUrl(collabPhoto, 1000)} srcset={photoSet(collabPhoto)} sizes="(max-width:780px) 100vw, 50vw" alt="" loading="lazy"/>}</div>
-  <div class="collab-copy" data-reveal>
-    <p class="eyebrow" data-en="COLLABORATIONS" data-sq="BASHKËPUNIME">COLLABORATIONS</p>
-    <h2 data-en="Let’s Create Together" data-sq="Le të krijojmë bashkë">Let’s Create Together</h2>
-    <p data-en="I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen." data-sq="Jam gjithmonë i interesuar të punoj me modele, muzikantë, artistë, dizajnerë, brande dhe njerëz kreativë. Nëse ke një ide që ia vlen të eksplorohet, le ta realizojmë.">I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen.</p>
-    <a href="#inquiry" data-project="collaboration" class="button button-outline"><span data-en="COLLABORATE" data-sq="BASHKËPUNOJMË">COLLABORATE</span><span aria-hidden="true">→</span></a>
-  </div>
-</section>
+const contactPageLd = {
+  '@context':
+    'https://schema.org',
 
-</div>
+  '@type':
+    'ContactPage',
 
-<script define:vars={{email}} is:inline>
-const root = document.querySelector('.booking-page');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  '@id':
+    `${pageUrl}#webpage`,
 
-// EN/SQ translation for this page's [data-en]/[data-sq] content is handled
-// by the site-wide toggle in Layout.astro (it queries the whole document,
-// not just this page), so there's no language logic here anymore.
+  url:
+    pageUrl,
 
-// Service cards and the collaboration CTA preselect the project type and
-// scroll to the form (the #inquiry anchor already scrolls without JS).
-const projectSelect = document.querySelector('#project-type');
-root?.querySelectorAll('[data-project]').forEach(el => {
-  el.addEventListener('click', () => {
-    const value = el.dataset.project;
-    if (projectSelect && value) projectSelect.value = value;
-    window.setTimeout(() => document.querySelector('input[name="name"]')?.focus({preventScroll: true}), reducedMotion.matches ? 0 : 500);
-  });
-});
+  name:
+    'Book Ergys Shehu',
 
-// No backend: a WhatsApp link can only open a pre-filled chat on the
-// visitor's own phone — it can never land in Ergys's WhatsApp automatically,
-// so the form goes straight to the official inbox instead, pre-filled and
-// ready to send. A mailto: link gives no feedback and silently does nothing
-// on a device/browser with no mail app configured — which just reads as
-// "the form is broken" — so a status line shows what's happening, and if
-// the tab is still here a couple seconds later (the OS never switched away
-// to a mail app), it swaps to a WhatsApp fallback that always works.
-const form = document.querySelector('#inquiry');
-const formStatus = document.querySelector('[data-form-status]');
-form?.addEventListener('submit', e => {
-  e.preventDefault();
-  const data = new FormData(form);
-  const name = String(data.get('name') || '').trim();
-  const sender = String(data.get('email') || '').trim();
-  const phone = String(data.get('phone') || '').trim();
-  const message = String(data.get('message') || '').trim();
-  const selectedOption = projectSelect?.selectedOptions[0];
-  const lang = typeof currentLang === 'function' ? currentLang() : (document.documentElement.lang || 'en');
-  const projectLabel = (lang === 'sq' ? selectedOption?.dataset.sq : selectedOption?.dataset.en) || '';
-  const subject = `${projectLabel || 'Project inquiry'} — ${name}`;
-  const bodyLines = [`Name: ${name}`, `Email: ${sender}`, phone && `Phone: ${phone}`, `Project Type: ${projectLabel}`, '', message].filter(Boolean).join('\n');
-  const mailtoHref = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
-  if (formStatus) {
-    formStatus.hidden = false;
-    formStatus.textContent = lang === 'sq' ? 'Duke hapur aplikacionin e email-it…' : 'Opening your email app…';
-    formStatus.classList.remove('is-fallback');
-    window.setTimeout(() => {
-      if (document.visibilityState !== 'visible') return; // it opened — the OS switched away
-      const waText = `Hi Ergys, I'd like to discuss a ${projectLabel || 'project'}. ${message}`.trim();
-      const waLink = `https://wa.me/355693310202?text=${encodeURIComponent(waText)}`;
-      formStatus.classList.add('is-fallback');
-      formStatus.innerHTML = lang === 'sq'
-        ? `Nuk u hap? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Më shkruaj në WhatsApp</a> ose <a href="mailto:${email}">dërgo email direkt</a>.`
-        : `Didn't open? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a> or <a href="mailto:${email}">email directly</a>.`;
-    }, 1500);
+  description,
+
+  isPartOf: {
+    '@id':
+      WEBSITE_ID
+  },
+
+  about: {
+    '@id':
+      PERSON_ID
+  },
+
+  mainEntity: {
+    '@id':
+      PERSON_ID
   }
-  // A plain <a> click for the mailto:, deferred a tick, instead of setting
-  // location.href directly — assigning location.href synchronously in the
-  // submit handler was found (via automated testing) to sometimes reset the
-  // page's in-flight DOM changes before they render, which would explain
-  // "nothing happens" reports: the status message above never got to paint.
-  window.setTimeout(() => {
-    const link = document.createElement('a');
-    link.href = mailtoHref;
-    link.rel = 'noopener';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }, 30);
-});
-</script>
+};
+---
 
-<style>
-.booking-page{background:#080a0a;color:#f4f0e8}
+<Layout
+  title={`Book a shoot — ${settings.name}`}
+  description={description}
+  name={settings.name}
+  image={
+    hero &&
+    photoUrl(
+      hero,
+      1800
+    )
+  }
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={
+      JSON.stringify(
+        contactPageLd
+      )
+    }
+  />
 
-.book-hero{position:relative;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden;background:#080a0a}
-.book-hero-media,.book-hero-media img{position:absolute;inset:0;width:100%;height:100%}
-.book-hero-media img{object-fit:cover;object-position:center 68%}
-.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,7,7,.91) 0%,rgba(5,7,7,.68) 38%,rgba(5,7,7,.14) 72%,rgba(5,7,7,.26) 100%),linear-gradient(0deg,rgba(5,7,7,.75),transparent 50%)}
-.hero-content{position:relative;z-index:1;width:min(760px,70vw);padding:clamp(4rem,8vh,7rem) clamp(1.5rem,5vw,6rem) clamp(4rem,8vh,7rem)}
-.eyebrow{margin:0 0 1.25rem;font-size:.69rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(244,240,232,.7)}
-.book-hero h1{margin:0;max-width:800px;font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,7.5vw,7.5rem);line-height:.92;letter-spacing:-.03em}
-.hero-intro{max-width:520px;margin:2rem 0 0;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.55;color:rgba(255,255,255,.76)}
-.hero-actions{display:flex;gap:1rem;margin-top:2.4rem;flex-wrap:wrap}
-.button{min-height:52px;padding:0 2rem;display:inline-flex;align-items:center;justify-content:center;gap:.9rem;border:1px solid rgba(255,255,255,.45);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:#fff;transition:background .25s var(--ease-editorial),color .25s var(--ease-editorial)}
-.button-light{background:#f4f0e8;color:#090b0b;border-color:#f4f0e8}
-.button:hover{background:#fff;color:#080a0a;border-color:#fff}
+  <div class="booking-page">
 
-.services-section{padding:var(--section-gap) var(--page-pad)}
-.section-heading{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;margin-bottom:clamp(2rem,4vw,3rem)}
-.section-heading h2,.direct-contact h2,.collab-copy h2{margin:.3rem 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,4.4vw,4.6rem);line-height:.98;letter-spacing:-.03em}
-.section-copy{max-width:520px;margin:0 0 .4rem auto;color:rgba(244,240,232,.78);line-height:1.65;font-size:var(--text-md)}
-.services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(244,240,232,.12)}
-.service-card{position:relative;min-height:340px;overflow:hidden;color:#fff;text-decoration:none;background:#111312;display:block}
-.service-image{position:absolute;inset:0;overflow:hidden;display:grid;place-items:center}
-.service-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--focal-point,50% 32%);transition:transform .7s var(--ease-editorial)}
-.service-card:hover .service-image img{transform:scale(1.045)}
-.service-fallback-icon{width:38%;max-width:70px;color:rgba(244,240,232,.28)}
-.service-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,7,.96) 0%,rgba(5,7,7,.25) 62%,rgba(5,7,7,.06) 100%)}
-.service-copy{position:absolute;z-index:1;left:1.4rem;right:1.4rem;bottom:1.4rem}
-.service-copy h3{margin:0 0 .55rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,1.5vw,1.5rem);line-height:1.08}
-.service-copy p{margin:0;font-size:.56rem;letter-spacing:.14em;color:rgba(255,255,255,.55)}
-.service-view{position:absolute;right:0;bottom:0;opacity:0;transform:translateY(4px);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
-.service-card:hover .service-view,.service-card:focus-visible .service-view{opacity:1;transform:translateY(0)}
+    <section class="book-hero">
+      {
+        hero &&
+        photoUrl(hero) && (
+          <picture
+            class="book-hero-media"
+            data-image-reveal
+          >
+            <img
+              src={photoUrl(
+                hero,
+                1800
+              )}
+              srcset={
+                photoSet(hero)
+              }
+              sizes="100vw"
+              alt=""
+              fetchpriority="high"
+              width={
+                hero.width
+              }
+              height={
+                hero.height
+              }
+            />
+          </picture>
+        )
+      }
 
-.contact-booking{padding:var(--section-gap) var(--page-pad);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(3rem,6vw,6rem);border-top:1px solid rgba(244,240,232,.12)}
-.contact-intro{max-width:440px;color:rgba(244,240,232,.78);line-height:1.65;margin:1.6rem 0 2.6rem;font-size:var(--text-md)}
-.contact-links{display:grid;gap:1.15rem}
-.contact-links a,.contact-location{display:flex;align-items:center;gap:1.1rem;color:inherit;text-decoration:none}
-.contact-links small,.contact-location small{display:block;margin-bottom:.25rem;font-size:.6rem;letter-spacing:.17em;color:rgba(244,240,232,.62)}
-.contact-links strong,.contact-location strong{font-size:1rem;font-weight:400;font-family:var(--serif);overflow-wrap:anywhere}
-/* Real line-icons matching the rest of the site's icon language (see
-   SocialIcons.astro) instead of Unicode symbol glyphs (☎ ✉ ◎ ⌖) — those
-   rendered as whatever bitmap-y default the OS/browser font shipped,
-   visually clashing with the thin-stroke, editorial look everywhere else. */
-.contact-icon{width:1.4rem;height:1.4rem;flex-shrink:0;color:rgba(244,240,232,.85)}
-/* WhatsApp leads the list and is called out as the fastest way to reach
-   him — it always works (no mail app needed) unlike mailto:, and reads
-   more clearly against the dark background than the low-contrast list it
-   used to blend into. */
-.contact-fast{padding:.85rem 1rem;margin:0 -1rem .2rem;border-radius:2px;background:rgba(242,165,44,.1)}
-.contact-fast .contact-icon{color:var(--accent)}
-.contact-fast small{color:var(--accent);opacity:1;font-weight:600}
+      <div
+        class="hero-shade"
+        aria-hidden="true"
+      ></div>
 
-.inquiry-form{padding:clamp(1.5rem,3vw,2.5rem);border:1px solid rgba(244,240,232,.14);background:rgba(244,240,232,.025)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.inquiry-form label{display:grid;gap:.55rem;margin-bottom:1rem;font-size:.7rem;letter-spacing:.08em;color:rgba(244,240,232,.75)}
-.inquiry-form input,.inquiry-form select,.inquiry-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(244,240,232,.28);background:transparent;color:#f4f0e8;font:400 15px/1.5 var(--sans);min-height:48px;padding:.8rem .9rem}
-.inquiry-form input::placeholder,.inquiry-form textarea::placeholder{color:rgba(244,240,232,.4)}
-.inquiry-form textarea{min-height:150px;resize:vertical}
-.inquiry-form select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#f4f0e8 50%),linear-gradient(135deg,#f4f0e8 50%,transparent 50%);background-position:calc(100% - 6px) 55%,calc(100% - 11px) 55%;background-size:6px 6px;background-repeat:no-repeat}
-.inquiry-form select option{background:#111;color:#fff}
-.inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:0;border-color:#f4f0e8}
-.submit-button{width:100%;min-height:54px;border:0;margin-top:.4rem;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;background:#f4f0e8;color:#090b0b;cursor:pointer;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s var(--ease-editorial)}
-.submit-button:hover{background:#fff}
-.form-note{margin:1rem 0 0;text-align:center;font-size:.7rem;color:rgba(244,240,232,.55)}
-.form-status{margin:1rem 0 0;text-align:center;font-size:.75rem;color:rgba(244,240,232,.8)}
-.form-status.is-fallback{color:#f4f0e8}
-.form-status a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+      <div class="hero-content">
+        <p
+          class="eyebrow"
+          data-en="LET’S CREATE TOGETHER"
+          data-sq="LE TË KRIJOJMË BASHKË"
+        >
+          LET’S CREATE TOGETHER
+        </p>
 
-.collab-section{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(244,240,232,.12)}
-.collab-visual{min-height:460px;overflow:hidden;background:#111}
-.collab-visual img{width:100%;height:100%;object-fit:cover}
-.collab-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(3rem,7vw,7rem)}
-.collab-copy p:not(.eyebrow){max-width:460px;margin:1.6rem 0 2.2rem;color:rgba(244,240,232,.78);line-height:1.7;font-size:var(--text-md)}
+        <h1
+          data-en="Book a Shoot"
+          data-sq="Rezervo një Sesion"
+        >
+          Book a Shoot
+        </h1>
 
-@media (max-width:900px){
-  .services-grid{grid-template-columns:repeat(2,1fr)}
-  .contact-booking{grid-template-columns:1fr}
-  .collab-section{grid-template-columns:1fr}
-}
-@media (max-width:700px){
-  .services-section,.contact-booking{padding:clamp(3.5rem,12vw,5rem) 6vw}
-  .hero-content{width:auto;padding:5.5rem 6vw 3rem}
-  .section-heading{grid-template-columns:1fr;gap:1rem}
-  .section-copy{margin:0}
-  .services-grid{grid-template-columns:1fr}
-  .service-card{min-height:150px}
-  .form-row{grid-template-columns:1fr}
-  .collab-visual{min-height:320px}
-}
-@media (prefers-reduced-motion:reduce){
-  .service-card img,.service-copy>span{transition:none}
-}
-</style>
+        <p
+          class="hero-intro"
+          data-en="Photography, video and creative direction for brands, artists and meaningful stories."
+          data-sq="Fotografi, video dhe drejtim kreativ për brande, artistë dhe histori që kanë kuptim."
+        >
+          Photography, video and creative direction for brands, artists and meaningful stories.
+        </p>
+
+        <div class="hero-actions">
+          <a
+            class="button button-light"
+            href="#inquiry"
+          >
+            <span
+              data-en="BOOK NOW"
+              data-sq="REZERVO"
+            >
+              BOOK NOW
+            </span>
+
+            <span aria-hidden="true">
+              →
+            </span>
+          </a>
+
+          <a
+            class="button button-outline"
+            href="#contact"
+          >
+            <span
+              data-en="GET IN TOUCH"
+              data-sq="NA KONTAKTO"
+            >
+              GET IN TOUCH
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-section">
+      <div
+        class="section-heading"
+        data-reveal
+      >
+        <div>
+          <p
+            class="eyebrow"
+            data-en="SERVICES"
+            data-sq="SHËRBIMET"
+          >
+            SERVICES
+          </p>
+
+          <h2
+            data-en="What I Do"
+            data-sq="Çfarë realizoj"
+          >
+            What I Do
+          </h2>
+        </div>
+
+        <p
+          class="section-copy"
+          data-en="From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity."
+          data-sq="Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit."
+        >
+          From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        {
+          services.map(service => (
+            <a
+              class="service-card"
+              href={service.href}
+              data-reveal
+            >
+              <div
+                class="service-image"
+                data-image-reveal
+                style={
+                  service.photo
+                    ? `--focal-point:${photoPosition(service.photo)}`
+                    : undefined
+                }
+              >
+                {
+                  service.photo &&
+                  photoUrl(
+                    service.photo
+                  )
+                    ? (
+                      <img
+                        src={photoUrl(
+                          service.photo,
+                          900
+                        )}
+                        srcset={
+                          photoSet(
+                            service.photo
+                          )
+                        }
+                        sizes="(max-width:780px) 100vw, 20vw"
+                        width={
+                          service.photo
+                            .width
+                        }
+                        height={
+                          service.photo
+                            .height
+                        }
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )
+                    : (
+                      <svg
+                        class="service-fallback-icon"
+                        viewBox="0 0 48 48"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                        aria-hidden="true"
+                      >
+                        <rect
+                          x="4"
+                          y="12"
+                          width="40"
+                          height="26"
+                          rx="3"
+                        />
+
+                        <path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/>
+
+                        <circle
+                          cx="24"
+                          cy="27"
+                          r="7"
+                        />
+                      </svg>
+                    )
+                }
+
+                {
+                  service.kind ===
+                    'films' && (
+                    <span
+                      class="icon-badge project-play"
+                      aria-hidden="true"
+                    >
+                      ▶
+                    </span>
+                  )
+                }
+              </div>
+
+              <div
+                class="service-overlay"
+                aria-hidden="true"
+              ></div>
+
+              <div class="service-copy">
+                <h3
+                  data-en={service.en}
+                  data-sq={service.sq}
+                >
+                  {service.en}
+                </h3>
+
+                <p
+                  data-en={
+                    service.subEn
+                  }
+                  data-sq={
+                    service.subSq
+                  }
+                >
+                  {service.subEn}
+                </p>
+
+                <span
+                  class="service-view"
+                  data-en="View work ↗"
+                  data-sq="Shiko punën ↗"
+                >
+                  View work ↗
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="contact-booking"
+      id="contact"
+    >
+      <div
+        class="direct-contact"
+        data-reveal
+      >
+        <p
+          class="eyebrow"
+          data-en="CONTACT"
+          data-sq="KONTAKT"
+        >
+          CONTACT
+        </p>
+
+        <h2
+          data-en="Let’s Talk"
+          data-sq="Le të flasim"
+        >
+          Let’s Talk
+        </h2>
+
+        <p
+          class="contact-intro"
+          data-en="Tell me about your project, idea or collaboration. I usually reply within 24 hours."
+          data-sq="Më trego për projektin, idenë ose bashkëpunimin tënd. Zakonisht përgjigjem brenda 24 orësh."
+        >
+          Tell me about your project, idea or collaboration. I usually reply within 24 hours.
+        </p>
+
+        <div class="contact-links">
+          <a
+            class="contact-fast"
+            href={whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg
+              class="contact-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 3C7 3 3 6.6 3 11c0 2.1 1 4 2.6 5.4L5 21l4.8-1.8c.7.2 1.4.3 2.2.3 5 0 9-3.6 9-8S17 3 12 3Z"/>
+            </svg>
+
+            <div>
+              <small
+                data-en="FASTEST · WHATSAPP"
+                data-sq="MË SHPEJT · WHATSAPP"
+              >
+                FASTEST · WHATSAPP
+              </small>
+
+              <strong
+                data-en="Message on WhatsApp"
+                data-sq="Shkruaj në WhatsApp"
+              >
+                Message on WhatsApp
+              </strong>
+            </div>
+          </a>
+
+          <a href={phoneTel}>
+            <svg
+              class="contact-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .5 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8Z"/>
+            </svg>
+
+            <div>
+              <small
+                data-en="CALL"
+                data-sq="TELEFON"
+              >
+                CALL
+              </small>
+
+              <strong>
+                {phoneDisplay}
+              </strong>
+            </div>
+          </a>
+
+          <a href={`mailto:${email}`}>
+            <svg
+              class="contact-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect
+                x="3"
+                y="5"
+                width="18"
+                height="14"
+                rx="2"
+              />
+
+              <path d="M4 7l8 6 8-6"/>
+            </svg>
+
+            <div>
+              <small
+                data-en="EMAIL"
+                data-sq="EMAIL"
+              >
+                EMAIL
+              </small>
+
+              <strong>
+                {email}
+              </strong>
+            </div>
+          </a>
+
+          {
+            instagram && (
+              <a
+                href={instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  class="contact-icon"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="5"
+                  />
+
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="5"
+                  />
+
+                  <circle
+                    cx="17.3"
+                    cy="6.7"
+                    r="1.15"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+
+                <div>
+                  <small
+                    data-en="INSTAGRAM"
+                    data-sq="INSTAGRAM"
+                  >
+                    INSTAGRAM
+                  </small>
+
+                  <strong>
+                    @ergys.shehu
+                  </strong>
+                </div>
+              </a>
+            )
+          }
+
+          <div class="contact-location">
+            <svg
+              class="contact-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12Z"/>
+
+              <circle
+                cx="12"
+                cy="9"
+                r="2.5"
+              />
+            </svg>
+
+            <div>
+              <small
+                data-en="LOCATION"
+                data-sq="VENDNDODHJA"
+              >
+                LOCATION
+              </small>
+
+              <strong
+                data-en="Albania · Available worldwide"
+                data-sq="Shqipëri · I disponueshëm në mbarë botën"
+              >
+                Albania · Available worldwide
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form
+        class="inquiry-form"
+        id="inquiry"
+        data-reveal
+      >
+        <div class="form-row">
+          <label>
+            <span
+              data-en="Name *"
+              data-sq="Emri *"
+            >
+              Name *
+            </span>
+
+            <input
+              type="text"
+              name="name"
+              required
+              autocomplete="name"
+            />
+          </label>
+
+          <label>
+            <span
+              data-en="Email *"
+              data-sq="Email *"
+            >
+              Email *
+            </span>
+
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+            />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            <span
+              data-en="Phone (optional)"
+              data-sq="Telefoni (opsionale)"
+            >
+              Phone (optional)
+            </span>
+
+            <input
+              type="tel"
+              name="phone"
+              autocomplete="tel"
+              placeholder="+355 6X XXX XXXX"
+            />
+          </label>
+
+          <label>
+            <span
+              data-en="Type of project *"
+              data-sq="Lloji i projektit *"
+            >
+              Type of project *
+            </span>
+
+            <select
+              name="project"
+              id="project-type"
+              required
+            >
+              <option
+                value=""
+                data-en="Choose a project"
+                data-sq="Zgjidh projektin"
+              >
+                Choose a project
+              </option>
+
+              {
+                projectTypes.map(
+                  project => (
+                    <option
+                      value={
+                        project.value
+                      }
+                      data-en={
+                        project.en
+                      }
+                      data-sq={
+                        project.sq
+                      }
+                    >
+                      {project.en}
+                    </option>
+                  )
+                )
+              }
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span
+            data-en="Tell me about your project *"
+            data-sq="Më trego për projektin *"
+          >
+            Tell me about your project *
+          </span>
+
+          <textarea
+            name="message"
+            required
+            rows="6"
+            data-en-placeholder="Date, location, idea, style, number of people…"
+            data-sq-placeholder="Data, vendndodhja, ideja, stili, numri i personave…"
+            placeholder="Date, location, idea, style, number of people…"
+          ></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="submit-button"
+        >
+          <span
+            data-en="SEND MESSAGE"
+            data-sq="DËRGO MESAZH"
+          >
+            SEND MESSAGE
+          </span>
+
+          <span aria-hidden="true">
+            →
+          </span>
+        </button>
+
+        <p
+          class="form-status"
+          data-form-status
+          role="status"
+          aria-live="polite"
+          hidden
+        ></p>
+
+        <p
+          class="form-note"
+          data-en="No long questionnaires. Just tell me what you have in mind."
+          data-sq="Pa formularë të gjatë. Thjesht më trego çfarë ke në mendje."
+        >
+          No long questionnaires. Just tell me what you have in mind.
+        </p>
+      </form>
+    </section>
+
+    <section class="collab-section">
+      <div
+        class="collab-visual"
+        data-image-reveal
+      >
+        {
+          collabPhoto &&
+          photoUrl(
+            collabPhoto
+          ) && (
+            <img
+              src={photoUrl(
+                collabPhoto,
+                1000
+              )}
+              srcset={
+                photoSet(
+                  collabPhoto
+                )
+              }
+              sizes="(max-width:780px) 100vw, 50vw"
+              width={
+                collabPhoto.width
+              }
+              height={
+                collabPhoto.height
+              }
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          )
+        }
+      </div>
+
+      <div
+        class="collab-copy"
+        data-reveal
+      >
+        <p
+          class="eyebrow"
+          data-en="COLLABORATIONS"
+          data-sq="BASHKËPUNIME"
+        >
+          COLLABORATIONS
+        </p>
+
+        <h2
+          data-en="Let’s Create Together"
+          data-sq="Le të krijojmë bashkë"
+        >
+          Let’s Create Together
+        </h2>
+
+        <p
+          data-en="I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen."
+          data-sq="Jam gjithmonë i interesuar të punoj me modele, muzikantë, artistë, dizajnerë, brande dhe njerëz kreativë. Nëse ke një ide që ia vlen të eksplorohet, le ta realizojmë."
+        >
+          I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen.
+        </p>
+
+        <a
+          href="#inquiry"
+          data-project="collaboration"
+          class="button button-outline"
+        >
+          <span
+            data-en="COLLABORATE"
+            data-sq="BASHKËPUNOJMË"
+          >
+            COLLABORATE
+          </span>
+
+          <span aria-hidden="true">
+            →
+          </span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <script
+    define:vars={{email}}
+    is:inline
+  >
+    const root =
+      document.querySelector(
+        '.booking-page'
+      );
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      );
+
+    const projectSelect =
+      document.querySelector(
+        '#project-type'
+      );
+
+    root
+      ?.querySelectorAll(
+        '[data-project]'
+      )
+      .forEach(el => {
+        el.addEventListener(
+          'click',
+          () => {
+            const value =
+              el.dataset.project;
+
+            if (
+              projectSelect &&
+              value
+            ) {
+              projectSelect.value =
+                value;
+            }
+
+            window.setTimeout(
+              () =>
+                document
+                  .querySelector(
+                    'input[name="name"]'
+                  )
+                  ?.focus({
+                    preventScroll:
+                      true
+                  }),
+
+              reducedMotion.matches
+                ? 0
+                : 500
+            );
+          }
+        );
+      });
+
+    const form =
+      document.querySelector(
+        '#inquiry'
+      );
+
+    const formStatus =
+      document.querySelector(
+        '[data-form-status]'
+      );
+
+    form?.addEventListener(
+      'submit',
+      event => {
+        event.preventDefault();
+
+        const data =
+          new FormData(form);
+
+        const name =
+          String(
+            data.get('name') ||
+            ''
+          ).trim();
+
+        const sender =
+          String(
+            data.get('email') ||
+            ''
+          ).trim();
+
+        const phone =
+          String(
+            data.get('phone') ||
+            ''
+          ).trim();
+
+        const message =
+          String(
+            data.get('message') ||
+            ''
+          ).trim();
+
+        const selectedOption =
+          projectSelect
+            ?.selectedOptions[0];
+
+        const lang =
+          typeof currentLang ===
+          'function'
+            ? currentLang()
+            : (
+                document
+                  .documentElement
+                  .lang ||
+                'en'
+              );
+
+        const projectLabel =
+          (
+            lang === 'sq'
+              ? selectedOption
+                  ?.dataset.sq
+              : selectedOption
+                  ?.dataset.en
+          ) || '';
+
+        const subject =
+          `${projectLabel || 'Project inquiry'} — ${name}`;
+
+        const bodyLines = [
+          `Name: ${name}`,
+          `Email: ${sender}`,
+          phone &&
+            `Phone: ${phone}`,
+          `Project Type: ${projectLabel}`,
+          '',
+          message
+        ]
+          .filter(Boolean)
+          .join('\n');
+
+        const mailtoHref =
+          `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
+
+        if (formStatus) {
+          formStatus.hidden =
+            false;
+
+          formStatus.textContent =
+            lang === 'sq'
+              ? 'Duke hapur aplikacionin e email-it…'
+              : 'Opening your email app…';
+
+          formStatus.classList
+            .remove(
+              'is-fallback'
+            );
+
+          window.setTimeout(
+            () => {
+              if (
+                document
+                  .visibilityState !==
+                'visible'
+              ) {
+                return;
+              }
+
+              const waText =
+                `Hi Ergys, I'd like to discuss a ${projectLabel || 'project'}. ${message}`
+                  .trim();
+
+              const waLink =
+                `https://wa.me/355693310202?text=${encodeURIComponent(waText)}`;
+
+              formStatus
+                .classList
+                .add(
+                  'is-fallback'
+                );
+
+              formStatus.innerHTML =
+                lang === 'sq'
+                  ? `Nuk u hap? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Më shkruaj në WhatsApp</a> ose <a href="mailto:${email}">dërgo email direkt</a>.`
+                  : `Didn't open? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a> or <a href="mailto:${email}">email directly</a>.`;
+            },
+            1500
+          );
+        }
+
+        window.setTimeout(
+          () => {
+            const link =
+              document.createElement(
+                'a'
+              );
+
+            link.href =
+              mailtoHref;
+
+            link.rel =
+              'noopener';
+
+            document.body
+              .appendChild(
+                link
+              );
+
+            link.click();
+            link.remove();
+          },
+          30
+        );
+      }
+    );
+  </script>
+
+  <style>
+    .booking-page{background:#080a0a;color:#f4f0e8}
+
+    .book-hero{position:relative;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden;background:#080a0a}
+    .book-hero-media,.book-hero-media img{position:absolute;inset:0;width:100%;height:100%}
+    .book-hero-media img{object-fit:cover;object-position:center 68%}
+    .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,7,7,.91) 0%,rgba(5,7,7,.68) 38%,rgba(5,7,7,.14) 72%,rgba(5,7,7,.26) 100%),linear-gradient(0deg,rgba(5,7,7,.75),transparent 50%)}
+    .hero-content{position:relative;z-index:1;width:min(760px,70vw);padding:clamp(4rem,8vh,7rem) clamp(1.5rem,5vw,6rem) clamp(4rem,8vh,7rem)}
+    .eyebrow{margin:0 0 1.25rem;font-size:.69rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(244,240,232,.7)}
+    .book-hero h1{margin:0;max-width:800px;font-family:var(--serif);font-weight:400;font-size:clamp(3.4rem,7.5vw,7.5rem);line-height:.92;letter-spacing:-.03em}
+    .hero-intro{max-width:520px;margin:2rem 0 0;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.55;color:rgba(255,255,255,.76)}
+    .hero-actions{display:flex;gap:1rem;margin-top:2.4rem;flex-wrap:wrap}
+    .button{min-height:52px;padding:0 2rem;display:inline-flex;align-items:center;justify-content:center;gap:.9rem;border:1px solid rgba(255,255,255,.45);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:#fff;transition:background .25s var(--ease-editorial),color .25s var(--ease-editorial)}
+    .button-light{background:#f4f0e8;color:#090b0b;border-color:#f4f0e8}
+    .button:hover{background:#fff;color:#080a0a;border-color:#fff}
+
+    .services-section{padding:var(--section-gap) var(--page-pad)}
+    .section-heading{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem;margin-bottom:clamp(2rem,4vw,3rem)}
+    .section-heading h2,.direct-contact h2,.collab-copy h2{margin:.3rem 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,4.4vw,4.6rem);line-height:.98;letter-spacing:-.03em}
+    .section-copy{max-width:520px;margin:0 0 .4rem auto;color:rgba(244,240,232,.78);line-height:1.65;font-size:var(--text-md)}
+    .services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(244,240,232,.12)}
+    .service-card{position:relative;min-height:340px;overflow:hidden;color:#fff;text-decoration:none;background:#111312;display:block}
+    .service-image{position:absolute;inset:0;overflow:hidden;display:grid;place-items:center}
+    .service-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--focal-point,50% 32%);transition:transform .7s var(--ease-editorial)}
+    .service-card:hover .service-image img{transform:scale(1.045)}
+    .service-fallback-icon{width:38%;max-width:70px;color:rgba(244,240,232,.28)}
+    .service-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,7,.96) 0%,rgba(5,7,7,.25) 62%,rgba(5,7,7,.06) 100%)}
+    .service-copy{position:absolute;z-index:1;left:1.4rem;right:1.4rem;bottom:1.4rem}
+    .service-copy h3{margin:0 0 .55rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,1.5vw,1.5rem);line-height:1.08}
+    .service-copy p{margin:0;font-size:.56rem;letter-spacing:.14em;color:rgba(255,255,255,.55)}
+    .service-view{position:absolute;right:0;bottom:0;opacity:0;transform:translateY(4px);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:transform .3s var(--ease-editorial),opacity .3s var(--ease-editorial)}
+    .service-card:hover .service-view,.service-card:focus-visible .service-view{opacity:1;transform:translateY(0)}
+
+    .contact-booking{padding:var(--section-gap) var(--page-pad);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(3rem,6vw,6rem);border-top:1px solid rgba(244,240,232,.12)}
+    .contact-intro{max-width:440px;color:rgba(244,240,232,.78);line-height:1.65;margin:1.6rem 0 2.6rem;font-size:var(--text-md)}
+    .contact-links{display:grid;gap:1.15rem}
+    .contact-links a,.contact-location{display:flex;align-items:center;gap:1.1rem;color:inherit;text-decoration:none}
+    .contact-links small,.contact-location small{display:block;margin-bottom:.25rem;font-size:.6rem;letter-spacing:.17em;color:rgba(244,240,232,.62)}
+    .contact-links strong,.contact-location strong{font-size:1rem;font-weight:400;font-family:var(--serif);overflow-wrap:anywhere}
+
+    .contact-icon{width:1.4rem;height:1.4rem;flex-shrink:0;color:rgba(244,240,232,.85)}
+    .contact-fast{padding:.85rem 1rem;margin:0 -1rem .2rem;border-radius:2px;background:rgba(242,165,44,.1)}
+    .contact-fast .contact-icon{color:var(--accent)}
+    .contact-fast small{color:var(--accent);opacity:1;font-weight:600}
+
+    .inquiry-form{padding:clamp(1.5rem,3vw,2.5rem);border:1px solid rgba(244,240,232,.14);background:rgba(244,240,232,.025)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .inquiry-form label{display:grid;gap:.55rem;margin-bottom:1rem;font-size:.7rem;letter-spacing:.08em;color:rgba(244,240,232,.75)}
+    .inquiry-form input,.inquiry-form select,.inquiry-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(244,240,232,.28);background:transparent;color:#f4f0e8;font:400 15px/1.5 var(--sans);min-height:48px;padding:.8rem .9rem}
+    .inquiry-form input::placeholder,.inquiry-form textarea::placeholder{color:rgba(244,240,232,.4)}
+    .inquiry-form textarea{min-height:150px;resize:vertical}
+    .inquiry-form select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#f4f0e8 50%),linear-gradient(135deg,#f4f0e8 50%,transparent 50%);background-position:calc(100% - 6px) 55%,calc(100% - 11px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+    .inquiry-form select option{background:#111;color:#fff}
+    .inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:0;border-color:#f4f0e8}
+    .submit-button{width:100%;min-height:54px;border:0;margin-top:.4rem;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;background:#f4f0e8;color:#090b0b;cursor:pointer;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase;transition:background .25s var(--ease-editorial)}
+    .submit-button:hover{background:#fff}
+    .form-note{margin:1rem 0 0;text-align:center;font-size:.7rem;color:rgba(244,240,232,.55)}
+    .form-status{margin:1rem 0 0;text-align:center;font-size:.75rem;color:rgba(244,240,232,.8)}
+    .form-status.is-fallback{color:#f4f0e8}
+    .form-status a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+
+    .collab-section{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(244,240,232,.12)}
+    .collab-visual{min-height:460px;overflow:hidden;background:#111}
+    .collab-visual img{width:100%;height:100%;object-fit:cover}
+    .collab-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(3rem,7vw,7rem)}
+    .collab-copy p:not(.eyebrow){max-width:460px;margin:1.6rem 0 2.2rem;color:rgba(244,240,232,.78);line-height:1.7;font-size:var(--text-md)}
+
+    @media (max-width:900px){
+      .services-grid{grid-template-columns:repeat(2,1fr)}
+      .contact-booking{grid-template-columns:1fr}
+      .collab-section{grid-template-columns:1fr}
+    }
+
+    @media (max-width:700px){
+      .services-section,.contact-booking{padding:clamp(3.5rem,12vw,5rem) 6vw}
+      .hero-content{width:auto;padding:5.5rem 6vw 3rem}
+      .section-heading{grid-template-columns:1fr;gap:1rem}
+      .section-copy{margin:0}
+      .services-grid{grid-template-columns:1fr}
+      .service-card{min-height:150px}
+      .form-row{grid-template-columns:1fr}
+      .collab-visual{min-height:320px}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .service-card img,.service-copy>span{transition:none}
+    }
+  </style>
 </Layout>
