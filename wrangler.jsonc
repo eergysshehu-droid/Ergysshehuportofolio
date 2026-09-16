@@ -1,17 +1,29 @@
 {
   "name": "ergysshehuportofolio",
 
+  "main": "./src/worker.ts",
+
   "compatibility_date": "2026-09-14",
 
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+
+    "run_worker_first": [
+      "/api/*",
+      "/book/*",
+      "/sq/book/*"
+    ]
   },
 
   "send_email": [
     {
       "name": "CONTACT_EMAIL",
-      "destination_address": "e.ergysshehu@gmail.com"
+      "destination_address": "e.ergysshehu@gmail.com",
+      "allowed_sender_addresses": [
+        "website@ergysshehu.com"
+      ]
     }
   ]
 }
