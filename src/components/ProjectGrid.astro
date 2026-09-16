@@ -40,17 +40,23 @@ const projectKindLabel = (
   album: Album
 ) => {
   const kind =
-    albumKind(album);
+    albumKind(
+      album
+    );
 
-  if (!isSq) {
+  if (
+    !isSq
+  ) {
     if (
-      kind === 'projects'
+      kind ===
+      'projects'
     ) {
       return 'Personal work';
     }
 
     if (
-      kind === 'portraits'
+      kind ===
+      'portraits'
     ) {
       return 'Portraits & beauty';
     }
@@ -63,31 +69,36 @@ const projectKindLabel = (
   }
 
   if (
-    kind === 'projects'
+    kind ===
+    'projects'
   ) {
     return 'Punë personale';
   }
 
   if (
-    kind === 'portraits'
+    kind ===
+    'portraits'
   ) {
     return 'Portrete & bukuri';
   }
 
   if (
-    kind === 'weddings'
+    kind ===
+    'weddings'
   ) {
     return 'Dasma';
   }
 
   if (
-    kind === 'fashion'
+    kind ===
+    'fashion'
   ) {
     return 'Modë';
   }
 
   if (
-    kind === 'films'
+    kind ===
+    'films'
   ) {
     return 'Video';
   }
@@ -110,7 +121,8 @@ const projectKindLabel = (
       ) => {
         const feature =
           i === 0 &&
-          albums.length > 3;
+          albums.length >
+            3;
 
         const imageUrl =
           photoUrl(
@@ -142,17 +154,33 @@ const projectKindLabel = (
             album
           );
 
+        const projectLabel =
+          isSq
+            ? `Hap projektin ${title}${
+                kindLabel
+                  ? ` — ${kindLabel}`
+                  : ''
+              }`
+            : `Open project ${title}${
+                kindLabel
+                  ? ` — ${kindLabel}`
+                  : ''
+              }`;
+
         return (
           <article
             class:list={[
               'project-card',
+
               {
                 'project-feature':
                   feature
               }
             ]}
             data-kind={
-              albumKind(album)
+              albumKind(
+                album
+              )
             }
             data-reveal
             style={`--frame-color:${album.cover?.color || '#141412'}`}
@@ -163,6 +191,9 @@ const projectKindLabel = (
                   album.slug
                 )
               }
+              aria-label={
+                projectLabel
+              }
             >
               <div
                 class="project-image"
@@ -170,45 +201,55 @@ const projectKindLabel = (
                 style={`--focal-point:${photoPosition(album.cover)}`}
               >
                 {
-                  imageUrl ? (
-                    <img
-                      src={photoUrl(
-                        album.cover,
-                        feature
-                          ? 1800
-                          : 1000
-                      )}
-                      srcset={
-                        photoSet(
-                          album.cover
-                        )
-                      }
-                      sizes={
-                        feature
-                          ? '100vw'
-                          : '(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 30vw'
-                      }
-                      alt={alt}
-                      loading="lazy"
-                      decoding="async"
-                      width={
-                        album.cover?.width ||
-                        1000
-                      }
-                      height={
-                        album.cover?.height ||
-                        1300
-                      }
-                    />
-                  ) : (
-                    <span class="project-fallback">
-                      {title}
-                    </span>
-                  )
+                  imageUrl
+                    ? (
+                        <img
+                          src={
+                            photoUrl(
+                              album.cover,
+                              feature
+                                ? 1800
+                                : 1000
+                            )
+                          }
+                          srcset={
+                            photoSet(
+                              album.cover
+                            )
+                          }
+                          sizes={
+                            feature
+                              ? '100vw'
+                              : '(max-width: 600px) 90vw, (max-width: 1000px) 45vw, 30vw'
+                          }
+                          alt={
+                            alt
+                          }
+                          loading="lazy"
+                          decoding="async"
+                          width={
+                            album.cover?.width ||
+                            1000
+                          }
+                          height={
+                            album.cover?.height ||
+                            1300
+                          }
+                        />
+                      )
+                    : (
+                        <span class="project-fallback">
+                          {
+                            title
+                          }
+                        </span>
+                      )
                 }
 
                 {
-                  albumKind(album) ===
+                  albumKind(
+                    album
+                  ) ===
                     'films' && (
                     <span
                       class="icon-badge project-play"
@@ -223,7 +264,8 @@ const projectKindLabel = (
                   <span class="project-no">
                     {
                       String(
-                        i + 1
+                        i +
+                        1
                       ).padStart(
                         2,
                         '0'
@@ -238,7 +280,9 @@ const projectKindLabel = (
 
                     <p>
                       <span class="project-kind">
-                        {kindLabel}
+                        {
+                          kindLabel
+                        }
                       </span>
 
                       <span
@@ -250,7 +294,8 @@ const projectKindLabel = (
 
                       <span class="project-total">
                         {
-                          album.photos?.length ||
+                          album.photos
+                            ?.length ||
                           0
                         }
 
