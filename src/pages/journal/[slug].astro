@@ -22,41 +22,109 @@ import {
   WEBSITE_ID
 } from '../../lib/editorial';
 
-export async function getStaticPaths() {
-  const posts = await journal();
+import {
+  languageFromPath,
+  localizedPath
+} from '../../lib/i18n';
 
-  return posts.map(post => ({
-    params: {
-      slug: post.slug
-    },
-    props: {
-      post
-    }
-  }));
+export async function getStaticPaths() {
+  const posts =
+    await journal();
+
+  return posts.map(
+    post => ({
+      params: {
+        slug:
+          post.slug
+      },
+
+      props: {
+        post
+      }
+    })
+  );
 }
 
-const {post} = Astro.props;
+const {
+  post
+} = Astro.props;
 
-const {settings: saved} =
-  await content();
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
+const {
+  settings: saved
+} = await content();
 
 const settings = {
   ...defaults,
+
   ...Object.fromEntries(
     Object.entries(saved)
-      .filter(([, v]) => v != null)
+      .filter(
+        ([, value]) =>
+          value != null
+      )
   )
 };
 
-const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString(
-    'en-GB',
-    {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    }
-  );
+const title =
+  isSq
+    ? (
+        post.titleSq ||
+        post.title
+      )
+    : post.title;
+
+const excerpt =
+  isSq
+    ? (
+        post.excerptSq ||
+        post.excerpt
+      )
+    : post.excerpt;
+
+const category =
+  isSq
+    ? (
+        post.categorySq ||
+        post.category
+      )
+    : post.category;
+
+const body:
+  PortableItem[] =
+    isSq
+      ? (
+          post.bodySq &&
+          post.bodySq.length
+            ? post.bodySq
+            : post.body
+        )
+      : post.body;
+
+const formatDateEn = (
+  iso: string
+) =>
+  new Date(iso)
+    .toLocaleDateString(
+      'en-GB',
+      {
+        day:
+          'numeric',
+
+        month:
+          'long',
+
+        year:
+          'numeric'
+      }
+    );
 
 const monthsSq = [
   'janar',
@@ -76,85 +144,141 @@ const monthsSq = [
 const formatDateSq = (
   iso: string
 ) => {
-  const d =
+  const date =
     new Date(iso);
 
-  return `${d.getDate()} ${monthsSq[d.getMonth()]} ${d.getFullYear()}`;
+  return `${date.getDate()} ${monthsSq[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-const dateLine = {
-  en:
-    `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
+const date =
+  isSq
+    ? formatDateSq(
+        post.publishedAt
+      )
+    : formatDateEn(
+        post.publishedAt
+      );
 
-  sq:
-    `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`
-};
+const dateLine =
+  `${
+    category
+      ? category + ' / '
+      : ''
+  }${date}`;
 
 const escapeHtml = (
   text: string
 ) =>
   text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+    .replace(
+      /</g,
+      '&lt;'
+    )
+    .replace(
+      />/g,
+      '&gt;'
+    )
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+    .replace(
+      /'/g,
+      '&#039;'
+    );
 
 function renderInline(
-  spans: PortableSpan[] = [],
-  markDefs: PortableMarkDef[] = []
+  spans:
+    PortableSpan[] = [],
+
+  markDefs:
+    PortableMarkDef[] = []
 ) {
   return spans
-    .map(span => {
-      let html =
-        escapeHtml(span.text);
+    .map(
+      span => {
+        let html =
+          escapeHtml(
+            span.text
+          );
 
-      for (
-        const mark of
-        span.marks || []
-      ) {
-        if (
-          mark === 'strong'
+        for (
+          const mark of
+          span.marks || []
         ) {
-          html =
-            `<strong>${html}</strong>`;
-        } else if (
-          mark === 'em'
-        ) {
-          html =
-            `<em>${html}</em>`;
-        } else {
-          const def =
-            markDefs.find(
-              item =>
-                item._key === mark
-            );
-
-          const href =
-            safeUrl(def?.href);
-
-          if (href) {
+          if (
+            mark ===
+            'strong'
+          ) {
             html =
-              `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}</a>`;
+              `<strong>${html}</strong>`;
+          } else if (
+            mark ===
+            'em'
+          ) {
+            html =
+              `<em>${html}</em>`;
+          } else {
+            const def =
+              markDefs.find(
+                item =>
+                  item._key ===
+                  mark
+              );
+
+            const href =
+              safeUrl(
+                def?.href
+              );
+
+            if (
+              href
+            ) {
+              html =
+                `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}</a>`;
+            }
           }
         }
-      }
 
-      return html;
-    })
+        return html;
+      }
+    )
     .join('');
 }
 
 const blockTag:
-  Record<string, string> = {
-    normal: 'p',
-    h2: 'h2',
-    h3: 'h3',
-    blockquote: 'blockquote'
+  Record<
+    string,
+    string
+  > = {
+    normal:
+      'p',
+
+    h2:
+      'h2',
+
+    h3:
+      'h3',
+
+    blockquote:
+      'blockquote'
   };
 
+const pagePath =
+  localizedPath(
+    `/journal/${post.slug}/`,
+    lang
+  );
+
 const pageUrl =
-  `https://ergysshehu.com/journal/${post.slug}/`;
+  new URL(
+    pagePath,
+    'https://ergysshehu.com'
+  ).href;
 
 const coverUrl =
   post.cover
@@ -178,10 +302,10 @@ const articleLd = {
     pageUrl,
 
   headline:
-    post.title,
+    title,
 
   description:
-    post.excerpt,
+    excerpt,
 
   ...(coverUrl
     ? {
@@ -223,20 +347,25 @@ const articleLd = {
     post.publishedAt,
 
   inLanguage:
-    'en'
+    lang
 };
 ---
 
 <Layout
-  title={`${post.title} — ${settings.name}`}
+  lang={lang}
+  title={`${title} — ${settings.name}`}
   name={settings.name}
-  description={post.excerpt}
+  description={excerpt}
   image={coverUrl}
 >
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(articleLd)}
+    set:html={
+      JSON.stringify(
+        articleLd
+      )
+    }
   />
 
   <article class="journal-post">
@@ -244,61 +373,58 @@ const articleLd = {
       <a
         class="back-link"
         data-reveal
-        href="/journal/"
-        data-en="← Journal"
-        data-sq="← Ditari"
+        href={
+          localizedPath(
+            '/journal/',
+            lang
+          )
+        }
       >
-        ← Journal
+        {
+          isSq
+            ? '← Ditari'
+            : '← Journal'
+        }
       </a>
 
       <p
         class="kicker"
         data-reveal
-        data-en={dateLine.en}
-        data-sq={dateLine.sq}
       >
-        {dateLine.en}
+        {dateLine}
       </p>
 
-      <h1
-        data-reveal
-        data-en={post.title}
-        data-sq={
-          post.titleSq ||
-          post.title
-        }
-      >
-        {post.title}
+      <h1 data-reveal>
+        {title}
       </h1>
 
-      <p
-        data-reveal
-        data-en={post.excerpt}
-        data-sq={
-          post.excerptSq ||
-          post.excerpt
-        }
-      >
-        {post.excerpt}
+      <p data-reveal>
+        {excerpt}
       </p>
     </section>
 
     {
       post.cover &&
-      photoUrl(post.cover) && (
+      photoUrl(
+        post.cover
+      ) && (
         <div
           class="journal-post-cover"
           data-image-reveal
           style={`--focal-point:${photoPosition(post.cover)}`}
         >
           <img
-            src={photoUrl(
-              post.cover,
-              1800
-            )}
-            srcset={photoSet(
-              post.cover
-            )}
+            src={
+              photoUrl(
+                post.cover,
+                1800
+              )
+            }
+            srcset={
+              photoSet(
+                post.cover
+              )
+            }
             sizes="90vw"
             width={
               post.cover.width
@@ -307,8 +433,16 @@ const articleLd = {
               post.cover.height
             }
             alt={
-              post.cover.alt ||
-              post.title
+              isSq
+                ? (
+                    post.cover.altSq ||
+                    post.cover.alt ||
+                    title
+                  )
+                : (
+                    post.cover.alt ||
+                    title
+                  )
             }
             loading="eager"
             fetchpriority="high"
@@ -323,25 +457,22 @@ const articleLd = {
       data-reveal
     >
       {
-        (
-          post.body as
-          PortableItem[]
-        ).map(item => {
-          if (
-            item._type ===
-            'block'
-          ) {
-            const Tag = (
-              blockTag[
-                item.style ||
-                'normal'
-              ] || 'p'
-            ) as any;
+        body.map(
+          item => {
+            if (
+              item._type ===
+              'block'
+            ) {
+              const Tag = (
+                blockTag[
+                  item.style ||
+                  'normal'
+                ] ||
+                'p'
+              ) as any;
 
-            return (
-              <>
+              return (
                 <Tag
-                  data-lang-content="en"
                   set:html={
                     renderInline(
                       item.children,
@@ -349,51 +480,89 @@ const articleLd = {
                     )
                   }
                 />
+              );
+            }
+
+            const imageUrl =
+              photoUrl(
+                item
+              );
+
+            if (
+              !imageUrl
+            ) {
+              return null;
+            }
+
+            const alt =
+              isSq
+                ? (
+                    item.altSq ||
+                    item.alt ||
+                    ''
+                  )
+                : (
+                    item.alt ||
+                    ''
+                  );
+
+            const caption =
+              isSq
+                ? (
+                    item.captionSq ||
+                    item.caption
+                  )
+                : item.caption;
+
+            return (
+              <figure>
+                <img
+                  src={
+                    photoUrl(
+                      item,
+                      1400
+                    )
+                  }
+                  srcset={
+                    photoSet(
+                      item
+                    )
+                  }
+                  sizes="(max-width:700px) 90vw, 700px"
+                  width={
+                    item.width
+                  }
+                  height={
+                    item.height
+                  }
+                  alt={alt}
+                  loading="lazy"
+                  decoding="async"
+                />
 
                 {
-                  item.childrenSq && (
-                    <Tag
-                      data-lang-content="sq"
-                      hidden
-                      set:html={
-                        renderInline(
-                          item.childrenSq,
-                          item.markDefs
+                  (
+                    caption ||
+                    item.credit
+                  ) && (
+                    <figcaption>
+                      {caption}
+
+                      {
+                        item.credit && (
+                          <span>
+                            {' '}
+                            © {item.credit}
+                          </span>
                         )
                       }
-                    />
+                    </figcaption>
                   )
                 }
-              </>
+              </figure>
             );
           }
-
-          return (
-            photoUrl(item) && (
-              <img
-                src={photoUrl(
-                  item,
-                  1400
-                )}
-                srcset={
-                  photoSet(item)
-                }
-                sizes="(max-width:700px) 90vw, 700px"
-                width={
-                  item.width
-                }
-                height={
-                  item.height
-                }
-                alt={
-                  item.alt || ''
-                }
-                loading="lazy"
-                decoding="async"
-              />
-            )
-          );
-        })
+        )
       }
     </div>
   </article>
