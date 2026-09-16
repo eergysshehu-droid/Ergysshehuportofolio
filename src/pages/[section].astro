@@ -21,10 +21,9 @@ const {
   noindex = false,
 } = Astro.props;
 
-const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const canonicalUrl = Astro.site ? new URL(canonicalPath === '/' ? '/' : canonicalPath, Astro.site).href : 'https://ergysshehu.com/';
-const currentLang = canonicalPath.startsWith('/sq') ? 'sq' : 'en';
-const sqCanonical = (() => {
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : 'https://ergysshehu.com/';
+const pageLang = Astro.url.pathname.startsWith('/sq') ? 'sq' : 'en';
+const sqUrl = (() => {
   const url = new URL(canonicalUrl);
   const path = url.pathname.replace(/\/+$/, '') || '/';
   if (path === '/') return 'https://ergysshehu.com/sq/';
@@ -48,12 +47,37 @@ const personLd = {
   ...(imageUrl ? {image: seoImage} : {}),
 };
 
-const kult360Ld = {'@context': 'https://schema.org', '@type': 'Organization', '@id': KULT360_ID, name: 'Kult 360 Foundation', url: defaults.kult360};
-const websiteLd = {'@context': 'https://schema.org', '@type': 'WebSite', '@id': WEBSITE_ID, name: 'Ergys Shehu', url: 'https://ergysshehu.com/', description: defaults.seoDescription, inLanguage: 'en', publisher: {'@id': PERSON_ID}};
-const webPageLd = {'@context': 'https://schema.org', '@type': 'WebPage', '@id': canonicalUrl + '#webpage', url: canonicalUrl, name: title, isPartOf: {'@id': WEBSITE_ID}, about: {'@id': PERSON_ID}};
+const kult360Ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': KULT360_ID,
+  name: 'Kult 360 Foundation',
+  url: defaults.kult360,
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  name: 'Ergys Shehu',
+  url: 'https://ergysshehu.com/',
+  description: defaults.seoDescription,
+  inLanguage: 'en',
+  publisher: {'@id': PERSON_ID},
+};
+
+const webPageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': canonicalUrl + '#webpage',
+  url: canonicalUrl,
+  name: title,
+  isPartOf: {'@id': WEBSITE_ID},
+  about: {'@id': PERSON_ID},
+};
 ---
 <!doctype html>
-<html lang={currentLang}>
+<html lang={pageLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,7 +86,7 @@ const webPageLd = {'@context': 'https://schema.org', '@type': 'WebPage', '@id': 
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={canonicalUrl} />
-    <link rel="alternate" hreflang="sq" href={sqCanonical} />
+    <link rel="alternate" hreflang="sq" href={sqUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ergys Shehu" />
@@ -71,8 +95,8 @@ const webPageLd = {'@context': 'https://schema.org', '@type': 'WebPage', '@id': 
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={seoImage} />
     <meta property="og:image:alt" content={title} />
-    <meta property="og:locale" content={currentLang === 'sq' ? 'sq_AL' : 'en_US'} />
-    <meta property="og:locale:alternate" content={currentLang === 'sq' ? 'en_US' : 'sq_AL'} />
+    <meta property="og:locale" content={pageLang === 'sq' ? 'sq_AL' : 'en_US'} />
+    <meta property="og:locale:alternate" content={pageLang === 'sq' ? 'en_US' : 'sq_AL'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -109,9 +133,7 @@ const webPageLd = {'@context': 'https://schema.org', '@type': 'WebPage', '@id': 
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       const LANG_KEY = 'site-lang';
-      function currentLang() {
-        try { return localStorage.getItem(LANG_KEY) || 'en'; } catch { return 'en'; }
-      }
+      function currentLang() { try { return localStorage.getItem(LANG_KEY) || 'en'; } catch { return 'en'; } }
       function applyLang(lang) {
         document.querySelectorAll('[data-en]').forEach((el) => {
           const text = lang === 'sq' ? el.dataset.sq : el.dataset.en;
@@ -216,54 +238,51 @@ const pageTitle = `${seoTitles[section.slug] || section.title} — Ergys Shehu`;
   <ProjectGrid albums={albums.filter((album) => albumKind(album) === section.slug || (section.slug === 'projects' && albumKind(album) !== 'weddings' && albumKind(album) !== 'portraits' && albumKind(album) !== 'fashion' && albumKind(album) !== 'films'))} />
   <dialog class="video-theater" aria-label="Video player" data-video-theater><button type="button" class="video-theater-close" data-video-close aria-label="Close video">CLOSE ×</button><div class="video-frame" data-video-frame></div></dialog>
   <script>
-    function embedVideo(wrap, opts) {
-      const id = wrap.dataset.ytId;
-      if (!id) return;
-      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      const shouldSkip = connection && connection.saveData;
-      if (shouldSkip) return;
-      const params = `autoplay=1${opts.muted ? '&mute=1' : ''}`;
+    function createVideoFrame(id, autoplay = false) {
       const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}${autoplay ? '?autoplay=1' : ''}`;
       iframe.title = 'YouTube video player';
       iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
       iframe.allowFullscreen = true;
       iframe.loading = 'lazy';
-      wrap.querySelector('.yt-thumb')?.remove();
-      wrap.prepend(iframe);
+      return iframe;
     }
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const hero = document.querySelector('.yt-hero[data-yt-id]');
-    if (hero && !reducedMotion.matches) {
-      if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              embedVideo(hero, {muted: true});
-              obs.unobserve(hero);
-            }
-          });
-        }, {rootMargin: '250px 0px'});
-        observer.observe(hero);
-      } else {
-        embedVideo(hero, {muted: true});
-      }
+    function hydrateVideo(wrap) {
+      const id = wrap.dataset.ytId;
+      if (!id) return;
+
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (connection && connection.saveData) return;
+
+      const iframe = createVideoFrame(id, true);
+      wrap.querySelector('.yt-thumb')?.remove();
+      wrap.prepend(iframe);
     }
 
     function openTheater(id) {
       const theater = document.querySelector('dialog.video-theater');
       const theaterFrame = theater?.querySelector('[data-video-frame]');
       if (!theater || !theaterFrame || !id) return;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
-      iframe.title = 'YouTube video player';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-      iframe.allowFullscreen = true;
-      iframe.loading = 'lazy';
+      const iframe = createVideoFrame(id, true);
       theaterFrame.replaceChildren(iframe);
       theater.showModal();
       document.documentElement.classList.add('lightbox-open');
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const hero = document.querySelector('.yt-hero[data-yt-id]');
+
+    if ('IntersectionObserver' in window && hero && !reducedMotion.matches) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            hydrateVideo(hero);
+            obs.unobserve(hero);
+          }
+        });
+      }, {rootMargin: '250px 0px'});
+      observer.observe(hero);
     }
 
     document.querySelectorAll('[data-yt-id]').forEach((wrap) => {
@@ -280,5 +299,3 @@ const pageTitle = `${seoTitles[section.slug] || section.title} — Ergys Shehu`;
     document.querySelector('.yt-sound-cta')?.addEventListener('click', (e) => openTheater(e.currentTarget.dataset.videoId));
   </script>
 </Layout>
-
-
