@@ -1,11 +1,22 @@
 {
-  "name": "Ergys Shehu",
+  "id": "/",
+  "name": "Ergys Shehu — Photographer, Videographer & Director",
   "short_name": "Ergys Shehu",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
-    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ],
-  "theme_color": "#30392c",
-  "background_color": "#30392c",
+  "theme_color": "#070807",
+  "background_color": "#0d0e0c",
   "display": "standalone"
 }
