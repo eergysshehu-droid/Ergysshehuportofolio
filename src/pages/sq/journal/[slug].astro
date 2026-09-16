@@ -1,0 +1,30 @@
+---
+import JournalPage from '../../journal/[slug].astro';
+
+import {
+  journal
+} from '../../../lib/journal';
+
+export async function getStaticPaths() {
+  const posts =
+    await journal();
+
+  return posts.map(
+    post => ({
+      params: {
+        slug:
+          post.slug
+      },
+
+      props: {
+        post
+      }
+    })
+  );
+}
+
+const props =
+  Astro.props;
+---
+
+<JournalPage {...props} />
