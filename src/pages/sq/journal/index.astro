@@ -19,6 +19,11 @@ import {
 const {settings: saved} =
   await content();
 
+const savedSq =
+  saved as typeof saved & {
+    seoDescriptionSq?: string;
+  };
+
 const settings = {
   ...defaults,
   ...Object.fromEntries(
@@ -80,7 +85,7 @@ const dateLine = (
   title={`Ditari — ${settings.name}`}
   name={settings.name}
   description={
-    settings.seoDescriptionSq ||
+    savedSq.seoDescriptionSq ||
     'Arkivi editorial i Ergys Shehu për fotografi, regji, kulturë, çmime dhe punë të publikuara.'
   }
 >
