@@ -20,7 +20,8 @@ import {
 
 import {
   languageFromPath,
-  localizedPath
+  localizedPath,
+  localizedHref
 } from '../../lib/i18n';
 
 export async function getStaticPaths() {
@@ -538,7 +539,7 @@ const creativeWorkLd = {
   <a
     class="gallery-cta"
     href={
-      localizedPath(
+      localizedHref(
         '/book/#contact',
         lang
       )
