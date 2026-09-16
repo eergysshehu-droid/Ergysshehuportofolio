@@ -1,25 +1,10 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-
-import {
-  content,
-  photoUrl,
-  photoSet,
-  photoPosition
-} from '../../lib/content';
-
-import {
-  journal
-} from '../../lib/journal';
-
-import {
-  defaults
-} from '../../lib/editorial';
+import Layout from '../layouts/Layout.astro';
 
 import {
   languageFromPath,
   localizedPath
-} from '../../lib/i18n';
+} from '../lib/i18n';
 
 const lang =
   languageFromPath(
@@ -28,383 +13,61 @@ const lang =
 
 const isSq =
   lang === 'sq';
-
-const {
-  settings: saved
-} = await content();
-
-const settings = {
-  ...defaults,
-
-  ...Object.fromEntries(
-    Object.entries(
-      saved
-    ).filter(
-      (
-        [, value]
-      ) =>
-        value != null
-    )
-  )
-};
-
-const posts =
-  await journal();
-
-const formatDate = (
-  iso: string
-) =>
-  new Date(
-    iso
-  ).toLocaleDateString(
-    'en-GB',
-    {
-      day:
-        'numeric',
-
-      month:
-        'long',
-
-      year:
-        'numeric'
-    }
-  );
-
-const monthsSq = [
-  'janar',
-  'shkurt',
-  'mars',
-  'prill',
-  'maj',
-  'qershor',
-  'korrik',
-  'gusht',
-  'shtator',
-  'tetor',
-  'nëntor',
-  'dhjetor'
-];
-
-const formatDateSq = (
-  iso: string
-) => {
-  const date =
-    new Date(
-      iso
-    );
-
-  return `${date.getDate()} ${monthsSq[date.getMonth()]} ${date.getFullYear()}`;
-};
-
-const dateLine = (
-  post: {
-    category?: string;
-    categorySq?: string;
-    publishedAt: string;
-  }
-) => {
-  const categorySq =
-    post.categorySq ||
-    post.category;
-
-  return {
-    en:
-      `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
-
-    sq:
-      `${categorySq ? categorySq + ' / ' : ''}${formatDateSq(post.publishedAt)}`
-  };
-};
-
-const pageTitle =
-  isSq
-    ? `Ditari — ${settings.name}`
-    : `Journal — ${settings.name}`;
-
-const description =
-  isSq
-    ? 'Arkivi editorial i Ergys Shehu për fotografi, regji, kulturë, çmime, projekte kreative dhe punë të publikuara.'
-    : 'An editorial archive of photography, directing, cultural work, recognition, creative projects and published pieces by Ergys Shehu.';
 ---
 
 <Layout
   lang={lang}
-  title={pageTitle}
-  name={settings.name}
-  description={description}
+  title={
+    isSq
+      ? 'Faqja nuk u gjet — Ergys Shehu'
+      : 'Page not found — Ergys Shehu'
+  }
+  noindex
 >
   <section class="collection-intro">
+    <p class="kicker">
+      404
+    </p>
+
+    <h1>
+      {
+        isSq
+          ? 'Jashtë kuadrit.'
+          : 'Out of frame.'
+      }
+    </h1>
+
+    <p>
+      {
+        isSq
+          ? 'Kjo faqe nuk u gjet.'
+          : 'This page could not be found.'
+      }
+    </p>
+
     <a
-      class="back-link"
-      data-reveal
+      class="cta-row"
       href={
         localizedPath(
           '/',
           lang
         )
       }
-      data-en="← Home"
-      data-sq="← Ballina"
     >
-      {
-        isSq
-          ? '← Ballina'
-          : '← Home'
-      }
+      <span
+        class="circle-btn"
+        aria-hidden="true"
+      >
+        ↗
+      </span>
+
+      <span>
+        {
+          isSq
+            ? 'KTHEHU TE PORTOFOLI'
+            : 'BACK TO PORTFOLIO'
+        }
+      </span>
     </a>
-
-    <p
-      class="kicker"
-      data-reveal
-    >
-      <span
-        data-en="THE JOURNAL"
-        data-sq="DITARI"
-      >
-        {
-          isSq
-            ? 'DITARI'
-            : 'THE JOURNAL'
-        }
-      </span>
-
-      {' / '}
-
-      {
-        String(
-          posts.length
-        ).padStart(
-          2,
-          '0'
-        )
-      }
-
-      {' '}
-
-      <span
-        data-en="ENTRIES"
-        data-sq="SHKRIME"
-      >
-        {
-          isSq
-            ? 'SHKRIME'
-            : 'ENTRIES'
-        }
-      </span>
-    </p>
-
-    <h1
-      data-reveal
-      data-en="Journal."
-      data-sq="Ditari."
-    >
-      {
-        isSq
-          ? 'Ditari.'
-          : 'Journal.'
-      }
-    </h1>
-
-    <p
-      data-reveal
-      data-en="Photography, directing, recognition and published work — the archive behind the portfolio."
-      data-sq="Fotografi, regji, njohje dhe punë e publikuar — arkivi pas portofolit."
-    >
-      {
-        isSq
-          ? 'Fotografi, regji, njohje dhe punë e publikuar — arkivi pas portofolit.'
-          : 'Photography, directing, recognition and published work — the archive behind the portfolio.'
-      }
-    </p>
-  </section>
-
-  <section class="journal-list">
-    {
-      posts.length
-        ? posts.map(
-            post => {
-              const date =
-                dateLine(
-                  post
-                );
-
-              const title =
-                isSq
-                  ? (
-                      post.titleSq ||
-                      post.title
-                    )
-                  : post.title;
-
-              const excerpt =
-                isSq
-                  ? (
-                      post.excerptSq ||
-                      post.excerpt
-                    )
-                  : post.excerpt;
-
-              const coverAlt =
-                isSq
-                  ? (
-                      post.cover?.altSq ||
-                      post.cover?.alt ||
-                      title
-                    )
-                  : (
-                      post.cover?.alt ||
-                      title
-                    );
-
-              return (
-                <a
-                  class="journal-card"
-                  data-reveal
-                  href={
-                    localizedPath(
-                      `/journal/${post.slug}/`,
-                      lang
-                    )
-                  }
-                >
-                  {
-                    post.cover &&
-                    photoUrl(
-                      post.cover
-                    ) && (
-                      <div
-                        class="journal-card-image"
-                        data-image-reveal
-                        style={`--focal-point:${photoPosition(post.cover)}`}
-                      >
-                        <img
-                          src={
-                            photoUrl(
-                              post.cover,
-                              900
-                            )
-                          }
-                          srcset={
-                            photoSet(
-                              post.cover
-                            )
-                          }
-                          sizes="(max-width:700px) 90vw, 42vw"
-                          width={
-                            post.cover
-                              .width
-                          }
-                          height={
-                            post.cover
-                              .height
-                          }
-                          alt={
-                            coverAlt
-                          }
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                    )
-                  }
-
-                  <div class="journal-card-copy">
-                    <span
-                      class="journal-date"
-                      data-en={
-                        date.en
-                      }
-                      data-sq={
-                        date.sq
-                      }
-                    >
-                      {
-                        isSq
-                          ? date.sq
-                          : date.en
-                      }
-                    </span>
-
-                    <h2
-                      data-en={
-                        post.title
-                      }
-                      data-sq={
-                        post.titleSq ||
-                        post.title
-                      }
-                    >
-                      {
-                        title
-                      }
-                    </h2>
-
-                    <p
-                      data-en={
-                        post.excerpt
-                      }
-                      data-sq={
-                        post.excerptSq ||
-                        post.excerpt
-                      }
-                    >
-                      {
-                        excerpt
-                      }
-                    </p>
-
-                    <span class="journal-read">
-                      <span
-                        data-en="Read"
-                        data-sq="Lexo"
-                      >
-                        {
-                          isSq
-                            ? 'Lexo'
-                            : 'Read'
-                        }
-                      </span>
-
-                      {' '}
-
-                      <span aria-hidden="true">
-                        ↗
-                      </span>
-                    </span>
-                  </div>
-                </a>
-              );
-            }
-          )
-        : (
-          <div
-            class="collection-empty"
-            data-reveal
-          >
-            <p
-              class="kicker"
-              data-en="COMING SOON"
-              data-sq="SË SHPEJTI"
-            >
-              {
-                isSq
-                  ? 'SË SHPEJTI'
-                  : 'COMING SOON'
-              }
-            </p>
-
-            <h2
-              data-en="The first entry is on its way."
-              data-sq="Shkrimi i parë po vjen së shpejti."
-            >
-              {
-                isSq
-                  ? 'Shkrimi i parë po vjen së shpejti.'
-                  : 'The first entry is on its way.'
-              }
-            </h2>
-          </div>
-        )
-    }
   </section>
 </Layout>
