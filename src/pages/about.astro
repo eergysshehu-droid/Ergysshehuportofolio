@@ -17,7 +17,8 @@ import {
 
 import {
   languageFromPath,
-  localizedPath
+  localizedPath,
+  localizedHref
 } from '../lib/i18n';
 
 const {
@@ -148,6 +149,7 @@ const profilePageLd = {
           ? (
               settings.bioSq ||
               settings.bio ||
+              defaults.bioSq ||
               defaults.bio
             )
           : (
@@ -200,22 +202,44 @@ const profilePageLd = {
       }
 
       <p class="kicker">
-        ALBANIA / WORLDWIDE
+        {
+          isSq
+            ? 'SHQIPËRI / NDËRKOMBËTARISHT'
+            : 'ALBANIA / WORLDWIDE'
+        }
       </p>
 
       <p>
-        Photography
-        <br/>
-        Film & creative direction
-        <br/>
-        Painting & decorative arts
-        <br/>
-        Cultural curation
+        {
+          isSq
+            ? (
+              <>
+                Fotografi
+                <br/>
+                Film & drejtim kreativ
+                <br/>
+                Pikturë & arte dekorative
+                <br/>
+                Kurim kulturor
+              </>
+            )
+            : (
+              <>
+                Photography
+                <br/>
+                Film & creative direction
+                <br/>
+                Painting & decorative arts
+                <br/>
+                Cultural curation
+              </>
+            )
+        }
       </p>
 
       <a
         href={
-          localizedPath(
+          localizedHref(
             '/book/#contact',
             lang
           )
@@ -232,7 +256,7 @@ const profilePageLd = {
     <div data-reveal>
       <details
         class="bio-language"
-        open
+        open={!isSq}
       >
         <summary>
           English <span>EN</span>
@@ -246,7 +270,10 @@ const profilePageLd = {
         </p>
       </details>
 
-      <details class="bio-language">
+      <details
+        class="bio-language"
+        open={isSq}
+      >
         <summary>
           Shqip <span>SQ</span>
         </summary>
@@ -261,8 +288,16 @@ const profilePageLd = {
 
       <blockquote>
         “{
-          settings.artistQuote ||
-          biography.quote
+          isSq
+            ? (
+                settings.artistQuoteSq ||
+                settings.artistQuote ||
+                biography.quote
+              )
+            : (
+                settings.artistQuote ||
+                biography.quote
+              )
         }”
 
         <cite>
@@ -276,7 +311,11 @@ const profilePageLd = {
             2017
           </span>
 
-          Founded ALERDIGITALMEDIA
+          {
+            isSq
+              ? 'Themeloi ALERDIGITALMEDIA'
+              : 'Founded ALERDIGITALMEDIA'
+          }
         </p>
 
         <p>
@@ -314,7 +353,11 @@ const profilePageLd = {
                       KULT 360
                     </span>
 
-                    Executive Director ↗
+                    {
+                      isSq
+                        ? 'Drejtor Ekzekutiv ↗'
+                        : 'Executive Director ↗'
+                    }
                   </a>
                 )
               : (
@@ -323,7 +366,11 @@ const profilePageLd = {
                       KULT 360
                     </span>
 
-                    Executive Director
+                    {
+                      isSq
+                        ? 'Drejtor Ekzekutiv'
+                        : 'Executive Director'
+                    }
                   </>
                 )
           }
