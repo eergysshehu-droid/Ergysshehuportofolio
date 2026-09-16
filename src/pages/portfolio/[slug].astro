@@ -103,6 +103,36 @@ const credits =
       )
     : album.credits;
 
+const seoDescription =
+  description ||
+  (
+    isSq
+      ? `${title} — projekt ${
+          category ||
+          'fotografie dhe video'
+        } nga Ergys Shehu${
+          location
+            ? ` në ${location}`
+            : ' në Shqipëri'
+        }${
+          album.year
+            ? `, ${album.year}`
+            : ''
+        }.`
+      : `${title} — ${
+          category ||
+          'photography and video'
+        } project by Ergys Shehu${
+          location
+            ? ` in ${location}`
+            : ' in Albania'
+        }${
+          album.year
+            ? `, ${album.year}`
+            : ''
+        }.`
+  );
+
 const rows =
   paceGallery(
     (
@@ -125,6 +155,24 @@ const pagePath =
 const pageUrl =
   new URL(
     pagePath,
+    'https://ergysshehu.com'
+  ).href;
+
+const projectsUrl =
+  new URL(
+    localizedPath(
+      '/projects/',
+      lang
+    ),
+    'https://ergysshehu.com'
+  ).href;
+
+const homeUrl =
+  new URL(
+    localizedPath(
+      '/',
+      lang
+    ),
     'https://ergysshehu.com'
   ).href;
 
@@ -152,7 +200,9 @@ const projectImages = [
     (
       value
     ): value is string =>
-      Boolean(value)
+      Boolean(
+        value
+      )
   )
   .filter(
     (
@@ -266,13 +316,69 @@ const creativeWorkLd = {
       }
     : {})
 };
+
+const breadcrumbLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'BreadcrumbList',
+
+  itemListElement: [
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        1,
+
+      name:
+        isSq
+          ? 'Ballina'
+          : 'Home',
+
+      item:
+        homeUrl
+    },
+
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        2,
+
+      name:
+        isSq
+          ? 'Projektet'
+          : 'Projects',
+
+      item:
+        projectsUrl
+    },
+
+    {
+      '@type':
+        'ListItem',
+
+      position:
+        3,
+
+      name:
+        title,
+
+      item:
+        pageUrl
+    }
+  ]
+};
 ---
 
 <Layout
   lang={lang}
-  title={`${title} — ${settings.name || 'Ergys Shehu'}`}
+  title={`${title} | ${settings.name || 'Ergys Shehu'}`}
   name={settings.name}
-  description={description}
+  description={seoDescription}
   image={coverUrl}
 >
   <script
@@ -281,6 +387,16 @@ const creativeWorkLd = {
     set:html={
       JSON.stringify(
         creativeWorkLd
+      )
+    }
+  />
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={
+      JSON.stringify(
+        breadcrumbLd
       )
     }
   />
