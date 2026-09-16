@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Lightbox from '../../components/Lightbox.astro';
+
 import {
   content,
   photoUrl,
@@ -17,18 +18,30 @@ import {
   WEBSITE_ID
 } from '../../lib/editorial';
 
-export async function getStaticPaths() {
-  const {albums, settings} = await content();
+import {
+  languageFromPath,
+  localizedPath
+} from '../../lib/i18n';
 
-  return albums.map(album => ({
-    params: {
-      slug: album.slug
-    },
-    props: {
-      album,
-      settings
-    }
-  }));
+export async function getStaticPaths() {
+  const {
+    albums,
+    settings
+  } = await content();
+
+  return albums.map(
+    album => ({
+      params: {
+        slug:
+          album.slug
+      },
+
+      props: {
+        album,
+        settings
+      }
+    })
+  );
 }
 
 interface Props {
@@ -36,86 +49,218 @@ interface Props {
   settings: Settings;
 }
 
-const {album, settings} = Astro.props;
+const {
+  album,
+  settings
+} = Astro.props;
 
-const rows = paceGallery(
-  (album.photos || [])
-    .filter(photo => photoUrl(photo))
-);
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
+const title =
+  isSq
+    ? (
+        album.titleSq ||
+        album.title
+      )
+    : album.title;
+
+const description =
+  isSq
+    ? (
+        album.descriptionSq ||
+        album.description
+      )
+    : album.description;
+
+const category =
+  isSq
+    ? (
+        album.categorySq ||
+        album.category
+      )
+    : album.category;
+
+const location =
+  isSq
+    ? (
+        album.locationSq ||
+        album.location
+      )
+    : album.location;
+
+const credits =
+  isSq
+    ? (
+        album.creditsSq ||
+        album.credits
+      )
+    : album.credits;
+
+const rows =
+  paceGallery(
+    (
+      album.photos ||
+      []
+    ).filter(
+      photo =>
+        photoUrl(
+          photo
+        )
+    )
+  );
+
+const pagePath =
+  localizedPath(
+    `/portfolio/${album.slug}/`,
+    lang
+  );
 
 const pageUrl =
-  `https://ergysshehu.com/portfolio/${album.slug}/`;
+  new URL(
+    pagePath,
+    'https://ergysshehu.com'
+  ).href;
 
 const coverUrl =
-  photoUrl(album.cover, 1800);
+  photoUrl(
+    album.cover,
+    1800
+  );
 
 const projectImages = [
   coverUrl,
-  ...(album.photos || [])
-    .map(photo => photoUrl(photo, 1800))
+
+  ...(
+    album.photos ||
+    []
+  ).map(
+    photo =>
+      photoUrl(
+        photo,
+        1800
+      )
+  )
 ]
   .filter(
-    (value): value is string =>
+    (
+      value
+    ): value is string =>
       Boolean(value)
   )
   .filter(
-    (value, index, array) =>
-      array.indexOf(value) === index
+    (
+      value,
+      index,
+      array
+    ) =>
+      array.indexOf(
+        value
+      ) ===
+      index
   )
-  .slice(0, 20);
+  .slice(
+    0,
+    20
+  );
 
 const creativeWorkLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CreativeWork',
-  '@id': `${pageUrl}#creativework`,
-  url: pageUrl,
-  name: album.title,
-  ...(album.description
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'CreativeWork',
+
+  '@id':
+    `${pageUrl}#creativework`,
+
+  url:
+    pageUrl,
+
+  name:
+    title,
+
+  inLanguage:
+    lang,
+
+  ...(description
     ? {
-        description: album.description
+        description
       }
     : {}),
+
   ...(projectImages.length
     ? {
-        image: projectImages
+        image:
+          projectImages
       }
     : {}),
+
   creator: {
-    '@id': PERSON_ID
+    '@id':
+      PERSON_ID
   },
+
   author: {
-    '@id': PERSON_ID
+    '@id':
+      PERSON_ID
   },
+
   isPartOf: {
-    '@id': WEBSITE_ID
+    '@id':
+      WEBSITE_ID
   },
-  ...(album.category || album.kind
+
+  ...(category ||
+  album.kind
     ? {
         genre:
-          album.category ||
+          category ||
           album.kind
       }
     : {}),
-  ...(album.location
+
+  ...(location
     ? {
         contentLocation: {
-          '@type': 'Place',
-          name: album.location
+          '@type':
+            'Place',
+
+          name:
+            location
         }
       }
     : {}),
+
   ...(album.year
     ? {
         dateCreated:
-          String(album.year)
+          String(
+            album.year
+          )
       }
     : {}),
-  ...(safeUrl(album.videoUrl)
+
+  ...(safeUrl(
+    album.videoUrl
+  )
     ? {
         associatedMedia: {
-          '@type': 'VideoObject',
-          url: safeUrl(album.videoUrl),
-          name: album.title
+          '@type':
+            'VideoObject',
+
+          url:
+            safeUrl(
+              album.videoUrl
+            ),
+
+          name:
+            title
         }
       }
     : {})
@@ -123,24 +268,38 @@ const creativeWorkLd = {
 ---
 
 <Layout
-  title={`${album.title} — ${settings.name || 'Ergys Shehu'}`}
+  lang={lang}
+  title={`${title} — ${settings.name || 'Ergys Shehu'}`}
   name={settings.name}
-  description={album.description}
+  description={description}
   image={coverUrl}
 >
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(creativeWorkLd)}
+    set:html={
+      JSON.stringify(
+        creativeWorkLd
+      )
+    }
   />
 
   <section class="collection-intro">
     <a
       class="back-link"
       data-reveal
-      href="/projects/"
+      href={
+        localizedPath(
+          '/projects/',
+          lang
+        )
+      }
     >
-      ← All projects
+      {
+        isSq
+          ? '← Të gjitha projektet'
+          : '← All projects'
+      }
     </a>
 
     <p
@@ -149,36 +308,46 @@ const creativeWorkLd = {
     >
       {
         [
-          album.category,
-          album.location,
+          category,
+          location,
           album.year
         ]
-          .filter(Boolean)
-          .join(' / ')
+          .filter(
+            Boolean
+          )
+          .join(
+            ' / '
+          )
       }
     </p>
 
     <h1 data-reveal>
-      {album.title}
+      {title}
     </h1>
 
     {
-      album.description && (
+      description && (
         <p
           class="bio"
           data-reveal
         >
-          {album.description}
+          {description}
         </p>
       )
     }
 
     {
-      safeUrl(album.videoUrl) && (
+      safeUrl(
+        album.videoUrl
+      ) && (
         <a
           class="cta-row video-link"
           data-reveal
-          href={safeUrl(album.videoUrl)}
+          href={
+            safeUrl(
+              album.videoUrl
+            )
+          }
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -190,19 +359,23 @@ const creativeWorkLd = {
           </span>
 
           <span>
-            WATCH FILM
+            {
+              isSq
+                ? 'SHIKO VIDEON'
+                : 'WATCH FILM'
+            }
           </span>
         </a>
       )
     }
 
     {
-      album.credits && (
+      credits && (
         <p
           class="credits"
           data-reveal
         >
-          {album.credits}
+          {credits}
         </p>
       )
     }
@@ -210,119 +383,172 @@ const creativeWorkLd = {
 
   <section
     class="gallery collection-body"
-    aria-label={album.title}
+    aria-label={title}
   >
     {
-      rows.map((row, ri) => (
-        <div
-          class:list={[
-            `row-${row.type}`,
-            row.align &&
-              `align-${row.align}`
-          ]}
-        >
-          {
-            row.items.map(
-              (photo, pi) => {
-                const isFirst =
-                  ri === 0 &&
-                  pi === 0;
+      rows.map(
+        (
+          row,
+          ri
+        ) => (
+          <div
+            class:list={[
+              `row-${row.type}`,
 
-                return (
-                  <figure data-reveal>
-                    <a
-                      href={photoUrl(
-                        photo,
-                        2400
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Open photograph: ${photo.alt || album.title}`}
-                    >
-                      <div
-                        data-image-reveal
-                        style={
-                          row.type === 'full'
-                            ? `--focal-point:${photoPosition(photo)}`
-                            : undefined
+              row.align &&
+                `align-${row.align}`
+            ]}
+          >
+            {
+              row.items.map(
+                (
+                  photo,
+                  pi
+                ) => {
+                  const isFirst =
+                    ri === 0 &&
+                    pi === 0;
+
+                  const alt =
+                    isSq
+                      ? (
+                          photo.altSq ||
+                          photo.alt ||
+                          title
+                        )
+                      : (
+                          photo.alt ||
+                          title
+                        );
+
+                  const caption =
+                    isSq
+                      ? (
+                          photo.captionSq ||
+                          photo.caption
+                        )
+                      : photo.caption;
+
+                  return (
+                    <figure data-reveal>
+                      <a
+                        href={
+                          photoUrl(
+                            photo,
+                            2400
+                          )
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={
+                          isSq
+                            ? `Hap fotografinë: ${alt}`
+                            : `Open photograph: ${alt}`
                         }
                       >
-                        <img
-                          src={photoUrl(
-                            photo,
-                            row.type === 'full'
-                              ? 2400
-                              : 1800
-                          )}
-                          srcset={photoSet(photo)}
-                          sizes={
-                            row.type === 'full'
-                              ? '100vw'
-                              : row.type === 'pair'
-                                ? '(max-width:700px) 90vw, 44vw'
-                                : '(max-width:700px) 90vw, 60vw'
-                          }
-                          width={photo.width}
-                          height={photo.height}
-                          alt={
-                            photo.alt ||
-                            album.title
-                          }
-                          loading={
-                            isFirst
-                              ? 'eager'
-                              : 'lazy'
-                          }
-                          fetchpriority={
-                            isFirst
-                              ? 'high'
+                        <div
+                          data-image-reveal
+                          style={
+                            row.type ===
+                            'full'
+                              ? `--focal-point:${photoPosition(photo)}`
                               : undefined
                           }
-                          decoding={
-                            isFirst
-                              ? 'sync'
-                              : 'async'
-                          }
-                        />
-                      </div>
-                    </a>
+                        >
+                          <img
+                            src={
+                              photoUrl(
+                                photo,
+                                row.type ===
+                                  'full'
+                                  ? 2400
+                                  : 1800
+                              )
+                            }
+                            srcset={
+                              photoSet(
+                                photo
+                              )
+                            }
+                            sizes={
+                              row.type ===
+                                'full'
+                                ? '100vw'
+                                : row.type ===
+                                    'pair'
+                                  ? '(max-width:700px) 90vw, 44vw'
+                                  : '(max-width:700px) 90vw, 60vw'
+                            }
+                            width={
+                              photo.width
+                            }
+                            height={
+                              photo.height
+                            }
+                            alt={alt}
+                            loading={
+                              isFirst
+                                ? 'eager'
+                                : 'lazy'
+                            }
+                            fetchpriority={
+                              isFirst
+                                ? 'high'
+                                : undefined
+                            }
+                            decoding={
+                              isFirst
+                                ? 'sync'
+                                : 'async'
+                            }
+                          />
+                        </div>
+                      </a>
 
-                    {
-                      (
-                        photo.caption ||
-                        photo.credit
-                      ) && (
-                        <figcaption>
-                          {photo.caption}
+                      {
+                        (
+                          caption ||
+                          photo.credit
+                        ) && (
+                          <figcaption>
+                            {caption}
 
-                          {
-                            photo.credit && (
-                              <span>
-                                {' '}
-                                © {photo.credit}
-                              </span>
-                            )
-                          }
-                        </figcaption>
-                      )
-                    }
-                  </figure>
-                );
-              }
-            )
-          }
-        </div>
-      ))
+                            {
+                              photo.credit && (
+                                <span>
+                                  {' '}
+                                  © {photo.credit}
+                                </span>
+                              )
+                            }
+                          </figcaption>
+                        )
+                      }
+                    </figure>
+                  );
+                }
+              )
+            }
+          </div>
+        )
+      )
     }
   </section>
 
   <a
     class="gallery-cta"
-    href="/book/#contact"
-    data-en="Book now ↗"
-    data-sq="Rezervo ↗"
+    href={
+      localizedPath(
+        '/book/#contact',
+        lang
+      )
+    }
   >
-    Book now ↗
+    {
+      isSq
+        ? 'Rezervo ↗'
+        : 'Book now ↗'
+    }
   </a>
 
   <Lightbox/>
