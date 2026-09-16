@@ -2,10 +2,28 @@
 import '../styles/portfolio.css';
 import {defaults,PERSON_ID,WEBSITE_ID,KULT360_ID} from '../lib/editorial';
 import SocialIcons from '../components/SocialIcons.astro';
-interface Props {title?:string;description?:string;name?:string;home?:boolean;image?:string;noindex?:boolean}
-const {title='Ergys Shehu — Photographer & Director | Albania',description=defaults.seoDescription,name=defaults.name,home=false,image='/images/ergys-shehu-logo.png',noindex=false}=Astro.props;
+
+interface Props {
+  title?:string;
+  description?:string;
+  name?:string;
+  home?:boolean;
+  image?:string;
+  noindex?:boolean;
+}
+
+const {
+  title='Ergys Shehu — Photographer & Director | Albania',
+  description=defaults.seoDescription,
+  name=defaults.name,
+  home=false,
+  image='/images/ergys-shehu-logo.png',
+  noindex=false
+}=Astro.props;
+
 const pageUrl=Astro.site?new URL(Astro.url.pathname,Astro.site):undefined;
 const imageUrl=Astro.site?new URL(image,Astro.site):undefined;
+
 // PERSON_ID/WEBSITE_ID/KULT360_ID come from lib/editorial.ts — a single
 // permanent id per entity, reused everywhere it's referenced (here and in
 // about.astro's ProfilePage) so every page's structured data resolves to
@@ -21,296 +39,979 @@ const personLd={
   jobTitle:'Photographer & Director',
   description:defaults.seoDescription,
   address:{'@type':'PostalAddress',addressCountry:'AL'},
-  sameAs:[defaults.instagram,defaults.linkedin,defaults.facebook,defaults.youtube].filter(Boolean),
+  sameAs:[
+    defaults.instagram,
+    defaults.linkedin,
+    defaults.facebook,
+    defaults.youtube
+  ].filter(Boolean),
   worksFor:{'@id':KULT360_ID},
   ...(imageUrl?{image:imageUrl.href}:{}),
 };
-const kult360Ld={'@context':'https://schema.org','@type':'Organization','@id':KULT360_ID,name:'Kult 360 Foundation',url:defaults.kult360};
-const websiteLd={'@context':'https://schema.org','@type':'WebSite','@id':WEBSITE_ID,name:'Ergys Shehu',url:'https://ergysshehu.com/',description:defaults.seoDescription,inLanguage:'en',publisher:{'@id':PERSON_ID}};
-const webPageLd={'@context':'https://schema.org','@type':'WebPage','@id':pageUrl?pageUrl.href+'#webpage':undefined,url:pageUrl?.href,name:title,isPartOf:{'@id':WEBSITE_ID},about:{'@id':PERSON_ID}};
+
+const kult360Ld={
+  '@context':'https://schema.org',
+  '@type':'Organization',
+  '@id':KULT360_ID,
+  name:'Kult 360 Foundation',
+  url:defaults.kult360
+};
+
+const websiteLd={
+  '@context':'https://schema.org',
+  '@type':'WebSite',
+  '@id':WEBSITE_ID,
+  name:'Ergys Shehu',
+  url:'https://ergysshehu.com/',
+  description:defaults.seoDescription,
+  inLanguage:['en','sq'],
+  publisher:{'@id':PERSON_ID}
+};
+
+const webPageLd={
+  '@context':'https://schema.org',
+  '@type':'WebPage',
+  '@id':pageUrl?pageUrl.href+'#webpage':undefined,
+  url:pageUrl?.href,
+  name:title,
+  isPartOf:{'@id':WEBSITE_ID},
+  about:{'@id':PERSON_ID}
+};
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/>{noindex && <meta name="robots" content="noindex,nofollow"/>}<link rel="icon" href="/favicon.ico" sizes="32x32"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png"/><link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png"/><link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/><link rel="manifest" href="/site.webmanifest"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>{pageUrl && <link rel="canonical" href={pageUrl}/>}<meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta property="og:site_name" content="Ergys Shehu"/><meta property="og:locale" content="en_US"/>{pageUrl && <meta property="og:url" content={pageUrl}/>}{imageUrl && <meta property="og:image" content={imageUrl}/>}{imageUrl && <meta property="og:image:alt" content={title}/>}<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>{imageUrl && <meta name="twitter:image" content={imageUrl}/>}<script type="application/ld+json" is:inline set:html={JSON.stringify(personLd)}/><script type="application/ld+json" is:inline set:html={JSON.stringify(kult360Ld)}/><script type="application/ld+json" is:inline set:html={JSON.stringify(websiteLd)}/>{pageUrl && <script type="application/ld+json" is:inline set:html={JSON.stringify(webPageLd)}/>}</head>
-<body class:list={[{'is-home':home}]}><a class="skip" href="#main" data-en="Skip to content" data-sq="Kalo te përmbajtja">Skip to content</a><div class="scroll-progress" aria-hidden="true"></div><header class="site-header"><a class="ergys-wordmark" href="/" aria-label={name+' home'}><span class="ergys-wordmark-strong">ERGYS</span><span class="ergys-wordmark-light">SHEHU</span></a><nav class="desktop-nav" aria-label="Primary"><a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a><a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a><a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a><a href="/films/" data-en="Motion" data-sq="Video">Motion</a><a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a><a href="/about/" data-en="About" data-sq="Rreth">About</a><a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a><a class="nav-book" href="/book/#contact" data-en="Book now ↗" data-sq="Rezervo ↗">Book now ↗</a><div class="language-switch" data-active="en" role="group" aria-label="Language / Gjuha"><button type="button" data-lang="en" class="is-active" aria-pressed="true">EN</button><button type="button" data-lang="sq" aria-pressed="false">SQ</button></div></nav><details class="mobile-menu"><summary aria-label="Open navigation"><span class="hamburger"><i></i><i></i><i></i></span></summary><div class="mobile-menu-screen"><div class="mobile-menu-head"><a class="mobile-menu-brand" href="/" aria-label={name+' home'}><span class="mobile-menu-brand-strong">ERGYS</span><span class="mobile-menu-brand-light">SHEHU</span></a><button type="button" class="mobile-menu-close" data-menu-close aria-label="Close navigation">✕</button></div><nav aria-label="Mobile navigation"><a href="/#selected" data-en="Photography" data-sq="Fotografi">Photography</a><a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a><a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a><a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a><a href="/films/" data-en="Motion" data-sq="Video">Motion</a><a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a><a href="/about/" data-en="About" data-sq="Rreth">About</a><a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a><a href="/book/#contact" data-en="Contact" data-sq="Kontakt">Contact</a></nav><div class="mobile-menu-footer"><div class="language-switch" data-active="en" role="group" aria-label="Language / Gjuha"><button type="button" data-lang="en" class="is-active" aria-pressed="true">EN</button><button type="button" data-lang="sq" aria-pressed="false">SQ</button></div><a class="mobile-book" href="/book/#contact" data-en="Book now ↗" data-sq="Rezervo ↗">Book now ↗</a><div class="mobile-footer-row"><SocialIcons class="mobile-social"/><div class="mobile-location"><span data-en="Albania" data-sq="Shqipëri">Albania</span><span data-en="Available worldwide" data-sq="I disponueshëm në mbarë botën">Available worldwide</span></div></div></div></div></details></header>
-<main id="main"><slot/></main><footer><div class="footer-row"><a href="/" class="footer-name" data-reveal>{name}</a><SocialIcons class="footer-social"/><a class="footer-contact" href="/book/#contact" data-reveal data-en="CONTACT ↗" data-sq="KONTAKT ↗">CONTACT ↗</a></div><span data-reveal data-en={`© ${new Date().getFullYear()} ERGYS SHEHU · ALL RIGHTS RESERVED`} data-sq={`© ${new Date().getFullYear()} ERGYS SHEHU · TË GJITHA TË DREJTAT TË REZERVUARA`}>© {new Date().getFullYear()} ERGYS SHEHU · ALL RIGHTS RESERVED</span><a href="#main" data-reveal data-en="BACK TO TOP ↑" data-sq="KTHEHU LART ↑">BACK TO TOP ↑</a></footer>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>{title}</title>
+  <meta name="description" content={description}/>
+
+  <meta
+    name="robots"
+    content={noindex?'noindex,nofollow':'index,follow,max-image-preview:large'}
+  />
+
+  <link rel="icon" href="/favicon.ico" sizes="32x32"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png"/>
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png"/>
+  <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  {pageUrl && <link rel="canonical" href={pageUrl}/>}
+
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Ergys Shehu"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:locale:alternate" content="sq_AL"/>
+
+  {pageUrl && <meta property="og:url" content={pageUrl}/>}
+  {imageUrl && <meta property="og:image" content={imageUrl}/>}
+  {imageUrl && <meta property="og:image:alt" content={title}/>}
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={title}/>
+  <meta name="twitter:description" content={description}/>
+  {imageUrl && <meta name="twitter:image" content={imageUrl}/>}
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(personLd)}
+  />
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(kult360Ld)}
+  />
+
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(websiteLd)}
+  />
+
+  {
+    pageUrl && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(webPageLd)}
+      />
+    )
+  }
+</head>
+
+<body class:list={[{'is-home':home}]}>
+  <a
+    class="skip"
+    href="#main"
+    data-en="Skip to content"
+    data-sq="Kalo te përmbajtja"
+  >
+    Skip to content
+  </a>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a
+      class="ergys-wordmark"
+      href="/"
+      aria-label={name+' home'}
+    >
+      <span class="ergys-wordmark-strong">ERGYS</span>
+      <span class="ergys-wordmark-light">SHEHU</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a>
+      <a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a>
+      <a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a>
+      <a href="/films/" data-en="Motion" data-sq="Video">Motion</a>
+      <a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a>
+      <a href="/about/" data-en="About" data-sq="Rreth">About</a>
+      <a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a>
+
+      <a
+        class="nav-book"
+        href="/book/#contact"
+        data-en="Book now ↗"
+        data-sq="Rezervo ↗"
+      >
+        Book now ↗
+      </a>
+
+      <div
+        class="language-switch"
+        data-active="en"
+        role="group"
+        aria-label="Language / Gjuha"
+      >
+        <button
+          type="button"
+          data-lang="en"
+          class="is-active"
+          aria-pressed="true"
+        >
+          EN
+        </button>
+
+        <button
+          type="button"
+          data-lang="sq"
+          aria-pressed="false"
+        >
+          SQ
+        </button>
+      </div>
+    </nav>
+
+    <details class="mobile-menu">
+      <summary aria-label="Open navigation">
+        <span class="hamburger">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </summary>
+
+      <div class="mobile-menu-screen">
+        <div class="mobile-menu-head">
+          <a
+            class="mobile-menu-brand"
+            href="/"
+            aria-label={name+' home'}
+          >
+            <span class="mobile-menu-brand-strong">ERGYS</span>
+            <span class="mobile-menu-brand-light">SHEHU</span>
+          </a>
+
+          <button
+            type="button"
+            class="mobile-menu-close"
+            data-menu-close
+            aria-label="Close navigation"
+          >
+            ✕
+          </button>
+        </div>
+
+        <nav aria-label="Mobile navigation">
+          <a href="/#selected" data-en="Photography" data-sq="Fotografi">Photography</a>
+          <a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a>
+          <a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a>
+          <a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a>
+          <a href="/films/" data-en="Motion" data-sq="Video">Motion</a>
+          <a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a>
+          <a href="/about/" data-en="About" data-sq="Rreth">About</a>
+          <a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a>
+          <a href="/book/#contact" data-en="Contact" data-sq="Kontakt">Contact</a>
+        </nav>
+
+        <div class="mobile-menu-footer">
+          <div
+            class="language-switch"
+            data-active="en"
+            role="group"
+            aria-label="Language / Gjuha"
+          >
+            <button
+              type="button"
+              data-lang="en"
+              class="is-active"
+              aria-pressed="true"
+            >
+              EN
+            </button>
+
+            <button
+              type="button"
+              data-lang="sq"
+              aria-pressed="false"
+            >
+              SQ
+            </button>
+          </div>
+
+          <a
+            class="mobile-book"
+            href="/book/#contact"
+            data-en="Book now ↗"
+            data-sq="Rezervo ↗"
+          >
+            Book now ↗
+          </a>
+
+          <div class="mobile-footer-row">
+            <SocialIcons class="mobile-social"/>
+
+            <div class="mobile-location">
+              <span data-en="Albania" data-sq="Shqipëri">Albania</span>
+              <span
+                data-en="Available worldwide"
+                data-sq="I disponueshëm në mbarë botën"
+              >
+                Available worldwide
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </header>
+
+  <main id="main">
+    <slot/>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <a href="/" class="footer-name" data-reveal>{name}</a>
+
+      <SocialIcons class="footer-social"/>
+
+      <a
+        class="footer-contact"
+        href="/book/#contact"
+        data-reveal
+        data-en="CONTACT ↗"
+        data-sq="KONTAKT ↗"
+      >
+        CONTACT ↗
+      </a>
+    </div>
+
+    <span
+      data-reveal
+      data-en={`© ${new Date().getFullYear()} ERGYS SHEHU · ALL RIGHTS RESERVED`}
+      data-sq={`© ${new Date().getFullYear()} ERGYS SHEHU · TË GJITHA TË DREJTAT TË REZERVUARA`}
+    >
+      © {new Date().getFullYear()} ERGYS SHEHU · ALL RIGHTS RESERVED
+    </span>
+
+    <a
+      href="#main"
+      data-reveal
+      data-en="BACK TO TOP ↑"
+      data-sq="KTHEHU LART ↑"
+    >
+      BACK TO TOP ↑
+    </a>
+  </footer>
+
 <script>
 document.documentElement.classList.add('motion-ready');
+
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 
-// Site-wide EN/SQ toggle. Swaps any [data-en]/[data-sq] pair on the current
-// page and remembers the choice (shared across pages via one storage key).
-// Pages that haven't marked their body copy yet just keep showing English
-// there — this only guarantees the header/footer/nav translate everywhere.
+// Site-wide EN/SQ toggle.
 const LANG_KEY='site-lang';
-function currentLang(){try{return localStorage.getItem(LANG_KEY)||'en'}catch{return 'en'}}
+
+function currentLang(){
+  try{
+    return localStorage.getItem(LANG_KEY)||'en';
+  }catch{
+    return 'en';
+  }
+}
+
 function applyLang(lang:string){
   document.querySelectorAll<HTMLElement>('[data-en]').forEach(el=>{
     const text=lang==='sq'?el.dataset.sq:el.dataset.en;
     if(text!=null)el.textContent=text;
   });
+
   document.querySelectorAll('[data-en-placeholder]').forEach(el=>{
     if(!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement))return;
-    const text=lang==='sq'?el.dataset.sqPlaceholder:el.dataset.enPlaceholder;
+
+    const text=
+      lang==='sq'
+        ?el.dataset.sqPlaceholder
+        :el.dataset.enPlaceholder;
+
     if(text!=null)el.placeholder=text;
   });
-  // Rich-content blocks (journal article bodies) can't be swapped via plain
-  // textContent — they carry inline HTML (links, bold) via set:html — so
-  // instead of one element with data-en/data-sq, these render as two full
-  // sibling elements, one per language, and this just shows/hides whichever
-  // one matches. The English copy renders unhidden by default (SSR/SEO
-  // default before this script ever runs); the Albanian copy renders
-  // pre-hidden, so there's no flash of duplicated content on first paint.
+
   document.querySelectorAll<HTMLElement>('[data-lang-content]').forEach(el=>{
     el.hidden=el.dataset.langContent!==lang;
   });
+
   document.querySelectorAll('[data-lang]').forEach(btn=>{
-    btn.classList.toggle('is-active',(btn as HTMLElement).dataset.lang===lang);
-    btn.setAttribute('aria-pressed',String((btn as HTMLElement).dataset.lang===lang));
+    const button=btn as HTMLElement;
+
+    button.classList.toggle(
+      'is-active',
+      button.dataset.lang===lang
+    );
+
+    button.setAttribute(
+      'aria-pressed',
+      String(button.dataset.lang===lang)
+    );
   });
-  document.querySelectorAll<HTMLElement>('.language-switch').forEach(el=>el.dataset.active=lang);
+
+  document
+    .querySelectorAll<HTMLElement>('.language-switch')
+    .forEach(el=>{
+      el.dataset.active=lang;
+    });
+
   document.documentElement.lang=lang;
-  try{localStorage.setItem(LANG_KEY,lang)}catch{}
+
+  try{
+    localStorage.setItem(LANG_KEY,lang);
+  }catch{}
 }
+
 applyLang(currentLang());
-document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>applyLang((btn as HTMLElement).dataset.lang||'en')));
 
-// Mobile menu: close on link click, Escape, and lock body scroll while open.
-const mobileMenu=document.querySelector<HTMLDetailsElement>('.mobile-menu');
-document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>{if(mobileMenu)mobileMenu.open=false}));
-document.querySelector('[data-menu-close]')?.addEventListener('click',()=>{if(mobileMenu)mobileMenu.open=false});
-document.addEventListener('keydown',e=>{if(e.key==='Escape' && mobileMenu?.open){mobileMenu.open=false;mobileMenu.querySelector('summary')?.focus()}});
-mobileMenu?.addEventListener('toggle',()=>document.documentElement.classList.toggle('mobile-menu-open',mobileMenu.open));
+document
+  .querySelectorAll('[data-lang]')
+  .forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      applyLang(
+        (btn as HTMLElement).dataset.lang||'en'
+      );
+    });
+  });
 
-// Fixed header: hides on scroll down, reveals on scroll up, so nav is
-// always one scroll-up away instead of requiring a trip all the way back
-// to the top. On the homepage it also flips from transparent-over-hero to
-// the same solid look every other page uses once scrolled past its own
-// height, so it stays legible over whatever's underneath it further down.
-const siteHeader=document.querySelector<HTMLElement>('.site-header');
+
+// Mobile menu
+const mobileMenu=
+  document.querySelector<HTMLDetailsElement>('.mobile-menu');
+
+document
+  .querySelectorAll('.mobile-menu a')
+  .forEach(a=>{
+    a.addEventListener('click',()=>{
+      if(mobileMenu)mobileMenu.open=false;
+    });
+  });
+
+document
+  .querySelector('[data-menu-close]')
+  ?.addEventListener('click',()=>{
+    if(mobileMenu)mobileMenu.open=false;
+  });
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && mobileMenu?.open){
+    mobileMenu.open=false;
+    mobileMenu.querySelector('summary')?.focus();
+  }
+});
+
+mobileMenu?.addEventListener('toggle',()=>{
+  document.documentElement.classList.toggle(
+    'mobile-menu-open',
+    mobileMenu.open
+  );
+});
+
+
+// Fixed header
+const siteHeader=
+  document.querySelector<HTMLElement>('.site-header');
+
 if(siteHeader){
   const headerH=siteHeader.offsetHeight||90;
+
   let lastY=window.scrollY;
   let headerTicking=false;
+
   const updateHeader=()=>{
     const y=window.scrollY;
-    siteHeader.classList.toggle('is-scrolled',y>headerH);
+
+    siteHeader.classList.toggle(
+      'is-scrolled',
+      y>headerH
+    );
+
     if(!reducedMotion.matches){
-      if(y<=headerH)siteHeader.classList.remove('is-hidden');
-      else if(y>lastY)siteHeader.classList.add('is-hidden');
-      else if(y<lastY)siteHeader.classList.remove('is-hidden');
+      if(y<=headerH){
+        siteHeader.classList.remove('is-hidden');
+      }else if(y>lastY){
+        siteHeader.classList.add('is-hidden');
+      }else if(y<lastY){
+        siteHeader.classList.remove('is-hidden');
+      }
     }
+
     lastY=y;
     headerTicking=false;
   };
+
   updateHeader();
-  document.addEventListener('scroll',()=>{if(!headerTicking){requestAnimationFrame(updateHeader);headerTicking=true}},{passive:true});
+
+  document.addEventListener(
+    'scroll',
+    ()=>{
+      if(!headerTicking){
+        requestAnimationFrame(updateHeader);
+        headerTicking=true;
+      }
+    },
+    {passive:true}
+  );
 }
 
-// Section / element reveals — safe by construction: the CSS only hides content
-// once 'motion-ready' is set, and everything is force-shown after a short delay
-// regardless of scroll or observer behaviour, so nothing can stay permanently hidden.
+
+// Reveals
 if('IntersectionObserver' in window){
-  const revealTargets=document.querySelectorAll<HTMLElement>('[data-reveal],[data-image-reveal]');
+
+  const revealTargets=
+    document.querySelectorAll<HTMLElement>(
+      '[data-reveal],[data-image-reveal]'
+    );
+
   if(revealTargets.length){
-    const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}})},{threshold:0,rootMargin:'0px 0px -5% 0px'});
+
+    const io=
+      new IntersectionObserver(
+        entries=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold:0,
+          rootMargin:'0px 0px -5% 0px'
+        }
+      );
+
     revealTargets.forEach(el=>io.observe(el));
-    setTimeout(()=>revealTargets.forEach(el=>el.classList.add('is-visible')),4000);
+
+    setTimeout(
+      ()=>revealTargets.forEach(
+        el=>el.classList.add('is-visible')
+      ),
+      4000
+    );
   }
 
-  // Homepage-only: on the single-column stacked "Selected Perspective" grid,
-  // darken + blur each card as the next one physically slides up to cover
-  // it. Scoped to body.is-home and .work-section specifically — .project-
-  // grid/.project-card are shared markup with the category listing pages,
-  // which must stay in normal light, non-sticky, non-stacking layout.
-  const stackSection=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('.work-section'):null;
-  const stackGrid=stackSection?.querySelector<HTMLElement>('.project-grid') ?? null;
-  if(stackGrid && stackSection && window.matchMedia('(max-width: 700px)').matches){
-    const cards=Array.from(stackGrid.querySelectorAll<HTMLElement>('.project-card'));
+
+  // Homepage mobile stacked project cards
+  const stackSection=
+    document.body.classList.contains('is-home')
+      ?document.querySelector<HTMLElement>('.work-section')
+      :null;
+
+  const stackGrid=
+    stackSection
+      ?.querySelector<HTMLElement>('.project-grid')
+      ??null;
+
+  if(
+    stackGrid &&
+    stackSection &&
+    window.matchMedia('(max-width: 700px)').matches
+  ){
+
+    const cards=
+      Array.from(
+        stackGrid.querySelectorAll<HTMLElement>(
+          '.project-card'
+        )
+      );
+
     if(cards.length){
-      const progress=new Map<HTMLElement,number>();
-      // Custom properties only inherit downward (ancestor -> descendant),
-      // so setting them on the <img> made --stack-blur visible to the img
-      // itself (which reads its own inline style) but invisible to
-      // .project-image::after — a *sibling-ish* pseudo-element of the img,
-      // not a descendant of it — which always fell back to the static 0 on
-      // .project-card. The darkness overlay never actually appeared; only
-      // the blur (applied directly on the element carrying the property)
-      // ever worked. Setting both on .project-image itself fixes it: the
-      // img inherits --stack-blur from its parent as normal, and
-      // .project-image's own ::after now genuinely sees --stack-darkness.
-      const cardImageEls=new Map<HTMLElement,HTMLElement|null>();
-      cards.forEach(c=>{progress.set(c,0);cardImageEls.set(c,c.querySelector<HTMLElement>('.project-image'))});
 
-      // Each card keeps its own natural height (the photo's real aspect
-      // ratio at full width) rather than being stretched/cropped to fill
-      // the screen — so "how much of this card is covered" has to be
-      // measured against *that* card's own height, not a shared constant.
-      // Read once, right here, before any card has ever been sticky (the
-      // whole section is still in plain normal-flow layout at setup time,
-      // long before the user has scrolled into it) — every img already has
-      // width/height attributes, so the browser has already reserved the
-      // correct intrinsic-aspect-ratio box even if the image itself hasn't
-      // finished loading yet, and this read is accurate immediately.
-      const cardHeights=cards.map(c=>c.getBoundingClientRect().height || 1);
+      const progress=
+        new Map<HTMLElement,number>();
 
-      // Real geometric overlap, not viewport visibility: how much of the
-      // current card is physically covered by the next card's top edge
-      // sliding up over it. Deliberately does NOT read the current (being-
-      // covered) card's own live rect: a position:sticky element's
-      // getBoundingClientRect() becomes unreliable in this browser once
-      // it's actually stuck (it starts mirroring scrollY instead of
-      // reporting its real box) — with 16+ cards in one long stack, by the
-      // time you're partway down, many earlier cards are simultaneously
-      // "stuck" and this showed up as several of them reporting identical,
-      // wrong rects at once (cards going solid black unpredictably,
-      // flicker). cardHeights[i] is a cached, static number instead —
-      // nothing to re-read, nothing to go stale. Only the *next* card's top
-      // is measured live, and it's reliable precisely because it's normally
-      // not yet stuck while it's the one sliding up into view.
+      const cardImageEls=
+        new Map<HTMLElement,HTMLElement|null>();
+
+      cards.forEach(card=>{
+        progress.set(card,0);
+
+        cardImageEls.set(
+          card,
+          card.querySelector<HTMLElement>(
+            '.project-image'
+          )
+        );
+      });
+
+      const cardHeights=
+        cards.map(
+          card=>
+            card.getBoundingClientRect().height||1
+        );
+
       const DEAD_ZONE=0.12;
-      function overlapProgress(next:HTMLElement,currentHeight:number):number{
-        const nextTop=next.getBoundingClientRect().top;
-        const raw=(currentHeight-nextTop)/currentHeight;
-        const clamped=Math.max(0,Math.min(1,raw));
-        return clamped<=DEAD_ZONE?0:(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
+
+      function overlapProgress(
+        next:HTMLElement,
+        currentHeight:number
+      ):number{
+
+        const nextTop=
+          next.getBoundingClientRect().top;
+
+        const raw=
+          (currentHeight-nextTop)/
+          currentHeight;
+
+        const clamped=
+          Math.max(
+            0,
+            Math.min(1,raw)
+          );
+
+        return clamped<=DEAD_ZONE
+          ?0
+          :(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
       }
 
       let stackActive=false;
       let rafId:number|undefined;
 
       function tickStack(){
-        // All reads first, then all writes — interleaving
-        // getBoundingClientRect() with style.setProperty() per card forced a
-        // layout flush between every single card each frame (classic layout
-        // thrashing), which is what showed up as jank/flicker while
-        // scrolling through the stack.
-        const targets=cards.map((_,i)=>{
-          const nextCard=cards[i+1];
-          return nextCard?overlapProgress(nextCard,cardHeights[i]):0;
-        });
+
+        const targets=
+          cards.map((_,i)=>{
+            const nextCard=cards[i+1];
+
+            return nextCard
+              ?overlapProgress(
+                  nextCard,
+                  cardHeights[i]
+                )
+              :0;
+          });
+
         let settled=true;
+
         cards.forEach((card,i)=>{
+
           const target=targets[i];
-          const prev=progress.get(card) ?? 0;
-          // Covering up (target rising) eases in slowly; clearing (target
-          // falling) catches up fast — a gradual melt going dark, a near-
-          // instant clear coming back so re-checking a photo reads live.
-          // Was 0.10 — too slow to visibly catch up to a normal scroll
-          // gesture before the user had already moved on.
-          const speed=target>prev?0.18:0.42;
-          const next=prev+(target-prev)*speed;
+          const prev=progress.get(card)??0;
+
+          const speed=
+            target>prev
+              ?0.18
+              :0.42;
+
+          const next=
+            prev+
+            (target-prev)*speed;
+
           progress.set(card,next);
-          if(Math.abs(target-next)>0.003)settled=false;
-          const imageEl=cardImageEls.get(card);
+
+          if(
+            Math.abs(target-next)>0.003
+          ){
+            settled=false;
+          }
+
+          const imageEl=
+            cardImageEls.get(card);
+
           if(imageEl){
-            imageEl.style.setProperty('--stack-blur',(next*3.5).toFixed(2)+'px');
-            imageEl.style.setProperty('--stack-darkness',next.toFixed(3));
+
+            imageEl.style.setProperty(
+              '--stack-blur',
+              (next*3.5).toFixed(2)+'px'
+            );
+
+            imageEl.style.setProperty(
+              '--stack-darkness',
+              next.toFixed(3)
+            );
           }
         });
-        // Once every card's value has converged to its target, stop the
-        // loop — this only ever needs to run again on the next scroll tick
-        // (re-armed below), not forever while the section sits idle.
-        rafId=settled?undefined:requestAnimationFrame(tickStack);
-      }
-      function schedule(){if(rafId===undefined)rafId=requestAnimationFrame(tickStack)}
 
-      // The whole effect (rAF loop + the black body background) only runs
-      // while the stack section is near/in view — a homepage-only visual
-      // detail has no business burning a rAF slot for the rest of the
-      // visit once the user has scrolled past it.
-      const sectionIo=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          stackActive=entry.isIntersecting;
-          document.body.classList.toggle('in-stack-grid',entry.isIntersecting);
-          if(stackActive)schedule();
-        });
-      },{rootMargin:'100px 0px'});
+        rafId=
+          settled
+            ?undefined
+            :requestAnimationFrame(
+                tickStack
+              );
+      }
+
+      function schedule(){
+        if(rafId===undefined){
+          rafId=
+            requestAnimationFrame(
+              tickStack
+            );
+        }
+      }
+
+      const sectionIo=
+        new IntersectionObserver(
+          entries=>{
+
+            entries.forEach(entry=>{
+
+              stackActive=
+                entry.isIntersecting;
+
+              document.body.classList.toggle(
+                'in-stack-grid',
+                entry.isIntersecting
+              );
+
+              if(stackActive){
+                schedule();
+              }
+            });
+          },
+          {
+            rootMargin:'100px 0px'
+          }
+        );
+
       sectionIo.observe(stackSection);
-      document.addEventListener('scroll',()=>{if(stackActive)schedule()},{passive:true});
+
+      document.addEventListener(
+        'scroll',
+        ()=>{
+          if(stackActive){
+            schedule();
+          }
+        },
+        {passive:true}
+      );
     }
   }
 
-  // Homepage-only: instead of a fixed dissolve, black actually climbs up
-  // over the light filmstrip section as .work-section approaches from
-  // below — the same "physical" language as the card melt above, just
-  // applied to this one section boundary. Progress is read straight off
-  // work-section's live position (0 once it's a full screen below, 1 once
-  // it's reached the top), not eased or eased on a timer.
-  const sectionVeil=document.body.classList.contains('is-home')?document.querySelector<HTMLElement>('[data-section-veil]'):null;
-  const veilWorkSection=document.querySelector<HTMLElement>('.work-section');
-  if(sectionVeil && veilWorkSection && window.matchMedia('(max-width: 700px)').matches){
+
+  // Section veil
+  const sectionVeil=
+    document.body.classList.contains('is-home')
+      ?document.querySelector<HTMLElement>(
+          '[data-section-veil]'
+        )
+      :null;
+
+  const veilWorkSection=
+    document.querySelector<HTMLElement>(
+      '.work-section'
+    );
+
+  if(
+    sectionVeil &&
+    veilWorkSection &&
+    window.matchMedia('(max-width: 700px)').matches
+  ){
+
     let veilActive=false;
     let veilRafId:number|undefined;
+
     function updateVeil(){
-      // 0 while work-section's top sits at the bottom of the viewport
-      // (just arriving), 1 exactly once it reaches the top — ties the
-      // climb to the section's own full approach instead of saturating
-      // partway through and sitting at max for an empty scroll stretch.
-      // Written as a 0-1 scaleY (compositor-only) rather than an animated
-      // height — height is a layout property, so recalculating it every
-      // scroll frame forced a real reflow each time, unlike the card
-      // melt's blur/opacity which never touch layout at all. That extra
-      // per-frame reflow next to the stack's own rAF loop is what read as
-      // flicker/jank while scrolling through this section.
-      const wsTop=veilWorkSection!.getBoundingClientRect().top;
-      const progress=Math.max(0,Math.min(1,1-wsTop/window.innerHeight));
-      sectionVeil!.style.setProperty('--veil-p',progress.toFixed(3));
+
+      const wsTop=
+        veilWorkSection!
+          .getBoundingClientRect()
+          .top;
+
+      const progress=
+        Math.max(
+          0,
+          Math.min(
+            1,
+            1-wsTop/window.innerHeight
+          )
+        );
+
+      sectionVeil!.style.setProperty(
+        '--veil-p',
+        progress.toFixed(3)
+      );
+
       veilRafId=undefined;
     }
-    function scheduleVeil(){if(veilRafId===undefined)veilRafId=requestAnimationFrame(updateVeil)}
-    const veilIo=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{veilActive=entry.isIntersecting;if(veilActive)scheduleVeil()});
-    },{rootMargin:'300px 0px'});
-    veilIo.observe(veilWorkSection);
-    document.addEventListener('scroll',()=>{if(veilActive)scheduleVeil()},{passive:true});
+
+    function scheduleVeil(){
+      if(veilRafId===undefined){
+        veilRafId=
+          requestAnimationFrame(
+            updateVeil
+          );
+      }
+    }
+
+    const veilIo=
+      new IntersectionObserver(
+        entries=>{
+          entries.forEach(entry=>{
+
+            veilActive=
+              entry.isIntersecting;
+
+            if(veilActive){
+              scheduleVeil();
+            }
+          });
+        },
+        {
+          rootMargin:'300px 0px'
+        }
+      );
+
+    veilIo.observe(
+      veilWorkSection
+    );
+
+    document.addEventListener(
+      'scroll',
+      ()=>{
+        if(veilActive){
+          scheduleVeil();
+        }
+      },
+      {passive:true}
+    );
   }
 }
 
-// Desktop-only, fine-pointer tilt on project cards — a few px, no rotation.
-if(!reducedMotion.matches && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
-  document.querySelectorAll<HTMLElement>('.project-card').forEach(card=>{
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect();
-      const x=((e.clientX-r.left)/r.width-.5)*8;
-      const y=((e.clientY-r.top)/r.height-.5)*8;
-      card.style.setProperty('--tilt-x',x.toFixed(2)+'px');
-      card.style.setProperty('--tilt-y',y.toFixed(2)+'px');
-    });
-    card.addEventListener('pointerleave',()=>{card.style.setProperty('--tilt-x','0px');card.style.setProperty('--tilt-y','0px')});
-  });
 
-  // Grid spotlight: dim every card except the one under the pointer. Tracked
-  // per-grid with a short grace delay before clearing, so drifting through
-  // the gap between two cards doesn't flash the whole grid back to normal
-  // and immediately re-dim — that flicker is what read as "glitchy".
-  document.querySelectorAll<HTMLElement>('.project-grid').forEach(grid=>{
-    let clearTimer:number|undefined;
-    grid.addEventListener('pointerover',e=>{
-      const card=(e.target as HTMLElement).closest('.project-card');
-      if(!card)return;
-      clearTimeout(clearTimer);
-      grid.classList.add('is-spotlighting');
-      grid.querySelectorAll('.project-card').forEach(c=>c.classList.toggle('is-focused',c===card));
+// Desktop pointer tilt
+if(
+  !reducedMotion.matches &&
+  window.matchMedia(
+    '(hover: hover) and (pointer: fine)'
+  ).matches
+){
+
+  document
+    .querySelectorAll<HTMLElement>(
+      '.project-card'
+    )
+    .forEach(card=>{
+
+      card.addEventListener(
+        'pointermove',
+        e=>{
+
+          const r=
+            card.getBoundingClientRect();
+
+          const x=
+            (
+              (e.clientX-r.left)/r.width
+              -.5
+            )*8;
+
+          const y=
+            (
+              (e.clientY-r.top)/r.height
+              -.5
+            )*8;
+
+          card.style.setProperty(
+            '--tilt-x',
+            x.toFixed(2)+'px'
+          );
+
+          card.style.setProperty(
+            '--tilt-y',
+            y.toFixed(2)+'px'
+          );
+        }
+      );
+
+      card.addEventListener(
+        'pointerleave',
+        ()=>{
+
+          card.style.setProperty(
+            '--tilt-x',
+            '0px'
+          );
+
+          card.style.setProperty(
+            '--tilt-y',
+            '0px'
+          );
+        }
+      );
     });
-    grid.addEventListener('pointerleave',()=>{
-      clearTimer=window.setTimeout(()=>{
-        grid.classList.remove('is-spotlighting');
-        grid.querySelectorAll('.project-card').forEach(c=>c.classList.remove('is-focused'));
-      },220);
+
+
+  // Grid spotlight
+  document
+    .querySelectorAll<HTMLElement>(
+      '.project-grid'
+    )
+    .forEach(grid=>{
+
+      let clearTimer:number|undefined;
+
+      grid.addEventListener(
+        'pointerover',
+        e=>{
+
+          const card=
+            (e.target as HTMLElement)
+              .closest('.project-card');
+
+          if(!card)return;
+
+          clearTimeout(clearTimer);
+
+          grid.classList.add(
+            'is-spotlighting'
+          );
+
+          grid
+            .querySelectorAll(
+              '.project-card'
+            )
+            .forEach(c=>{
+              c.classList.toggle(
+                'is-focused',
+                c===card
+              );
+            });
+        }
+      );
+
+      grid.addEventListener(
+        'pointerleave',
+        ()=>{
+
+          clearTimer=
+            window.setTimeout(
+              ()=>{
+
+                grid.classList.remove(
+                  'is-spotlighting'
+                );
+
+                grid
+                  .querySelectorAll(
+                    '.project-card'
+                  )
+                  .forEach(
+                    c=>
+                      c.classList.remove(
+                        'is-focused'
+                      )
+                  );
+              },
+              220
+            );
+        }
+      );
     });
-  });
 }
 
-// Thin scroll-progress line.
-const progress=document.querySelector<HTMLElement>('.scroll-progress');
-if(progress && !reducedMotion.matches){
+
+// Scroll progress
+const progress=
+  document.querySelector<HTMLElement>(
+    '.scroll-progress'
+  );
+
+if(
+  progress &&
+  !reducedMotion.matches
+){
+
   let ticking=false;
+
   const update=()=>{
-    const doc=document.documentElement;
-    const max=doc.scrollHeight-doc.clientHeight;
-    progress.style.transform=`scaleX(${max>0?Math.min(doc.scrollTop/max,1):0})`;
+
+    const doc=
+      document.documentElement;
+
+    const max=
+      doc.scrollHeight-
+      doc.clientHeight;
+
+    progress.style.transform=
+      `scaleX(${
+        max>0
+          ?Math.min(
+              doc.scrollTop/max,
+              1
+            )
+          :0
+      })`;
+
     ticking=false;
   };
+
   update();
-  document.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});
+
+  document.addEventListener(
+    'scroll',
+    ()=>{
+
+      if(!ticking){
+
+        requestAnimationFrame(
+          update
+        );
+
+        ticking=true;
+      }
+    },
+    {passive:true}
+  );
 }
-</script></body></html>
+</script>
+
+</body>
+</html>
