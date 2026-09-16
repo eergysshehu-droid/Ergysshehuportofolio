@@ -1,220 +1,593 @@
 /* ==========================================================================
-   GLOBAL VISUAL POLISH
-   Screenshot/audit fixes without changing the underlying design language.
+   GLOBAL PRODUCTION POLISH
+   Typography, spacing, journal, awards, current work and responsive safety.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   PAGE TITLES
-   Prevent oversized headings on normal pages and long article titles.
-   -------------------------------------------------------------------------- */
-
 .collection-intro{
-  padding-top:clamp(48px,4vw,64px);
-  padding-bottom:clamp(42px,4vw,58px);
+  min-height:0!important;
+
+  padding-top:
+    clamp(
+      46px,
+      4vw,
+      64px
+    );
+
+  padding-bottom:
+    clamp(
+      40px,
+      4vw,
+      58px
+    );
 }
 
 .collection-intro h1{
-  font-size:clamp(44px,6.2vw,96px)!important;
-  line-height:1.02!important;
-  letter-spacing:-.04em;
-  max-width:1200px;
-  margin-top:18px;
-  margin-bottom:24px;
-  overflow-wrap:break-word;
-  word-break:normal;
+  max-width:
+    min(
+      1200px,
+      100%
+    );
+
+  margin:
+    18px
+    0
+    24px;
+
+  font-size:
+    clamp(
+      44px,
+      6.2vw,
+      96px
+    )!important;
+
+  line-height:
+    1.02!important;
+
+  letter-spacing:
+    -.04em;
+
+  overflow-wrap:
+    break-word;
+
+  word-break:
+    normal;
 }
 
 .collection-intro>p:not(.kicker){
-  max-width:720px;
+  max-width:
+    720px;
 }
 
-/* Journal article titles were visually overpowering the page. */
+
+/* ==========================================================================
+   JOURNAL ARTICLE
+   ========================================================================== */
 
 .journal-post .collection-intro{
-  padding-bottom:clamp(34px,3.5vw,48px);
+  padding-bottom:
+    clamp(
+      32px,
+      3.5vw,
+      48px
+    );
 }
 
 .journal-post .collection-intro h1{
-  font-size:clamp(40px,5vw,76px)!important;
-  line-height:1.04!important;
-  max-width:980px;
-  overflow-wrap:break-word;
+  max-width:
+    980px;
+
+  font-size:
+    clamp(
+      40px,
+      5vw,
+      76px
+    )!important;
+
+  line-height:
+    1.04!important;
 }
 
 .journal-post .collection-intro>p:not(.kicker){
-  max-width:760px;
+  max-width:
+    760px;
 }
 
 .journal-post-cover{
-  margin-bottom:clamp(34px,4vw,48px)!important;
+  margin-bottom:
+    clamp(
+      34px,
+      4vw,
+      48px
+    )!important;
+
+  overflow:
+    hidden;
+}
+
+.journal-post-cover img{
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    auto;
 }
 
 .journal-post-body{
-  padding-bottom:clamp(70px,7vw,100px)!important;
+  padding-bottom:
+    clamp(
+      68px,
+      7vw,
+      100px
+    )!important;
 }
 
-/* --------------------------------------------------------------------------
+
+/* ==========================================================================
    JOURNAL INDEX
-   Cleaner spacing and a stronger editorial type hierarchy.
-   -------------------------------------------------------------------------- */
+   ========================================================================== */
 
 .journal-list{
-  gap:clamp(34px,3.6vw,56px)!important;
-  padding-bottom:clamp(70px,7vw,100px)!important;
+  gap:
+    clamp(
+      34px,
+      3.6vw,
+      56px
+    )!important;
+
+  padding-bottom:
+    clamp(
+      68px,
+      7vw,
+      100px
+    )!important;
 }
 
 .journal-card{
-  min-width:0;
+  min-width:
+    0;
+}
+
+.journal-card-image{
+  overflow:
+    hidden;
+}
+
+.journal-card-image img{
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
 }
 
 .journal-card-copy{
-  padding-top:clamp(14px,1.4vw,20px);
+  min-width:
+    0;
+
+  padding-top:
+    clamp(
+      14px,
+      1.4vw,
+      20px
+    );
 }
 
 .journal-card-copy h2{
-  font-size:clamp(25px,2.2vw,34px)!important;
-  line-height:1.12!important;
-  letter-spacing:-.025em!important;
-  margin-bottom:12px!important;
-  overflow-wrap:break-word;
+  margin-bottom:
+    12px!important;
+
+  font-size:
+    clamp(
+      25px,
+      2.2vw,
+      34px
+    )!important;
+
+  line-height:
+    1.12!important;
+
+  letter-spacing:
+    -.025em!important;
+
+  overflow-wrap:
+    break-word;
 }
 
 .journal-card-copy p{
-  max-width:62ch;
-  font-size:clamp(13px,.86vw,15px)!important;
-  line-height:1.68!important;
-  margin-bottom:16px!important;
+  max-width:
+    62ch;
+
+  margin-bottom:
+    16px!important;
+
+  font-size:
+    clamp(
+      13px,
+      .86vw,
+      15px
+    )!important;
+
+  line-height:
+    1.68!important;
 }
 
 .journal-read{
-  display:inline-flex;
-  align-items:center;
-  gap:.25em;
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    .25em;
 }
 
-/* --------------------------------------------------------------------------
+
+/* ==========================================================================
    RECOGNITION / AWARDS
-   Reduce the oversized blank areas without making the section cramped.
-   -------------------------------------------------------------------------- */
+   ========================================================================== */
 
 .recognition-section{
-  padding-bottom:clamp(58px,5.5vw,82px)!important;
+  min-height:
+    0!important;
+
+  padding-bottom:
+    clamp(
+      54px,
+      5.5vw,
+      82px
+    )!important;
 }
 
 .recognition-heading{
-  padding-top:clamp(38px,4vw,56px)!important;
+  padding-top:
+    clamp(
+      36px,
+      4vw,
+      56px
+    )!important;
 }
 
 .recognition-list{
-  margin-top:clamp(22px,2.7vw,36px)!important;
+  margin-top:
+    clamp(
+      20px,
+      2.7vw,
+      36px
+    )!important;
 }
 
 .recognition-row{
-  padding:clamp(20px,2.1vw,29px) 0!important;
+  padding:
+    clamp(
+      18px,
+      2.1vw,
+      29px
+    )
+    0!important;
 }
 
-/* --------------------------------------------------------------------------
-   CURRENT / INSTAGRAM
-   Give the photographs enough breathing room so they don't read as one block.
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   CURRENT WORK / INSTAGRAM
+   ========================================================================== */
 
 .latest-section{
-  padding-top:clamp(70px,7vw,105px)!important;
-  padding-bottom:clamp(62px,6vw,90px)!important;
+  min-height:
+    0!important;
+
+  padding-top:
+    clamp(
+      64px,
+      6.5vw,
+      96px
+    )!important;
+
+  padding-bottom:
+    clamp(
+      58px,
+      6vw,
+      86px
+    )!important;
 }
 
 .latest-grid{
-  gap:clamp(8px,.8vw,14px)!important;
+  gap:
+    clamp(
+      7px,
+      .75vw,
+      13px
+    )!important;
 }
 
 .latest-card{
-  overflow:hidden;
-  background:#111;
+  overflow:
+    hidden;
+
+  background:
+    #111;
 }
 
 .latest-card img{
-  transform:scale(1.001);
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  transform:
+    scale(
+      1.001
+    );
 }
 
-/* --------------------------------------------------------------------------
-   ABOUT / GENERAL LOWER WHITESPACE
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   ABOUT / INNER PAGE LOWER SPACING
+   ========================================================================== */
 
 .biography-layout.collection-body{
-  padding-bottom:clamp(68px,7vw,105px)!important;
+  min-height:
+    0!important;
+
+  padding-bottom:
+    clamp(
+      64px,
+      6.5vw,
+      96px
+    )!important;
 }
 
 .collection-body{
-  padding-bottom:clamp(68px,7vw,100px);
+  padding-bottom:
+    clamp(
+      64px,
+      6.5vw,
+      96px
+    );
 }
 
 .bio-language:last-of-type{
-  margin-bottom:clamp(24px,3vw,42px);
+  margin-bottom:
+    clamp(
+      22px,
+      3vw,
+      40px
+    );
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVE
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   FORM STATUS
+   ========================================================================== */
+
+.form-status:not([hidden]){
+  display:
+    block;
+
+  padding:
+    12px
+    14px;
+
+  border:
+    1px solid
+    rgba(
+      244,
+      240,
+      232,
+      .16
+    );
+
+  line-height:
+    1.5;
+}
+
+.form-status[data-state="success"]{
+  border-color:
+    rgba(
+      170,
+      210,
+      175,
+      .34
+    );
+}
+
+.form-status[data-state="error"]{
+  border-color:
+    rgba(
+      230,
+      150,
+      140,
+      .36
+    );
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+:focus-visible{
+  outline:
+    2px solid
+    var(
+      --accent
+    );
+
+  outline-offset:
+    4px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:
+      auto!important;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:
+      .01ms!important;
+
+    animation-iteration-count:
+      1!important;
+
+    transition-duration:
+      .01ms!important;
+  }
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media(max-width:900px){
+  .collection-intro h1{
+    font-size:
+      clamp(
+        42px,
+        8vw,
+        72px
+      )!important;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
 
 @media(max-width:700px){
+
   .collection-intro{
-    padding-top:38px;
-    padding-bottom:38px;
+    padding-top:
+      36px;
+
+    padding-bottom:
+      36px;
   }
 
   .collection-intro h1{
-    font-size:clamp(40px,12vw,62px)!important;
-    line-height:1.02!important;
-    margin:16px 0 22px;
+    margin:
+      16px
+      0
+      21px;
+
+    font-size:
+      clamp(
+        38px,
+        11.5vw,
+        60px
+      )!important;
+
+    line-height:
+      1.03!important;
   }
 
   .journal-post .collection-intro h1{
-    font-size:clamp(36px,10vw,52px)!important;
-    line-height:1.06!important;
+    font-size:
+      clamp(
+        34px,
+        9.5vw,
+        50px
+      )!important;
+
+    line-height:
+      1.06!important;
   }
 
   .journal-list{
-    gap:42px!important;
-    padding-bottom:64px!important;
+    gap:
+      40px!important;
+
+    padding-bottom:
+      60px!important;
   }
 
   .journal-card-copy{
-    padding-top:14px;
+    padding-top:
+      13px;
   }
 
   .journal-card-copy h2{
-    font-size:26px!important;
+    font-size:
+      25px!important;
   }
 
   .recognition-section{
-    padding-bottom:54px!important;
+    padding-bottom:
+      50px!important;
   }
 
   .recognition-heading{
-    padding-top:38px!important;
+    padding-top:
+      34px!important;
   }
 
   .recognition-row{
-    padding:20px 0!important;
+    padding:
+      18px
+      0!important;
   }
 
   .latest-section{
-    padding-top:64px!important;
-    padding-bottom:58px!important;
+    padding-top:
+      58px!important;
+
+    padding-bottom:
+      54px!important;
   }
 
   .latest-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:7px!important;
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      )!important;
+
+    gap:
+      6px!important;
   }
 
   .biography-layout.collection-body{
-    padding-bottom:64px!important;
+    padding-bottom:
+      58px!important;
   }
 }
 
 @media(max-width:420px){
+
+  .collection-intro h1{
+    font-size:
+      clamp(
+        36px,
+        11vw,
+        48px
+      )!important;
+  }
+
   .latest-grid{
-    gap:5px!important;
+    gap:
+      4px!important;
   }
 }
