@@ -10,6 +10,9 @@ import {
 
 import {
   languageFromPath,
+  localizedHref,
+  localizedPath,
+  languageUrls,
   type SiteLang
 } from '../lib/i18n';
 
@@ -37,28 +40,43 @@ const {
 
 const lang: SiteLang =
   requestedLang ||
-  languageFromPath(
-    Astro.url.pathname
+  languageFromPath(Astro.url.pathname);
+
+const isSq = lang === 'sq';
+
+const pageUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : undefined;
+
+const imageUrl = Astro.site
+  ? new URL(image, Astro.site)
+  : undefined;
+
+const alternateUrls =
+  languageUrls(
+    Astro.url.pathname,
+    Astro.site
   );
 
-const isSq =
-  lang === 'sq';
+const enSwitchHref =
+  localizedPath(
+    Astro.url.pathname,
+    'en'
+  );
 
-const pageUrl =
-  Astro.site
-    ? new URL(
-        Astro.url.pathname,
-        Astro.site
-      )
-    : undefined;
+const sqSwitchHref =
+  localizedPath(
+    Astro.url.pathname,
+    'sq'
+  );
 
-const imageUrl =
-  Astro.site
-    ? new URL(
-        image,
-        Astro.site
-      )
-    : undefined;
+const href = (
+  path: string
+) =>
+  localizedHref(
+    path,
+    lang
+  );
 
 const personLd = {
   '@context':
@@ -288,6 +306,36 @@ const webPageLd = {
     )
   }
 
+  {
+    alternateUrls.en && (
+      <link
+        rel="alternate"
+        hreflang="en"
+        href={alternateUrls.en}
+      />
+    )
+  }
+
+  {
+    alternateUrls.sq && (
+      <link
+        rel="alternate"
+        hreflang="sq"
+        href={alternateUrls.sq}
+      />
+    )
+  }
+
+  {
+    alternateUrls.xDefault && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={alternateUrls.xDefault}
+      />
+    )
+  }
+
   <meta
     property="og:title"
     content={title}
@@ -447,7 +495,7 @@ const webPageLd = {
   <header class="site-header">
     <a
       class="ergys-wordmark"
-      href="/"
+      href={href('/')}
       aria-label={
         name +
         ' home'
@@ -467,7 +515,7 @@ const webPageLd = {
       aria-label="Primary"
     >
       <a
-        href="/fashion/"
+        href={href('/fashion/')}
         data-en="Fashion"
         data-sq="Modë"
       >
@@ -475,7 +523,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/portraits/"
+        href={href('/portraits/')}
         data-en="Portraits"
         data-sq="Portrete"
       >
@@ -483,7 +531,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/weddings/"
+        href={href('/weddings/')}
         data-en="Weddings"
         data-sq="Dasma"
       >
@@ -491,7 +539,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/films/"
+        href={href('/films/')}
         data-en="Motion"
         data-sq="Video"
       >
@@ -499,7 +547,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/projects/"
+        href={href('/projects/')}
         data-en="Index"
         data-sq="Indeksi"
       >
@@ -507,7 +555,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/about/"
+        href={href('/about/')}
         data-en="About"
         data-sq="Rreth"
       >
@@ -515,7 +563,7 @@ const webPageLd = {
       </a>
 
       <a
-        href="/journal/"
+        href={href('/journal/')}
         data-en="Journal"
         data-sq="Ditari"
       >
@@ -524,7 +572,7 @@ const webPageLd = {
 
       <a
         class="nav-book"
-        href="/book/#contact"
+        href={href('/book/#contact')}
         data-en="Book now ↗"
         data-sq="Rezervo ↗"
       >
@@ -540,6 +588,7 @@ const webPageLd = {
         <button
           type="button"
           data-lang="en"
+          data-lang-href={enSwitchHref}
           class:is-active={
             lang === 'en'
           }
@@ -555,6 +604,7 @@ const webPageLd = {
         <button
           type="button"
           data-lang="sq"
+          data-lang-href={sqSwitchHref}
           class:is-active={
             lang === 'sq'
           }
@@ -584,7 +634,7 @@ const webPageLd = {
         <div class="mobile-menu-head">
           <a
             class="mobile-menu-brand"
-            href="/"
+            href={href('/')}
             aria-label={
               name +
               ' home'
@@ -613,7 +663,7 @@ const webPageLd = {
           aria-label="Mobile navigation"
         >
           <a
-            href="/#selected"
+            href={href('/#selected')}
             data-en="Photography"
             data-sq="Fotografi"
           >
@@ -621,7 +671,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/fashion/"
+            href={href('/fashion/')}
             data-en="Fashion"
             data-sq="Modë"
           >
@@ -629,7 +679,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/portraits/"
+            href={href('/portraits/')}
             data-en="Portraits"
             data-sq="Portrete"
           >
@@ -637,7 +687,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/weddings/"
+            href={href('/weddings/')}
             data-en="Weddings"
             data-sq="Dasma"
           >
@@ -645,7 +695,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/films/"
+            href={href('/films/')}
             data-en="Motion"
             data-sq="Video"
           >
@@ -653,7 +703,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/projects/"
+            href={href('/projects/')}
             data-en="Index"
             data-sq="Indeksi"
           >
@@ -661,7 +711,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/about/"
+            href={href('/about/')}
             data-en="About"
             data-sq="Rreth"
           >
@@ -669,7 +719,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/journal/"
+            href={href('/journal/')}
             data-en="Journal"
             data-sq="Ditari"
           >
@@ -677,7 +727,7 @@ const webPageLd = {
           </a>
 
           <a
-            href="/book/#contact"
+            href={href('/book/#contact')}
             data-en="Contact"
             data-sq="Kontakt"
           >
@@ -695,6 +745,7 @@ const webPageLd = {
             <button
               type="button"
               data-lang="en"
+              data-lang-href={enSwitchHref}
               class:is-active={
                 lang === 'en'
               }
@@ -710,6 +761,7 @@ const webPageLd = {
             <button
               type="button"
               data-lang="sq"
+              data-lang-href={sqSwitchHref}
               class:is-active={
                 lang === 'sq'
               }
@@ -725,7 +777,7 @@ const webPageLd = {
 
           <a
             class="mobile-book"
-            href="/book/#contact"
+            href={href('/book/#contact')}
             data-en="Book now ↗"
             data-sq="Rezervo ↗"
           >
@@ -765,7 +817,7 @@ const webPageLd = {
   <footer>
     <div class="footer-row">
       <a
-        href="/"
+        href={href('/')}
         class="footer-name"
         data-reveal
       >
@@ -778,7 +830,7 @@ const webPageLd = {
 
       <a
         class="footer-contact"
-        href="/book/#contact"
+        href={href('/book/#contact')}
         data-reveal
         data-en="CONTACT ↗"
         data-sq="KONTAKT ↗"
@@ -822,28 +874,11 @@ const webPageLd = {
       'site-lang';
 
     function currentLang(){
-      const htmlLang =
-        document
-          .documentElement
-          .lang;
-
-      if(
-        htmlLang === 'sq'
-      ){
-        return 'sq';
-      }
-
-      try{
-        return (
-          localStorage
-            .getItem(
-              LANG_KEY
-            ) ||
-          'en'
-        );
-      }catch{
-        return 'en';
-      }
+      return document
+        .documentElement
+        .lang === 'sq'
+        ? 'sq'
+        : 'en';
     }
 
     function applyLang(
@@ -911,14 +946,11 @@ const webPageLd = {
         );
 
       document
-        .querySelectorAll(
+        .querySelectorAll<HTMLElement>(
           '[data-lang]'
         )
         .forEach(
-          btn=>{
-            const button =
-              btn as HTMLElement;
-
+          button=>{
             const active =
               button.dataset.lang ===
               lang;
@@ -968,21 +1000,36 @@ const webPageLd = {
     );
 
     document
-      .querySelectorAll(
+      .querySelectorAll<HTMLElement>(
         '[data-lang]'
       )
       .forEach(
-        btn=>{
-          btn
+        button=>{
+          button
             .addEventListener(
               'click',
               ()=>{
-                applyLang(
-                  (
-                    btn as HTMLElement
-                  ).dataset.lang ||
-                  'en'
-                );
+                const targetLang =
+                  button.dataset.lang ||
+                  'en';
+
+                const targetHref =
+                  button.dataset.langHref;
+
+                try{
+                  localStorage
+                    .setItem(
+                      LANG_KEY,
+                      targetLang
+                    );
+                }catch{}
+
+                if(
+                  targetHref
+                ){
+                  window.location.href =
+                    targetHref;
+                }
               }
             );
         }
