@@ -10,7 +10,12 @@ import {
   type Album,
   type Settings
 } from '../../lib/content';
-import {paceGallery} from '../../lib/editorial';
+
+import {
+  paceGallery,
+  PERSON_ID,
+  WEBSITE_ID
+} from '../../lib/editorial';
 
 export async function getStaticPaths() {
   const {albums, settings} = await content();
@@ -37,14 +42,98 @@ const rows = paceGallery(
   (album.photos || [])
     .filter(photo => photoUrl(photo))
 );
+
+const pageUrl =
+  `https://ergysshehu.com/portfolio/${album.slug}/`;
+
+const coverUrl =
+  photoUrl(album.cover, 1800);
+
+const projectImages = [
+  coverUrl,
+  ...(album.photos || [])
+    .map(photo => photoUrl(photo, 1800))
+]
+  .filter(
+    (value): value is string =>
+      Boolean(value)
+  )
+  .filter(
+    (value, index, array) =>
+      array.indexOf(value) === index
+  )
+  .slice(0, 20);
+
+const creativeWorkLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': `${pageUrl}#creativework`,
+  url: pageUrl,
+  name: album.title,
+  ...(album.description
+    ? {
+        description: album.description
+      }
+    : {}),
+  ...(projectImages.length
+    ? {
+        image: projectImages
+      }
+    : {}),
+  creator: {
+    '@id': PERSON_ID
+  },
+  author: {
+    '@id': PERSON_ID
+  },
+  isPartOf: {
+    '@id': WEBSITE_ID
+  },
+  ...(album.category || album.kind
+    ? {
+        genre:
+          album.category ||
+          album.kind
+      }
+    : {}),
+  ...(album.location
+    ? {
+        contentLocation: {
+          '@type': 'Place',
+          name: album.location
+        }
+      }
+    : {}),
+  ...(album.year
+    ? {
+        dateCreated:
+          String(album.year)
+      }
+    : {}),
+  ...(safeUrl(album.videoUrl)
+    ? {
+        associatedMedia: {
+          '@type': 'VideoObject',
+          url: safeUrl(album.videoUrl),
+          name: album.title
+        }
+      }
+    : {})
+};
 ---
 
 <Layout
   title={`${album.title} — ${settings.name || 'Ergys Shehu'}`}
   name={settings.name}
   description={album.description}
-  image={photoUrl(album.cover, 1800)}
+  image={coverUrl}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(creativeWorkLd)}
+  />
+
   <section class="collection-intro">
     <a
       class="back-link"
@@ -54,7 +143,10 @@ const rows = paceGallery(
       ← All projects
     </a>
 
-    <p class="kicker" data-reveal>
+    <p
+      class="kicker"
+      data-reveal
+    >
       {
         [
           album.category,
@@ -72,7 +164,10 @@ const rows = paceGallery(
 
     {
       album.description && (
-        <p class="bio" data-reveal>
+        <p
+          class="bio"
+          data-reveal
+        >
           {album.description}
         </p>
       )
@@ -103,7 +198,10 @@ const rows = paceGallery(
 
     {
       album.credits && (
-        <p class="credits" data-reveal>
+        <p
+          class="credits"
+          data-reveal
+        >
           {album.credits}
         </p>
       )
@@ -119,89 +217,99 @@ const rows = paceGallery(
         <div
           class:list={[
             `row-${row.type}`,
-            row.align && `align-${row.align}`
+            row.align &&
+              `align-${row.align}`
           ]}
         >
           {
-            row.items.map((photo, pi) => {
-              const isFirst =
-                ri === 0 &&
-                pi === 0;
+            row.items.map(
+              (photo, pi) => {
+                const isFirst =
+                  ri === 0 &&
+                  pi === 0;
 
-              return (
-                <figure data-reveal>
-                  <a
-                    href={photoUrl(photo, 2400)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open photograph: ${photo.alt || album.title}`}
-                  >
-                    <div
-                      data-image-reveal
-                      style={
-                        row.type === 'full'
-                          ? `--focal-point:${photoPosition(photo)}`
-                          : undefined
-                      }
+                return (
+                  <figure data-reveal>
+                    <a
+                      href={photoUrl(
+                        photo,
+                        2400
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open photograph: ${photo.alt || album.title}`}
                     >
-                      <img
-                        src={photoUrl(
-                          photo,
+                      <div
+                        data-image-reveal
+                        style={
                           row.type === 'full'
-                            ? 2400
-                            : 1800
-                        )}
-                        srcset={photoSet(photo)}
-                        sizes={
-                          row.type === 'full'
-                            ? '100vw'
-                            : row.type === 'pair'
-                              ? '(max-width:700px) 90vw, 44vw'
-                              : '(max-width:700px) 90vw, 60vw'
-                        }
-                        width={photo.width}
-                        height={photo.height}
-                        alt={photo.alt || album.title}
-                        loading={
-                          isFirst
-                            ? 'eager'
-                            : 'lazy'
-                        }
-                        fetchpriority={
-                          isFirst
-                            ? 'high'
+                            ? `--focal-point:${photoPosition(photo)}`
                             : undefined
                         }
-                        decoding={
-                          isFirst
-                            ? 'sync'
-                            : 'async'
-                        }
-                      />
-                    </div>
-                  </a>
+                      >
+                        <img
+                          src={photoUrl(
+                            photo,
+                            row.type === 'full'
+                              ? 2400
+                              : 1800
+                          )}
+                          srcset={photoSet(photo)}
+                          sizes={
+                            row.type === 'full'
+                              ? '100vw'
+                              : row.type === 'pair'
+                                ? '(max-width:700px) 90vw, 44vw'
+                                : '(max-width:700px) 90vw, 60vw'
+                          }
+                          width={photo.width}
+                          height={photo.height}
+                          alt={
+                            photo.alt ||
+                            album.title
+                          }
+                          loading={
+                            isFirst
+                              ? 'eager'
+                              : 'lazy'
+                          }
+                          fetchpriority={
+                            isFirst
+                              ? 'high'
+                              : undefined
+                          }
+                          decoding={
+                            isFirst
+                              ? 'sync'
+                              : 'async'
+                          }
+                        />
+                      </div>
+                    </a>
 
-                  {
-                    (
-                      photo.caption ||
-                      photo.credit
-                    ) && (
-                      <figcaption>
-                        {photo.caption}
+                    {
+                      (
+                        photo.caption ||
+                        photo.credit
+                      ) && (
+                        <figcaption>
+                          {photo.caption}
 
-                        {
-                          photo.credit && (
-                            <span>
-                              {' '}© {photo.credit}
-                            </span>
-                          )
-                        }
-                      </figcaption>
-                    )
-                  }
-                </figure>
-              );
-            })
+                          {
+                            photo.credit && (
+                              <span>
+                                {' '}
+                                © {photo.credit}
+                              </span>
+                            )
+                          }
+                        </figcaption>
+                      )
+                    }
+                  </figure>
+                );
+              }
+            )
           }
         </div>
       ))
