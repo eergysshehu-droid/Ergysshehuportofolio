@@ -30,6 +30,9 @@ export const defaults = {
   bio:
     'Since 2017, Ergys Shehu has worked as a freelance fashion and beauty photographer, collaborating with celebrities, models and national and international clients. Purity, simplicity and honesty characterise his photographic style. He lives and works in Albania.',
 
+  bioSq:
+    'Që nga viti 2017, Ergys Shehu punon si fotograf i pavarur në modë dhe bukuri, duke bashkëpunuar me artistë, modele dhe klientë kombëtarë e ndërkombëtarë. Pastërtia, thjeshtësia dhe sinqeriteti karakterizojnë stilin e tij fotografik. Jeton dhe punon në Shqipëri.',
+
   email:
     'e.ergysshehu@gmail.com',
 
