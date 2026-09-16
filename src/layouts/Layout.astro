@@ -24,12 +24,6 @@ const {
 const pageUrl=Astro.site?new URL(Astro.url.pathname,Astro.site):undefined;
 const imageUrl=Astro.site?new URL(image,Astro.site):undefined;
 
-// PERSON_ID/WEBSITE_ID/KULT360_ID come from lib/editorial.ts — a single
-// permanent id per entity, reused everywhere it's referenced (here and in
-// about.astro's ProfilePage) so every page's structured data resolves to
-// the same node in Google's graph instead of minting a fresh Person per
-// page. sameAs only lists profiles already verified live elsewhere on this
-// site (SocialIcons/editorial.ts) — nothing invented.
 const personLd={
   '@context':'https://schema.org',
   '@type':'Person',
@@ -302,6 +296,7 @@ const webPageLd={
 
             <div class="mobile-location">
               <span data-en="Albania" data-sq="Shqipëri">Albania</span>
+
               <span
                 data-en="Available worldwide"
                 data-sq="I disponueshëm në mbarë botën"
@@ -359,7 +354,6 @@ document.documentElement.classList.add('motion-ready');
 
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 
-// Site-wide EN/SQ toggle.
 const LANG_KEY='site-lang';
 
 function currentLang(){
@@ -431,7 +425,6 @@ document
   });
 
 
-// Mobile menu
 const mobileMenu=
   document.querySelector<HTMLDetailsElement>('.mobile-menu');
 
@@ -464,7 +457,6 @@ mobileMenu?.addEventListener('toggle',()=>{
 });
 
 
-// Fixed header
 const siteHeader=
   document.querySelector<HTMLElement>('.site-header');
 
@@ -511,7 +503,6 @@ if(siteHeader){
 }
 
 
-// Reveals
 if('IntersectionObserver' in window){
 
   const revealTargets=
@@ -548,7 +539,6 @@ if('IntersectionObserver' in window){
   }
 
 
-  // Homepage mobile stacked project cards
   const stackSection=
     document.body.classList.contains('is-home')
       ?document.querySelector<HTMLElement>('.work-section')
@@ -736,7 +726,6 @@ if('IntersectionObserver' in window){
   }
 
 
-  // Section veil
   const sectionVeil=
     document.body.classList.contains('is-home')
       ?document.querySelector<HTMLElement>(
@@ -826,7 +815,7 @@ if('IntersectionObserver' in window){
 }
 
 
-// Desktop pointer tilt
+// Desktop pointer tilt - optimized
 if(
   !reducedMotion.matches &&
   window.matchMedia(
@@ -835,45 +824,78 @@ if(
 ){
 
   document
-    .querySelectorAll<HTMLElement>(
-      '.project-card'
-    )
+    .querySelectorAll<HTMLElement>('.project-card')
     .forEach(card=>{
+
+      let rect:DOMRect|null=null;
+      let frame:number|undefined;
+
+      let pointerX=0;
+      let pointerY=0;
+
+      const updateTilt=()=>{
+
+        frame=undefined;
+
+        if(!rect)return;
+
+        const x=
+          (
+            (pointerX-rect.left)/rect.width
+            -.5
+          )*8;
+
+        const y=
+          (
+            (pointerY-rect.top)/rect.height
+            -.5
+          )*8;
+
+        card.style.setProperty(
+          '--tilt-x',
+          x.toFixed(2)+'px'
+        );
+
+        card.style.setProperty(
+          '--tilt-y',
+          y.toFixed(2)+'px'
+        );
+      };
+
+      card.addEventListener(
+        'pointerenter',
+        ()=>{
+          rect=
+            card.getBoundingClientRect();
+        }
+      );
 
       card.addEventListener(
         'pointermove',
         e=>{
 
-          const r=
-            card.getBoundingClientRect();
+          pointerX=e.clientX;
+          pointerY=e.clientY;
 
-          const x=
-            (
-              (e.clientX-r.left)/r.width
-              -.5
-            )*8;
-
-          const y=
-            (
-              (e.clientY-r.top)/r.height
-              -.5
-            )*8;
-
-          card.style.setProperty(
-            '--tilt-x',
-            x.toFixed(2)+'px'
-          );
-
-          card.style.setProperty(
-            '--tilt-y',
-            y.toFixed(2)+'px'
-          );
+          if(frame===undefined){
+            frame=
+              requestAnimationFrame(
+                updateTilt
+              );
+          }
         }
       );
 
       card.addEventListener(
         'pointerleave',
         ()=>{
+
+          rect=null;
+
+          if(frame!==undefined){
+            cancelAnimationFrame(frame);
+            frame=undefined;
+          }
 
           card.style.setProperty(
             '--tilt-x',
@@ -889,7 +911,6 @@ if(
     });
 
 
-  // Grid spotlight
   document
     .querySelectorAll<HTMLElement>(
       '.project-grid'
@@ -958,7 +979,6 @@ if(
 }
 
 
-// Scroll progress
 const progress=
   document.querySelector<HTMLElement>(
     '.scroll-progress'
