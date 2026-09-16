@@ -1,0 +1,220 @@
+/* ==========================================================================
+   GLOBAL VISUAL POLISH
+   Screenshot/audit fixes without changing the underlying design language.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   PAGE TITLES
+   Prevent oversized headings on normal pages and long article titles.
+   -------------------------------------------------------------------------- */
+
+.collection-intro{
+  padding-top:clamp(48px,4vw,64px);
+  padding-bottom:clamp(42px,4vw,58px);
+}
+
+.collection-intro h1{
+  font-size:clamp(44px,6.2vw,96px)!important;
+  line-height:1.02!important;
+  letter-spacing:-.04em;
+  max-width:1200px;
+  margin-top:18px;
+  margin-bottom:24px;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+.collection-intro>p:not(.kicker){
+  max-width:720px;
+}
+
+/* Journal article titles were visually overpowering the page. */
+
+.journal-post .collection-intro{
+  padding-bottom:clamp(34px,3.5vw,48px);
+}
+
+.journal-post .collection-intro h1{
+  font-size:clamp(40px,5vw,76px)!important;
+  line-height:1.04!important;
+  max-width:980px;
+  overflow-wrap:break-word;
+}
+
+.journal-post .collection-intro>p:not(.kicker){
+  max-width:760px;
+}
+
+.journal-post-cover{
+  margin-bottom:clamp(34px,4vw,48px)!important;
+}
+
+.journal-post-body{
+  padding-bottom:clamp(70px,7vw,100px)!important;
+}
+
+/* --------------------------------------------------------------------------
+   JOURNAL INDEX
+   Cleaner spacing and a stronger editorial type hierarchy.
+   -------------------------------------------------------------------------- */
+
+.journal-list{
+  gap:clamp(34px,3.6vw,56px)!important;
+  padding-bottom:clamp(70px,7vw,100px)!important;
+}
+
+.journal-card{
+  min-width:0;
+}
+
+.journal-card-copy{
+  padding-top:clamp(14px,1.4vw,20px);
+}
+
+.journal-card-copy h2{
+  font-size:clamp(25px,2.2vw,34px)!important;
+  line-height:1.12!important;
+  letter-spacing:-.025em!important;
+  margin-bottom:12px!important;
+  overflow-wrap:break-word;
+}
+
+.journal-card-copy p{
+  max-width:62ch;
+  font-size:clamp(13px,.86vw,15px)!important;
+  line-height:1.68!important;
+  margin-bottom:16px!important;
+}
+
+.journal-read{
+  display:inline-flex;
+  align-items:center;
+  gap:.25em;
+}
+
+/* --------------------------------------------------------------------------
+   RECOGNITION / AWARDS
+   Reduce the oversized blank areas without making the section cramped.
+   -------------------------------------------------------------------------- */
+
+.recognition-section{
+  padding-bottom:clamp(58px,5.5vw,82px)!important;
+}
+
+.recognition-heading{
+  padding-top:clamp(38px,4vw,56px)!important;
+}
+
+.recognition-list{
+  margin-top:clamp(22px,2.7vw,36px)!important;
+}
+
+.recognition-row{
+  padding:clamp(20px,2.1vw,29px) 0!important;
+}
+
+/* --------------------------------------------------------------------------
+   CURRENT / INSTAGRAM
+   Give the photographs enough breathing room so they don't read as one block.
+   -------------------------------------------------------------------------- */
+
+.latest-section{
+  padding-top:clamp(70px,7vw,105px)!important;
+  padding-bottom:clamp(62px,6vw,90px)!important;
+}
+
+.latest-grid{
+  gap:clamp(8px,.8vw,14px)!important;
+}
+
+.latest-card{
+  overflow:hidden;
+  background:#111;
+}
+
+.latest-card img{
+  transform:scale(1.001);
+}
+
+/* --------------------------------------------------------------------------
+   ABOUT / GENERAL LOWER WHITESPACE
+   -------------------------------------------------------------------------- */
+
+.biography-layout.collection-body{
+  padding-bottom:clamp(68px,7vw,105px)!important;
+}
+
+.collection-body{
+  padding-bottom:clamp(68px,7vw,100px);
+}
+
+.bio-language:last-of-type{
+  margin-bottom:clamp(24px,3vw,42px);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media(max-width:700px){
+  .collection-intro{
+    padding-top:38px;
+    padding-bottom:38px;
+  }
+
+  .collection-intro h1{
+    font-size:clamp(40px,12vw,62px)!important;
+    line-height:1.02!important;
+    margin:16px 0 22px;
+  }
+
+  .journal-post .collection-intro h1{
+    font-size:clamp(36px,10vw,52px)!important;
+    line-height:1.06!important;
+  }
+
+  .journal-list{
+    gap:42px!important;
+    padding-bottom:64px!important;
+  }
+
+  .journal-card-copy{
+    padding-top:14px;
+  }
+
+  .journal-card-copy h2{
+    font-size:26px!important;
+  }
+
+  .recognition-section{
+    padding-bottom:54px!important;
+  }
+
+  .recognition-heading{
+    padding-top:38px!important;
+  }
+
+  .recognition-row{
+    padding:20px 0!important;
+  }
+
+  .latest-section{
+    padding-top:64px!important;
+    padding-bottom:58px!important;
+  }
+
+  .latest-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+
+  .biography-layout.collection-body{
+    padding-bottom:64px!important;
+  }
+}
+
+@media(max-width:420px){
+  .latest-grid{
+    gap:5px!important;
+  }
+}
