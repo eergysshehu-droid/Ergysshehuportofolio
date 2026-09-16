@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
 import {
   content,
   photoUrl,
@@ -19,9 +20,6 @@ const {settings} = await content();
 const aboutDescription =
   'Ergys Shehu — photographer and director based in Albania since 2017, working across fashion, portrait, wedding and film direction, and Executive Director of the Kult 360 Foundation.';
 
-// /about/ is the authoritative profile page — its mainEntity points at the
-// same Person @id used in Layout.astro's Person/WebSite graph, not a new
-// Person object, so this page reinforces rather than duplicates the entity.
 const profilePageLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
@@ -81,17 +79,26 @@ const profilePageLd = {
     <aside data-reveal>
       {
         settings.portrait && (
-          <div data-image-reveal>
+          <div
+            class="about-portrait"
+            data-image-reveal
+          >
             <img
-              src={photoUrl(settings.portrait, 1200)}
-              srcset={photoSet(settings.portrait)}
+              src={photoUrl(
+                settings.portrait,
+                1200
+              )}
+              srcset={photoSet(
+                settings.portrait
+              )}
               sizes="(max-width: 700px) 90vw, 35vw"
-              width={settings.portrait.width}
-              height={settings.portrait.height}
-              alt={settings.portrait.alt || 'Ergys Shehu'}
+              alt={
+                settings.portrait.alt ||
+                'Ergys Shehu'
+              }
               loading="eager"
               fetchpriority="high"
-              decoding="sync"
+              decoding="async"
             />
           </div>
         )
@@ -111,7 +118,7 @@ const profilePageLd = {
         Cultural curation
       </p>
 
-      <a href="/#contact">
+      <a href="/book/#contact">
         Enquiries ↗
       </a>
     </aside>
@@ -126,7 +133,10 @@ const profilePageLd = {
         </summary>
 
         <p lang="en">
-          {settings.biographyEn || biography.en}
+          {
+            settings.biographyEn ||
+            biography.en
+          }
         </p>
       </details>
 
@@ -136,12 +146,19 @@ const profilePageLd = {
         </summary>
 
         <p lang="sq">
-          {settings.biographySq || biography.sq}
+          {
+            settings.biographySq ||
+            biography.sq
+          }
         </p>
       </details>
 
       <blockquote>
-        “{settings.artistQuote || biography.quote}”
+        “{
+          settings.artistQuote ||
+          biography.quote
+        }”
+
         <cite>
           — Ergys Shehu
         </cite>
@@ -168,13 +185,16 @@ const profilePageLd = {
             safeUrl(defaults.kult360)
               ? (
                 <a
-                  href={safeUrl(defaults.kult360)}
+                  href={safeUrl(
+                    defaults.kult360
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span>
                     KULT 360
                   </span>
+
                   Executive Director ↗
                 </a>
               )
@@ -183,6 +203,7 @@ const profilePageLd = {
                   <span>
                     KULT 360
                   </span>
+
                   Executive Director
                 </>
               )
@@ -191,4 +212,19 @@ const profilePageLd = {
       </div>
     </div>
   </section>
+
+  <style>
+    .about-portrait{
+      width:100%;
+      overflow:hidden;
+    }
+
+    .about-portrait img{
+      display:block;
+      width:100%;
+      height:auto;
+      max-width:100%;
+      object-fit:contain;
+    }
+  </style>
 </Layout>
