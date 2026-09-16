@@ -1,30 +1,281 @@
-<dialog class="lightbox" aria-label="Photograph viewer"><div class="lightbox-toolbar"><span class="lightbox-counter" aria-live="polite"></span><button type="button" data-close aria-label="Close photograph viewer">CLOSE ×</button></div><button type="button" class="lightbox-nav lightbox-prev" data-prev aria-label="Previous photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4L7 12l8 8"/></svg></button><button type="button" class="lightbox-nav lightbox-next" data-next aria-label="Next photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button><img class="lightbox-photo" alt=""/><p class="lightbox-caption"></p><a class="lightbox-book" href="/book/#contact" data-en="Book now ↗" data-sq="Rezervo ↗">Book now ↗</a></dialog>
+<dialog
+  class="lightbox"
+  aria-label="Photograph viewer"
+>
+  <div class="lightbox-toolbar">
+    <span
+      class="lightbox-counter"
+      aria-live="polite"
+    ></span>
+
+    <button
+      type="button"
+      data-close
+      aria-label="Close photograph viewer"
+    >
+      CLOSE ×
+    </button>
+  </div>
+
+  <button
+    type="button"
+    class="lightbox-nav lightbox-prev"
+    data-prev
+    aria-label="Previous photograph"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M15 4L7 12l8 8"/>
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    class="lightbox-nav lightbox-next"
+    data-next
+    aria-label="Next photograph"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9 4l8 8-8 8"/>
+    </svg>
+  </button>
+
+  <img
+    class="lightbox-photo"
+    alt=""
+    decoding="async"
+  />
+
+  <p class="lightbox-caption"></p>
+
+  <a
+    class="lightbox-book"
+    href="/book/#contact"
+    data-en="Book now ↗"
+    data-sq="Rezervo ↗"
+  >
+    Book now ↗
+  </a>
+</dialog>
+
 <script>
-const dialog=document.querySelector<HTMLDialogElement>('.lightbox');
-const links=Array.from(document.querySelectorAll<HTMLAnchorElement>('.gallery figure > a'));
-if(dialog && links.length){
- const photo=dialog.querySelector<HTMLImageElement>('.lightbox-photo')!;
- const counter=dialog.querySelector<HTMLElement>('.lightbox-counter')!;
- const caption=dialog.querySelector<HTMLElement>('.lightbox-caption')!;
- let active=0;
- function show(index:number){active=(index+links.length)%links.length;photo.src=links[active].href;photo.alt=links[active].querySelector('img')?.alt || '';counter.textContent=(active+1)+' / '+links.length;caption.textContent=links[active].closest('figure')?.querySelector('figcaption')?.textContent || '';}
- links.forEach((link,i)=>link.addEventListener('click',event=>{if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;event.preventDefault();show(i);dialog.showModal();document.documentElement.classList.add('lightbox-open');}));
- dialog.querySelector('[data-prev]')?.addEventListener('click',()=>show(active-1));
- dialog.querySelector('[data-next]')?.addEventListener('click',()=>show(active+1));
- dialog.querySelector('[data-close]')?.addEventListener('click',()=>dialog.close());
- dialog.addEventListener('close',()=>document.documentElement.classList.remove('lightbox-open'));
- dialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();show(active-1)}if(event.key==='ArrowRight'){event.preventDefault();show(active+1)}});
- // Pointer-based swipe (not just touch) — covers touch, pen and mouse-drag
- // in one listener pair, tracked on the photo itself so it doesn't fight
- // the dialog's own click-to-close-on-backdrop behavior.
- let startX=0,startY=0,dragging=false;
- photo.addEventListener('pointerdown',event=>{startX=event.clientX;startY=event.clientY;dragging=true});
- photo.addEventListener('pointerup',event=>{
-   if(!dragging)return;
-   dragging=false;
-   const dx=event.clientX-startX;
-   const dy=event.clientY-startY;
-   if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.2)show(active+(dx<0?1:-1));
- });
+const dialog =
+  document.querySelector<HTMLDialogElement>(
+    '.lightbox'
+  );
+
+const links =
+  Array.from(
+    document.querySelectorAll<HTMLAnchorElement>(
+      '.gallery figure > a'
+    )
+  );
+
+if (dialog && links.length) {
+  const photo =
+    dialog.querySelector<HTMLImageElement>(
+      '.lightbox-photo'
+    )!;
+
+  const counter =
+    dialog.querySelector<HTMLElement>(
+      '.lightbox-counter'
+    )!;
+
+  const caption =
+    dialog.querySelector<HTMLElement>(
+      '.lightbox-caption'
+    )!;
+
+  let active = 0;
+
+  function preload(index: number) {
+    const normalized =
+      (index + links.length) % links.length;
+
+    const href =
+      links[normalized]?.href;
+
+    if (!href) return;
+
+    const image = new Image();
+
+    image.decoding = 'async';
+    image.src = href;
+  }
+
+  function show(index: number) {
+    active =
+      (index + links.length) %
+      links.length;
+
+    const link =
+      links[active];
+
+    if (!link) return;
+
+    const sourceImage =
+      link.querySelector<HTMLImageElement>(
+        'img'
+      );
+
+    photo.src = link.href;
+
+    photo.alt =
+      sourceImage?.alt || '';
+
+    counter.textContent =
+      `${active + 1} / ${links.length}`;
+
+    caption.textContent =
+      link
+        .closest('figure')
+        ?.querySelector('figcaption')
+        ?.textContent || '';
+
+    preload(active + 1);
+    preload(active - 1);
+  }
+
+  links.forEach(
+    (link, i) =>
+      link.addEventListener(
+        'click',
+        event => {
+          if (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          show(i);
+
+          dialog.showModal();
+
+          document.documentElement
+            .classList.add(
+              'lightbox-open'
+            );
+        }
+      )
+  );
+
+  dialog
+    .querySelector('[data-prev]')
+    ?.addEventListener(
+      'click',
+      () => show(active - 1)
+    );
+
+  dialog
+    .querySelector('[data-next]')
+    ?.addEventListener(
+      'click',
+      () => show(active + 1)
+    );
+
+  dialog
+    .querySelector('[data-close]')
+    ?.addEventListener(
+      'click',
+      () => dialog.close()
+    );
+
+  dialog.addEventListener(
+    'close',
+    () => {
+      document.documentElement
+        .classList.remove(
+          'lightbox-open'
+        );
+
+      photo.removeAttribute('src');
+    }
+  );
+
+  dialog.addEventListener(
+    'keydown',
+    event => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        show(active - 1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(active + 1);
+      }
+    }
+  );
+
+  let startX = 0;
+  let startY = 0;
+  let dragging = false;
+
+  photo.addEventListener(
+    'pointerdown',
+    event => {
+      startX = event.clientX;
+      startY = event.clientY;
+      dragging = true;
+
+      photo.setPointerCapture?.(
+        event.pointerId
+      );
+    }
+  );
+
+  photo.addEventListener(
+    'pointercancel',
+    () => {
+      dragging = false;
+    }
+  );
+
+  photo.addEventListener(
+    'pointerup',
+    event => {
+      if (!dragging) return;
+
+      dragging = false;
+
+      const dx =
+        event.clientX - startX;
+
+      const dy =
+        event.clientY - startY;
+
+      if (
+        Math.abs(dx) > 50 &&
+        Math.abs(dx) >
+          Math.abs(dy) * 1.2
+      ) {
+        show(
+          active +
+          (dx < 0 ? 1 : -1)
+        );
+      }
+    }
+  );
 }
 </script>
