@@ -13,7 +13,9 @@ import {
 } from '../../lib/journal';
 
 import {
-  defaults
+  defaults,
+  PERSON_ID,
+  WEBSITE_ID
 } from '../../lib/editorial';
 
 import {
@@ -118,13 +120,96 @@ const dateLine = (
 
 const pageTitle =
   isSq
-    ? `Ditari — ${settings.name}`
-    : `Journal — ${settings.name}`;
+    ? `Ditar Fotografie & Filmi | ${settings.name}`
+    : `Photography & Film Journal | ${settings.name}`;
 
 const description =
   isSq
-    ? 'Arkivi editorial i Ergys Shehu për fotografi, regji, kulturë, çmime, projekte kreative dhe punë të publikuara.'
-    : 'An editorial archive of photography, directing, cultural work, recognition, creative projects and published pieces by Ergys Shehu.';
+    ? 'Ditari editorial i Ergys Shehu për fotografi, film, regji, projekte kulturore, çmime, eksperienca profesionale dhe punë të publikuara.'
+    : 'Ergys Shehu’s editorial journal covering photography, film, directing, cultural projects, recognition, professional experience and published work.';
+
+const pageUrl =
+  new URL(
+    localizedPath(
+      '/journal/',
+      lang
+    ),
+    'https://ergysshehu.com'
+  ).href;
+
+const itemList =
+  posts.map(
+    (
+      post,
+      index
+    ) => ({
+      '@type':
+        'ListItem',
+
+      position:
+        index + 1,
+
+      name:
+        isSq
+          ? (
+              post.titleSq ||
+              post.title
+            )
+          : post.title,
+
+      url:
+        new URL(
+          localizedPath(
+            `/journal/${post.slug}/`,
+            lang
+          ),
+          'https://ergysshehu.com'
+        ).href
+    })
+  );
+
+const collectionLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'CollectionPage',
+
+  '@id':
+    `${pageUrl}#journal`,
+
+  url:
+    pageUrl,
+
+  name:
+    pageTitle,
+
+  description,
+
+  inLanguage:
+    lang,
+
+  isPartOf: {
+    '@id':
+      WEBSITE_ID
+  },
+
+  about: {
+    '@id':
+      PERSON_ID
+  },
+
+  mainEntity: {
+    '@type':
+      'ItemList',
+
+    numberOfItems:
+      itemList.length,
+
+    itemListElement:
+      itemList
+  }
+};
 ---
 
 <Layout
@@ -133,6 +218,16 @@ const description =
   name={settings.name}
   description={description}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={
+      JSON.stringify(
+        collectionLd
+      )
+    }
+  />
+
   <section class="collection-intro">
     <a
       class="back-link"
