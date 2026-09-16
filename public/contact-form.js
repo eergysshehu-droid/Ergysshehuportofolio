@@ -5,10 +5,15 @@
     );
 
   if (
-    !form
+    !form ||
+    form.dataset.contactEnhanced ===
+      'true'
   ) {
     return;
   }
+
+  form.dataset.contactEnhanced =
+    'true';
 
   const status =
     form.querySelector(
@@ -83,7 +88,10 @@
   let startedAt =
     Date.now();
 
-  function lang() {
+  let sending =
+    false;
+
+  function currentLang() {
     return document
       .documentElement
       .lang ===
@@ -109,47 +117,93 @@
     status.textContent =
       text;
 
-    status.classList
-      .toggle(
-        'is-fallback',
-        type ===
-          'error'
-      );
+    status.dataset.state =
+      type;
+
+    status.classList.toggle(
+      'is-fallback',
+      type ===
+        'error'
+    );
+  }
+
+  function clearStatus() {
+    if (
+      !status
+    ) {
+      return;
+    }
+
+    status.hidden =
+      true;
+
+    status.textContent =
+      '';
+
+    delete status.dataset.state;
+
+    status.classList.remove(
+      'is-fallback'
+    );
   }
 
   function setBusy(
     busy
   ) {
+    sending =
+      busy;
+
+    form.setAttribute(
+      'aria-busy',
+      String(
+        busy
+      )
+    );
+
     if (
-      submit
+      !submit
     ) {
-      submit.disabled =
-        busy;
-
-      submit.setAttribute(
-        'aria-busy',
-        String(
-          busy
-        )
-      );
-
-      submit.style.opacity =
-        busy
-          ? '.62'
-          : '';
-
-      submit.style.cursor =
-        busy
-          ? 'wait'
-          : '';
+      return;
     }
+
+    submit.disabled =
+      busy;
+
+    submit.setAttribute(
+      'aria-busy',
+      String(
+        busy
+      )
+    );
+
+    submit.style.opacity =
+      busy
+        ? '.62'
+        : '';
+
+    submit.style.cursor =
+      busy
+        ? 'wait'
+        : '';
   }
 
+  form.addEventListener(
+    'input',
+    () => {
+      if (
+        !sending &&
+        status?.dataset.state ===
+          'error'
+      ) {
+        clearStatus();
+      }
+    }
+  );
+
   /*
-   * Capture phase is intentional:
-   * the old mailto handler remains as a safe fallback in the static HTML,
-   * but when this Worker-powered enhancement is present it gets intercepted
-   * before the old target listener can run.
+   * Capture phase is intentional.
+   * It intercepts the original static mailto fallback before
+   * the older target submit handler can run.
    */
   document.addEventListener(
     'submit',
@@ -163,19 +217,23 @@
       }
 
       event.preventDefault();
-
       event.stopImmediatePropagation();
+
+      if (
+        sending
+      ) {
+        return;
+      }
 
       if (
         !form.checkValidity()
       ) {
         form.reportValidity();
-
         return;
       }
 
-      const currentLang =
-        lang();
+      const lang =
+        currentLang();
 
       const data =
         new FormData(
@@ -231,15 +289,12 @@
             ''
           ),
 
-        lang:
-          currentLang,
+        lang,
 
         startedAt,
 
         page:
-          window
-            .location
-            .pathname
+          window.location.pathname
       };
 
       setBusy(
@@ -247,11 +302,22 @@
       );
 
       setStatus(
-        currentLang ===
+        lang ===
           'sq'
           ? 'Duke dërguar mesazhin…'
-          : 'Sending your message…'
+          : 'Sending your message…',
+        'sending'
       );
+
+      const controller =
+        new AbortController();
+
+      const timeout =
+        window.setTimeout(
+          () =>
+            controller.abort(),
+          15000
+        );
 
       try {
         const response =
@@ -275,7 +341,10 @@
               body:
                 JSON.stringify(
                   payload
-                )
+                ),
+
+              signal:
+                controller.signal
             }
           );
 
@@ -292,7 +361,11 @@
         ) {
           throw new Error(
             result.error ||
-            'Send failed'
+            (
+              lang === 'sq'
+                ? 'Mesazhi nuk u dërgua.'
+                : 'The message could not be sent.'
+            )
           );
         }
 
@@ -309,26 +382,53 @@
         }
 
         setStatus(
-          currentLang ===
+          lang ===
             'sq'
             ? 'Mesazhi u dërgua. Do të të përgjigjem sa më shpejt.'
-            : 'Message sent. I’ll get back to you as soon as possible.'
+            : 'Message sent. I’ll get back to you as soon as possible.',
+          'success'
         );
       } catch (
         error
       ) {
         console.error(
+          'Contact form:',
           error
         );
 
+        const isAbort =
+          error instanceof DOMException &&
+          error.name ===
+            'AbortError';
+
+        const serverMessage =
+          error instanceof Error
+            ? error.message
+            : '';
+
         setStatus(
-          currentLang ===
-            'sq'
-            ? 'Mesazhi nuk u dërgua. Provo përsëri ose më shkruaj në e.ergysshehu@gmail.com.'
-            : 'The message could not be sent. Please try again or email e.ergysshehu@gmail.com.',
+          isAbort
+            ? (
+                lang ===
+                  'sq'
+                  ? 'Dërgimi po zgjat shumë. Kontrollo lidhjen dhe provo përsëri.'
+                  : 'Sending took too long. Check your connection and try again.'
+              )
+            : (
+                serverMessage ||
+                (
+                  lang === 'sq'
+                    ? 'Mesazhi nuk u dërgua. Provo përsëri ose më shkruaj në e.ergysshehu@gmail.com.'
+                    : 'The message could not be sent. Please try again or email e.ergysshehu@gmail.com.'
+                )
+              ),
           'error'
         );
       } finally {
+        window.clearTimeout(
+          timeout
+        );
+
         setBusy(
           false
         );
