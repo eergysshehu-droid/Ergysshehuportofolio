@@ -1,36 +1,220 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import {content, photoUrl, photoSet, photoPosition} from '../../lib/content';
+import {
+  content,
+  photoUrl,
+  photoSet,
+  photoPosition
+} from '../../lib/content';
 import {journal} from '../../lib/journal';
 import {defaults} from '../../lib/editorial';
 
 const {settings: saved} = await content();
-const settings = {...defaults, ...Object.fromEntries(Object.entries(saved).filter(([, v]) => v != null))};
+
+const settings = {
+  ...defaults,
+  ...Object.fromEntries(
+    Object.entries(saved)
+      .filter(([, v]) => v != null)
+  )
+};
+
 const posts = await journal();
-const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
-const monthsSq = ['janar','shkurt','mars','prill','maj','qershor','korrik','gusht','shtator','tetor','nëntor','dhjetor'];
-const formatDateSq = (iso: string) => {const d = new Date(iso); return `${d.getDate()} ${monthsSq[d.getMonth()]} ${d.getFullYear()}`;};
-const dateLine = (post: {category?: string; categorySq?: string; publishedAt: string}) => ({
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString(
+    'en-GB',
+    {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }
+  );
+
+const monthsSq = [
+  'janar',
+  'shkurt',
+  'mars',
+  'prill',
+  'maj',
+  'qershor',
+  'korrik',
+  'gusht',
+  'shtator',
+  'tetor',
+  'nëntor',
+  'dhjetor'
+];
+
+const formatDateSq = (iso: string) => {
+  const d = new Date(iso);
+
+  return `${d.getDate()} ${monthsSq[d.getMonth()]} ${d.getFullYear()}`;
+};
+
+const dateLine = (
+  post: {
+    category?: string;
+    categorySq?: string;
+    publishedAt: string;
+  }
+) => ({
   en: `${post.category ? post.category + ' / ' : ''}${formatDate(post.publishedAt)}`,
-  sq: `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`,
+  sq: `${post.categorySq || post.category ? (post.categorySq || post.category) + ' / ' : ''}${formatDateSq(post.publishedAt)}`
 });
 ---
-<Layout title={`Journal — ${settings.name}`} name={settings.name} description="An editorial archive of photography, directing, selected cultural work and published pieces by Ergys Shehu.">
-<section class="collection-intro">
-  <a class="back-link" data-reveal href="/" data-en="← Home" data-sq="← Ballina">← Home</a>
-  <p class="kicker" data-reveal><span data-en="THE JOURNAL" data-sq="DITARI">THE JOURNAL</span> / {String(posts.length).padStart(2,'0')} <span data-en="ENTRIES" data-sq="SHKRIME">ENTRIES</span></p>
-  <h1 data-reveal data-en="Journal." data-sq="Ditari.">Journal.</h1>
-  <p data-reveal data-en="Photography, directing, recognition and published work — the archive behind the portfolio." data-sq="Fotografi, regji, njohje dhe punë e publikuar — arkivi pas portofolit.">Photography, directing, recognition and published work — the archive behind the portfolio.</p>
-</section>
-<section class="journal-list">
-  {posts.length ? posts.map(post => {const date=dateLine(post); return <a class="journal-card" data-reveal href={`/journal/${post.slug}/`}>
-      {post.cover && photoUrl(post.cover) && <div class="journal-card-image" data-image-reveal style={`--focal-point:${photoPosition(post.cover)}`}><img src={photoUrl(post.cover, 900)} srcset={photoSet(post.cover)} sizes="(max-width:700px) 90vw, 42vw" alt={post.cover.alt || post.title} loading="lazy"/></div>}
-      <div class="journal-card-copy">
-        <span class="journal-date" data-en={date.en} data-sq={date.sq}>{date.en}</span>
-        <h2 data-en={post.title} data-sq={post.titleSq || post.title}>{post.title}</h2>
-        <p data-en={post.excerpt} data-sq={post.excerptSq || post.excerpt}>{post.excerpt}</p>
-        <span class="journal-read"><span data-en="Read" data-sq="Lexo">Read</span> <span aria-hidden="true">↗</span></span>
-      </div>
-    </a>;}) : <div class="collection-empty" data-reveal><p class="kicker" data-en="COMING SOON" data-sq="SË SHPEJTI">COMING SOON</p><h2 data-en="The first entry is on its way." data-sq="Shkrimi i parë po vjen së shpejti.">The first entry is on its way.</h2></div>}
-</section>
+
+<Layout
+  title={`Journal — ${settings.name}`}
+  name={settings.name}
+  description="An editorial archive of photography, directing, selected cultural work and published pieces by Ergys Shehu."
+>
+  <section class="collection-intro">
+    <a
+      class="back-link"
+      data-reveal
+      href="/"
+      data-en="← Home"
+      data-sq="← Ballina"
+    >
+      ← Home
+    </a>
+
+    <p class="kicker" data-reveal>
+      <span
+        data-en="THE JOURNAL"
+        data-sq="DITARI"
+      >
+        THE JOURNAL
+      </span>
+
+      {' / '}
+
+      {String(posts.length).padStart(2, '0')}
+
+      {' '}
+
+      <span
+        data-en="ENTRIES"
+        data-sq="SHKRIME"
+      >
+        ENTRIES
+      </span>
+    </p>
+
+    <h1
+      data-reveal
+      data-en="Journal."
+      data-sq="Ditari."
+    >
+      Journal.
+    </h1>
+
+    <p
+      data-reveal
+      data-en="Photography, directing, recognition and published work — the archive behind the portfolio."
+      data-sq="Fotografi, regji, njohje dhe punë e publikuar — arkivi pas portofolit."
+    >
+      Photography, directing, recognition and published work — the archive behind the portfolio.
+    </p>
+  </section>
+
+  <section class="journal-list">
+    {
+      posts.length
+        ? posts.map(post => {
+            const date = dateLine(post);
+
+            return (
+              <a
+                class="journal-card"
+                data-reveal
+                href={`/journal/${post.slug}/`}
+              >
+                {
+                  post.cover &&
+                  photoUrl(post.cover) && (
+                    <div
+                      class="journal-card-image"
+                      data-image-reveal
+                      style={`--focal-point:${photoPosition(post.cover)}`}
+                    >
+                      <img
+                        src={photoUrl(post.cover, 900)}
+                        srcset={photoSet(post.cover)}
+                        sizes="(max-width:700px) 90vw, 42vw"
+                        width={post.cover.width}
+                        height={post.cover.height}
+                        alt={post.cover.alt || post.title}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )
+                }
+
+                <div class="journal-card-copy">
+                  <span
+                    class="journal-date"
+                    data-en={date.en}
+                    data-sq={date.sq}
+                  >
+                    {date.en}
+                  </span>
+
+                  <h2
+                    data-en={post.title}
+                    data-sq={post.titleSq || post.title}
+                  >
+                    {post.title}
+                  </h2>
+
+                  <p
+                    data-en={post.excerpt}
+                    data-sq={post.excerptSq || post.excerpt}
+                  >
+                    {post.excerpt}
+                  </p>
+
+                  <span class="journal-read">
+                    <span
+                      data-en="Read"
+                      data-sq="Lexo"
+                    >
+                      Read
+                    </span>
+
+                    {' '}
+
+                    <span aria-hidden="true">
+                      ↗
+                    </span>
+                  </span>
+                </div>
+              </a>
+            );
+          })
+        : (
+          <div
+            class="collection-empty"
+            data-reveal
+          >
+            <p
+              class="kicker"
+              data-en="COMING SOON"
+              data-sq="SË SHPEJTI"
+            >
+              COMING SOON
+            </p>
+
+            <h2
+              data-en="The first entry is on its way."
+              data-sq="Shkrimi i parë po vjen së shpejti."
+            >
+              The first entry is on its way.
+            </h2>
+          </div>
+        )
+    }
+  </section>
 </Layout>
