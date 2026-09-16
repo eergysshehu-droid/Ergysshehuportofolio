@@ -1,6 +1,31 @@
+---
+import {
+  languageFromPath,
+  localizedHref
+} from '../lib/i18n';
+
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
+const bookingHref =
+  localizedHref(
+    '/book/#contact',
+    lang
+  );
+---
+
 <dialog
   class="lightbox"
-  aria-label="Photograph viewer"
+  aria-label={
+    isSq
+      ? 'Shikuesi i fotografive'
+      : 'Photograph viewer'
+  }
 >
   <div class="lightbox-toolbar">
     <span
@@ -11,9 +36,17 @@
     <button
       type="button"
       data-close
-      aria-label="Close photograph viewer"
+      aria-label={
+        isSq
+          ? 'Mbyll shikuesin e fotografive'
+          : 'Close photograph viewer'
+      }
     >
-      CLOSE ×
+      {
+        isSq
+          ? 'MBYLL ×'
+          : 'CLOSE ×'
+      }
     </button>
   </div>
 
@@ -21,7 +54,11 @@
     type="button"
     class="lightbox-nav lightbox-prev"
     data-prev
-    aria-label="Previous photograph"
+    aria-label={
+      isSq
+        ? 'Fotografia e mëparshme'
+        : 'Previous photograph'
+    }
   >
     <svg
       viewBox="0 0 24 24"
@@ -40,7 +77,11 @@
     type="button"
     class="lightbox-nav lightbox-next"
     data-next
-    aria-label="Next photograph"
+    aria-label={
+      isSq
+        ? 'Fotografia tjetër'
+        : 'Next photograph'
+    }
   >
     <svg
       viewBox="0 0 24 24"
@@ -65,11 +106,15 @@
 
   <a
     class="lightbox-book"
-    href="/book/#contact"
+    href={bookingHref}
     data-en="Book now ↗"
     data-sq="Rezervo ↗"
   >
-    Book now ↗
+    {
+      isSq
+        ? 'Rezervo ↗'
+        : 'Book now ↗'
+    }
   </a>
 </dialog>
 
@@ -86,7 +131,10 @@ const links =
     )
   );
 
-if (dialog && links.length) {
+if (
+  dialog &&
+  links.length
+) {
   const photo =
     dialog.querySelector<HTMLImageElement>(
       '.lightbox-photo'
@@ -102,60 +150,104 @@ if (dialog && links.length) {
       '.lightbox-caption'
     )!;
 
-  let active = 0;
+  let active =
+    0;
 
-  function preload(index: number) {
+  function preload(
+    index: number
+  ) {
     const normalized =
-      (index + links.length) % links.length;
+      (
+        index +
+        links.length
+      ) %
+      links.length;
 
     const href =
-      links[normalized]?.href;
+      links[
+        normalized
+      ]?.href;
 
-    if (!href) return;
+    if (
+      !href
+    ) {
+      return;
+    }
 
-    const image = new Image();
+    const image =
+      new Image();
 
-    image.decoding = 'async';
-    image.src = href;
+    image.decoding =
+      'async';
+
+    image.src =
+      href;
   }
 
-  function show(index: number) {
+  function show(
+    index: number
+  ) {
     active =
-      (index + links.length) %
+      (
+        index +
+        links.length
+      ) %
       links.length;
 
     const link =
-      links[active];
+      links[
+        active
+      ];
 
-    if (!link) return;
+    if (
+      !link
+    ) {
+      return;
+    }
 
     const sourceImage =
       link.querySelector<HTMLImageElement>(
         'img'
       );
 
-    photo.src = link.href;
+    photo.src =
+      link.href;
 
     photo.alt =
-      sourceImage?.alt || '';
+      sourceImage?.alt ||
+      '';
 
     counter.textContent =
       `${active + 1} / ${links.length}`;
 
     caption.textContent =
       link
-        .closest('figure')
-        ?.querySelector('figcaption')
-        ?.textContent || '';
+        .closest(
+          'figure'
+        )
+        ?.querySelector(
+          'figcaption'
+        )
+        ?.textContent ||
+      '';
 
-    preload(active + 1);
-    preload(active - 1);
+    preload(
+      active + 1
+    );
+
+    preload(
+      active - 1
+    );
   }
 
   links.forEach(
-    (link, i) =>
+    (
+      link,
+      i
+    ) =>
       link.addEventListener(
         'click',
+
         event => {
           if (
             event.ctrlKey ||
@@ -168,7 +260,9 @@ if (dialog && links.length) {
 
           event.preventDefault();
 
-          show(i);
+          show(
+            i
+          );
 
           dialog.showModal();
 
@@ -181,63 +275,106 @@ if (dialog && links.length) {
   );
 
   dialog
-    .querySelector('[data-prev]')
+    .querySelector(
+      '[data-prev]'
+    )
     ?.addEventListener(
       'click',
-      () => show(active - 1)
+
+      () =>
+        show(
+          active - 1
+        )
     );
 
   dialog
-    .querySelector('[data-next]')
+    .querySelector(
+      '[data-next]'
+    )
     ?.addEventListener(
       'click',
-      () => show(active + 1)
+
+      () =>
+        show(
+          active + 1
+        )
     );
 
   dialog
-    .querySelector('[data-close]')
+    .querySelector(
+      '[data-close]'
+    )
     ?.addEventListener(
       'click',
-      () => dialog.close()
+
+      () =>
+        dialog.close()
     );
 
   dialog.addEventListener(
     'close',
+
     () => {
       document.documentElement
         .classList.remove(
           'lightbox-open'
         );
 
-      photo.removeAttribute('src');
+      photo.removeAttribute(
+        'src'
+      );
     }
   );
 
   dialog.addEventListener(
     'keydown',
+
     event => {
-      if (event.key === 'ArrowLeft') {
+      if (
+        event.key ===
+        'ArrowLeft'
+      ) {
         event.preventDefault();
-        show(active - 1);
+
+        show(
+          active - 1
+        );
       }
 
-      if (event.key === 'ArrowRight') {
+      if (
+        event.key ===
+        'ArrowRight'
+      ) {
         event.preventDefault();
-        show(active + 1);
+
+        show(
+          active + 1
+        );
       }
     }
   );
 
-  let startX = 0;
-  let startY = 0;
-  let dragging = false;
+  let startX =
+    0;
+
+  let startY =
+    0;
+
+  let dragging =
+    false;
 
   photo.addEventListener(
     'pointerdown',
+
     event => {
-      startX = event.clientX;
-      startY = event.clientY;
-      dragging = true;
+      startX =
+        event.clientX;
+
+      startY =
+        event.clientY;
+
+      dragging =
+        true;
 
       photo.setPointerCapture?.(
         event.pointerId
@@ -247,32 +384,54 @@ if (dialog && links.length) {
 
   photo.addEventListener(
     'pointercancel',
+
     () => {
-      dragging = false;
+      dragging =
+        false;
     }
   );
 
   photo.addEventListener(
     'pointerup',
-    event => {
-      if (!dragging) return;
 
-      dragging = false;
+    event => {
+      if (
+        !dragging
+      ) {
+        return;
+      }
+
+      dragging =
+        false;
 
       const dx =
-        event.clientX - startX;
+        event.clientX -
+        startX;
 
       const dy =
-        event.clientY - startY;
+        event.clientY -
+        startY;
 
       if (
-        Math.abs(dx) > 50 &&
-        Math.abs(dx) >
-          Math.abs(dy) * 1.2
+        Math.abs(
+          dx
+        ) >
+          50 &&
+        Math.abs(
+          dx
+        ) >
+          Math.abs(
+            dy
+          ) *
+          1.2
       ) {
         show(
           active +
-          (dx < 0 ? 1 : -1)
+          (
+            dx < 0
+              ? 1
+              : -1
+          )
         );
       }
     }
