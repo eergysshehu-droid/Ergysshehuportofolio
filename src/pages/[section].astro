@@ -13,7 +13,9 @@ import {
 import {
   sections,
   films,
-  defaults
+  defaults,
+  PERSON_ID,
+  WEBSITE_ID
 } from '../lib/editorial';
 
 import {
@@ -31,33 +33,43 @@ export async function getStaticPaths() {
   return [
     ...sections,
     {
-      slug: 'projects',
-      title: 'Projects',
+      slug:
+        'projects',
+
+      title:
+        'Projects',
+
       subtitle:
         'Selected stories, still and moving.',
+
       seoDescription:
-        'Personal and commercial photography projects by Ergys Shehu, photographer and director based in Albania.'
+        'Commercial, personal, photography and video projects by Ergys Shehu, working with brands, artists and creative teams across Albania and internationally.'
     }
-  ].map(section => ({
-    params: {
-      section:
-        section.slug
-    },
+  ].map(
+    section => ({
+      params: {
+        section:
+          section.slug
+      },
 
-    props: {
-      section,
-      settings,
+      props: {
+        section,
+        settings,
 
-      albums:
-        section.slug === 'projects'
-          ? albums
-          : albums.filter(
-              album =>
-                albumKind(album) ===
-                section.slug
-            )
-    }
-  }));
+        albums:
+          section.slug ===
+            'projects'
+            ? albums
+            : albums.filter(
+                album =>
+                  albumKind(
+                    album
+                  ) ===
+                  section.slug
+              )
+      }
+    })
+  );
 }
 
 interface Props {
@@ -86,14 +98,93 @@ const lang =
 const isSq =
   lang === 'sq';
 
+const seoBySection:
+  Record<
+    string,
+    {
+      enTitle: string;
+      sqTitle: string;
+      enDescription: string;
+      sqDescription: string;
+    }
+  > = {
+    fashion: {
+      enTitle:
+        'Fashion Photographer Albania | Editorial & Campaigns',
+
+      sqTitle:
+        'Fotograf Mode & Editoriale në Shqipëri',
+
+      enDescription:
+        'Fashion photographer Ergys Shehu creates editorial, beauty and campaign photography for models, artists, brands and creative teams across Albania and internationally.',
+
+      sqDescription:
+        'Ergys Shehu realizon fotografi mode, beauty, editoriale dhe fushata për modele, artistë, brande dhe ekipe kreative në Shqipëri dhe ndërkombëtarisht.'
+    },
+
+    weddings: {
+      enTitle:
+        'Wedding Photographer & Videographer Albania',
+
+      sqTitle:
+        'Fotograf & Videograf Dasmash në Shqipëri',
+
+      enDescription:
+        'Wedding photographer and videographer Ergys Shehu creates editorial wedding photography and cinematic films for couples across Albania and destination weddings worldwide.',
+
+      sqDescription:
+        'Ergys Shehu realizon fotografi dhe video dasmash me qasje editoriale dhe kinematografike për çifte në të gjithë Shqipërinë dhe destination weddings.'
+    },
+
+    portraits: {
+      enTitle:
+        'Portrait & Beauty Photographer Albania',
+
+      sqTitle:
+        'Fotograf Portretesh & Beauty në Shqipëri',
+
+      enDescription:
+        'Portrait and beauty photography by Ergys Shehu for artists, models, professionals, personal branding and creative collaborations across Albania and internationally.',
+
+      sqDescription:
+        'Fotografi portretesh dhe beauty nga Ergys Shehu për artistë, modele, profesionistë, personal branding dhe bashkëpunime kreative në Shqipëri dhe jashtë saj.'
+    },
+
+    films: {
+      enTitle:
+        'Videographer & Music Video Director Albania',
+
+      sqTitle:
+        'Videograf & Regjisor Videoklipesh në Shqipëri',
+
+      enDescription:
+        'Videographer and director Ergys Shehu creates music videos, commercial films, campaign video, cultural productions and cinematic visual stories in Albania and internationally.',
+
+      sqDescription:
+        'Videograf dhe regjisor, Ergys Shehu realizon videoklipe, video komerciale, fushata, projekte kulturore dhe storytelling kinematografik në Shqipëri dhe ndërkombëtarisht.'
+    },
+
+    projects: {
+      enTitle:
+        'Commercial Photography & Video Projects Albania',
+
+      sqTitle:
+        'Fotografi Komerciale & Video në Shqipëri',
+
+      enDescription:
+        'Selected commercial and personal photography, video, campaign and creative collaboration projects by Ergys Shehu for brands, artists and cultural productions.',
+
+      sqDescription:
+        'Projekte të përzgjedhura komerciale dhe personale në fotografi, video, fushata dhe bashkëpunime kreative nga Ergys Shehu për brande, artistë dhe projekte kulturore.'
+    }
+  };
+
 const sectionSq:
   Record<
     string,
     {
       title: string;
       subtitle: string;
-      seoTitle: string;
-      seoDescription: string;
     }
   > = {
     fashion: {
@@ -101,13 +192,7 @@ const sectionSq:
         'Modë',
 
       subtitle:
-        'Editoriale & Fushata',
-
-      seoTitle:
-        'Fotografi Mode',
-
-      seoDescription:
-        'Fotografi mode, editoriale dhe fushatash nga Ergys Shehu, fotograf dhe regjisor me bazë në Shqipëri dhe i disponueshëm ndërkombëtarisht.'
+        'Editoriale & Fushata'
     },
 
     weddings: {
@@ -115,13 +200,7 @@ const sectionSq:
         'Dasma',
 
       subtitle:
-        'Histori dashurie',
-
-      seoTitle:
-        'Fotografi Dasmash',
-
-      seoDescription:
-        'Fotografi dhe film dasmash nga Ergys Shehu — reportazh editorial, emocional dhe i përjetshëm për çifte në Shqipëri dhe jashtë saj.'
+        'Histori dashurie'
     },
 
     portraits: {
@@ -129,13 +208,7 @@ const sectionSq:
         'Portrete',
 
       subtitle:
-        'Bukuria në realitet',
-
-      seoTitle:
-        'Fotografi Portretesh',
-
-      seoDescription:
-        'Fotografi portretesh nga Ergys Shehu — portrete të sinqerta, editoriale dhe bashkëkohore në Shqipëri dhe ndërkombëtarisht.'
+        'Bukuria në realitet'
     },
 
     films: {
@@ -143,13 +216,7 @@ const sectionSq:
         'Film & Video',
 
       subtitle:
-        'Videoklipe, filma të shkurtër dhe histori vizuale.',
-
-      seoTitle:
-        'Film & Regji',
-
-      seoDescription:
-        'Videoklipe, filma të shkurtër dhe storytelling vizual me regji nga Ergys Shehu.'
+        'Videoklipe, filma të shkurtër dhe histori vizuale.'
     },
 
     projects: {
@@ -157,32 +224,8 @@ const sectionSq:
         'Projekte',
 
       subtitle:
-        'Histori të përzgjedhura, fotografi dhe film.',
-
-      seoTitle:
-        'Projekte Personale',
-
-      seoDescription:
-        'Projekte personale dhe komerciale në fotografi dhe film nga Ergys Shehu.'
+        'Histori të përzgjedhura, fotografi dhe film.'
     }
-  };
-
-const seoTitlesEn:
-  Record<string, string> = {
-    fashion:
-      'Fashion Photography',
-
-    weddings:
-      'Wedding Photography',
-
-    portraits:
-      'Portrait Photography',
-
-    films:
-      'Film & Direction',
-
-    projects:
-      'Personal Projects'
   };
 
 const localizedSection =
@@ -195,13 +238,7 @@ const localizedSection =
             section.title,
 
           subtitle:
-            section.subtitle,
-
-          seoTitle:
-            section.title,
-
-          seoDescription:
-            section.seoDescription
+            section.subtitle
         }
       )
     : {
@@ -209,20 +246,124 @@ const localizedSection =
           section.title,
 
         subtitle:
-          section.subtitle,
-
-        seoTitle:
-          seoTitlesEn[
-            section.slug
-          ] ||
-          section.title,
-
-        seoDescription:
-          section.seoDescription
+          section.subtitle
       };
 
+const seo =
+  seoBySection[
+    section.slug
+  ];
+
 const pageTitle =
-  `${localizedSection.seoTitle} — Ergys Shehu`;
+  `${
+    isSq
+      ? (
+          seo?.sqTitle ||
+          localizedSection.title
+        )
+      : (
+          seo?.enTitle ||
+          section.title
+        )
+  } | Ergys Shehu`;
+
+const seoDescription =
+  isSq
+    ? (
+        seo?.sqDescription ||
+        section.seoDescription
+      )
+    : (
+        seo?.enDescription ||
+        section.seoDescription
+      );
+
+const pagePath =
+  localizedPath(
+    `/${section.slug}/`,
+    lang
+  );
+
+const pageUrl =
+  new URL(
+    pagePath,
+    'https://ergysshehu.com'
+  ).href;
+
+const itemList =
+  albums.map(
+    (
+      album,
+      index
+    ) => ({
+      '@type':
+        'ListItem',
+
+      position:
+        index + 1,
+
+      name:
+        isSq
+          ? (
+              album.titleSq ||
+              album.title
+            )
+          : album.title,
+
+      url:
+        new URL(
+          localizedPath(
+            `/portfolio/${album.slug}/`,
+            lang
+          ),
+          'https://ergysshehu.com'
+        ).href
+    })
+  );
+
+const collectionPageLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'CollectionPage',
+
+  '@id':
+    `${pageUrl}#collectionpage`,
+
+  url:
+    pageUrl,
+
+  name:
+    pageTitle,
+
+  description:
+    seoDescription,
+
+  inLanguage:
+    lang,
+
+  isPartOf: {
+    '@id':
+      WEBSITE_ID
+  },
+
+  about: {
+    '@id':
+      PERSON_ID
+  },
+
+  mainEntity: {
+    '@type':
+      'ItemList',
+
+    numberOfItems:
+      itemList.length,
+
+    itemListElement:
+      itemList
+  }
+};
 
 const projectsLabel =
   isSq
@@ -239,9 +380,7 @@ const portfolioLabel =
   lang={lang}
   title={pageTitle}
   name={settings.name}
-  description={
-    localizedSection.seoDescription
-  }
+  description={seoDescription}
   image={
     albums[0] &&
     photoUrl(
@@ -250,6 +389,16 @@ const portfolioLabel =
     )
   }
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={
+      JSON.stringify(
+        collectionPageLd
+      )
+    }
+  />
+
   <section class="collection-intro">
     <a
       class="back-link"
@@ -535,7 +684,9 @@ const portfolioLabel =
         <div class="yt-grid">
           {
             films
-              .slice(1)
+              .slice(
+                1
+              )
               .map(
                 video => (
                   <div
