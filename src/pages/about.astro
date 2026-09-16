@@ -15,55 +15,127 @@ import {
   WEBSITE_ID
 } from '../lib/editorial';
 
-const {settings} = await content();
+import {
+  languageFromPath,
+  localizedPath
+} from '../lib/i18n';
+
+const {
+  settings
+} = await content();
+
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
+const pageTitle =
+  isSq
+    ? 'Ergys Shehu — Fotograf, Videograf & Regjisor i Vlerësuar me Çmime'
+    : 'Ergys Shehu — Award-Winning Photographer, Videographer & Director';
 
 const aboutDescription =
-  'Ergys Shehu — photographer and director based in Albania since 2017, working across fashion, portrait, wedding and film direction, and Executive Director of the Kult 360 Foundation.';
+  isSq
+    ? 'Ergys Shehu është fotograf, videograf dhe regjisor shqiptar i vlerësuar me çmime, me eksperiencë në modë, portrete, dasma, evente, fushata komerciale, videoklipe, projekte kulturore dhe bashkëpunime kreative në Shqipëri dhe ndërkombëtarisht.'
+    : 'Ergys Shehu is an award-winning photographer, videographer and director from Albania working across fashion, portraits, weddings, events, commercial campaigns, music videos, cultural projects and creative collaborations.';
+
+const pageUrl =
+  new URL(
+    localizedPath(
+      '/about/',
+      lang
+    ),
+    'https://ergysshehu.com'
+  ).href;
 
 const profilePageLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  '@id': 'https://ergysshehu.com/about/#profilepage',
-  url: 'https://ergysshehu.com/about/',
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'ProfilePage',
+
+  '@id':
+    `${pageUrl}#profilepage`,
+
+  url:
+    pageUrl,
+
+  name:
+    pageTitle,
+
+  description:
+    aboutDescription,
+
+  inLanguage:
+    lang,
+
   isPartOf: {
-    '@id': WEBSITE_ID
+    '@id':
+      WEBSITE_ID
   },
+
   mainEntity: {
-    '@id': PERSON_ID
+    '@id':
+      PERSON_ID
   }
 };
 ---
 
 <Layout
-  title="About — Ergys Shehu"
+  lang={lang}
+  title={pageTitle}
   description={aboutDescription}
   name={settings.name}
   image={
     settings.portrait
-      ? photoUrl(settings.portrait, 1200)
+      ? photoUrl(
+          settings.portrait,
+          1200
+        )
       : undefined
   }
 >
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(profilePageLd)}
+    set:html={
+      JSON.stringify(
+        profilePageLd
+      )
+    }
   />
 
   <section class="collection-intro">
     <a
       class="back-link"
       data-reveal
-      href="/"
+      href={
+        localizedPath(
+          '/',
+          lang
+        )
+      }
     >
-      ← Selected work
+      {
+        isSq
+          ? '← Punë të përzgjedhura'
+          : '← Selected work'
+      }
     </a>
 
     <p
       class="kicker"
       data-reveal
     >
-      PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST
+      {
+        isSq
+          ? 'FOTOGRAF / REGJISOR / ARTIST VIZUAL'
+          : 'PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST'
+      }
     </p>
 
     <h1 data-reveal>
@@ -71,7 +143,18 @@ const profilePageLd = {
     </h1>
 
     <p data-reveal>
-      {settings.bio || defaults.bio}
+      {
+        isSq
+          ? (
+              settings.bioSq ||
+              settings.bio ||
+              defaults.bio
+            )
+          : (
+              settings.bio ||
+              defaults.bio
+            )
+      }
     </p>
   </section>
 
@@ -84,17 +167,29 @@ const profilePageLd = {
             data-image-reveal
           >
             <img
-              src={photoUrl(
-                settings.portrait,
-                1200
-              )}
-              srcset={photoSet(
-                settings.portrait
-              )}
+              src={
+                photoUrl(
+                  settings.portrait,
+                  1200
+                )
+              }
+              srcset={
+                photoSet(
+                  settings.portrait
+                )
+              }
               sizes="(max-width: 700px) 90vw, 35vw"
               alt={
-                settings.portrait.alt ||
-                'Ergys Shehu'
+                isSq
+                  ? (
+                      settings.portrait.altSq ||
+                      settings.portrait.alt ||
+                      'Ergys Shehu'
+                    )
+                  : (
+                      settings.portrait.alt ||
+                      'Ergys Shehu'
+                    )
               }
               loading="eager"
               fetchpriority="high"
@@ -118,8 +213,19 @@ const profilePageLd = {
         Cultural curation
       </p>
 
-      <a href="/book/#contact">
-        Enquiries ↗
+      <a
+        href={
+          localizedPath(
+            '/book/#contact',
+            lang
+          )
+        }
+      >
+        {
+          isSq
+            ? 'Kontakto ↗'
+            : 'Enquiries ↗'
+        }
       </a>
     </aside>
 
@@ -166,47 +272,60 @@ const profilePageLd = {
 
       <div class="bio-milestones">
         <p>
-          <span>2017</span>
+          <span>
+            2017
+          </span>
+
           Founded ALERDIGITALMEDIA
         </p>
 
         <p>
-          <span>2020</span>
+          <span>
+            2020
+          </span>
+
           “Loving Art” · Netët e Klipit Shqiptar
         </p>
 
         <p>
-          <span>2026</span>
+          <span>
+            2026
+          </span>
+
           Best Director & Best Female Performance · “Kujtimi”
         </p>
 
         <p>
           {
-            safeUrl(defaults.kult360)
+            safeUrl(
+              defaults.kult360
+            )
               ? (
-                <a
-                  href={safeUrl(
-                    defaults.kult360
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>
-                    KULT 360
-                  </span>
+                  <a
+                    href={
+                      safeUrl(
+                        defaults.kult360
+                      )
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>
+                      KULT 360
+                    </span>
 
-                  Executive Director ↗
-                </a>
-              )
+                    Executive Director ↗
+                  </a>
+                )
               : (
-                <>
-                  <span>
-                    KULT 360
-                  </span>
+                  <>
+                    <span>
+                      KULT 360
+                    </span>
 
-                  Executive Director
-                </>
-              )
+                    Executive Director
+                  </>
+                )
           }
         </p>
       </div>
