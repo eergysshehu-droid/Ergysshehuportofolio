@@ -1,0 +1,51 @@
+---
+import SectionPage from '../[section].astro';
+
+import {
+  content,
+  albumKind
+} from '../../lib/content';
+
+import {
+  sections
+} from '../../lib/editorial';
+
+export async function getStaticPaths() {
+  const {
+    settings,
+    albums
+  } = await content();
+
+  return [
+    ...sections,
+    {
+      slug: 'projects',
+      title: 'Projects',
+      subtitle:
+        'Selected stories, still and moving.',
+      seoDescription:
+        'Personal and commercial photography projects by Ergys Shehu, photographer and director based in Albania.'
+    }
+  ].map(section => ({
+    params: {
+      section: section.slug
+    },
+
+    props: {
+      section,
+      settings,
+
+      albums:
+        section.slug === 'projects'
+          ? albums
+          : albums.filter(
+              album =>
+                albumKind(album) ===
+                section.slug
+            )
+    }
+  }));
+}
+---
+
+<SectionPage {...Astro.props} />
