@@ -17,145 +17,1495 @@ const selected=[...featuredAlbums,...albums.filter(a=>!a.featured)];
 const reel=safeUrl(saved.reelUrl);
 const heroSeen=new Set<string>();
 const photoKey=(p?:{localBase?:string;src?:string;asset?:{_ref:string}})=>p?.localBase||p?.src||p?.asset?._ref||'';
+
 // The hero is a full-bleed, wide cinematic strip — a tall portrait crop
 // (object-fit:cover) into that shape almost always crops badly. Only
 // landscape/near-square covers are eligible for the rotation.
 const isHeroShaped=(p?:{width?:number;height?:number})=>Boolean(p?.width && p?.height && p.width/p.height >= 0.95);
-const heroPosition=(p?:{hotspot?:{x?:number;y?:number}})=>p?.hotspot?.x!=null && p?.hotspot?.y!=null?`${(p.hotspot.x*100).toFixed(1)}% ${(p.hotspot.y*100).toFixed(1)}%`:'50% 43%';
-const heroEligible=featuredAlbums.filter(a=>photoUrl(a.cover) && isHeroShaped(a.cover));
-const heroCandidates=heroEligible.length?heroEligible:featuredAlbums.filter(a=>photoUrl(a.cover));
-const heroSlides=heroCandidates.filter(a=>{const key=photoKey(a.cover);if(!key||heroSeen.has(key))return false;heroSeen.add(key);return true}).slice(0,5).map(a=>({photo:a.cover!,title:a.title,href:`/portfolio/${a.slug}/`}));
-if(hero && photoUrl(hero) && isHeroShaped(hero)){const key=photoKey(hero);if(key && !heroSeen.has(key)){heroSeen.add(key);heroSlides.unshift({photo:hero,title:featuredAlbums[0]?.title || settings.name,href:featuredAlbums[0]?`/portfolio/${featuredAlbums[0].slug}/`:'#selected'});heroSlides.length=Math.min(heroSlides.length,5)}}
-const filmstripAlbums=(featuredAlbums.length>=4?featuredAlbums:selected).filter(a=>photoUrl(a.cover)).slice(0,8);
----
-<Layout home title="Ergys Shehu — Photographer & Director | Albania" name={settings.name} description={settings.seoDescription} image={hero && photoUrl(hero,1800)}>
-<div class="cinematic-intro" data-intro aria-hidden="true"><div class="intro-brand"><strong>ERGYS</strong><span>SHEHU</span></div><span class="intro-line"></span><div class="intro-meta"><span>A VISUAL STORY AWAITS</span><span>01 / 04</span></div><div class="intro-curtain intro-curtain-left"></div><div class="intro-curtain intro-curtain-right"></div></div>
-<div class="hero-scroll-scene"><section class="opening cinematic-opening" aria-label="Selected photography" data-hero-rotator>
-<div class="opening-image">{heroSlides.map((slide,i)=><picture class:list={['opening-frame',{'is-active':i===0}]} data-href={slide.href} data-title={slide.title} style={`--slide-pos:${heroPosition(slide.photo)}`}>{i===0 && slide.photo.localBase && <source media="(max-width:700px)" srcset="/images/dance-mobile.webp"/>}<img src={photoUrl(slide.photo,1800)} srcset={photoSet(slide.photo)} sizes="100vw" alt={slide.photo.alt || slide.title} loading={i===0?undefined:'lazy'} fetchpriority={i===0?'high':undefined} width={slide.photo.width} height={slide.photo.height}/></picture>)}</div>
-<div class="hero-light-sweep" data-hero-sweep aria-hidden="true"></div>
-<h1 class="sr-only">{settings.name}</h1>
-<div class="hero-topline"><span data-en="Photographer / Director" data-sq="Fotograf / Regjisor">Photographer / Director</span><span data-en="Albania · Available worldwide" data-sq="Shqipëri · I disponueshëm në mbarë botën">Albania · Available worldwide</span></div>
-<div class="hero-feature"><a class="hero-project" href={heroSlides[0]?.href || '#selected'} data-slide-link aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}><span class="hero-project-label" data-en="Selected work" data-sq="Punë e përzgjedhur">Selected work</span><span class="hero-project-title"><span class="title-mask"><span data-slide-title>{heroSlides[0]?.title}</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span></a>{heroSlides.length>1 && <div class="hero-meta" aria-hidden="true"><span data-slide-count>01</span> / {String(heroSlides.length).padStart(2,'0')}</div>}{heroSlides.length>1 && <div class="hero-progress" aria-hidden="true"><span data-hero-progress></span></div>}<div class="hero-controls"><a class="hero-explore" href={heroSlides[0]?.href || '#selected'} data-slide-link data-en="Explore the story" data-sq="Eksploro historinë">Explore the story</a>{heroSlides.length>1 && <div class="hero-nav-arrows"><button type="button" data-slide-prev aria-label="Previous project"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button><span aria-hidden="true"></span><button type="button" data-slide-next aria-label="Next project"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></div>}</div></div>
-<a class="scroll-indicator" href="#selected"><span data-en="Scroll" data-sq="Zbrit">Scroll</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></a>
-</section>
-{filmstripAlbums.length>0 && <section class="filmstrip-section"><svg class="filmstrip-curve" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true"><path d="M 0 100 C 20 88, 45 74, 75 66 C 105 59, 145 56, 195 56 L 805 56 C 855 56, 895 53, 925 46 C 955 38, 980 24, 1000 12 L 1000 100 Z"/></svg><div class="filmstrip-heading" data-reveal><p class="kicker" data-en="FEATURED WORKS" data-sq="PUNË TË VEÇANTA">FEATURED WORKS</p><h2 data-en="Stories that feel real." data-sq="Histori që ndihen të vërteta.">Stories that feel real.</h2><p class="filmstrip-copy" data-en="Photography, film and creative direction for people, brands and meaningful moments." data-sq="Fotografi, film dhe drejtim kreativ për njerëz, brande dhe momente që kanë kuptim.">Photography, film and creative direction for people, brands and meaningful moments.</p><a class="filmstrip-view-all" href="/projects/" data-en="VIEW ALL WORKS" data-sq="SHIKO GJITHË PUNËN">VIEW ALL WORKS <span aria-hidden="true">→</span></a></div><div class="filmstrip-track-wrap"><div class="filmstrip-track" data-filmstrip>{filmstripAlbums.map((album,i)=><a class="filmstrip-item" href={`/portfolio/${album.slug}/`}><div class="filmstrip-image" data-image-reveal style={`--focal-point:${photoPosition(album.cover)}`}><img src={photoUrl(album.cover,1000)} srcset={photoSet(album.cover)} sizes="(max-width:700px) 78vw, 26vw" alt={album.cover?.alt || album.title} loading="lazy"/></div><span class="filmstrip-counter">{String(i+1).padStart(2,'0')} / {String(filmstripAlbums.length).padStart(2,'0')}</span></a>)}</div><button type="button" class="filmstrip-next" data-filmstrip-next aria-label="Next"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></div><div class="section-veil" data-section-veil aria-hidden="true"></div></section>}
-<section class="work-section" id="selected"><div class="work-heading" data-reveal><div><p class="kicker" data-en="A SELECTED PERSPECTIVE" data-sq="NJË PERSPEKTIVË E PËRZGJEDHUR">A SELECTED PERSPECTIVE</p><h2><span data-en="Still." data-sq="Statike.">Still.</span> <em data-en="Never silent." data-sq="Kurrë e heshtur.">Never silent.</em></h2></div><span class="work-count">{String(albums.length).padStart(2,'0')} <span data-en="COLLECTIONS" data-sq="KOLEKSIONE">COLLECTIONS</span></span></div><div class="work-toolbar" data-reveal><div class="filters" role="group" aria-label="Filter projects"><button data-filter="all" aria-pressed="true" data-en="All work" data-sq="Gjithë puna">All work</button><button data-filter="fashion" aria-pressed="false" data-en="Fashion" data-sq="Modë">Fashion</button><button data-filter="portraits" aria-pressed="false" data-en="Portraits" data-sq="Portrete">Portraits</button><button data-filter="weddings" aria-pressed="false" data-en="Weddings" data-sq="Dasma">Weddings</button><button data-filter="projects" aria-pressed="false" data-en="Personal" data-sq="Personale">Personal</button></div><a class="index-link" href="/projects/" data-en="PROJECT INDEX ↗" data-sq="INDEKSI I PROJEKTEVE ↗">PROJECT INDEX ↗</a></div><ProjectGrid albums={selected}/><p class="work-empty" hidden data-en="No projects in this selection yet." data-sq="Ende s'ka projekte në këtë përzgjedhje.">No projects in this selection yet.</p></section>
-</div>
-{recognitions.length>0 && <section class="recognition-section" id="recognition"><div class="recognition-heading" data-reveal><p class="kicker" data-en="SELECTED RECOGNITION" data-sq="NJOHJE E PËRZGJEDHUR">SELECTED RECOGNITION</p></div><div class="recognition-list">{recognitions.map(r=>{const secondary=r.project||r.organization||r.note;const Tag=r.link?'a':'div';return <Tag class="recognition-row" data-reveal {...(r.link?{href:r.link}:{})}><span class="recognition-year">{r.year}</span><span class="recognition-body"><span class="recognition-title">{r.title}</span>{secondary && <span class="recognition-sub">{secondary}</span>}</span>{r.link && <span class="recognition-arrow" aria-hidden="true">↗</span>}</Tag>;})}</div></section>}
-{reel && <section class="motion-section"><p class="kicker" data-reveal data-en="MOVING IMAGE" data-sq="IMAZH NË LËVIZJE">MOVING IMAGE</p><h2 data-reveal data-en="Beyond the still." data-sq="Përtej statikes.">Beyond the still.</h2><a data-reveal href={reel} target="_blank" rel="noopener noreferrer" data-en="WATCH THE REEL ↗" data-sq="SHIKO REEL-IN ↗">WATCH THE REEL ↗</a></section>}
-<LatestWork/>
-{journalFeature.length>0 && <section class="journal-feature"><div class="journal-feature-heading" data-reveal><div><p class="kicker" data-en="THE JOURNAL" data-sq="DITARI">THE JOURNAL</p><h2 data-en="Beyond the frame." data-sq="Përtej kuadrit.">Beyond the frame.</h2></div><a class="index-link" href="/journal/" data-en="READ THE JOURNAL ↗" data-sq="LEXO DITARIN ↗">READ THE JOURNAL ↗</a></div><div class="journal-feature-grid">{journalFeature.map(post=>{const dateEn=`${post.category?post.category+' / ':''}${journalDate(post.publishedAt)}`;const dateSq=`${(post.categorySq||post.category)?(post.categorySq||post.category)+' / ':''}${journalDateSq(post.publishedAt)}`;return <a class="journal-card" data-reveal href={`/journal/${post.slug}/`}>{post.cover && photoUrl(post.cover) && <div class="journal-card-image" data-image-reveal style={`--focal-point:${photoPosition(post.cover)}`}><img src={photoUrl(post.cover,700)} srcset={photoSet(post.cover)} sizes="(max-width:700px) 90vw, 30vw" alt={post.cover.alt || post.title} loading="lazy"/></div>}<div class="journal-card-copy"><span class="journal-date" data-en={dateEn} data-sq={dateSq}>{dateEn}</span><h2 data-en={post.title} data-sq={post.titleSq||post.title}>{post.title}</h2><p data-en={post.excerpt} data-sq={post.excerptSq||post.excerpt}>{post.excerpt}</p><span class="journal-read"><span data-en="Read" data-sq="Lexo">Read</span> <span aria-hidden="true">↗</span></span></div></a>;})}</div></section>}
-<section class="artist-section" id="about"><div class="artist-label" data-reveal><span class="kicker" data-en="BEHIND THE LENS" data-sq="PAS OBJEKTIVIT">BEHIND THE LENS</span><span class="artist-number">ES / 01</span></div><div class="artist-copy"><h2 data-reveal><span data-en="Purity." data-sq="Pastërti.">Purity.</span><br/><span data-en="Simplicity." data-sq="Thjeshtësi.">Simplicity.</span><br/><em data-en="Honesty." data-sq="Ndershmëri.">Honesty.</em></h2><p data-reveal>{settings.bio}</p><a class="text-link" data-reveal href="/about/">THE ARTIST · EN / SQ <span>↗</span></a></div></section>
-<section class="contact-section" id="contact"><div data-reveal><p class="kicker" data-en="FOR COMMISSIONS & COLLABORATIONS" data-sq="PËR KOMISIONE & BASHKËPUNIME">FOR COMMISSIONS & COLLABORATIONS</p><h2><span data-en="Let’s make" data-sq="Le të krijojmë">Let’s make</span><br/><em data-en="something matter." data-sq="diçka që ka kuptim.">something matter.</em></h2></div><div class="contact-details" data-reveal>{settings.email && <a class="email" href={`mailto:${settings.email}`}>{settings.email} ↗</a>}<p><span data-en="Based in Albania." data-sq="Me bazë në Shqipëri.">Based in Albania.</span><br/><span data-en="Available worldwide." data-sq="I disponueshëm në mbarë botën.">Available worldwide.</span></p>{safeUrl(settings.instagram) && <a href={safeUrl(settings.instagram)} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>}</div></section>
-<script>
-const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 
-// Cinematic intro — plays once per browser tab session (sessionStorage-gated),
-// skipped entirely under reduced motion. The overlay covers the hero at
-// z-index:9999 while it plays, so the hero's own fade/scale entrance just
-// runs underneath, unseen, and is already finished by the time the curtain
-// opens. Every path below ends by removing 'intro-running' from <html> and/or
-// clearing the title's inline transform, so the headline can never be left
-// permanently hidden if a step above it fails.
-const introSeenKey='ergys-intro-seen';
-const introEl=document.querySelector<HTMLElement>('[data-intro]');
-let introSeen=false;
-try{introSeen=sessionStorage.getItem(introSeenKey)==='1'}catch{}
-const introTitle=document.querySelector<HTMLElement>('.title-mask [data-slide-title]');
-if(introEl){
-  if(reducedMotion.matches || introSeen){
-    introEl.remove();
-    if(introTitle)introTitle.style.transform='none';
-  }else{
-    document.documentElement.classList.add('intro-running');
-    const isMobile=window.matchMedia('(max-width:700px)').matches;
-    const t=(ms:number)=>Math.round(ms*(isMobile?0.75:1));
-    const leftCurtain=introEl.querySelector<HTMLElement>('.intro-curtain-left');
-    const rightCurtain=introEl.querySelector<HTMLElement>('.intro-curtain-right');
-    const introLine=introEl.querySelector<HTMLElement>('.intro-line');
-    const sweep=document.querySelector<HTMLElement>('[data-hero-sweep]');
-    setTimeout(()=>introLine?.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:t(550),easing:'cubic-bezier(.2,.7,.2,1)',fill:'forwards'}),t(250));
-    setTimeout(()=>{
-      leftCurtain?.animate([{transform:'translateX(0)'},{transform:'translateX(-100%)'}],{duration:t(1100),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'});
-      rightCurtain?.animate([{transform:'translateX(0)'},{transform:'translateX(100%)'}],{duration:t(1100),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'});
-    },t(850));
-    setTimeout(()=>{
-      introEl.animate([{opacity:1},{opacity:0}],{duration:t(450),easing:'ease',fill:'forwards'});
-      introTitle?.animate([{transform:'translateY(115%)'},{transform:'translateY(0)'}],{duration:t(850),easing:'cubic-bezier(.2,.75,.2,1)',fill:'forwards'});
-    },t(1450));
-    setTimeout(()=>sweep?.animate([{left:'-25%',opacity:0},{left:'25%',opacity:.7},{left:'115%',opacity:0}],{duration:t(1800),easing:'ease-in-out'}),t(1800));
-    setTimeout(()=>{
-      introEl.remove();
-      document.documentElement.classList.remove('intro-running');
-      if(introTitle)introTitle.style.transform='none';
-      try{sessionStorage.setItem(introSeenKey,'1')}catch{}
-    },t(2300));
+const heroPosition=(p?:{hotspot?:{x?:number;y?:number}})=>
+  p?.hotspot?.x!=null && p?.hotspot?.y!=null
+    ? `${(p.hotspot.x*100).toFixed(1)}% ${(p.hotspot.y*100).toFixed(1)}%`
+    : '50% 43%';
+
+const heroEligible=featuredAlbums.filter(
+  a=>photoUrl(a.cover) && isHeroShaped(a.cover)
+);
+
+const heroCandidates=
+  heroEligible.length
+    ? heroEligible
+    : featuredAlbums.filter(a=>photoUrl(a.cover));
+
+const heroSlides=heroCandidates
+  .filter(a=>{
+    const key=photoKey(a.cover);
+
+    if(!key || heroSeen.has(key)) return false;
+
+    heroSeen.add(key);
+
+    return true;
+  })
+  .slice(0,5)
+  .map(a=>({
+    photo:a.cover!,
+    title:a.title,
+    href:`/portfolio/${a.slug}/`
+  }));
+
+if(hero && photoUrl(hero) && isHeroShaped(hero)){
+  const key=photoKey(hero);
+
+  if(key && !heroSeen.has(key)){
+    heroSeen.add(key);
+
+    heroSlides.unshift({
+      photo:hero,
+      title:featuredAlbums[0]?.title || settings.name,
+      href:featuredAlbums[0]
+        ? `/portfolio/${featuredAlbums[0].slug}/`
+        : '#selected'
+    });
+
+    heroSlides.length=Math.min(heroSlides.length,5);
   }
 }
 
-const heroRoot=document.querySelector<HTMLElement>('[data-hero-rotator]');
-const heroFrameEls=heroRoot?Array.from(heroRoot.querySelectorAll<HTMLElement>('.opening-frame')):[];
-const slideLinks=Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-slide-link]'));
-const slideTitle=document.querySelector<HTMLElement>('[data-slide-title]');
-const slideCount=document.querySelector<HTMLElement>('[data-slide-count]');
-const heroProgress=document.querySelector<HTMLElement>('[data-hero-progress]');
-let heroProgressAnim:Animation|undefined;
-let heroActive=0;
-let heroTimer:ReturnType<typeof setInterval>|undefined;
-function playHeroProgress(){
-  if(!heroProgress || reducedMotion.matches || heroFrameEls.length<2)return;
-  heroProgressAnim?.cancel();
-  heroProgressAnim=heroProgress.animate([{width:'0%'},{width:'100%'}],{duration:7000,easing:'linear',fill:'forwards'});
-}
-function showSlide(index:number){
-  if(!heroFrameEls.length)return;
-  heroFrameEls[heroActive]?.classList.remove('is-active');
-  heroActive=(index+heroFrameEls.length)%heroFrameEls.length;
-  const el=heroFrameEls[heroActive];
-  el.classList.add('is-active');
-  const href=el.dataset.href;
-  const title=el.dataset.title;
-  if(href){slideLinks.forEach(link=>{link.href=href;if(link.classList.contains('hero-project'))link.setAttribute('aria-label','Selected work: '+(title||''))})}
-  if(slideTitle && title)slideTitle.textContent=title;
-  if(slideCount)slideCount.textContent=String(heroActive+1).padStart(2,'0');
-  playHeroProgress();
-}
-function startHero(){if(heroFrameEls.length>1 && !heroTimer)heroTimer=setInterval(()=>showSlide(heroActive+1),7000)}
-function stopHero(){if(heroTimer){clearInterval(heroTimer);heroTimer=undefined}}
-if(!reducedMotion.matches)startHero();
-playHeroProgress();
-document.querySelector('[data-slide-prev]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive-1);startHero()});
-document.querySelector('[data-slide-next]')?.addEventListener('click',()=>{stopHero();showSlide(heroActive+1);startHero()});
+const filmstripAlbums=
+  (featuredAlbums.length>=4 ? featuredAlbums : selected)
+    .filter(a=>photoUrl(a.cover))
+    .slice(0,8);
+---
 
-// Subtle hero parallax, driven by scroll progress through the sticky scene.
-const heroScene=document.querySelector<HTMLElement>('.hero-scroll-scene');
-const heroSection=document.querySelector<HTMLElement>('.opening');
-if(heroScene && heroSection && !reducedMotion.matches){
-  let ticking=false;
-  const update=()=>{
-    const rect=heroScene.getBoundingClientRect();
-    const span=Math.max(heroScene.offsetHeight-window.innerHeight,1);
-    const progress=Math.min(Math.max(-rect.top/span,0),1);
-    heroSection.style.setProperty('--hero-image-shift',(progress*40)+'px');
-    heroSection.style.setProperty('--hero-content-shift',(progress*-18)+'px');
-    heroSection.style.setProperty('--hero-content-opacity',String(Math.max(1-progress*.65,.3)));
-    ticking=false;
-  };
-  update();
-  document.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});
-}
+<Layout
+  home
+  title="Ergys Shehu — Photographer & Director | Albania"
+  name={settings.name}
+  description={settings.seoDescription}
+  image={hero && photoUrl(hero,1800)}
+>
+  <div
+    class="cinematic-intro"
+    data-intro
+    aria-hidden="true"
+  >
+    <div class="intro-brand">
+      <strong>ERGYS</strong>
+      <span>SHEHU</span>
+    </div>
 
-// Featured-works filmstrip: native horizontal scroll (touch/trackpad swipe
-// already works for free) plus a "next" button that pages forward one
-// viewport-ish at a time and loops back to the start at the end.
-const filmstrip=document.querySelector<HTMLElement>('[data-filmstrip]');
-const filmstripNext=document.querySelector<HTMLButtonElement>('[data-filmstrip-next]');
-filmstripNext?.addEventListener('click',()=>{
-  if(!filmstrip)return;
-  const atEnd=filmstrip.scrollLeft+filmstrip.clientWidth>=filmstrip.scrollWidth-8;
-  filmstrip.scrollTo({left:atEnd?0:filmstrip.scrollLeft+filmstrip.clientWidth*0.72,behavior:reducedMotion.matches?'auto':'smooth'});
-});
+    <span class="intro-line"></span>
 
-const buttons=document.querySelectorAll<HTMLButtonElement>('[data-filter]');
-buttons.forEach(button=>button.addEventListener('click',()=>{buttons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;document.querySelectorAll<HTMLElement>('[data-kind]').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.kind!==button.dataset.filter;if(!card.hidden)count++});const empty=document.querySelector<HTMLElement>('.work-empty');if(empty)empty.hidden=count>0;}));
-</script></Layout>
+    <div class="intro-meta">
+      <span>A VISUAL STORY AWAITS</span>
+      <span>01 / 04</span>
+    </div>
+
+    <div class="intro-curtain intro-curtain-left"></div>
+    <div class="intro-curtain intro-curtain-right"></div>
+  </div>
+
+  <div class="hero-scroll-scene">
+    <section
+      class="opening cinematic-opening"
+      aria-label="Selected photography"
+      data-hero-rotator
+    >
+      <div class="opening-image">
+        {
+          heroSlides.map((slide,i)=>
+            <picture
+              class:list={[
+                'opening-frame',
+                {'is-active':i===0}
+              ]}
+              data-href={slide.href}
+              data-title={slide.title}
+              style={`--slide-pos:${heroPosition(slide.photo)}`}
+            >
+              {
+                i===0 &&
+                slide.photo.localBase && (
+                  <source
+                    media="(max-width:700px)"
+                    srcset="/images/dance-mobile.webp"
+                  />
+                )
+              }
+
+              <img
+                src={photoUrl(slide.photo,1800)}
+                srcset={photoSet(slide.photo)}
+                sizes="100vw"
+                alt={slide.photo.alt || slide.title}
+                loading={i===0 ? undefined : 'lazy'}
+                fetchpriority={i===0 ? 'high' : undefined}
+                width={slide.photo.width}
+                height={slide.photo.height}
+              />
+            </picture>
+          )
+        }
+      </div>
+
+      <div
+        class="hero-light-sweep"
+        data-hero-sweep
+        aria-hidden="true"
+      ></div>
+
+      <h1 class="sr-only">
+        {settings.name}
+      </h1>
+
+      <div class="hero-topline">
+        <span
+          data-en="Photographer / Director"
+          data-sq="Fotograf / Regjisor"
+        >
+          Photographer / Director
+        </span>
+
+        <span
+          data-en="Albania · Available worldwide"
+          data-sq="Shqipëri · I disponueshëm në mbarë botën"
+        >
+          Albania · Available worldwide
+        </span>
+      </div>
+
+      <div class="hero-feature">
+        <a
+          class="hero-project"
+          href={heroSlides[0]?.href || '#selected'}
+          data-slide-link
+          aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}
+        >
+          <span
+            class="hero-project-label"
+            data-en="Selected work"
+            data-sq="Punë e përzgjedhur"
+          >
+            Selected work
+          </span>
+
+          <span class="hero-project-title">
+            <span class="title-mask">
+              <span data-slide-title>
+                {heroSlides[0]?.title}
+              </span>
+            </span>
+
+            <span
+              class="hero-project-arrow"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </span>
+        </a>
+
+        {
+          heroSlides.length>1 && (
+            <div
+              class="hero-meta"
+              aria-hidden="true"
+            >
+              <span data-slide-count>
+                01
+              </span>
+
+              {' / '}
+
+              {String(heroSlides.length).padStart(2,'0')}
+            </div>
+          )
+        }
+
+        {
+          heroSlides.length>1 && (
+            <div
+              class="hero-progress"
+              aria-hidden="true"
+            >
+              <span data-hero-progress></span>
+            </div>
+          )
+        }
+
+        <div class="hero-controls">
+          <a
+            class="hero-explore"
+            href={heroSlides[0]?.href || '#selected'}
+            data-slide-link
+            data-en="Explore the story"
+            data-sq="Eksploro historinë"
+          >
+            Explore the story
+          </a>
+
+          {
+            heroSlides.length>1 && (
+              <div class="hero-nav-arrows">
+                <button
+                  type="button"
+                  data-slide-prev
+                  aria-label="Previous project"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M10 3L5 8l5 5"/>
+                  </svg>
+                </button>
+
+                <span aria-hidden="true"></span>
+
+                <button
+                  type="button"
+                  data-slide-next
+                  aria-label="Next project"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 3l5 5-5 5"/>
+                  </svg>
+                </button>
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <a
+        class="scroll-indicator"
+        href="#selected"
+      >
+        <span
+          data-en="Scroll"
+          data-sq="Zbrit"
+        >
+          Scroll
+        </span>
+
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 6l5 5 5-5"/>
+        </svg>
+      </a>
+    </section>
+
+    {
+      filmstripAlbums.length>0 && (
+        <section class="filmstrip-section">
+          <svg
+            class="filmstrip-curve"
+            viewBox="0 0 1000 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M 0 100 C 20 88, 45 74, 75 66 C 105 59, 145 56, 195 56 L 805 56 C 855 56, 895 53, 925 46 C 955 38, 980 24, 1000 12 L 1000 100 Z"/>
+          </svg>
+
+          <div
+            class="filmstrip-heading"
+            data-reveal
+          >
+            <p
+              class="kicker"
+              data-en="FEATURED WORKS"
+              data-sq="PUNË TË VEÇANTA"
+            >
+              FEATURED WORKS
+            </p>
+
+            <h2
+              data-en="Stories that feel real."
+              data-sq="Histori që ndihen të vërteta."
+            >
+              Stories that feel real.
+            </h2>
+
+            <p
+              class="filmstrip-copy"
+              data-en="Photography, film and creative direction for people, brands and meaningful moments."
+              data-sq="Fotografi, film dhe drejtim kreativ për njerëz, brande dhe momente që kanë kuptim."
+            >
+              Photography, film and creative direction for people, brands and meaningful moments.
+            </p>
+
+            <a
+              class="filmstrip-view-all"
+              href="/projects/"
+              data-en="VIEW ALL WORKS"
+              data-sq="SHIKO GJITHË PUNËN"
+            >
+              VIEW ALL WORKS
+              {' '}
+              <span aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+
+          <div class="filmstrip-track-wrap">
+            <div
+              class="filmstrip-track"
+              data-filmstrip
+            >
+              {
+                filmstripAlbums.map((album,i)=>
+                  <a
+                    class="filmstrip-item"
+                    href={`/portfolio/${album.slug}/`}
+                  >
+                    <div
+                      class="filmstrip-image"
+                      data-image-reveal
+                      style={`--focal-point:${photoPosition(album.cover)}`}
+                    >
+                      <img
+                        src={photoUrl(album.cover,1000)}
+                        srcset={photoSet(album.cover)}
+                        sizes="(max-width:700px) 78vw, 26vw"
+                        width={album.cover?.width}
+                        height={album.cover?.height}
+                        alt={album.cover?.alt || album.title}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+
+                    <span class="filmstrip-counter">
+                      {String(i+1).padStart(2,'0')}
+                      {' / '}
+                      {String(filmstripAlbums.length).padStart(2,'0')}
+                    </span>
+                  </a>
+                )
+              }
+            </div>
+
+            <button
+              type="button"
+              class="filmstrip-next"
+              data-filmstrip-next
+              aria-label="Next"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 3l5 5-5 5"/>
+              </svg>
+            </button>
+          </div>
+
+          <div
+            class="section-veil"
+            data-section-veil
+            aria-hidden="true"
+          ></div>
+        </section>
+      )
+    }
+
+    <section
+      class="work-section"
+      id="selected"
+    >
+      <div
+        class="work-heading"
+        data-reveal
+      >
+        <div>
+          <p
+            class="kicker"
+            data-en="A SELECTED PERSPECTIVE"
+            data-sq="NJË PERSPEKTIVË E PËRZGJEDHUR"
+          >
+            A SELECTED PERSPECTIVE
+          </p>
+
+          <h2>
+            <span
+              data-en="Still."
+              data-sq="Statike."
+            >
+              Still.
+            </span>
+
+            {' '}
+
+            <em
+              data-en="Never silent."
+              data-sq="Kurrë e heshtur."
+            >
+              Never silent.
+            </em>
+          </h2>
+        </div>
+
+        <span class="work-count">
+          {String(albums.length).padStart(2,'0')}
+          {' '}
+
+          <span
+            data-en="COLLECTIONS"
+            data-sq="KOLEKSIONE"
+          >
+            COLLECTIONS
+          </span>
+        </span>
+      </div>
+
+      <div
+        class="work-toolbar"
+        data-reveal
+      >
+        <div
+          class="filters"
+          role="group"
+          aria-label="Filter projects"
+        >
+          <button
+            data-filter="all"
+            aria-pressed="true"
+            data-en="All work"
+            data-sq="Gjithë puna"
+          >
+            All work
+          </button>
+
+          <button
+            data-filter="fashion"
+            aria-pressed="false"
+            data-en="Fashion"
+            data-sq="Modë"
+          >
+            Fashion
+          </button>
+
+          <button
+            data-filter="portraits"
+            aria-pressed="false"
+            data-en="Portraits"
+            data-sq="Portrete"
+          >
+            Portraits
+          </button>
+
+          <button
+            data-filter="weddings"
+            aria-pressed="false"
+            data-en="Weddings"
+            data-sq="Dasma"
+          >
+            Weddings
+          </button>
+
+          <button
+            data-filter="projects"
+            aria-pressed="false"
+            data-en="Personal"
+            data-sq="Personale"
+          >
+            Personal
+          </button>
+        </div>
+
+        <a
+          class="index-link"
+          href="/projects/"
+          data-en="PROJECT INDEX ↗"
+          data-sq="INDEKSI I PROJEKTEVE ↗"
+        >
+          PROJECT INDEX ↗
+        </a>
+      </div>
+
+      <ProjectGrid albums={selected}/>
+
+      <p
+        class="work-empty"
+        hidden
+        data-en="No projects in this selection yet."
+        data-sq="Ende s'ka projekte në këtë përzgjedhje."
+      >
+        No projects in this selection yet.
+      </p>
+    </section>
+  </div>
+
+  {
+    recognitions.length>0 && (
+      <section
+        class="recognition-section"
+        id="recognition"
+      >
+        <div
+          class="recognition-heading"
+          data-reveal
+        >
+          <p
+            class="kicker"
+            data-en="SELECTED RECOGNITION"
+            data-sq="NJOHJE E PËRZGJEDHUR"
+          >
+            SELECTED RECOGNITION
+          </p>
+        </div>
+
+        <div class="recognition-list">
+          {
+            recognitions.map(r=>{
+              const secondary=
+                r.project ||
+                r.organization ||
+                r.note;
+
+              const Tag=
+                r.link
+                  ? 'a'
+                  : 'div';
+
+              return (
+                <Tag
+                  class="recognition-row"
+                  data-reveal
+                  {...(r.link ? {href:r.link} : {})}
+                >
+                  <span class="recognition-year">
+                    {r.year}
+                  </span>
+
+                  <span class="recognition-body">
+                    <span class="recognition-title">
+                      {r.title}
+                    </span>
+
+                    {
+                      secondary && (
+                        <span class="recognition-sub">
+                          {secondary}
+                        </span>
+                      )
+                    }
+                  </span>
+
+                  {
+                    r.link && (
+                      <span
+                        class="recognition-arrow"
+                        aria-hidden="true"
+                      >
+                        ↗
+                      </span>
+                    )
+                  }
+                </Tag>
+              );
+            })
+          }
+        </div>
+      </section>
+    )
+  }
+
+  {
+    reel && (
+      <section class="motion-section">
+        <p
+          class="kicker"
+          data-reveal
+          data-en="MOVING IMAGE"
+          data-sq="IMAZH NË LËVIZJE"
+        >
+          MOVING IMAGE
+        </p>
+
+        <h2
+          data-reveal
+          data-en="Beyond the still."
+          data-sq="Përtej statikes."
+        >
+          Beyond the still.
+        </h2>
+
+        <a
+          data-reveal
+          href={reel}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-en="WATCH THE REEL ↗"
+          data-sq="SHIKO REEL-IN ↗"
+        >
+          WATCH THE REEL ↗
+        </a>
+      </section>
+    )
+  }
+
+  <LatestWork/>
+
+  {
+    journalFeature.length>0 && (
+      <section class="journal-feature">
+        <div
+          class="journal-feature-heading"
+          data-reveal
+        >
+          <div>
+            <p
+              class="kicker"
+              data-en="THE JOURNAL"
+              data-sq="DITARI"
+            >
+              THE JOURNAL
+            </p>
+
+            <h2
+              data-en="Beyond the frame."
+              data-sq="Përtej kuadrit."
+            >
+              Beyond the frame.
+            </h2>
+          </div>
+
+          <a
+            class="index-link"
+            href="/journal/"
+            data-en="READ THE JOURNAL ↗"
+            data-sq="LEXO DITARIN ↗"
+          >
+            READ THE JOURNAL ↗
+          </a>
+        </div>
+
+        <div class="journal-feature-grid">
+          {
+            journalFeature.map(post=>{
+              const dateEn=
+                `${post.category ? post.category+' / ' : ''}${journalDate(post.publishedAt)}`;
+
+              const dateSq=
+                `${(post.categorySq||post.category) ? (post.categorySq||post.category)+' / ' : ''}${journalDateSq(post.publishedAt)}`;
+
+              return (
+                <a
+                  class="journal-card"
+                  data-reveal
+                  href={`/journal/${post.slug}/`}
+                >
+                  {
+                    post.cover &&
+                    photoUrl(post.cover) && (
+                      <div
+                        class="journal-card-image"
+                        data-image-reveal
+                        style={`--focal-point:${photoPosition(post.cover)}`}
+                      >
+                        <img
+                          src={photoUrl(post.cover,700)}
+                          srcset={photoSet(post.cover)}
+                          sizes="(max-width:700px) 90vw, 30vw"
+                          width={post.cover.width}
+                          height={post.cover.height}
+                          alt={post.cover.alt || post.title}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    )
+                  }
+
+                  <div class="journal-card-copy">
+                    <span
+                      class="journal-date"
+                      data-en={dateEn}
+                      data-sq={dateSq}
+                    >
+                      {dateEn}
+                    </span>
+
+                    <h2
+                      data-en={post.title}
+                      data-sq={post.titleSq||post.title}
+                    >
+                      {post.title}
+                    </h2>
+
+                    <p
+                      data-en={post.excerpt}
+                      data-sq={post.excerptSq||post.excerpt}
+                    >
+                      {post.excerpt}
+                    </p>
+
+                    <span class="journal-read">
+                      <span
+                        data-en="Read"
+                        data-sq="Lexo"
+                      >
+                        Read
+                      </span>
+
+                      {' '}
+
+                      <span aria-hidden="true">
+                        ↗
+                      </span>
+                    </span>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </section>
+    )
+  }
+
+  <section
+    class="artist-section"
+    id="about"
+  >
+    <div
+      class="artist-label"
+      data-reveal
+    >
+      <span
+        class="kicker"
+        data-en="BEHIND THE LENS"
+        data-sq="PAS OBJEKTIVIT"
+      >
+        BEHIND THE LENS
+      </span>
+
+      <span class="artist-number">
+        ES / 01
+      </span>
+    </div>
+
+    <div class="artist-copy">
+      <h2 data-reveal>
+        <span
+          data-en="Purity."
+          data-sq="Pastërti."
+        >
+          Purity.
+        </span>
+
+        <br/>
+
+        <span
+          data-en="Simplicity."
+          data-sq="Thjeshtësi."
+        >
+          Simplicity.
+        </span>
+
+        <br/>
+
+        <em
+          data-en="Honesty."
+          data-sq="Ndershmëri."
+        >
+          Honesty.
+        </em>
+      </h2>
+
+      <p data-reveal>
+        {settings.bio}
+      </p>
+
+      <a
+        class="text-link"
+        data-reveal
+        href="/about/"
+      >
+        THE ARTIST · EN / SQ
+        {' '}
+        <span>↗</span>
+      </a>
+    </div>
+  </section>
+
+  <section
+    class="contact-section"
+    id="contact"
+  >
+    <div data-reveal>
+      <p
+        class="kicker"
+        data-en="FOR COMMISSIONS & COLLABORATIONS"
+        data-sq="PËR KOMISIONE & BASHKËPUNIME"
+      >
+        FOR COMMISSIONS & COLLABORATIONS
+      </p>
+
+      <h2>
+        <span
+          data-en="Let’s make"
+          data-sq="Le të krijojmë"
+        >
+          Let’s make
+        </span>
+
+        <br/>
+
+        <em
+          data-en="something matter."
+          data-sq="diçka që ka kuptim."
+        >
+          something matter.
+        </em>
+      </h2>
+    </div>
+
+    <div
+      class="contact-details"
+      data-reveal
+    >
+      {
+        settings.email && (
+          <a
+            class="email"
+            href={`mailto:${settings.email}`}
+          >
+            {settings.email} ↗
+          </a>
+        )
+      }
+
+      <p>
+        <span
+          data-en="Based in Albania."
+          data-sq="Me bazë në Shqipëri."
+        >
+          Based in Albania.
+        </span>
+
+        <br/>
+
+        <span
+          data-en="Available worldwide."
+          data-sq="I disponueshëm në mbarë botën."
+        >
+          Available worldwide.
+        </span>
+      </p>
+
+      {
+        safeUrl(settings.instagram) && (
+          <a
+            href={safeUrl(settings.instagram)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            INSTAGRAM ↗
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <script>
+    const reducedMotion=
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      );
+
+    // Cinematic intro — plays once per browser tab session (sessionStorage-gated),
+    // skipped entirely under reduced motion. The overlay covers the hero at
+    // z-index:9999 while it plays, so the hero's own fade/scale entrance just
+    // runs underneath, unseen, and is already finished by the time the curtain
+    // opens. Every path below ends by removing 'intro-running' from <html> and/or
+    // clearing the title's inline transform, so the headline can never be left
+    // permanently hidden if a step above it fails.
+
+    const introSeenKey=
+      'ergys-intro-seen';
+
+    const introEl=
+      document.querySelector<HTMLElement>(
+        '[data-intro]'
+      );
+
+    let introSeen=false;
+
+    try{
+      introSeen=
+        sessionStorage.getItem(
+          introSeenKey
+        )==='1';
+    }catch{}
+
+    const introTitle=
+      document.querySelector<HTMLElement>(
+        '.title-mask [data-slide-title]'
+      );
+
+    if(introEl){
+      if(
+        reducedMotion.matches ||
+        introSeen
+      ){
+        introEl.remove();
+
+        if(introTitle){
+          introTitle.style.transform='none';
+        }
+      }else{
+        document.documentElement
+          .classList.add(
+            'intro-running'
+          );
+
+        const isMobile=
+          window.matchMedia(
+            '(max-width:700px)'
+          ).matches;
+
+        const t=
+          (ms:number)=>
+            Math.round(
+              ms*(isMobile ? 0.75 : 1)
+            );
+
+        const leftCurtain=
+          introEl.querySelector<HTMLElement>(
+            '.intro-curtain-left'
+          );
+
+        const rightCurtain=
+          introEl.querySelector<HTMLElement>(
+            '.intro-curtain-right'
+          );
+
+        const introLine=
+          introEl.querySelector<HTMLElement>(
+            '.intro-line'
+          );
+
+        const sweep=
+          document.querySelector<HTMLElement>(
+            '[data-hero-sweep]'
+          );
+
+        setTimeout(
+          ()=>introLine?.animate(
+            [
+              {transform:'scaleX(0)'},
+              {transform:'scaleX(1)'}
+            ],
+            {
+              duration:t(550),
+              easing:'cubic-bezier(.2,.7,.2,1)',
+              fill:'forwards'
+            }
+          ),
+          t(250)
+        );
+
+        setTimeout(
+          ()=>{
+            leftCurtain?.animate(
+              [
+                {transform:'translateX(0)'},
+                {transform:'translateX(-100%)'}
+              ],
+              {
+                duration:t(1100),
+                easing:'cubic-bezier(.77,0,.18,1)',
+                fill:'forwards'
+              }
+            );
+
+            rightCurtain?.animate(
+              [
+                {transform:'translateX(0)'},
+                {transform:'translateX(100%)'}
+              ],
+              {
+                duration:t(1100),
+                easing:'cubic-bezier(.77,0,.18,1)',
+                fill:'forwards'
+              }
+            );
+          },
+          t(850)
+        );
+
+        setTimeout(
+          ()=>{
+            introEl.animate(
+              [
+                {opacity:1},
+                {opacity:0}
+              ],
+              {
+                duration:t(450),
+                easing:'ease',
+                fill:'forwards'
+              }
+            );
+
+            introTitle?.animate(
+              [
+                {transform:'translateY(115%)'},
+                {transform:'translateY(0)'}
+              ],
+              {
+                duration:t(850),
+                easing:'cubic-bezier(.2,.75,.2,1)',
+                fill:'forwards'
+              }
+            );
+          },
+          t(1450)
+        );
+
+        setTimeout(
+          ()=>sweep?.animate(
+            [
+              {left:'-25%',opacity:0},
+              {left:'25%',opacity:.7},
+              {left:'115%',opacity:0}
+            ],
+            {
+              duration:t(1800),
+              easing:'ease-in-out'
+            }
+          ),
+          t(1800)
+        );
+
+        setTimeout(
+          ()=>{
+            introEl.remove();
+
+            document.documentElement
+              .classList.remove(
+                'intro-running'
+              );
+
+            if(introTitle){
+              introTitle.style.transform='none';
+            }
+
+            try{
+              sessionStorage.setItem(
+                introSeenKey,
+                '1'
+              );
+            }catch{}
+          },
+          t(2300)
+        );
+      }
+    }
+
+    const heroRoot=
+      document.querySelector<HTMLElement>(
+        '[data-hero-rotator]'
+      );
+
+    const heroFrameEls=
+      heroRoot
+        ? Array.from(
+            heroRoot.querySelectorAll<HTMLElement>(
+              '.opening-frame'
+            )
+          )
+        : [];
+
+    const slideLinks=
+      Array.from(
+        document.querySelectorAll<HTMLAnchorElement>(
+          '[data-slide-link]'
+        )
+      );
+
+    const slideTitle=
+      document.querySelector<HTMLElement>(
+        '[data-slide-title]'
+      );
+
+    const slideCount=
+      document.querySelector<HTMLElement>(
+        '[data-slide-count]'
+      );
+
+    const heroProgress=
+      document.querySelector<HTMLElement>(
+        '[data-hero-progress]'
+      );
+
+    let heroProgressAnim:
+      Animation|undefined;
+
+    let heroActive=0;
+
+    let heroTimer:
+      ReturnType<typeof setInterval>|undefined;
+
+    function playHeroProgress(){
+      if(
+        !heroProgress ||
+        reducedMotion.matches ||
+        heroFrameEls.length<2
+      ){
+        return;
+      }
+
+      heroProgressAnim?.cancel();
+
+      heroProgressAnim=
+        heroProgress.animate(
+          [
+            {width:'0%'},
+            {width:'100%'}
+          ],
+          {
+            duration:7000,
+            easing:'linear',
+            fill:'forwards'
+          }
+        );
+    }
+
+    function showSlide(index:number){
+      if(!heroFrameEls.length){
+        return;
+      }
+
+      heroFrameEls[heroActive]
+        ?.classList.remove(
+          'is-active'
+        );
+
+      heroActive=
+        (
+          index +
+          heroFrameEls.length
+        ) %
+        heroFrameEls.length;
+
+      const el=
+        heroFrameEls[heroActive];
+
+      el.classList.add(
+        'is-active'
+      );
+
+      const href=
+        el.dataset.href;
+
+      const title=
+        el.dataset.title;
+
+      if(href){
+        slideLinks.forEach(
+          link=>{
+            link.href=href;
+
+            if(
+              link.classList.contains(
+                'hero-project'
+              )
+            ){
+              link.setAttribute(
+                'aria-label',
+                'Selected work: '+
+                (title||'')
+              );
+            }
+          }
+        );
+      }
+
+      if(
+        slideTitle &&
+        title
+      ){
+        slideTitle.textContent=
+          title;
+      }
+
+      if(slideCount){
+        slideCount.textContent=
+          String(
+            heroActive+1
+          ).padStart(
+            2,
+            '0'
+          );
+      }
+
+      playHeroProgress();
+    }
+
+    function startHero(){
+      if(
+        heroFrameEls.length>1 &&
+        !heroTimer
+      ){
+        heroTimer=
+          setInterval(
+            ()=>showSlide(
+              heroActive+1
+            ),
+            7000
+          );
+      }
+    }
+
+    function stopHero(){
+      if(heroTimer){
+        clearInterval(
+          heroTimer
+        );
+
+        heroTimer=
+          undefined;
+      }
+    }
+
+    if(!reducedMotion.matches){
+      startHero();
+    }
+
+    playHeroProgress();
+
+    document
+      .querySelector(
+        '[data-slide-prev]'
+      )
+      ?.addEventListener(
+        'click',
+        ()=>{
+          stopHero();
+          showSlide(
+            heroActive-1
+          );
+          startHero();
+        }
+      );
+
+    document
+      .querySelector(
+        '[data-slide-next]'
+      )
+      ?.addEventListener(
+        'click',
+        ()=>{
+          stopHero();
+          showSlide(
+            heroActive+1
+          );
+          startHero();
+        }
+      );
+
+    // Subtle hero parallax, driven by scroll progress through the sticky scene.
+
+    const heroScene=
+      document.querySelector<HTMLElement>(
+        '.hero-scroll-scene'
+      );
+
+    const heroSection=
+      document.querySelector<HTMLElement>(
+        '.opening'
+      );
+
+    if(
+      heroScene &&
+      heroSection &&
+      !reducedMotion.matches
+    ){
+      let ticking=false;
+
+      const update=()=>{
+        const rect=
+          heroScene.getBoundingClientRect();
+
+        const span=
+          Math.max(
+            heroScene.offsetHeight-
+            window.innerHeight,
+            1
+          );
+
+        const progress=
+          Math.min(
+            Math.max(
+              -rect.top/span,
+              0
+            ),
+            1
+          );
+
+        heroSection.style.setProperty(
+          '--hero-image-shift',
+          (progress*40)+'px'
+        );
+
+        heroSection.style.setProperty(
+          '--hero-content-shift',
+          (progress*-18)+'px'
+        );
+
+        heroSection.style.setProperty(
+          '--hero-content-opacity',
+          String(
+            Math.max(
+              1-progress*.65,
+              .3
+            )
+          )
+        );
+
+        ticking=false;
+      };
+
+      update();
+
+      document.addEventListener(
+        'scroll',
+        ()=>{
+          if(!ticking){
+            requestAnimationFrame(
+              update
+            );
+
+            ticking=true;
+          }
+        },
+        {
+          passive:true
+        }
+      );
+    }
+
+    // Featured-works filmstrip: native horizontal scroll (touch/trackpad swipe
+    // already works for free) plus a "next" button that pages forward one
+    // viewport-ish at a time and loops back to the start at the end.
+
+    const filmstrip=
+      document.querySelector<HTMLElement>(
+        '[data-filmstrip]'
+      );
+
+    const filmstripNext=
+      document.querySelector<HTMLButtonElement>(
+        '[data-filmstrip-next]'
+      );
+
+    filmstripNext?.addEventListener(
+      'click',
+      ()=>{
+        if(!filmstrip){
+          return;
+        }
+
+        const atEnd=
+          filmstrip.scrollLeft+
+          filmstrip.clientWidth>=
+          filmstrip.scrollWidth-8;
+
+        filmstrip.scrollTo({
+          left:
+            atEnd
+              ? 0
+              : filmstrip.scrollLeft+
+                filmstrip.clientWidth*.72,
+
+          behavior:
+            reducedMotion.matches
+              ? 'auto'
+              : 'smooth'
+        });
+      }
+    );
+
+    const buttons=
+      document.querySelectorAll<HTMLButtonElement>(
+        '[data-filter]'
+      );
+
+    buttons.forEach(
+      button=>
+        button.addEventListener(
+          'click',
+          ()=>{
+            buttons.forEach(
+              b=>
+                b.setAttribute(
+                  'aria-pressed',
+                  String(
+                    b===button
+                  )
+                )
+            );
+
+            let count=0;
+
+            document
+              .querySelectorAll<HTMLElement>(
+                '[data-kind]'
+              )
+              .forEach(
+                card=>{
+                  card.hidden=
+                    button.dataset.filter!=='all' &&
+                    card.dataset.kind!==
+                      button.dataset.filter;
+
+                  if(!card.hidden){
+                    count++;
+                  }
+                }
+              );
+
+            const empty=
+              document.querySelector<HTMLElement>(
+                '.work-empty'
+              );
+
+            if(empty){
+              empty.hidden=
+                count>0;
+            }
+          }
+        )
+    );
+  </script>
+</Layout>
