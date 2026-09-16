@@ -1,142 +1,410 @@
 ---
 import '../styles/portfolio.css';
-import {defaults,PERSON_ID,WEBSITE_ID,KULT360_ID} from '../lib/editorial';
+
+import {
+  defaults,
+  PERSON_ID,
+  WEBSITE_ID,
+  KULT360_ID
+} from '../lib/editorial';
+
+import {
+  languageFromPath,
+  type SiteLang
+} from '../lib/i18n';
+
 import SocialIcons from '../components/SocialIcons.astro';
 
 interface Props {
-  title?:string;
-  description?:string;
-  name?:string;
-  home?:boolean;
-  image?:string;
-  noindex?:boolean;
+  title?: string;
+  description?: string;
+  name?: string;
+  home?: boolean;
+  image?: string;
+  noindex?: boolean;
+  lang?: SiteLang;
 }
 
 const {
-  title='Ergys Shehu — Photographer & Director | Albania',
-  description=defaults.seoDescription,
-  name=defaults.name,
-  home=false,
-  image='/images/ergys-shehu-logo.png',
-  noindex=false
-}=Astro.props;
+  title = 'Ergys Shehu — Photographer & Director | Albania',
+  description = defaults.seoDescription,
+  name = defaults.name,
+  home = false,
+  image = '/images/ergys-shehu-logo.png',
+  noindex = false,
+  lang: requestedLang
+} = Astro.props;
 
-const pageUrl=Astro.site?new URL(Astro.url.pathname,Astro.site):undefined;
-const imageUrl=Astro.site?new URL(image,Astro.site):undefined;
+const lang: SiteLang =
+  requestedLang ||
+  languageFromPath(
+    Astro.url.pathname
+  );
 
-const personLd={
-  '@context':'https://schema.org',
-  '@type':'Person',
-  '@id':PERSON_ID,
-  name:defaults.name,
-  url:'https://ergysshehu.com/',
-  jobTitle:'Photographer & Director',
-  description:defaults.seoDescription,
-  address:{'@type':'PostalAddress',addressCountry:'AL'},
-  sameAs:[
+const isSq =
+  lang === 'sq';
+
+const pageUrl =
+  Astro.site
+    ? new URL(
+        Astro.url.pathname,
+        Astro.site
+      )
+    : undefined;
+
+const imageUrl =
+  Astro.site
+    ? new URL(
+        image,
+        Astro.site
+      )
+    : undefined;
+
+const personLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'Person',
+
+  '@id':
+    PERSON_ID,
+
+  name:
+    defaults.name,
+
+  url:
+    'https://ergysshehu.com/',
+
+  jobTitle:
+    'Photographer & Director',
+
+  description:
+    defaults.seoDescription,
+
+  address: {
+    '@type':
+      'PostalAddress',
+
+    addressCountry:
+      'AL'
+  },
+
+  sameAs: [
     defaults.instagram,
     defaults.linkedin,
     defaults.facebook,
     defaults.youtube
   ].filter(Boolean),
-  worksFor:{'@id':KULT360_ID},
-  ...(imageUrl?{image:imageUrl.href}:{}),
+
+  worksFor: {
+    '@id':
+      KULT360_ID
+  },
+
+  ...(imageUrl
+    ? {
+        image:
+          imageUrl.href
+      }
+    : {})
 };
 
-const kult360Ld={
-  '@context':'https://schema.org',
-  '@type':'Organization',
-  '@id':KULT360_ID,
-  name:'Kult 360 Foundation',
-  url:defaults.kult360
+const kult360Ld = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'Organization',
+
+  '@id':
+    KULT360_ID,
+
+  name:
+    'Kult 360 Foundation',
+
+  url:
+    defaults.kult360
 };
 
-const websiteLd={
-  '@context':'https://schema.org',
-  '@type':'WebSite',
-  '@id':WEBSITE_ID,
-  name:'Ergys Shehu',
-  url:'https://ergysshehu.com/',
-  description:defaults.seoDescription,
-  inLanguage:['en','sq'],
-  publisher:{'@id':PERSON_ID}
+const websiteLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'WebSite',
+
+  '@id':
+    WEBSITE_ID,
+
+  name:
+    'Ergys Shehu',
+
+  url:
+    'https://ergysshehu.com/',
+
+  description:
+    defaults.seoDescription,
+
+  inLanguage: [
+    'en',
+    'sq'
+  ],
+
+  publisher: {
+    '@id':
+      PERSON_ID
+  }
 };
 
-const webPageLd={
-  '@context':'https://schema.org',
-  '@type':'WebPage',
-  '@id':pageUrl?pageUrl.href+'#webpage':undefined,
-  url:pageUrl?.href,
-  name:title,
-  isPartOf:{'@id':WEBSITE_ID},
-  about:{'@id':PERSON_ID}
+const webPageLd = {
+  '@context':
+    'https://schema.org',
+
+  '@type':
+    'WebPage',
+
+  '@id':
+    pageUrl
+      ? pageUrl.href +
+        '#webpage'
+      : undefined,
+
+  url:
+    pageUrl?.href,
+
+  name:
+    title,
+
+  inLanguage:
+    lang,
+
+  isPartOf: {
+    '@id':
+      WEBSITE_ID
+  },
+
+  about: {
+    '@id':
+      PERSON_ID
+  }
 };
 ---
 
 <!doctype html>
-<html lang="en">
+
+<html lang={lang}>
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>{title}</title>
-  <meta name="description" content={description}/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>
+    {title}
+  </title>
+
+  <meta
+    name="description"
+    content={description}
+  />
 
   <meta
     name="robots"
-    content={noindex?'noindex,nofollow':'index,follow,max-image-preview:large'}
+    content={
+      noindex
+        ? 'noindex,nofollow'
+        : 'index,follow,max-image-preview:large'
+    }
   />
 
-  <link rel="icon" href="/favicon.ico" sizes="32x32"/>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png"/>
-  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png"/>
-  <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png"/>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-  <link rel="manifest" href="/site.webmanifest"/>
+  <link
+    rel="icon"
+    href="/favicon.ico"
+    sizes="32x32"
+  />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    rel="icon"
+    href="/favicon.svg"
+    type="image/svg+xml"
+  />
+
+  <link
+    rel="icon"
+    href="/favicon-16x16.png"
+    sizes="16x16"
+    type="image/png"
+  />
+
+  <link
+    rel="icon"
+    href="/favicon-32x32.png"
+    sizes="32x32"
+    type="image/png"
+  />
+
+  <link
+    rel="icon"
+    href="/favicon-48x48.png"
+    sizes="48x48"
+    type="image/png"
+  />
+
+  <link
+    rel="apple-touch-icon"
+    href="/apple-touch-icon.png"
+  />
+
+  <link
+    rel="manifest"
+    href="/site.webmanifest"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
     rel="stylesheet"
   />
 
-  {pageUrl && <link rel="canonical" href={pageUrl}/>}
+  {
+    pageUrl && (
+      <link
+        rel="canonical"
+        href={pageUrl}
+      />
+    )
+  }
 
-  <meta property="og:title" content={title}/>
-  <meta property="og:description" content={description}/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Ergys Shehu"/>
-  <meta property="og:locale" content="en_US"/>
-  <meta property="og:locale:alternate" content="sq_AL"/>
+  <meta
+    property="og:title"
+    content={title}
+  />
 
-  {pageUrl && <meta property="og:url" content={pageUrl}/>}
-  {imageUrl && <meta property="og:image" content={imageUrl}/>}
-  {imageUrl && <meta property="og:image:alt" content={title}/>}
+  <meta
+    property="og:description"
+    content={description}
+  />
 
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content={title}/>
-  <meta name="twitter:description" content={description}/>
-  {imageUrl && <meta name="twitter:image" content={imageUrl}/>}
+  <meta
+    property="og:type"
+    content="website"
+  />
+
+  <meta
+    property="og:site_name"
+    content="Ergys Shehu"
+  />
+
+  <meta
+    property="og:locale"
+    content={
+      isSq
+        ? 'sq_AL'
+        : 'en_US'
+    }
+  />
+
+  <meta
+    property="og:locale:alternate"
+    content={
+      isSq
+        ? 'en_US'
+        : 'sq_AL'
+    }
+  />
+
+  {
+    pageUrl && (
+      <meta
+        property="og:url"
+        content={pageUrl}
+      />
+    )
+  }
+
+  {
+    imageUrl && (
+      <meta
+        property="og:image"
+        content={imageUrl}
+      />
+    )
+  }
+
+  {
+    imageUrl && (
+      <meta
+        property="og:image:alt"
+        content={title}
+      />
+    )
+  }
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+
+  <meta
+    name="twitter:title"
+    content={title}
+  />
+
+  <meta
+    name="twitter:description"
+    content={description}
+  />
+
+  {
+    imageUrl && (
+      <meta
+        name="twitter:image"
+        content={imageUrl}
+      />
+    )
+  }
 
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(personLd)}
+    set:html={
+      JSON.stringify(
+        personLd
+      )
+    }
   />
 
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(kult360Ld)}
+    set:html={
+      JSON.stringify(
+        kult360Ld
+      )
+    }
   />
 
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(websiteLd)}
+    set:html={
+      JSON.stringify(
+        websiteLd
+      )
+    }
   />
 
   {
@@ -144,13 +412,24 @@ const webPageLd={
       <script
         type="application/ld+json"
         is:inline
-        set:html={JSON.stringify(webPageLd)}
+        set:html={
+          JSON.stringify(
+            webPageLd
+          )
+        }
       />
     )
   }
 </head>
 
-<body class:list={[{'is-home':home}]}>
+<body
+  class:list={[
+    {
+      'is-home':
+        home
+    }
+  ]}
+>
   <a
     class="skip"
     href="#main"
@@ -160,26 +439,88 @@ const webPageLd={
     Skip to content
   </a>
 
-  <div class="scroll-progress" aria-hidden="true"></div>
+  <div
+    class="scroll-progress"
+    aria-hidden="true"
+  ></div>
 
   <header class="site-header">
     <a
       class="ergys-wordmark"
       href="/"
-      aria-label={name+' home'}
+      aria-label={
+        name +
+        ' home'
+      }
     >
-      <span class="ergys-wordmark-strong">ERGYS</span>
-      <span class="ergys-wordmark-light">SHEHU</span>
+      <span class="ergys-wordmark-strong">
+        ERGYS
+      </span>
+
+      <span class="ergys-wordmark-light">
+        SHEHU
+      </span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary">
-      <a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a>
-      <a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a>
-      <a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a>
-      <a href="/films/" data-en="Motion" data-sq="Video">Motion</a>
-      <a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a>
-      <a href="/about/" data-en="About" data-sq="Rreth">About</a>
-      <a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a>
+    <nav
+      class="desktop-nav"
+      aria-label="Primary"
+    >
+      <a
+        href="/fashion/"
+        data-en="Fashion"
+        data-sq="Modë"
+      >
+        Fashion
+      </a>
+
+      <a
+        href="/portraits/"
+        data-en="Portraits"
+        data-sq="Portrete"
+      >
+        Portraits
+      </a>
+
+      <a
+        href="/weddings/"
+        data-en="Weddings"
+        data-sq="Dasma"
+      >
+        Weddings
+      </a>
+
+      <a
+        href="/films/"
+        data-en="Motion"
+        data-sq="Video"
+      >
+        Motion
+      </a>
+
+      <a
+        href="/projects/"
+        data-en="Index"
+        data-sq="Indeksi"
+      >
+        Index
+      </a>
+
+      <a
+        href="/about/"
+        data-en="About"
+        data-sq="Rreth"
+      >
+        About
+      </a>
+
+      <a
+        href="/journal/"
+        data-en="Journal"
+        data-sq="Ditari"
+      >
+        Journal
+      </a>
 
       <a
         class="nav-book"
@@ -192,15 +533,21 @@ const webPageLd={
 
       <div
         class="language-switch"
-        data-active="en"
+        data-active={lang}
         role="group"
         aria-label="Language / Gjuha"
       >
         <button
           type="button"
           data-lang="en"
-          class="is-active"
-          aria-pressed="true"
+          class:is-active={
+            lang === 'en'
+          }
+          aria-pressed={
+            lang === 'en'
+              ? 'true'
+              : 'false'
+          }
         >
           EN
         </button>
@@ -208,7 +555,14 @@ const webPageLd={
         <button
           type="button"
           data-lang="sq"
-          aria-pressed="false"
+          class:is-active={
+            lang === 'sq'
+          }
+          aria-pressed={
+            lang === 'sq'
+              ? 'true'
+              : 'false'
+          }
         >
           SQ
         </button>
@@ -216,7 +570,9 @@ const webPageLd={
     </nav>
 
     <details class="mobile-menu">
-      <summary aria-label="Open navigation">
+      <summary
+        aria-label="Open navigation"
+      >
         <span class="hamburger">
           <i></i>
           <i></i>
@@ -229,10 +585,18 @@ const webPageLd={
           <a
             class="mobile-menu-brand"
             href="/"
-            aria-label={name+' home'}
+            aria-label={
+              name +
+              ' home'
+            }
           >
-            <span class="mobile-menu-brand-strong">ERGYS</span>
-            <span class="mobile-menu-brand-light">SHEHU</span>
+            <span class="mobile-menu-brand-strong">
+              ERGYS
+            </span>
+
+            <span class="mobile-menu-brand-light">
+              SHEHU
+            </span>
           </a>
 
           <button
@@ -245,30 +609,100 @@ const webPageLd={
           </button>
         </div>
 
-        <nav aria-label="Mobile navigation">
-          <a href="/#selected" data-en="Photography" data-sq="Fotografi">Photography</a>
-          <a href="/fashion/" data-en="Fashion" data-sq="Modë">Fashion</a>
-          <a href="/portraits/" data-en="Portraits" data-sq="Portrete">Portraits</a>
-          <a href="/weddings/" data-en="Weddings" data-sq="Dasma">Weddings</a>
-          <a href="/films/" data-en="Motion" data-sq="Video">Motion</a>
-          <a href="/projects/" data-en="Index" data-sq="Indeksi">Index</a>
-          <a href="/about/" data-en="About" data-sq="Rreth">About</a>
-          <a href="/journal/" data-en="Journal" data-sq="Ditari">Journal</a>
-          <a href="/book/#contact" data-en="Contact" data-sq="Kontakt">Contact</a>
+        <nav
+          aria-label="Mobile navigation"
+        >
+          <a
+            href="/#selected"
+            data-en="Photography"
+            data-sq="Fotografi"
+          >
+            Photography
+          </a>
+
+          <a
+            href="/fashion/"
+            data-en="Fashion"
+            data-sq="Modë"
+          >
+            Fashion
+          </a>
+
+          <a
+            href="/portraits/"
+            data-en="Portraits"
+            data-sq="Portrete"
+          >
+            Portraits
+          </a>
+
+          <a
+            href="/weddings/"
+            data-en="Weddings"
+            data-sq="Dasma"
+          >
+            Weddings
+          </a>
+
+          <a
+            href="/films/"
+            data-en="Motion"
+            data-sq="Video"
+          >
+            Motion
+          </a>
+
+          <a
+            href="/projects/"
+            data-en="Index"
+            data-sq="Indeksi"
+          >
+            Index
+          </a>
+
+          <a
+            href="/about/"
+            data-en="About"
+            data-sq="Rreth"
+          >
+            About
+          </a>
+
+          <a
+            href="/journal/"
+            data-en="Journal"
+            data-sq="Ditari"
+          >
+            Journal
+          </a>
+
+          <a
+            href="/book/#contact"
+            data-en="Contact"
+            data-sq="Kontakt"
+          >
+            Contact
+          </a>
         </nav>
 
         <div class="mobile-menu-footer">
           <div
             class="language-switch"
-            data-active="en"
+            data-active={lang}
             role="group"
             aria-label="Language / Gjuha"
           >
             <button
               type="button"
               data-lang="en"
-              class="is-active"
-              aria-pressed="true"
+              class:is-active={
+                lang === 'en'
+              }
+              aria-pressed={
+                lang === 'en'
+                  ? 'true'
+                  : 'false'
+              }
             >
               EN
             </button>
@@ -276,7 +710,14 @@ const webPageLd={
             <button
               type="button"
               data-lang="sq"
-              aria-pressed="false"
+              class:is-active={
+                lang === 'sq'
+              }
+              aria-pressed={
+                lang === 'sq'
+                  ? 'true'
+                  : 'false'
+              }
             >
               SQ
             </button>
@@ -292,10 +733,17 @@ const webPageLd={
           </a>
 
           <div class="mobile-footer-row">
-            <SocialIcons class="mobile-social"/>
+            <SocialIcons
+              class="mobile-social"
+            />
 
             <div class="mobile-location">
-              <span data-en="Albania" data-sq="Shqipëri">Albania</span>
+              <span
+                data-en="Albania"
+                data-sq="Shqipëri"
+              >
+                Albania
+              </span>
 
               <span
                 data-en="Available worldwide"
@@ -316,9 +764,17 @@ const webPageLd={
 
   <footer>
     <div class="footer-row">
-      <a href="/" class="footer-name" data-reveal>{name}</a>
+      <a
+        href="/"
+        class="footer-name"
+        data-reveal
+      >
+        {name}
+      </a>
 
-      <SocialIcons class="footer-social"/>
+      <SocialIcons
+        class="footer-social"
+      />
 
       <a
         class="footer-contact"
@@ -349,689 +805,1152 @@ const webPageLd={
     </a>
   </footer>
 
-<script>
-document.documentElement.classList.add('motion-ready');
-
-const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-
-const LANG_KEY='site-lang';
-
-function currentLang(){
-  try{
-    return localStorage.getItem(LANG_KEY)||'en';
-  }catch{
-    return 'en';
-  }
-}
-
-function applyLang(lang:string){
-  document.querySelectorAll<HTMLElement>('[data-en]').forEach(el=>{
-    const text=lang==='sq'?el.dataset.sq:el.dataset.en;
-    if(text!=null)el.textContent=text;
-  });
-
-  document.querySelectorAll('[data-en-placeholder]').forEach(el=>{
-    if(!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement))return;
-
-    const text=
-      lang==='sq'
-        ?el.dataset.sqPlaceholder
-        :el.dataset.enPlaceholder;
-
-    if(text!=null)el.placeholder=text;
-  });
-
-  document.querySelectorAll<HTMLElement>('[data-lang-content]').forEach(el=>{
-    el.hidden=el.dataset.langContent!==lang;
-  });
-
-  document.querySelectorAll('[data-lang]').forEach(btn=>{
-    const button=btn as HTMLElement;
-
-    button.classList.toggle(
-      'is-active',
-      button.dataset.lang===lang
-    );
-
-    button.setAttribute(
-      'aria-pressed',
-      String(button.dataset.lang===lang)
-    );
-  });
-
-  document
-    .querySelectorAll<HTMLElement>('.language-switch')
-    .forEach(el=>{
-      el.dataset.active=lang;
-    });
-
-  document.documentElement.lang=lang;
-
-  try{
-    localStorage.setItem(LANG_KEY,lang);
-  }catch{}
-}
-
-applyLang(currentLang());
-
-document
-  .querySelectorAll('[data-lang]')
-  .forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      applyLang(
-        (btn as HTMLElement).dataset.lang||'en'
+  <script>
+    document
+      .documentElement
+      .classList
+      .add(
+        'motion-ready'
       );
-    });
-  });
 
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      );
 
-const mobileMenu=
-  document.querySelector<HTMLDetailsElement>('.mobile-menu');
+    const LANG_KEY =
+      'site-lang';
 
-document
-  .querySelectorAll('.mobile-menu a')
-  .forEach(a=>{
-    a.addEventListener('click',()=>{
-      if(mobileMenu)mobileMenu.open=false;
-    });
-  });
+    function currentLang(){
+      const htmlLang =
+        document
+          .documentElement
+          .lang;
 
-document
-  .querySelector('[data-menu-close]')
-  ?.addEventListener('click',()=>{
-    if(mobileMenu)mobileMenu.open=false;
-  });
+      if(
+        htmlLang === 'sq'
+      ){
+        return 'sq';
+      }
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape' && mobileMenu?.open){
-    mobileMenu.open=false;
-    mobileMenu.querySelector('summary')?.focus();
-  }
-});
-
-mobileMenu?.addEventListener('toggle',()=>{
-  document.documentElement.classList.toggle(
-    'mobile-menu-open',
-    mobileMenu.open
-  );
-});
-
-
-const siteHeader=
-  document.querySelector<HTMLElement>('.site-header');
-
-if(siteHeader){
-  const headerH=siteHeader.offsetHeight||90;
-
-  let lastY=window.scrollY;
-  let headerTicking=false;
-
-  const updateHeader=()=>{
-    const y=window.scrollY;
-
-    siteHeader.classList.toggle(
-      'is-scrolled',
-      y>headerH
-    );
-
-    if(!reducedMotion.matches){
-      if(y<=headerH){
-        siteHeader.classList.remove('is-hidden');
-      }else if(y>lastY){
-        siteHeader.classList.add('is-hidden');
-      }else if(y<lastY){
-        siteHeader.classList.remove('is-hidden');
+      try{
+        return (
+          localStorage
+            .getItem(
+              LANG_KEY
+            ) ||
+          'en'
+        );
+      }catch{
+        return 'en';
       }
     }
 
-    lastY=y;
-    headerTicking=false;
-  };
+    function applyLang(
+      lang:string
+    ){
+      document
+        .querySelectorAll<HTMLElement>(
+          '[data-en]'
+        )
+        .forEach(
+          el=>{
+            const text =
+              lang === 'sq'
+                ? el.dataset.sq
+                : el.dataset.en;
 
-  updateHeader();
+            if(
+              text != null
+            ){
+              el.textContent =
+                text;
+            }
+          }
+        );
 
-  document.addEventListener(
-    'scroll',
-    ()=>{
-      if(!headerTicking){
-        requestAnimationFrame(updateHeader);
-        headerTicking=true;
-      }
-    },
-    {passive:true}
-  );
-}
+      document
+        .querySelectorAll(
+          '[data-en-placeholder]'
+        )
+        .forEach(
+          el=>{
+            if(
+              !(
+                el instanceof HTMLInputElement ||
+                el instanceof HTMLTextAreaElement
+              )
+            ){
+              return;
+            }
 
+            const text =
+              lang === 'sq'
+                ? el.dataset.sqPlaceholder
+                : el.dataset.enPlaceholder;
 
-if('IntersectionObserver' in window){
+            if(
+              text != null
+            ){
+              el.placeholder =
+                text;
+            }
+          }
+        );
 
-  const revealTargets=
-    document.querySelectorAll<HTMLElement>(
-      '[data-reveal],[data-image-reveal]'
+      document
+        .querySelectorAll<HTMLElement>(
+          '[data-lang-content]'
+        )
+        .forEach(
+          el=>{
+            el.hidden =
+              el.dataset.langContent !==
+              lang;
+          }
+        );
+
+      document
+        .querySelectorAll(
+          '[data-lang]'
+        )
+        .forEach(
+          btn=>{
+            const button =
+              btn as HTMLElement;
+
+            const active =
+              button.dataset.lang ===
+              lang;
+
+            button
+              .classList
+              .toggle(
+                'is-active',
+                active
+              );
+
+            button
+              .setAttribute(
+                'aria-pressed',
+                String(active)
+              );
+          }
+        );
+
+      document
+        .querySelectorAll<HTMLElement>(
+          '.language-switch'
+        )
+        .forEach(
+          el=>{
+            el.dataset.active =
+              lang;
+          }
+        );
+
+      document
+        .documentElement
+        .lang =
+          lang;
+
+      try{
+        localStorage
+          .setItem(
+            LANG_KEY,
+            lang
+          );
+      }catch{}
+    }
+
+    applyLang(
+      currentLang()
     );
 
-  if(revealTargets.length){
-
-    const io=
-      new IntersectionObserver(
-        entries=>{
-          entries.forEach(entry=>{
-            if(entry.isIntersecting){
-              entry.target.classList.add('is-visible');
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold:0,
-          rootMargin:'0px 0px -5% 0px'
+    document
+      .querySelectorAll(
+        '[data-lang]'
+      )
+      .forEach(
+        btn=>{
+          btn
+            .addEventListener(
+              'click',
+              ()=>{
+                applyLang(
+                  (
+                    btn as HTMLElement
+                  ).dataset.lang ||
+                  'en'
+                );
+              }
+            );
         }
       );
 
-    revealTargets.forEach(el=>io.observe(el));
-
-    setTimeout(
-      ()=>revealTargets.forEach(
-        el=>el.classList.add('is-visible')
-      ),
-      4000
-    );
-  }
-
-
-  const stackSection=
-    document.body.classList.contains('is-home')
-      ?document.querySelector<HTMLElement>('.work-section')
-      :null;
-
-  const stackGrid=
-    stackSection
-      ?.querySelector<HTMLElement>('.project-grid')
-      ??null;
-
-  if(
-    stackGrid &&
-    stackSection &&
-    window.matchMedia('(max-width: 700px)').matches
-  ){
-
-    const cards=
-      Array.from(
-        stackGrid.querySelectorAll<HTMLElement>(
-          '.project-card'
-        )
+    const mobileMenu =
+      document.querySelector<HTMLDetailsElement>(
+        '.mobile-menu'
       );
 
-    if(cards.length){
-
-      const progress=
-        new Map<HTMLElement,number>();
-
-      const cardImageEls=
-        new Map<HTMLElement,HTMLElement|null>();
-
-      cards.forEach(card=>{
-        progress.set(card,0);
-
-        cardImageEls.set(
-          card,
-          card.querySelector<HTMLElement>(
-            '.project-image'
-          )
-        );
-      });
-
-      const cardHeights=
-        cards.map(
-          card=>
-            card.getBoundingClientRect().height||1
-        );
-
-      const DEAD_ZONE=0.12;
-
-      function overlapProgress(
-        next:HTMLElement,
-        currentHeight:number
-      ):number{
-
-        const nextTop=
-          next.getBoundingClientRect().top;
-
-        const raw=
-          (currentHeight-nextTop)/
-          currentHeight;
-
-        const clamped=
-          Math.max(
-            0,
-            Math.min(1,raw)
+    document
+      .querySelectorAll(
+        '.mobile-menu a'
+      )
+      .forEach(
+        a=>{
+          a.addEventListener(
+            'click',
+            ()=>{
+              if(
+                mobileMenu
+              ){
+                mobileMenu.open =
+                  false;
+              }
+            }
           );
+        }
+      );
 
-        return clamped<=DEAD_ZONE
-          ?0
-          :(clamped-DEAD_ZONE)/(1-DEAD_ZONE);
-      }
+    document
+      .querySelector(
+        '[data-menu-close]'
+      )
+      ?.addEventListener(
+        'click',
+        ()=>{
+          if(
+            mobileMenu
+          ){
+            mobileMenu.open =
+              false;
+          }
+        }
+      );
 
-      let stackActive=false;
-      let rafId:number|undefined;
+    document
+      .addEventListener(
+        'keydown',
+        e=>{
+          if(
+            e.key ===
+              'Escape' &&
+            mobileMenu?.open
+          ){
+            mobileMenu.open =
+              false;
 
-      function tickStack(){
+            mobileMenu
+              .querySelector(
+                'summary'
+              )
+              ?.focus();
+          }
+        }
+      );
 
-        const targets=
-          cards.map((_,i)=>{
-            const nextCard=cards[i+1];
+    mobileMenu
+      ?.addEventListener(
+        'toggle',
+        ()=>{
+          document
+            .documentElement
+            .classList
+            .toggle(
+              'mobile-menu-open',
+              mobileMenu.open
+            );
+        }
+      );
 
-            return nextCard
-              ?overlapProgress(
-                  nextCard,
-                  cardHeights[i]
-                )
-              :0;
-          });
+    const siteHeader =
+      document.querySelector<HTMLElement>(
+        '.site-header'
+      );
 
-        let settled=true;
+    if(
+      siteHeader
+    ){
+      const headerH =
+        siteHeader.offsetHeight ||
+        90;
 
-        cards.forEach((card,i)=>{
+      let lastY =
+        window.scrollY;
 
-          const target=targets[i];
-          const prev=progress.get(card)??0;
+      let headerTicking =
+        false;
 
-          const speed=
-            target>prev
-              ?0.18
-              :0.42;
+      const updateHeader =
+        ()=>{
+          const y =
+            window.scrollY;
 
-          const next=
-            prev+
-            (target-prev)*speed;
-
-          progress.set(card,next);
+          siteHeader
+            .classList
+            .toggle(
+              'is-scrolled',
+              y > headerH
+            );
 
           if(
-            Math.abs(target-next)>0.003
+            !reducedMotion.matches
           ){
-            settled=false;
+            if(
+              y <= headerH
+            ){
+              siteHeader
+                .classList
+                .remove(
+                  'is-hidden'
+                );
+            }else if(
+              y > lastY
+            ){
+              siteHeader
+                .classList
+                .add(
+                  'is-hidden'
+                );
+            }else if(
+              y < lastY
+            ){
+              siteHeader
+                .classList
+                .remove(
+                  'is-hidden'
+                );
+            }
           }
 
-          const imageEl=
-            cardImageEls.get(card);
+          lastY =
+            y;
 
-          if(imageEl){
+          headerTicking =
+            false;
+        };
 
-            imageEl.style.setProperty(
-              '--stack-blur',
-              (next*3.5).toFixed(2)+'px'
-            );
+      updateHeader();
 
-            imageEl.style.setProperty(
-              '--stack-darkness',
-              next.toFixed(3)
-            );
-          }
-        });
-
-        rafId=
-          settled
-            ?undefined
-            :requestAnimationFrame(
-                tickStack
-              );
-      }
-
-      function schedule(){
-        if(rafId===undefined){
-          rafId=
-            requestAnimationFrame(
-              tickStack
-            );
-        }
-      }
-
-      const sectionIo=
-        new IntersectionObserver(
-          entries=>{
-
-            entries.forEach(entry=>{
-
-              stackActive=
-                entry.isIntersecting;
-
-              document.body.classList.toggle(
-                'in-stack-grid',
-                entry.isIntersecting
+      document
+        .addEventListener(
+          'scroll',
+          ()=>{
+            if(
+              !headerTicking
+            ){
+              requestAnimationFrame(
+                updateHeader
               );
 
-              if(stackActive){
-                schedule();
-              }
-            });
+              headerTicking =
+                true;
+            }
           },
           {
-            rootMargin:'100px 0px'
+            passive:
+              true
           }
         );
-
-      sectionIo.observe(stackSection);
-
-      document.addEventListener(
-        'scroll',
-        ()=>{
-          if(stackActive){
-            schedule();
-          }
-        },
-        {passive:true}
-      );
     }
-  }
 
-
-  const sectionVeil=
-    document.body.classList.contains('is-home')
-      ?document.querySelector<HTMLElement>(
-          '[data-section-veil]'
-        )
-      :null;
-
-  const veilWorkSection=
-    document.querySelector<HTMLElement>(
-      '.work-section'
-    );
-
-  if(
-    sectionVeil &&
-    veilWorkSection &&
-    window.matchMedia('(max-width: 700px)').matches
-  ){
-
-    let veilActive=false;
-    let veilRafId:number|undefined;
-
-    function updateVeil(){
-
-      const wsTop=
-        veilWorkSection!
-          .getBoundingClientRect()
-          .top;
-
-      const progress=
-        Math.max(
-          0,
-          Math.min(
-            1,
-            1-wsTop/window.innerHeight
-          )
+    if(
+      'IntersectionObserver'
+      in window
+    ){
+      const revealTargets =
+        document.querySelectorAll<HTMLElement>(
+          '[data-reveal],[data-image-reveal]'
         );
 
-      sectionVeil!.style.setProperty(
-        '--veil-p',
-        progress.toFixed(3)
-      );
+      if(
+        revealTargets.length
+      ){
+        const io =
+          new IntersectionObserver(
+            entries=>{
+              entries
+                .forEach(
+                  entry=>{
+                    if(
+                      entry.isIntersecting
+                    ){
+                      entry
+                        .target
+                        .classList
+                        .add(
+                          'is-visible'
+                        );
 
-      veilRafId=undefined;
-    }
+                      io.unobserve(
+                        entry.target
+                      );
+                    }
+                  }
+                );
+            },
+            {
+              threshold:
+                0,
 
-    function scheduleVeil(){
-      if(veilRafId===undefined){
-        veilRafId=
-          requestAnimationFrame(
-            updateVeil
-          );
-      }
-    }
-
-    const veilIo=
-      new IntersectionObserver(
-        entries=>{
-          entries.forEach(entry=>{
-
-            veilActive=
-              entry.isIntersecting;
-
-            if(veilActive){
-              scheduleVeil();
+              rootMargin:
+                '0px 0px -5% 0px'
             }
-          });
-        },
-        {
-          rootMargin:'300px 0px'
-        }
-      );
+          );
 
-    veilIo.observe(
-      veilWorkSection
-    );
+        revealTargets
+          .forEach(
+            el=>
+              io.observe(
+                el
+              )
+          );
 
-    document.addEventListener(
-      'scroll',
-      ()=>{
-        if(veilActive){
-          scheduleVeil();
-        }
-      },
-      {passive:true}
-    );
-  }
-}
-
-
-// Desktop pointer tilt - optimized
-if(
-  !reducedMotion.matches &&
-  window.matchMedia(
-    '(hover: hover) and (pointer: fine)'
-  ).matches
-){
-
-  document
-    .querySelectorAll<HTMLElement>('.project-card')
-    .forEach(card=>{
-
-      let rect:DOMRect|null=null;
-      let frame:number|undefined;
-
-      let pointerX=0;
-      let pointerY=0;
-
-      const updateTilt=()=>{
-
-        frame=undefined;
-
-        if(!rect)return;
-
-        const x=
-          (
-            (pointerX-rect.left)/rect.width
-            -.5
-          )*8;
-
-        const y=
-          (
-            (pointerY-rect.top)/rect.height
-            -.5
-          )*8;
-
-        card.style.setProperty(
-          '--tilt-x',
-          x.toFixed(2)+'px'
+        setTimeout(
+          ()=>
+            revealTargets
+              .forEach(
+                el=>
+                  el.classList
+                    .add(
+                      'is-visible'
+                    )
+              ),
+          4000
         );
+      }
 
-        card.style.setProperty(
-          '--tilt-y',
-          y.toFixed(2)+'px'
-        );
-      };
-
-      card.addEventListener(
-        'pointerenter',
-        ()=>{
-          rect=
-            card.getBoundingClientRect();
-        }
-      );
-
-      card.addEventListener(
-        'pointermove',
-        e=>{
-
-          pointerX=e.clientX;
-          pointerY=e.clientY;
-
-          if(frame===undefined){
-            frame=
-              requestAnimationFrame(
-                updateTilt
-              );
-          }
-        }
-      );
-
-      card.addEventListener(
-        'pointerleave',
-        ()=>{
-
-          rect=null;
-
-          if(frame!==undefined){
-            cancelAnimationFrame(frame);
-            frame=undefined;
-          }
-
-          card.style.setProperty(
-            '--tilt-x',
-            '0px'
-          );
-
-          card.style.setProperty(
-            '--tilt-y',
-            '0px'
-          );
-        }
-      );
-    });
-
-
-  document
-    .querySelectorAll<HTMLElement>(
-      '.project-grid'
-    )
-    .forEach(grid=>{
-
-      let clearTimer:number|undefined;
-
-      grid.addEventListener(
-        'pointerover',
-        e=>{
-
-          const card=
-            (e.target as HTMLElement)
-              .closest('.project-card');
-
-          if(!card)return;
-
-          clearTimeout(clearTimer);
-
-          grid.classList.add(
-            'is-spotlighting'
-          );
-
-          grid
-            .querySelectorAll(
-              '.project-card'
+      const stackSection =
+        document.body
+          .classList
+          .contains(
+            'is-home'
+          )
+          ? document.querySelector<HTMLElement>(
+              '.work-section'
             )
-            .forEach(c=>{
-              c.classList.toggle(
-                'is-focused',
-                c===card
-              );
-            });
-        }
-      );
+          : null;
 
-      grid.addEventListener(
-        'pointerleave',
-        ()=>{
+      const stackGrid =
+        stackSection
+          ?.querySelector<HTMLElement>(
+            '.project-grid'
+          ) ??
+        null;
 
-          clearTimer=
-            window.setTimeout(
-              ()=>{
+      if(
+        stackGrid &&
+        stackSection &&
+        window
+          .matchMedia(
+            '(max-width: 700px)'
+          )
+          .matches
+      ){
+        const cards =
+          Array.from(
+            stackGrid
+              .querySelectorAll<HTMLElement>(
+                '.project-card'
+              )
+          );
 
-                grid.classList.remove(
-                  'is-spotlighting'
+        if(
+          cards.length
+        ){
+          const progress =
+            new Map<
+              HTMLElement,
+              number
+            >();
+
+          const cardImageEls =
+            new Map<
+              HTMLElement,
+              HTMLElement | null
+            >();
+
+          cards
+            .forEach(
+              card=>{
+                progress.set(
+                  card,
+                  0
                 );
 
-                grid
-                  .querySelectorAll(
-                    '.project-card'
-                  )
-                  .forEach(
-                    c=>
-                      c.classList.remove(
-                        'is-focused'
+                cardImageEls
+                  .set(
+                    card,
+                    card.querySelector<HTMLElement>(
+                      '.project-image'
+                    )
+                  );
+              }
+            );
+
+          const cardHeights =
+            cards.map(
+              card=>
+                card
+                  .getBoundingClientRect()
+                  .height ||
+                1
+            );
+
+          const DEAD_ZONE =
+            0.12;
+
+          function overlapProgress(
+            next:HTMLElement,
+            currentHeight:number
+          ):number{
+            const nextTop =
+              next
+                .getBoundingClientRect()
+                .top;
+
+            const raw =
+              (
+                currentHeight -
+                nextTop
+              ) /
+              currentHeight;
+
+            const clamped =
+              Math.max(
+                0,
+                Math.min(
+                  1,
+                  raw
+                )
+              );
+
+            return (
+              clamped <=
+              DEAD_ZONE
+            )
+              ? 0
+              : (
+                  clamped -
+                  DEAD_ZONE
+                ) /
+                (
+                  1 -
+                  DEAD_ZONE
+                );
+          }
+
+          let stackActive =
+            false;
+
+          let rafId:
+            number |
+            undefined;
+
+          function tickStack(){
+            const targets =
+              cards.map(
+                (_,i)=>{
+                  const nextCard =
+                    cards[
+                      i + 1
+                    ];
+
+                  return nextCard
+                    ? overlapProgress(
+                        nextCard,
+                        cardHeights[i]
                       )
+                    : 0;
+                }
+              );
+
+            let settled =
+              true;
+
+            cards
+              .forEach(
+                (
+                  card,
+                  i
+                )=>{
+                  const target =
+                    targets[i];
+
+                  const prev =
+                    progress
+                      .get(
+                        card
+                      ) ??
+                    0;
+
+                  const speed =
+                    target >
+                    prev
+                      ? 0.18
+                      : 0.42;
+
+                  const next =
+                    prev +
+                    (
+                      target -
+                      prev
+                    ) *
+                    speed;
+
+                  progress
+                    .set(
+                      card,
+                      next
+                    );
+
+                  if(
+                    Math.abs(
+                      target -
+                      next
+                    ) >
+                    0.003
+                  ){
+                    settled =
+                      false;
+                  }
+
+                  const imageEl =
+                    cardImageEls
+                      .get(
+                        card
+                      );
+
+                  if(
+                    imageEl
+                  ){
+                    imageEl
+                      .style
+                      .setProperty(
+                        '--stack-blur',
+                        (
+                          next *
+                          3.5
+                        ).toFixed(
+                          2
+                        ) +
+                        'px'
+                      );
+
+                    imageEl
+                      .style
+                      .setProperty(
+                        '--stack-darkness',
+                        next.toFixed(
+                          3
+                        )
+                      );
+                  }
+                }
+              );
+
+            rafId =
+              settled
+                ? undefined
+                : requestAnimationFrame(
+                    tickStack
+                  );
+          }
+
+          function schedule(){
+            if(
+              rafId ===
+              undefined
+            ){
+              rafId =
+                requestAnimationFrame(
+                  tickStack
+                );
+            }
+          }
+
+          const sectionIo =
+            new IntersectionObserver(
+              entries=>{
+                entries
+                  .forEach(
+                    entry=>{
+                      stackActive =
+                        entry
+                          .isIntersecting;
+
+                      document
+                        .body
+                        .classList
+                        .toggle(
+                          'in-stack-grid',
+                          entry
+                            .isIntersecting
+                        );
+
+                      if(
+                        stackActive
+                      ){
+                        schedule();
+                      }
+                    }
                   );
               },
-              220
+              {
+                rootMargin:
+                  '100px 0px'
+              }
+            );
+
+          sectionIo
+            .observe(
+              stackSection
+            );
+
+          document
+            .addEventListener(
+              'scroll',
+              ()=>{
+                if(
+                  stackActive
+                ){
+                  schedule();
+                }
+              },
+              {
+                passive:
+                  true
+              }
             );
         }
-      );
-    });
-}
+      }
 
-
-const progress=
-  document.querySelector<HTMLElement>(
-    '.scroll-progress'
-  );
-
-if(
-  progress &&
-  !reducedMotion.matches
-){
-
-  let ticking=false;
-
-  const update=()=>{
-
-    const doc=
-      document.documentElement;
-
-    const max=
-      doc.scrollHeight-
-      doc.clientHeight;
-
-    progress.style.transform=
-      `scaleX(${
-        max>0
-          ?Math.min(
-              doc.scrollTop/max,
-              1
+      const sectionVeil =
+        document.body
+          .classList
+          .contains(
+            'is-home'
+          )
+          ? document.querySelector<HTMLElement>(
+              '[data-section-veil]'
             )
-          :0
-      })`;
+          : null;
 
-    ticking=false;
-  };
-
-  update();
-
-  document.addEventListener(
-    'scroll',
-    ()=>{
-
-      if(!ticking){
-
-        requestAnimationFrame(
-          update
+      const veilWorkSection =
+        document.querySelector<HTMLElement>(
+          '.work-section'
         );
 
-        ticking=true;
-      }
-    },
-    {passive:true}
-  );
-}
-</script>
+      if(
+        sectionVeil &&
+        veilWorkSection &&
+        window
+          .matchMedia(
+            '(max-width: 700px)'
+          )
+          .matches
+      ){
+        let veilActive =
+          false;
 
+        let veilRafId:
+          number |
+          undefined;
+
+        function updateVeil(){
+          const wsTop =
+            veilWorkSection!
+              .getBoundingClientRect()
+              .top;
+
+          const progress =
+            Math.max(
+              0,
+              Math.min(
+                1,
+                1 -
+                wsTop /
+                window
+                  .innerHeight
+              )
+            );
+
+          sectionVeil!
+            .style
+            .setProperty(
+              '--veil-p',
+              progress.toFixed(
+                3
+              )
+            );
+
+          veilRafId =
+            undefined;
+        }
+
+        function scheduleVeil(){
+          if(
+            veilRafId ===
+            undefined
+          ){
+            veilRafId =
+              requestAnimationFrame(
+                updateVeil
+              );
+          }
+        }
+
+        const veilIo =
+          new IntersectionObserver(
+            entries=>{
+              entries
+                .forEach(
+                  entry=>{
+                    veilActive =
+                      entry
+                        .isIntersecting;
+
+                    if(
+                      veilActive
+                    ){
+                      scheduleVeil();
+                    }
+                  }
+                );
+            },
+            {
+              rootMargin:
+                '300px 0px'
+            }
+          );
+
+        veilIo.observe(
+          veilWorkSection
+        );
+
+        document
+          .addEventListener(
+            'scroll',
+            ()=>{
+              if(
+                veilActive
+              ){
+                scheduleVeil();
+              }
+            },
+            {
+              passive:
+                true
+            }
+          );
+      }
+    }
+
+    if(
+      !reducedMotion.matches &&
+      window
+        .matchMedia(
+          '(hover: hover) and (pointer: fine)'
+        )
+        .matches
+    ){
+      document
+        .querySelectorAll<HTMLElement>(
+          '.project-card'
+        )
+        .forEach(
+          card=>{
+            let rect:
+              DOMRect |
+              null =
+              null;
+
+            let frame:
+              number |
+              undefined;
+
+            let pointerX =
+              0;
+
+            let pointerY =
+              0;
+
+            const updateTilt =
+              ()=>{
+                frame =
+                  undefined;
+
+                if(
+                  !rect
+                ){
+                  return;
+                }
+
+                const x =
+                  (
+                    (
+                      pointerX -
+                      rect.left
+                    ) /
+                    rect.width -
+                    .5
+                  ) *
+                  8;
+
+                const y =
+                  (
+                    (
+                      pointerY -
+                      rect.top
+                    ) /
+                    rect.height -
+                    .5
+                  ) *
+                  8;
+
+                card
+                  .style
+                  .setProperty(
+                    '--tilt-x',
+                    x.toFixed(
+                      2
+                    ) +
+                    'px'
+                  );
+
+                card
+                  .style
+                  .setProperty(
+                    '--tilt-y',
+                    y.toFixed(
+                      2
+                    ) +
+                    'px'
+                  );
+              };
+
+            card
+              .addEventListener(
+                'pointerenter',
+                ()=>{
+                  rect =
+                    card
+                      .getBoundingClientRect();
+                }
+              );
+
+            card
+              .addEventListener(
+                'pointermove',
+                e=>{
+                  pointerX =
+                    e.clientX;
+
+                  pointerY =
+                    e.clientY;
+
+                  if(
+                    frame ===
+                    undefined
+                  ){
+                    frame =
+                      requestAnimationFrame(
+                        updateTilt
+                      );
+                  }
+                }
+              );
+
+            card
+              .addEventListener(
+                'pointerleave',
+                ()=>{
+                  rect =
+                    null;
+
+                  if(
+                    frame !==
+                    undefined
+                  ){
+                    cancelAnimationFrame(
+                      frame
+                    );
+
+                    frame =
+                      undefined;
+                  }
+
+                  card
+                    .style
+                    .setProperty(
+                      '--tilt-x',
+                      '0px'
+                    );
+
+                  card
+                    .style
+                    .setProperty(
+                      '--tilt-y',
+                      '0px'
+                    );
+                }
+              );
+          }
+        );
+
+      document
+        .querySelectorAll<HTMLElement>(
+          '.project-grid'
+        )
+        .forEach(
+          grid=>{
+            let clearTimer:
+              number |
+              undefined;
+
+            grid
+              .addEventListener(
+                'pointerover',
+                e=>{
+                  const card =
+                    (
+                      e.target as HTMLElement
+                    )
+                      .closest(
+                        '.project-card'
+                      );
+
+                  if(
+                    !card
+                  ){
+                    return;
+                  }
+
+                  clearTimeout(
+                    clearTimer
+                  );
+
+                  grid
+                    .classList
+                    .add(
+                      'is-spotlighting'
+                    );
+
+                  grid
+                    .querySelectorAll(
+                      '.project-card'
+                    )
+                    .forEach(
+                      c=>{
+                        c
+                          .classList
+                          .toggle(
+                            'is-focused',
+                            c ===
+                            card
+                          );
+                      }
+                    );
+                }
+              );
+
+            grid
+              .addEventListener(
+                'pointerleave',
+                ()=>{
+                  clearTimer =
+                    window.setTimeout(
+                      ()=>{
+                        grid
+                          .classList
+                          .remove(
+                            'is-spotlighting'
+                          );
+
+                        grid
+                          .querySelectorAll(
+                            '.project-card'
+                          )
+                          .forEach(
+                            c=>
+                              c
+                                .classList
+                                .remove(
+                                  'is-focused'
+                                )
+                          );
+                      },
+                      220
+                    );
+                }
+              );
+          }
+        );
+    }
+
+    const scrollProgress =
+      document.querySelector<HTMLElement>(
+        '.scroll-progress'
+      );
+
+    if(
+      scrollProgress &&
+      !reducedMotion.matches
+    ){
+      let ticking =
+        false;
+
+      const update =
+        ()=>{
+          const doc =
+            document
+              .documentElement;
+
+          const max =
+            doc.scrollHeight -
+            doc.clientHeight;
+
+          scrollProgress
+            .style
+            .transform =
+              `scaleX(${
+                max > 0
+                  ? Math.min(
+                      doc.scrollTop /
+                      max,
+                      1
+                    )
+                  : 0
+              })`;
+
+          ticking =
+            false;
+        };
+
+      update();
+
+      document
+        .addEventListener(
+          'scroll',
+          ()=>{
+            if(
+              !ticking
+            ){
+              requestAnimationFrame(
+                update
+              );
+
+              ticking =
+                true;
+            }
+          },
+          {
+            passive:
+              true
+          }
+        );
+    }
+  </script>
 </body>
 </html>
