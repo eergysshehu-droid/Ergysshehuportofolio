@@ -1,0 +1,40 @@
+---
+import ProjectPage from '../../portfolio/[slug].astro';
+
+import {
+  content,
+  type Album,
+  type Settings
+} from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const {
+    albums,
+    settings
+  } = await content();
+
+  return albums.map(
+    album => ({
+      params: {
+        slug:
+          album.slug
+      },
+
+      props: {
+        album,
+        settings
+      }
+    })
+  );
+}
+
+interface Props {
+  album: Album;
+  settings: Settings;
+}
+
+const props =
+  Astro.props as Props;
+---
+
+<ProjectPage {...props} />
