@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
 import {
   content,
   photoUrl,
@@ -16,6 +17,19 @@ import {
   WEBSITE_ID
 } from '../lib/editorial';
 
+import {
+  languageFromPath,
+  localizedPath
+} from '../lib/i18n';
+
+const lang =
+  languageFromPath(
+    Astro.url.pathname
+  );
+
+const isSq =
+  lang === 'sq';
+
 const {
   settings: saved,
   albums
@@ -23,15 +37,23 @@ const {
 
 const settings = {
   ...defaults,
+
   ...Object.fromEntries(
-    Object.entries(saved)
-      .filter(([, value]) => value != null)
+    Object.entries(
+      saved
+    ).filter(
+      (
+        [, value]
+      ) =>
+        value != null
+    )
   )
 };
 
 const featured =
   albums.filter(
-    album => album.featured
+    album =>
+      album.featured
   );
 
 const hero =
@@ -39,54 +61,125 @@ const hero =
   featured[0]?.cover ||
   albums.find(
     album =>
-      photoUrl(album.cover)
+      photoUrl(
+        album.cover
+      )
   )?.cover;
 
 const serviceKinds = [
   {
-    kind: 'fashion',
-    project: 'fashion',
-    href: '/fashion/',
-    en: 'Fashion Photography',
-    sq: 'Fotografi Mode',
-    subEn: 'EDITORIAL / CAMPAIGNS',
-    subSq: 'EDITORIALE / FUSHATA'
+    kind:
+      'fashion',
+
+    project:
+      'fashion',
+
+    href:
+      '/fashion/',
+
+    en:
+      'Fashion Photography',
+
+    sq:
+      'Fotografi Mode',
+
+    subEn:
+      'EDITORIAL / CAMPAIGNS',
+
+    subSq:
+      'EDITORIALE / FUSHATA'
   },
+
   {
-    kind: 'weddings',
-    project: 'wedding',
-    href: '/weddings/',
-    en: 'Wedding Photography & Video',
-    sq: 'Fotografi & Video Dasmash',
-    subEn: 'YOUR STORY, TIMELESS',
-    subSq: 'HISTORIA JUAJ, PA KOHË'
+    kind:
+      'weddings',
+
+    project:
+      'wedding',
+
+    href:
+      '/weddings/',
+
+    en:
+      'Wedding Photography & Video',
+
+    sq:
+      'Fotografi & Video Dasmash',
+
+    subEn:
+      'YOUR STORY, TIMELESS',
+
+    subSq:
+      'HISTORIA JUAJ, PA KOHË'
   },
+
   {
-    kind: 'films',
-    project: 'music',
-    href: '/films/',
-    en: 'Music Videos',
-    sq: 'Videoklipe',
-    subEn: 'ARTISTS / STORYTELLING',
-    subSq: 'ARTISTË / TREGIME'
+    kind:
+      'films',
+
+    project:
+      'music',
+
+    href:
+      '/films/',
+
+    en:
+      'Music Videos',
+
+    sq:
+      'Videoklipe',
+
+    subEn:
+      'ARTISTS / STORYTELLING',
+
+    subSq:
+      'ARTISTË / TREGIME'
   },
+
   {
-    kind: 'portraits',
-    project: 'portrait',
-    href: '/portraits/',
-    en: 'Portraits',
-    sq: 'Portrete',
-    subEn: 'INDIVIDUAL / CREATIVE',
-    subSq: 'INDIVIDUALE / KREATIVE'
+    kind:
+      'portraits',
+
+    project:
+      'portrait',
+
+    href:
+      '/portraits/',
+
+    en:
+      'Portraits',
+
+    sq:
+      'Portrete',
+
+    subEn:
+      'INDIVIDUAL / CREATIVE',
+
+    subSq:
+      'INDIVIDUALE / KREATIVE'
   },
+
   {
-    kind: 'projects',
-    project: 'commercial',
-    href: '/projects/',
-    en: 'Commercial & Brand Content',
-    sq: 'Përmbajtje Komerciale & Brand',
-    subEn: 'BUSINESSES / CAMPAIGNS',
-    subSq: 'BIZNESE / FUSHATA'
+    kind:
+      'projects',
+
+    project:
+      'commercial',
+
+    href:
+      '/projects/',
+
+    en:
+      'Commercial & Brand Content',
+
+    sq:
+      'Përmbajtje Komerciale & Brand',
+
+    subEn:
+      'BUSINESSES / CAMPAIGNS',
+
+    subSq:
+      'BIZNESE / FUSHATA'
   }
 ] as const;
 
@@ -94,49 +187,68 @@ const kujtimi =
   films[0];
 
 const services =
-  serviceKinds.map(service => {
-    const cover =
-      albums.find(
-        album =>
-          albumKind(album) === service.kind &&
-          photoUrl(album.cover)
-      )?.cover;
+  serviceKinds.map(
+    service => {
+      const cover =
+        albums.find(
+          album =>
+            albumKind(
+              album
+            ) ===
+              service.kind &&
+            photoUrl(
+              album.cover
+            )
+        )?.cover;
 
-    if (cover) {
+      if (
+        cover
+      ) {
+        return {
+          ...service,
+          photo:
+            cover
+        };
+      }
+
+      if (
+        service.kind ===
+          'films' &&
+        kujtimi
+      ) {
+        return {
+          ...service,
+
+          photo: {
+            src:
+              `https://i.ytimg.com/vi/${kujtimi.id}/hqdefault.jpg`,
+
+            alt:
+              kujtimi.label ||
+              'Kujtimi (Remix)',
+
+            width:
+              480,
+
+            height:
+              360
+          }
+        };
+      }
+
       return {
         ...service,
-        photo: cover
+        photo:
+          undefined
       };
     }
-
-    if (
-      service.kind === 'films' &&
-      kujtimi
-    ) {
-      return {
-        ...service,
-        photo: {
-          src:
-            `https://i.ytimg.com/vi/${kujtimi.id}/hqdefault.jpg`,
-          alt:
-            kujtimi.label ||
-            'Kujtimi (Remix)',
-          width: 480,
-          height: 360
-        }
-      };
-    }
-
-    return {
-      ...service,
-      photo: undefined
-    };
-  });
+  );
 
 function photoKey(
   photo?: {
     localBase?: string;
     src?: string;
+
     asset?: {
       _ref: string;
     };
@@ -153,52 +265,103 @@ function photoKey(
 const collabPhoto =
   albums.find(
     album =>
-      albumKind(album) ===
+      albumKind(
+        album
+      ) ===
         'weddings' &&
-      photoUrl(album.cover) &&
-      photoKey(album.cover) !==
-        photoKey(hero)
+      photoUrl(
+        album.cover
+      ) &&
+      photoKey(
+        album.cover
+      ) !==
+        photoKey(
+          hero
+        )
   )?.cover ||
   albums.find(
     album =>
-      photoUrl(album.cover)
+      photoUrl(
+        album.cover
+      )
   )?.cover;
 
 const projectTypes = [
   {
-    value: 'fashion',
-    en: 'Fashion Photography',
-    sq: 'Fotografi Mode'
+    value:
+      'fashion',
+
+    en:
+      'Fashion Photography',
+
+    sq:
+      'Fotografi Mode'
   },
+
   {
-    value: 'wedding',
-    en: 'Wedding Photography & Video',
-    sq: 'Fotografi & Video Dasmash'
+    value:
+      'wedding',
+
+    en:
+      'Wedding Photography & Video',
+
+    sq:
+      'Fotografi & Video Dasmash'
   },
+
   {
-    value: 'music',
-    en: 'Music Video',
-    sq: 'Videoklip'
+    value:
+      'music',
+
+    en:
+      'Music Video',
+
+    sq:
+      'Videoklip'
   },
+
   {
-    value: 'portrait',
-    en: 'Portrait Photography',
-    sq: 'Fotografi Portreti'
+    value:
+      'portrait',
+
+    en:
+      'Portrait Photography',
+
+    sq:
+      'Fotografi Portreti'
   },
+
   {
-    value: 'commercial',
-    en: 'Commercial / Brand',
-    sq: 'Komerciale / Brand'
+    value:
+      'commercial',
+
+    en:
+      'Commercial / Brand',
+
+    sq:
+      'Komerciale / Brand'
   },
+
   {
-    value: 'collaboration',
-    en: 'Collaboration',
-    sq: 'Bashkëpunim'
+    value:
+      'collaboration',
+
+    en:
+      'Collaboration',
+
+    sq:
+      'Bashkëpunim'
   },
+
   {
-    value: 'other',
-    en: 'Other',
-    sq: 'Tjetër'
+    value:
+      'other',
+
+    en:
+      'Other',
+
+    sq:
+      'Tjetër'
   }
 ] as const;
 
@@ -212,19 +375,40 @@ const phoneTel =
 const phoneDisplay =
   '+355 69 331 0202';
 
+const whatsappText =
+  isSq
+    ? 'Përshëndetje Ergys, do të doja të flisja për një projekt.'
+    : "Hi Ergys, I'd like to discuss a project.";
+
 const whatsapp =
-  "https://wa.me/355693310202?text=Hi%20Ergys%2C%20I%27d%20like%20to%20discuss%20a%20project.";
+  `https://wa.me/355693310202?text=${encodeURIComponent(whatsappText)}`;
 
 const instagram =
   safeUrl(
     settings.instagram
   );
 
+const pagePath =
+  localizedPath(
+    '/book/',
+    lang
+  );
+
 const pageUrl =
-  'https://ergysshehu.com/book/';
+  new URL(
+    pagePath,
+    'https://ergysshehu.com'
+  ).href;
+
+const pageTitle =
+  isSq
+    ? `Rezervo Ergys Shehu — Fotograf & Videograf | Shqipëri`
+    : `Book Ergys Shehu — Photographer & Videographer | Albania`;
 
 const description =
-  'Book Ergys Shehu for fashion, portrait, wedding, music video or commercial work. Based in Albania, available worldwide.';
+  isSq
+    ? 'Kontakto dhe rezervo Ergys Shehu, fotograf, videograf dhe regjisor i vlerësuar me çmime, për dasma, modë, portrete, evente, videoklipe, fushata komerciale dhe bashkëpunime kreative në Shqipëri dhe ndërkombëtarisht.'
+    : 'Book award-winning photographer, videographer and director Ergys Shehu for weddings, fashion, portraits, events, music videos, commercial campaigns and creative collaborations across Albania and worldwide.';
 
 const contactPageLd = {
   '@context':
@@ -240,9 +424,14 @@ const contactPageLd = {
     pageUrl,
 
   name:
-    'Book Ergys Shehu',
+    isSq
+      ? 'Rezervo dhe Kontakto Ergys Shehu'
+      : 'Book and Contact Ergys Shehu',
 
   description,
+
+  inLanguage:
+    lang,
 
   isPartOf: {
     '@id':
@@ -262,7 +451,8 @@ const contactPageLd = {
 ---
 
 <Layout
-  title={`Book a shoot — ${settings.name}`}
+  lang={lang}
+  title={pageTitle}
   description={description}
   name={settings.name}
   image={
@@ -288,18 +478,24 @@ const contactPageLd = {
     <section class="book-hero">
       {
         hero &&
-        photoUrl(hero) && (
+        photoUrl(
+          hero
+        ) && (
           <picture
             class="book-hero-media"
             data-image-reveal
           >
             <img
-              src={photoUrl(
-                hero,
-                1800
-              )}
+              src={
+                photoUrl(
+                  hero,
+                  1800
+                )
+              }
               srcset={
-                photoSet(hero)
+                photoSet(
+                  hero
+                )
               }
               sizes="100vw"
               alt=""
@@ -326,14 +522,22 @@ const contactPageLd = {
           data-en="LET’S CREATE TOGETHER"
           data-sq="LE TË KRIJOJMË BASHKË"
         >
-          LET’S CREATE TOGETHER
+          {
+            isSq
+              ? 'LE TË KRIJOJMË BASHKË'
+              : 'LET’S CREATE TOGETHER'
+          }
         </p>
 
         <h1
           data-en="Book a Shoot"
           data-sq="Rezervo një Sesion"
         >
-          Book a Shoot
+          {
+            isSq
+              ? 'Rezervo një Sesion'
+              : 'Book a Shoot'
+          }
         </h1>
 
         <p
@@ -341,7 +545,11 @@ const contactPageLd = {
           data-en="Photography, video and creative direction for brands, artists and meaningful stories."
           data-sq="Fotografi, video dhe drejtim kreativ për brande, artistë dhe histori që kanë kuptim."
         >
-          Photography, video and creative direction for brands, artists and meaningful stories.
+          {
+            isSq
+              ? 'Fotografi, video dhe drejtim kreativ për brande, artistë dhe histori që kanë kuptim.'
+              : 'Photography, video and creative direction for brands, artists and meaningful stories.'
+          }
         </p>
 
         <div class="hero-actions">
@@ -353,7 +561,11 @@ const contactPageLd = {
               data-en="BOOK NOW"
               data-sq="REZERVO"
             >
-              BOOK NOW
+              {
+                isSq
+                  ? 'REZERVO'
+                  : 'BOOK NOW'
+              }
             </span>
 
             <span aria-hidden="true">
@@ -369,12 +581,17 @@ const contactPageLd = {
               data-en="GET IN TOUCH"
               data-sq="NA KONTAKTO"
             >
-              GET IN TOUCH
+              {
+                isSq
+                  ? 'NA KONTAKTO'
+                  : 'GET IN TOUCH'
+              }
             </span>
           </a>
         </div>
       </div>
     </section>
+
 
     <section class="services-section">
       <div
@@ -387,14 +604,22 @@ const contactPageLd = {
             data-en="SERVICES"
             data-sq="SHËRBIMET"
           >
-            SERVICES
+            {
+              isSq
+                ? 'SHËRBIMET'
+                : 'SERVICES'
+            }
           </p>
 
           <h2
             data-en="What I Do"
             data-sq="Çfarë realizoj"
           >
-            What I Do
+            {
+              isSq
+                ? 'Çfarë realizoj'
+                : 'What I Do'
+            }
           </h2>
         </div>
 
@@ -403,135 +628,165 @@ const contactPageLd = {
           data-en="From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity."
           data-sq="Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit."
         >
-          From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.
+          {
+            isSq
+              ? 'Nga editorialet e modës te dasmat, videoklipet dhe historitë e brandeve — punë vizuale e ndërtuar rreth njerëzve, emocionit dhe identitetit.'
+              : 'From fashion editorials to weddings, music videos and brand stories — visual work built around people, emotion and identity.'
+          }
         </p>
       </div>
 
       <div class="services-grid">
         {
-          services.map(service => (
-            <a
-              class="service-card"
-              href={service.href}
-              data-reveal
-            >
-              <div
-                class="service-image"
-                data-image-reveal
-                style={
-                  service.photo
-                    ? `--focal-point:${photoPosition(service.photo)}`
-                    : undefined
-                }
-              >
-                {
-                  service.photo &&
-                  photoUrl(
-                    service.photo
+          services.map(
+            service => (
+              <a
+                class="service-card"
+                href={
+                  localizedPath(
+                    service.href,
+                    lang
                   )
-                    ? (
-                      <img
-                        src={photoUrl(
-                          service.photo,
-                          900
-                        )}
-                        srcset={
-                          photoSet(
-                            service.photo
-                          )
-                        }
-                        sizes="(max-width:780px) 100vw, 20vw"
-                        width={
-                          service.photo
-                            .width
-                        }
-                        height={
-                          service.photo
-                            .height
-                        }
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
+                }
+                data-reveal
+              >
+                <div
+                  class="service-image"
+                  data-image-reveal
+                  style={
+                    service.photo
+                      ? `--focal-point:${photoPosition(service.photo)}`
+                      : undefined
+                  }
+                >
+                  {
+                    service.photo &&
+                    photoUrl(
+                      service.photo
                     )
-                    : (
-                      <svg
-                        class="service-fallback-icon"
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.4"
+                      ? (
+                        <img
+                          src={
+                            photoUrl(
+                              service.photo,
+                              900
+                            )
+                          }
+                          srcset={
+                            photoSet(
+                              service.photo
+                            )
+                          }
+                          sizes="(max-width:780px) 100vw, 20vw"
+                          width={
+                            service.photo
+                              .width
+                          }
+                          height={
+                            service.photo
+                              .height
+                          }
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )
+                      : (
+                        <svg
+                          class="service-fallback-icon"
+                          viewBox="0 0 48 48"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.4"
+                          aria-hidden="true"
+                        >
+                          <rect
+                            x="4"
+                            y="12"
+                            width="40"
+                            height="26"
+                            rx="3"
+                          />
+
+                          <path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/>
+
+                          <circle
+                            cx="24"
+                            cy="27"
+                            r="7"
+                          />
+                        </svg>
+                      )
+                  }
+
+                  {
+                    service.kind ===
+                      'films' && (
+                      <span
+                        class="icon-badge project-play"
                         aria-hidden="true"
                       >
-                        <rect
-                          x="4"
-                          y="12"
-                          width="40"
-                          height="26"
-                          rx="3"
-                        />
-
-                        <path d="M4 18h40M12 12v-2a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v2"/>
-
-                        <circle
-                          cx="24"
-                          cy="27"
-                          r="7"
-                        />
-                      </svg>
+                        ▶
+                      </span>
                     )
-                }
-
-                {
-                  service.kind ===
-                    'films' && (
-                    <span
-                      class="icon-badge project-play"
-                      aria-hidden="true"
-                    >
-                      ▶
-                    </span>
-                  )
-                }
-              </div>
-
-              <div
-                class="service-overlay"
-                aria-hidden="true"
-              ></div>
-
-              <div class="service-copy">
-                <h3
-                  data-en={service.en}
-                  data-sq={service.sq}
-                >
-                  {service.en}
-                </h3>
-
-                <p
-                  data-en={
-                    service.subEn
                   }
-                  data-sq={
-                    service.subSq
-                  }
-                >
-                  {service.subEn}
-                </p>
+                </div>
 
-                <span
-                  class="service-view"
-                  data-en="View work ↗"
-                  data-sq="Shiko punën ↗"
-                >
-                  View work ↗
-                </span>
-              </div>
-            </a>
-          ))
+                <div
+                  class="service-overlay"
+                  aria-hidden="true"
+                ></div>
+
+                <div class="service-copy">
+                  <h3
+                    data-en={
+                      service.en
+                    }
+                    data-sq={
+                      service.sq
+                    }
+                  >
+                    {
+                      isSq
+                        ? service.sq
+                        : service.en
+                    }
+                  </h3>
+
+                  <p
+                    data-en={
+                      service.subEn
+                    }
+                    data-sq={
+                      service.subSq
+                    }
+                  >
+                    {
+                      isSq
+                        ? service.subSq
+                        : service.subEn
+                    }
+                  </p>
+
+                  <span
+                    class="service-view"
+                    data-en="View work ↗"
+                    data-sq="Shiko punën ↗"
+                  >
+                    {
+                      isSq
+                        ? 'Shiko punën ↗'
+                        : 'View work ↗'
+                    }
+                  </span>
+                </div>
+              </a>
+            )
+          )
         }
       </div>
     </section>
+
 
     <section
       class="contact-booking"
@@ -546,14 +801,22 @@ const contactPageLd = {
           data-en="CONTACT"
           data-sq="KONTAKT"
         >
-          CONTACT
+          {
+            isSq
+              ? 'KONTAKT'
+              : 'CONTACT'
+          }
         </p>
 
         <h2
           data-en="Let’s Talk"
           data-sq="Le të flasim"
         >
-          Let’s Talk
+          {
+            isSq
+              ? 'Le të flasim'
+              : 'Let’s Talk'
+          }
         </h2>
 
         <p
@@ -561,7 +824,11 @@ const contactPageLd = {
           data-en="Tell me about your project, idea or collaboration. I usually reply within 24 hours."
           data-sq="Më trego për projektin, idenë ose bashkëpunimin tënd. Zakonisht përgjigjem brenda 24 orësh."
         >
-          Tell me about your project, idea or collaboration. I usually reply within 24 hours.
+          {
+            isSq
+              ? 'Më trego për projektin, idenë ose bashkëpunimin tënd. Zakonisht përgjigjem brenda 24 orësh.'
+              : 'Tell me about your project, idea or collaboration. I usually reply within 24 hours.'
+          }
         </p>
 
         <div class="contact-links">
@@ -587,14 +854,22 @@ const contactPageLd = {
                 data-en="FASTEST · WHATSAPP"
                 data-sq="MË SHPEJT · WHATSAPP"
               >
-                FASTEST · WHATSAPP
+                {
+                  isSq
+                    ? 'MË SHPEJT · WHATSAPP'
+                    : 'FASTEST · WHATSAPP'
+                }
               </small>
 
               <strong
                 data-en="Message on WhatsApp"
                 data-sq="Shkruaj në WhatsApp"
               >
-                Message on WhatsApp
+                {
+                  isSq
+                    ? 'Shkruaj në WhatsApp'
+                    : 'Message on WhatsApp'
+                }
               </strong>
             </div>
           </a>
@@ -616,7 +891,11 @@ const contactPageLd = {
                 data-en="CALL"
                 data-sq="TELEFON"
               >
-                CALL
+                {
+                  isSq
+                    ? 'TELEFON'
+                    : 'CALL'
+                }
               </small>
 
               <strong>
@@ -736,19 +1015,28 @@ const contactPageLd = {
                 data-en="LOCATION"
                 data-sq="VENDNDODHJA"
               >
-                LOCATION
+                {
+                  isSq
+                    ? 'VENDNDODHJA'
+                    : 'LOCATION'
+                }
               </small>
 
               <strong
                 data-en="Albania · Available worldwide"
                 data-sq="Shqipëri · I disponueshëm në mbarë botën"
               >
-                Albania · Available worldwide
+                {
+                  isSq
+                    ? 'Shqipëri · I disponueshëm në mbarë botën'
+                    : 'Albania · Available worldwide'
+                }
               </strong>
             </div>
           </div>
         </div>
       </div>
+
 
       <form
         class="inquiry-form"
@@ -761,7 +1049,11 @@ const contactPageLd = {
               data-en="Name *"
               data-sq="Emri *"
             >
-              Name *
+              {
+                isSq
+                  ? 'Emri *'
+                  : 'Name *'
+              }
             </span>
 
             <input
@@ -795,7 +1087,11 @@ const contactPageLd = {
               data-en="Phone (optional)"
               data-sq="Telefoni (opsionale)"
             >
-              Phone (optional)
+              {
+                isSq
+                  ? 'Telefoni (opsionale)'
+                  : 'Phone (optional)'
+              }
             </span>
 
             <input
@@ -811,7 +1107,11 @@ const contactPageLd = {
               data-en="Type of project *"
               data-sq="Lloji i projektit *"
             >
-              Type of project *
+              {
+                isSq
+                  ? 'Lloji i projektit *'
+                  : 'Type of project *'
+              }
             </span>
 
             <select
@@ -824,7 +1124,11 @@ const contactPageLd = {
                 data-en="Choose a project"
                 data-sq="Zgjidh projektin"
               >
-                Choose a project
+                {
+                  isSq
+                    ? 'Zgjidh projektin'
+                    : 'Choose a project'
+                }
               </option>
 
               {
@@ -841,7 +1145,11 @@ const contactPageLd = {
                         project.sq
                       }
                     >
-                      {project.en}
+                      {
+                        isSq
+                          ? project.sq
+                          : project.en
+                      }
                     </option>
                   )
                 )
@@ -855,7 +1163,11 @@ const contactPageLd = {
             data-en="Tell me about your project *"
             data-sq="Më trego për projektin *"
           >
-            Tell me about your project *
+            {
+              isSq
+                ? 'Më trego për projektin *'
+                : 'Tell me about your project *'
+            }
           </span>
 
           <textarea
@@ -864,7 +1176,11 @@ const contactPageLd = {
             rows="6"
             data-en-placeholder="Date, location, idea, style, number of people…"
             data-sq-placeholder="Data, vendndodhja, ideja, stili, numri i personave…"
-            placeholder="Date, location, idea, style, number of people…"
+            placeholder={
+              isSq
+                ? 'Data, vendndodhja, ideja, stili, numri i personave…'
+                : 'Date, location, idea, style, number of people…'
+            }
           ></textarea>
         </label>
 
@@ -876,7 +1192,11 @@ const contactPageLd = {
             data-en="SEND MESSAGE"
             data-sq="DËRGO MESAZH"
           >
-            SEND MESSAGE
+            {
+              isSq
+                ? 'DËRGO MESAZH'
+                : 'SEND MESSAGE'
+            }
           </span>
 
           <span aria-hidden="true">
@@ -897,10 +1217,15 @@ const contactPageLd = {
           data-en="No long questionnaires. Just tell me what you have in mind."
           data-sq="Pa formularë të gjatë. Thjesht më trego çfarë ke në mendje."
         >
-          No long questionnaires. Just tell me what you have in mind.
+          {
+            isSq
+              ? 'Pa formularë të gjatë. Thjesht më trego çfarë ke në mendje.'
+              : 'No long questionnaires. Just tell me what you have in mind.'
+          }
         </p>
       </form>
     </section>
+
 
     <section class="collab-section">
       <div
@@ -913,10 +1238,12 @@ const contactPageLd = {
             collabPhoto
           ) && (
             <img
-              src={photoUrl(
-                collabPhoto,
-                1000
-              )}
+              src={
+                photoUrl(
+                  collabPhoto,
+                  1000
+                )
+              }
               srcset={
                 photoSet(
                   collabPhoto
@@ -946,21 +1273,33 @@ const contactPageLd = {
           data-en="COLLABORATIONS"
           data-sq="BASHKËPUNIME"
         >
-          COLLABORATIONS
+          {
+            isSq
+              ? 'BASHKËPUNIME'
+              : 'COLLABORATIONS'
+          }
         </p>
 
         <h2
           data-en="Let’s Create Together"
           data-sq="Le të krijojmë bashkë"
         >
-          Let’s Create Together
+          {
+            isSq
+              ? 'Le të krijojmë bashkë'
+              : 'Let’s Create Together'
+          }
         </h2>
 
         <p
           data-en="I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen."
           data-sq="Jam gjithmonë i interesuar të punoj me modele, muzikantë, artistë, dizajnerë, brande dhe njerëz kreativë. Nëse ke një ide që ia vlen të eksplorohet, le ta realizojmë."
         >
-          I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen.
+          {
+            isSq
+              ? 'Jam gjithmonë i interesuar të punoj me modele, muzikantë, artistë, dizajnerë, brande dhe njerëz kreativë. Nëse ke një ide që ia vlen të eksplorohet, le ta realizojmë.'
+              : 'I’m always interested in working with models, musicians, artists, designers, brands and creative minds. If you have an idea worth exploring, let’s make it happen.'
+          }
         </p>
 
         <a
@@ -972,7 +1311,11 @@ const contactPageLd = {
             data-en="COLLABORATE"
             data-sq="BASHKËPUNOJMË"
           >
-            COLLABORATE
+            {
+              isSq
+                ? 'BASHKËPUNOJMË'
+                : 'COLLABORATE'
+            }
           </span>
 
           <span aria-hidden="true">
@@ -983,6 +1326,7 @@ const contactPageLd = {
     </section>
 
   </div>
+
 
   <script
     define:vars={{email}}
@@ -1057,39 +1401,51 @@ const contactPageLd = {
         event.preventDefault();
 
         const data =
-          new FormData(form);
+          new FormData(
+            form
+          );
 
         const name =
           String(
-            data.get('name') ||
+            data.get(
+              'name'
+            ) ||
             ''
           ).trim();
 
         const sender =
           String(
-            data.get('email') ||
+            data.get(
+              'email'
+            ) ||
             ''
           ).trim();
 
         const phone =
           String(
-            data.get('phone') ||
+            data.get(
+              'phone'
+            ) ||
             ''
           ).trim();
 
         const message =
           String(
-            data.get('message') ||
+            data.get(
+              'message'
+            ) ||
             ''
           ).trim();
 
         const selectedOption =
           projectSelect
-            ?.selectedOptions[0];
+            ?.selectedOptions[
+              0
+            ];
 
         const lang =
           typeof currentLang ===
-          'function'
+            'function'
             ? currentLang()
             : (
                 document
@@ -1105,7 +1461,8 @@ const contactPageLd = {
                   ?.dataset.sq
               : selectedOption
                   ?.dataset.en
-          ) || '';
+          ) ||
+          '';
 
         const subject =
           `${projectLabel || 'Project inquiry'} — ${name}`;
@@ -1113,19 +1470,29 @@ const contactPageLd = {
         const bodyLines = [
           `Name: ${name}`,
           `Email: ${sender}`,
+
           phone &&
             `Phone: ${phone}`,
+
           `Project Type: ${projectLabel}`,
+
           '',
+
           message
         ]
-          .filter(Boolean)
-          .join('\n');
+          .filter(
+            Boolean
+          )
+          .join(
+            '\n'
+          );
 
         const mailtoHref =
           `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
 
-        if (formStatus) {
+        if (
+          formStatus
+        ) {
           formStatus.hidden =
             false;
 
@@ -1167,6 +1534,7 @@ const contactPageLd = {
                   ? `Nuk u hap? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Më shkruaj në WhatsApp</a> ose <a href="mailto:${email}">dërgo email direkt</a>.`
                   : `Didn't open? <a href="${waLink}" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a> or <a href="mailto:${email}">email directly</a>.`;
             },
+
             1500
           );
         }
@@ -1190,13 +1558,16 @@ const contactPageLd = {
               );
 
             link.click();
+
             link.remove();
           },
+
           30
         );
       }
     );
   </script>
+
 
   <style>
     .booking-page{background:#080a0a;color:#f4f0e8}
