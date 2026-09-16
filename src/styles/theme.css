@@ -1,0 +1,242 @@
+/* ==========================================================================
+   AUTOMATIC SYSTEM THEME
+   Light mode = existing design.
+   Dark mode = follows phone / computer prefers-color-scheme.
+   ========================================================================== */
+
+:root{
+  color-scheme:light;
+}
+
+@media(prefers-color-scheme:dark){
+
+  :root{
+    color-scheme:dark;
+
+    --paper:#0b0b0a;
+    --ink:#f1eee7;
+    --muted:#aaa69d;
+    --line:#2c2b28;
+  }
+
+  html{
+    background:#0b0b0a;
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+  }
+
+  /* ------------------------------------------------------------------------
+     HEADER
+     ------------------------------------------------------------------------ */
+
+  .site-header{
+    --header-fg:var(--ink);
+    --header-bg:var(--paper);
+    --header-line:rgba(255,255,255,.12);
+  }
+
+  .is-home .site-header{
+    --header-fg:#fff;
+    --header-bg:transparent;
+    --header-line:transparent;
+  }
+
+  .is-home .site-header.is-scrolled{
+    --header-fg:var(--ink);
+    --header-bg:var(--paper);
+    --header-line:rgba(255,255,255,.12);
+  }
+
+  /* ------------------------------------------------------------------------
+     LIGHT-PAPER SECTIONS
+     ------------------------------------------------------------------------ */
+
+  .collection-intro,
+  .journal-feature,
+  .recognition-section,
+  .latest-section{
+    background:var(--paper);
+    color:var(--ink);
+  }
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    color:var(--ink);
+  }
+
+  /* Text that used fixed light-mode greys. */
+
+  .collection-intro>p:not(.kicker),
+  .journal-card-copy p,
+  .journal-post-body,
+  .contact-copy,
+  .bio-language p,
+  .biography-layout aside>p:not(.kicker){
+    color:#b9b5ac!important;
+  }
+
+  .collection-intro .kicker,
+  .journal-date,
+  .recognition-meta{
+    color:var(--muted)!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     JOURNAL
+     ------------------------------------------------------------------------ */
+
+  .journal-card{
+    color:var(--ink);
+  }
+
+  .journal-card-copy h2,
+  .journal-read{
+    color:var(--ink);
+  }
+
+  .journal-post-body h2,
+  .journal-post-body h3,
+  .journal-post-body strong{
+    color:var(--ink);
+  }
+
+  .journal-post-body blockquote{
+    color:#d3cfc6;
+    border-color:var(--line);
+  }
+
+  .journal-post-body figcaption{
+    color:var(--muted);
+  }
+
+  /* ------------------------------------------------------------------------
+     ABOUT
+     ------------------------------------------------------------------------ */
+
+  .bio-language{
+    border-color:var(--line);
+  }
+
+  .bio-language summary{
+    color:var(--ink);
+  }
+
+  .bio-milestones{
+    border-color:var(--line);
+  }
+
+  .bio-milestones p{
+    border-color:var(--line);
+  }
+
+  blockquote{
+    color:var(--ink);
+  }
+
+  /* ------------------------------------------------------------------------
+     RECOGNITION
+     ------------------------------------------------------------------------ */
+
+  .recognition-heading,
+  .recognition-row{
+    border-color:var(--line)!important;
+  }
+
+  .recognition-row{
+    color:var(--ink);
+  }
+
+  /* ------------------------------------------------------------------------
+     FILMSTRIP / PAPER CONTROLS
+     ------------------------------------------------------------------------ */
+
+  .filmstrip-section{
+    background:var(--paper);
+    color:var(--ink);
+  }
+
+  .filmstrip-curve{
+    color:var(--paper);
+  }
+
+  .filmstrip-next{
+    background:var(--paper);
+    color:var(--ink);
+    border-color:var(--line);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+
+  .filmstrip-next:hover{
+    background:var(--accent);
+    color:#171714;
+    border-color:var(--accent);
+  }
+
+  /* ------------------------------------------------------------------------
+     GENERIC LINES / CONTROLS
+     ------------------------------------------------------------------------ */
+
+  .back-link,
+  .footer-contact,
+  .footer-name{
+    color:var(--ink);
+  }
+
+  footer{
+    color:var(--ink);
+    border-color:var(--line);
+  }
+
+  .skip{
+    background:var(--paper);
+    color:var(--ink);
+  }
+
+  /* Accent buttons intentionally retain dark text for contrast. */
+
+  .gallery-cta,
+  .circle-btn{
+    color:#171714;
+  }
+
+  /* ------------------------------------------------------------------------
+     BOOK PAGE
+     Already dark by design — preserve its intentional palette.
+     ------------------------------------------------------------------------ */
+
+  .booking-page{
+    color:#f4f0e8;
+    background:#080a0a;
+  }
+
+  .booking-page .eyebrow,
+  .booking-page .hero-intro,
+  .booking-page .section-copy,
+  .booking-page .contact-intro,
+  .booking-page .form-note,
+  .booking-page .collab-copy p:not(.eyebrow){
+    color:rgba(244,240,232,.78)!important;
+  }
+
+  .booking-page input,
+  .booking-page textarea,
+  .booking-page select{
+    color:#f4f0e8;
+  }
+
+  /* ------------------------------------------------------------------------
+     IMAGES
+     Never invert or recolor photography.
+     ------------------------------------------------------------------------ */
+
+  img,
+  picture,
+  video{
+    color-scheme:normal;
+  }
+}
