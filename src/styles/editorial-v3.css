@@ -1,10 +1,11 @@
 /* ==========================================================================
-   ERGYS SHEHU — EDITORIAL V4
-   DENSE LIQUID GLASS / MODERN MINIMAL
+   ERGYS SHEHU — EDITORIAL V5
+   CLEAN / MINIMAL / DENSE LIQUID GLASS
    --------------------------------------------------------------------------
-   IMPORTANT — HOMEPAGE STACKING IS UNTOUCHED.
+   IMPORTANT:
+   HOMEPAGE PHOTO STACKING IS NOT MODIFIED.
 
-   This file NEVER changes:
+   Never override:
    - .project-card position
    - .project-card top
    - .work-section overflow
@@ -15,51 +16,175 @@
 
 
 /* ==========================================================================
-   DESIGN TOKENS
+   TOKENS
    ========================================================================== */
 
 :root{
-  --glass-deep:
+  --v5-bg:
+    #090d09;
+
+  --v5-bg-soft:
+    #0e140f;
+
+  --v5-green:
     rgba(
-      12,
-      18,
-      13,
-      .92
+      34,
+      48,
+      35,
+      .91
     );
 
-  --glass-green:
+  --v5-green-deep:
     rgba(
-      27,
-      40,
-      29,
-      .86
+      14,
+      22,
+      15,
+      .95
     );
 
-  --glass-green-bright:
+  --v5-green-soft:
     rgba(
-      43,
-      62,
-      45,
-      .78
+      55,
+      74,
+      57,
+      .31
     );
 
-  --glass-soft:
+  --v5-text:
+    #f1efe8;
+
+  --v5-muted:
     rgba(
-      76,
-      96,
-      77,
-      .18
+      241,
+      239,
+      232,
+      .61
     );
 
-  --glass-highlight:
+  --v5-border:
     rgba(
       255,
       255,
       255,
-      .16
+      .095
     );
 
-  --glass-highlight-soft:
+  --v5-highlight:
+    rgba(
+      255,
+      255,
+      255,
+      .105
+    );
+
+  --v5-blur:
+    38px;
+
+  --v5-radius:
+    14px;
+
+  --v5-radius-small:
+    7px;
+
+  --v5-section-cut:
+    clamp(
+      32px,
+      4vw,
+      68px
+    );
+
+  --v5-section-cut-mobile:
+    30px;
+
+  --v5-shadow:
+    0
+    28px
+    70px
+    rgba(
+      0,
+      0,
+      0,
+      .28
+    );
+
+  --v5-ease:
+    cubic-bezier(
+      .2,
+      .7,
+      .2,
+      1
+    );
+}
+
+
+/* ==========================================================================
+   GLOBAL
+   ========================================================================== */
+
+html,
+body{
+  background:
+    var(
+      --v5-bg
+    );
+}
+
+body{
+  text-rendering:
+    optimizeLegibility;
+}
+
+body.is-home .kicker{
+  letter-spacing:
+    .18em!important;
+
+  font-size:
+    clamp(
+      9px,
+      .55vw,
+      11px
+    )!important;
+}
+
+
+/* ==========================================================================
+   HEADER
+   Glass stays dense, but no oversized pill styling.
+   ========================================================================== */
+
+.site-header{
+  transition:
+    background
+    .35s
+    ease,
+    backdrop-filter
+    .35s
+    ease,
+    box-shadow
+    .35s
+    ease;
+}
+
+.site-header.is-scrolled{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        35,
+        48,
+        36,
+        .93
+      ),
+      rgba(
+        13,
+        20,
+        14,
+        .96
+      )
+    )!important;
+
+  border-bottom:
+    1px solid
     rgba(
       255,
       255,
@@ -67,232 +192,6 @@
       .075
     );
 
-  --glass-line:
-    rgba(
-      255,
-      255,
-      255,
-      .12
-    );
-
-  --glass-text:
-    #f2f1eb;
-
-  --glass-muted:
-    rgba(
-      242,
-      241,
-      235,
-      .62
-    );
-
-  --glass-blur:
-    38px;
-
-  --glass-shadow:
-    0
-    26px
-    70px
-    rgba(
-      0,
-      0,
-      0,
-      .36
-    );
-
-  --glass-inner:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .13
-    ),
-    inset
-    0
-    -1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .035
-    );
-
-  --editorial-radius:
-    34px;
-
-  --editorial-radius-mobile:
-    25px;
-
-  --v4-ease:
-    cubic-bezier(
-      .18,
-      .72,
-      .18,
-      1
-    );
-}
-
-
-/* ==========================================================================
-   DENSE GLASS MATERIAL
-   ========================================================================== */
-
-.glass-material{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(
-        50,
-        70,
-        51,
-        .86
-      )
-      0%,
-      rgba(
-        24,
-        36,
-        26,
-        .91
-      )
-      54%,
-      rgba(
-        14,
-        21,
-        15,
-        .94
-      )
-      100%
-    );
-
-  border:
-    1px solid
-    var(
-      --glass-line
-    );
-
-  box-shadow:
-    var(
-      --glass-inner
-    ),
-    var(
-      --glass-shadow
-    );
-
-  backdrop-filter:
-    blur(
-      var(
-        --glass-blur
-      )
-    )
-    saturate(
-      145%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      var(
-        --glass-blur
-      )
-    )
-    saturate(
-      145%
-    );
-}
-
-
-/* ==========================================================================
-   GLOBAL TYPOGRAPHY POLISH
-   ========================================================================== */
-
-body{
-  text-rendering:
-    optimizeLegibility;
-}
-
-body.is-home h2{
-  text-wrap:
-    balance;
-}
-
-body.is-home .kicker{
-  font-size:
-    clamp(
-      9px,
-      .55vw,
-      11px
-    )!important;
-
-  font-weight:
-    500!important;
-
-  letter-spacing:
-    .18em!important;
-}
-
-
-/* ==========================================================================
-   HEADER — DESKTOP LIQUID GLASS
-   ========================================================================== */
-
-.site-header{
-  transition:
-    background
-    .42s
-    var(
-      --v4-ease
-    ),
-    box-shadow
-    .42s
-    var(
-      --v4-ease
-    ),
-    backdrop-filter
-    .42s
-    var(
-      --v4-ease
-    ),
-    border-color
-    .42s
-    var(
-      --v4-ease
-    );
-}
-
-.site-header.is-scrolled{
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .09
-    );
-
-  border-radius:
-    999px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(
-        47,
-        63,
-        48,
-        .78
-      ),
-      rgba(
-        16,
-        23,
-        17,
-        .91
-      )
-    )!important;
-
   box-shadow:
     inset
     0
@@ -302,16 +201,16 @@ body.is-home .kicker{
       255,
       255,
       255,
-      .11
+      .075
     ),
     0
-    14px
-    44px
+    10px
+    40px
     rgba(
       0,
       0,
       0,
-      .27
+      .24
     );
 
   backdrop-filter:
@@ -319,7 +218,7 @@ body.is-home .kicker{
       34px
     )
     saturate(
-      145%
+      135%
     );
 
   -webkit-backdrop-filter:
@@ -327,14 +226,14 @@ body.is-home .kicker{
       34px
     )
     saturate(
-      145%
+      135%
     );
 }
 
 
 /* ==========================================================================
    IN BETWEEN
-   Shorter, cleaner, horizontally editorial.
+   Restore the curved SECTION cut — not curved photos.
    ========================================================================== */
 
 body.is-home .filmstrip-section{
@@ -346,65 +245,67 @@ body.is-home .filmstrip-section{
 
   padding:
     clamp(
-      52px,
-      5vw,
-      78px
+      54px,
+      5.5vw,
+      86px
     )
     0
     clamp(
-      54px,
-      5vw,
-      82px
+      58px,
+      6vw,
+      94px
+    )!important;
+
+  color:
+    var(
+      --v5-text
     )!important;
 
   background:
     linear-gradient(
       180deg,
-      #0c100c
+      #111711
       0%,
-      #121812
-      48%,
-      #0c100c
+      #0c110c
       100%
     )!important;
 
-  color:
+  border-radius:
     var(
-      --glass-text
-    )!important;
+      --v5-section-cut
+    )
+    var(
+      --v5-section-cut
+    )
+    0
+    0!important;
 
   overflow:
     hidden;
 }
 
 
-/* remove huge decorative curve feeling */
+/* the curve now comes from the actual container */
 
 body.is-home .filmstrip-curve{
-  opacity:
-    .08!important;
-
-  height:
-    48px!important;
-}
-
-body.is-home .filmstrip-curve path{
-  fill:
-    #101610!important;
+  display:
+    none!important;
 }
 
 
-/* compact header */
+/* ==========================================================================
+   IN BETWEEN HEADING
+   ========================================================================== */
 
 body.is-home .filmstrip-heading{
   width:
     min(
-      1360px,
+      1380px,
       calc(
         100% -
-        64px
+        72px
       )
-    );
+    )!important;
 
   margin:
     0
@@ -412,11 +313,11 @@ body.is-home .filmstrip-heading{
     clamp(
       28px,
       3vw,
-      42px
+      46px
     )!important;
 
   display:
-    grid;
+    grid!important;
 
   grid-template-columns:
     minmax(
@@ -424,42 +325,42 @@ body.is-home .filmstrip-heading{
       1fr
     )
     minmax(
-      240px,
-      390px
-    );
-
-  align-items:
-    end;
+      260px,
+      410px
+    )!important;
 
   gap:
     clamp(
-      26px,
+      30px,
       5vw,
       80px
-    );
+    )!important;
+
+  align-items:
+    end!important;
 }
 
 body.is-home .filmstrip-heading h2{
-  max-width:
-    620px;
-
   margin:
-    9px
+    10px
     0
     0!important;
 
+  max-width:
+    650px;
+
   font-size:
     clamp(
-      42px,
-      4.7vw,
-      74px
+      43px,
+      4.9vw,
+      78px
     )!important;
 
   line-height:
     .94!important;
 
   letter-spacing:
-    -.04em!important;
+    -.042em!important;
 }
 
 body.is-home .filmstrip-copy{
@@ -468,10 +369,10 @@ body.is-home .filmstrip-copy{
 
   color:
     rgba(
-      242,
       241,
-      235,
-      .54
+      239,
+      232,
+      .56
     )!important;
 
   font-size:
@@ -482,29 +383,30 @@ body.is-home .filmstrip-copy{
     )!important;
 
   line-height:
-    1.68!important;
+    1.7!important;
 }
 
 
 /* ==========================================================================
-   FILMSTRIP — PILL CARDS
+   IN BETWEEN PHOTO STRIP
+   Clean photography — NO pills.
    ========================================================================== */
 
 body.is-home .filmstrip-track{
   gap:
     clamp(
-      10px,
-      1vw,
-      17px
+      12px,
+      1.15vw,
+      20px
     )!important;
 
   padding-left:
     max(
-      20px,
+      22px,
       calc(
         (
           100vw -
-          1360px
+          1380px
         ) /
         2
       )
@@ -512,140 +414,75 @@ body.is-home .filmstrip-track{
 
   padding-right:
     clamp(
-      30px,
+      36px,
       5vw,
       80px
     )!important;
 
   align-items:
-    center;
+    flex-start!important;
 }
-
-
-/* all same visual rhythm */
 
 body.is-home .filmstrip-item,
 body.is-home .filmstrip-item:nth-child(even){
-  width:
-    clamp(
-      250px,
-      23vw,
-      370px
-    )!important;
-
   flex:
     0
     0
     clamp(
-      250px,
-      23vw,
-      370px
+      260px,
+      25vw,
+      410px
+    )!important;
+
+  width:
+    clamp(
+      260px,
+      25vw,
+      410px
     )!important;
 
   margin-top:
     0!important;
 
   transform:
-    none;
-
-  transition:
-    transform
-    .55s
-    var(
-      --v4-ease
-    );
+    none!important;
 }
 
-
-/* actual pill */
-
 body.is-home .filmstrip-image{
-  position:
-    relative;
-
   width:
     100%;
 
   height:
     clamp(
-      230px,
-      24vw,
-      340px
+      290px,
+      30vw,
+      460px
     )!important;
+
+  padding:
+    0!important;
 
   overflow:
     hidden;
 
-  border-radius:
-    clamp(
-      34px,
-      4vw,
-      64px
-    )!important;
+  border:
+    0!important;
 
-  padding:
-    7px;
+  border-radius:
+    6px!important;
 
   background:
-    linear-gradient(
-      145deg,
-      rgba(
-        69,
-        91,
-        70,
-        .45
-      ),
-      rgba(
-        17,
-        25,
-        18,
-        .85
-      )
-    );
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .12
-    );
+    #111!important;
 
   box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .12
-    ),
-    0
-    17px
-    48px
-    rgba(
-      0,
-      0,
-      0,
-      .27
-    );
+    none!important;
 
   backdrop-filter:
-    blur(
-      25px
-    );
+    none!important;
 
   -webkit-backdrop-filter:
-    blur(
-      25px
-    );
+    none!important;
 }
-
-
-/* inner photo itself */
 
 body.is-home .filmstrip-image img{
   width:
@@ -657,95 +494,62 @@ body.is-home .filmstrip-image img{
   object-fit:
     cover!important;
 
-  object-position:
-    center;
-
   border-radius:
-    clamp(
-      28px,
-      3.4vw,
-      56px
-    );
+    6px!important;
 
   transition:
     transform
-    .85s
+    .8s
     var(
-      --v4-ease
-    ),
-    filter
-    .6s
-    ease;
+      --v5-ease
+    );
 }
 
 @media(hover:hover) and (pointer:fine){
 
-  body.is-home .filmstrip-item:hover{
-    transform:
-      translateY(
-        -5px
-      );
-  }
-
   body.is-home .filmstrip-item:hover .filmstrip-image img{
     transform:
       scale(
-        1.025
+        1.018
       );
   }
 }
 
-
-/* subdued metadata */
-
 body.is-home .filmstrip-counter{
-  margin-top:
-    10px!important;
+  margin:
+    10px
+    0
+    0!important;
 
-  padding-left:
-    9px;
+  padding:
+    0!important;
 
   color:
     rgba(
-      242,
       241,
-      235,
-      .4
+      239,
+      232,
+      .38
     )!important;
+
+  font-size:
+    10px!important;
 }
 
 
-/* arrow becomes proper liquid-glass control */
+/* ==========================================================================
+   FILMSTRIP BUTTON
+   ========================================================================== */
 
 body.is-home .filmstrip-next{
   width:
-    48px!important;
+    44px!important;
 
   height:
-    48px!important;
+    44px!important;
 
   border-radius:
-    999px!important;
-
-  color:
-    #f5f5ef!important;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(
-        61,
-        83,
-        62,
-        .8
-      ),
-      rgba(
-        17,
-        25,
-        18,
-        .92
-      )
-    )!important;
+    50%!important;
 
   border:
     1px solid
@@ -753,7 +557,20 @@ body.is-home .filmstrip-next{
       255,
       255,
       255,
-      .14
+      .1
+    )!important;
+
+  background:
+    rgba(
+      30,
+      43,
+      31,
+      .88
+    )!important;
+
+  color:
+    var(
+      --v5-text
     )!important;
 
   box-shadow:
@@ -765,134 +582,59 @@ body.is-home .filmstrip-next{
       255,
       255,
       255,
-      .15
-    ),
-    0
-    12px
-    30px
-    rgba(
-      0,
-      0,
-      0,
-      .3
+      .09
     );
 
   backdrop-filter:
     blur(
-      26px
+      24px
     );
 
   -webkit-backdrop-filter:
     blur(
-      26px
+      24px
     );
 }
 
 
 /* ==========================================================================
-   BEHIND THE LENS
-   Compact glass editorial card instead of giant poster section.
+   DENSE LIQUID GLASS PANELS
+   Used for text-heavy editorial blocks.
    ========================================================================== */
 
+.collection-intro,
 body.is-home .artist-section{
-  position:
-    relative;
-
-  width:
-    min(
-      1420px,
-      calc(
-        100% -
-        clamp(
-          28px,
-          6vw,
-          96px
-        )
-      )
-    )!important;
-
-  min-height:
-    0!important;
-
-  margin:
-    clamp(
-      60px,
-      7vw,
-      110px
-    )
-    auto!important;
-
-  padding:
-    clamp(
-      22px,
-      2.4vw,
-      34px
-    )!important;
-
-  display:
-    grid!important;
-
-  grid-template-columns:
-    minmax(
-      280px,
-      .84fr
-    )
-    minmax(
-      320px,
-      1.16fr
-    )!important;
-
-  gap:
-    clamp(
-      28px,
-      5vw,
-      78px
-    )!important;
-
-  align-items:
-    center!important;
-
-  border-radius:
-    clamp(
-      34px,
-      4vw,
-      58px
-    )!important;
-
   background:
     linear-gradient(
       145deg,
       rgba(
-        52,
-        72,
-        53,
-        .83
+        47,
+        64,
+        48,
+        .84
       )
       0%,
       rgba(
-        28,
-        41,
-        29,
-        .9
+        24,
+        34,
+        25,
+        .92
       )
-      44%,
+      48%,
       rgba(
+        13,
+        20,
         14,
-        21,
-        15,
-        .95
+        .96
       )
       100%
     )!important;
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .12
-    );
+    var(
+      --v5-border
+    )!important;
 
   box-shadow:
     inset
@@ -903,7 +645,7 @@ body.is-home .artist-section{
       255,
       255,
       255,
-      .14
+      .095
     ),
     inset
     0
@@ -913,60 +655,196 @@ body.is-home .artist-section{
       255,
       255,
       255,
-      .025
+      .02
     ),
-    0
-    35px
-    90px
-    rgba(
-      0,
-      0,
-      0,
-      .32
+    var(
+      --v5-shadow
     );
 
   backdrop-filter:
     blur(
-      42px
+      var(
+        --v5-blur
+      )
     )
     saturate(
-      138%
+      135%
     );
 
   -webkit-backdrop-filter:
     blur(
-      42px
+      var(
+        --v5-blur
+      )
     )
     saturate(
-      138%
+      135%
     );
+}
+
+
+/* ==========================================================================
+   PROJECT / ABOUT INTRO PANEL
+   Sara Fani / Ergys Shehu / etc.
+   ========================================================================== */
+
+.collection-intro{
+  width:
+    min(
+      1760px,
+      calc(
+        100% -
+        clamp(
+          28px,
+          5vw,
+          90px
+        )
+      )
+    )!important;
+
+  margin:
+    0
+    auto!important;
+
+  padding:
+    clamp(
+      56px,
+      5.8vw,
+      96px
+    )
+    clamp(
+      42px,
+      5vw,
+      82px
+    )!important;
+
+  border-radius:
+    0
+    0
+    18px
+    18px!important;
+}
+
+.collection-intro h1{
+  max-width:
+    1050px!important;
+
+  margin-bottom:
+    clamp(
+      26px,
+      2.5vw,
+      40px
+    )!important;
+}
+
+.collection-intro>p:not(.kicker){
+  max-width:
+    650px!important;
+
+  color:
+    rgba(
+      241,
+      239,
+      232,
+      .64
+    )!important;
+
+  line-height:
+    1.72!important;
+}
+
+.collection-intro .back-link{
+  margin-bottom:
+    clamp(
+      34px,
+      4vw,
+      58px
+    )!important;
+}
+
+
+/* ==========================================================================
+   BEHIND THE LENS
+   Glass panel with low radius.
+   ========================================================================== */
+
+body.is-home .artist-section{
+  position:
+    relative;
+
+  width:
+    min(
+      1440px,
+      calc(
+        100% -
+        clamp(
+          30px,
+          6vw,
+          100px
+        )
+      )
+    )!important;
+
+  min-height:
+    0!important;
+
+  margin:
+    clamp(
+      66px,
+      7vw,
+      110px
+    )
+    auto!important;
+
+  padding:
+    clamp(
+      32px,
+      3vw,
+      48px
+    )!important;
+
+  display:
+    grid!important;
+
+  grid-template-columns:
+    minmax(
+      300px,
+      .82fr
+    )
+    minmax(
+      360px,
+      1.18fr
+    )!important;
+
+  align-items:
+    center!important;
+
+  gap:
+    clamp(
+      40px,
+      6vw,
+      96px
+    )!important;
+
+  border-radius:
+    18px!important;
 
   overflow:
     hidden;
 }
 
 
-/* photo becomes pill / capsule */
+/* portrait — clean rectangular editorial crop */
 
 body.is-home .artist-section::before{
   content:
     "";
 
   position:
-    relative;
+    relative!important;
 
   display:
-    block;
-
-  width:
-    100%;
-
-  height:
-    clamp(
-      370px,
-      43vw,
-      590px
-    );
+    block!important;
 
   grid-column:
     1;
@@ -974,72 +852,60 @@ body.is-home .artist-section::before{
   grid-row:
     1;
 
-  border-radius:
+  width:
+    100%!important;
+
+  height:
     clamp(
-      90px,
-      10vw,
-      170px
-    );
+      400px,
+      42vw,
+      610px
+    )!important;
+
+  top:
+    auto!important;
+
+  left:
+    auto!important;
+
+  border:
+    0!important;
+
+  border-radius:
+    7px!important;
 
   background-image:
     linear-gradient(
       180deg,
       transparent
-      52%,
+      64%,
       rgba(
-        7,
-        10,
-        7,
-        .2
+        5,
+        8,
+        5,
+        .15
       )
       100%
     ),
     url(
       '/images/5998b542175204-1800.webp'
-    );
+    )!important;
 
   background-size:
-    cover;
+    cover!important;
 
   background-position:
-    center;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .11
-    );
+    center!important;
 
   box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .13
-    ),
-    0
-    20px
-    50px
-    rgba(
-      0,
-      0,
-      0,
-      .25
-    );
+    none!important;
+
+  transform:
+    none!important;
 
   z-index:
     1;
 }
-
-
-/* remove giant background words */
 
 body.is-home .artist-section::after{
   display:
@@ -1047,25 +913,17 @@ body.is-home .artist-section::after{
 }
 
 
-/* label becomes tiny floating glass badge */
+/* tiny label, not bubble/pill */
 
 body.is-home .artist-label{
   position:
     absolute!important;
 
   top:
-    clamp(
-      34px,
-      3vw,
-      48px
-    );
+    54px!important;
 
   left:
-    clamp(
-      34px,
-      3vw,
-      48px
-    );
+    54px!important;
 
   z-index:
     4!important;
@@ -1074,50 +932,22 @@ body.is-home .artist-label{
     0!important;
 
   padding:
-    10px
-    14px;
-
-  border-radius:
-    999px;
+    0!important;
 
   background:
-    rgba(
-      18,
-      28,
-      20,
-      .78
-    );
+    transparent!important;
 
   border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .13
-    );
+    0!important;
+
+  border-radius:
+    0!important;
 
   box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .12
-    );
+    none!important;
 
   backdrop-filter:
-    blur(
-      24px
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      24px
-    );
+    none!important;
 }
 
 body.is-home .artist-number{
@@ -1131,49 +961,46 @@ body.is-home .artist-label .kicker{
 
   color:
     rgba(
-      245,
-      244,
-      237,
-      .76
+      255,
+      255,
+      255,
+      .8
     )!important;
+
+  text-shadow:
+    0
+    2px
+    14px
+    rgba(
+      0,
+      0,
+      0,
+      .48
+    );
 }
 
 
-/* content */
+/* copy */
 
 body.is-home .artist-copy{
-  position:
-    relative;
-
   grid-column:
     2!important;
 
   grid-row:
-    1;
-
-  z-index:
-    2;
+    1!important;
 
   max-width:
-    660px!important;
+    670px!important;
 
   padding:
     clamp(
-      18px,
-      3vw,
-      46px
-    )
-    clamp(
-      10px,
+      12px,
       2vw,
-      28px
+      34px
     )!important;
 }
 
 body.is-home .artist-copy h2{
-  position:
-    static!important;
-
   min-height:
     0!important;
 
@@ -1182,29 +1009,25 @@ body.is-home .artist-copy h2{
     0
     clamp(
       22px,
-      2.2vw,
-      32px
+      2.5vw,
+      36px
     )!important;
 
   color:
-    #f2f1eb!important;
+    var(
+      --v5-text
+    )!important;
 
   font-size:
     clamp(
-      47px,
+      50px,
       5vw,
-      78px
+      82px
     )!important;
 
   line-height:
-    .93!important;
-
-  letter-spacing:
-    -.043em!important;
+    .94!important;
 }
-
-
-/* remove Work-mode pseudo replacement */
 
 body.is-home .artist-copy h2::after{
   display:
@@ -1216,22 +1039,19 @@ body.is-home .artist-copy p{
     54ch!important;
 
   color:
-    rgba(
-      242,
-      241,
-      235,
-      .64
+    var(
+      --v5-muted
     )!important;
 
   font-size:
     clamp(
       13px,
-      .92vw,
+      .9vw,
       16px
     )!important;
 
   line-height:
-    1.74!important;
+    1.76!important;
 }
 
 body.is-home .artist-copy .text-link{
@@ -1239,251 +1059,180 @@ body.is-home .artist-copy .text-link{
     inline-flex;
 
   margin-top:
-    25px!important;
+    27px!important;
 
   padding:
-    11px
-    17px!important;
+    0
+    0
+    5px!important;
 
   border:
+    0!important;
+
+  border-bottom:
     1px solid
     rgba(
       255,
       255,
       255,
-      .13
+      .33
     )!important;
 
   border-radius:
-    999px;
+    0!important;
 
   background:
-    rgba(
-      60,
-      83,
-      61,
-      .22
-    );
-
-  color:
-    #f3f2ec!important;
+    transparent!important;
 
   box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .09
-    );
+    none!important;
 
   backdrop-filter:
-    blur(
-      18px
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      18px
-    );
+    none!important;
 }
 
 
 /* ==========================================================================
-   RECOGNITION — DENSE GLASS ROWS
-   ========================================================================== */
-
-body.is-home .recognition-section{
-  background:
-    #0b0f0b!important;
-}
-
-body.is-home .recognition-row{
-  margin-bottom:
-    8px;
-
-  padding:
-    17px
-    18px!important;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .085
-    )!important;
-
-  border-radius:
-    18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(
-        54,
-        75,
-        55,
-        .4
-      ),
-      rgba(
-        18,
-        27,
-        19,
-        .74
-      )
-    );
-
-  box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .075
-    );
-
-  backdrop-filter:
-    blur(
-      28px
-    )
-    saturate(
-      135%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      28px
-    )
-    saturate(
-      135%
-    );
-}
-
-
-/* ==========================================================================
-   INSTAGRAM / FROM THE STUDIO
-   Glass photo cards instead of plain Instagram grid.
+   INSTAGRAM
+   Minimal horizontal image strip.
+   No frames. No bubbles.
    ========================================================================== */
 
 body.is-home .latest-section{
   background:
-    linear-gradient(
-      180deg,
-      #0c100c,
-      #111711
-    )!important;
+    #0c110c!important;
 
   padding-top:
     clamp(
-      62px,
+      64px,
       6vw,
-      92px
+      94px
     )!important;
 
   padding-bottom:
     clamp(
       68px,
       6.5vw,
-      100px
+      104px
+    )!important;
+}
+
+body.is-home .latest-section .work-heading{
+  width:
+    min(
+      1380px,
+      calc(
+        100% -
+        72px
+      )
+    );
+
+  margin:
+    0
+    auto
+    24px!important;
+}
+
+body.is-home .latest-intro{
+  width:
+    min(
+      1380px,
+      calc(
+        100% -
+        72px
+      )
+    );
+
+  margin:
+    0
+    auto
+    30px!important;
+
+  color:
+    rgba(
+      241,
+      239,
+      232,
+      .54
     )!important;
 }
 
 body.is-home .latest-grid{
+  width:
+    calc(
+      100% -
+      clamp(
+        40px,
+        6vw,
+        100px
+      )
+    );
+
+  margin:
+    0
+    auto;
+
+  display:
+    grid!important;
+
+  grid-template-columns:
+    repeat(
+      10,
+      minmax(
+        0,
+        1fr
+      )
+    )!important;
+
+  grid-auto-rows:
+    auto!important;
+
   gap:
     clamp(
-      10px,
-      1vw,
-      16px
+      7px,
+      .65vw,
+      12px
     )!important;
 }
 
-body.is-home .latest-card{
-  position:
-    relative;
+body.is-home .latest-card,
+body.is-home .latest-card:nth-child(n){
+  grid-column:
+    auto!important;
+
+  grid-row:
+    auto!important;
+
+  aspect-ratio:
+    4 /
+    5!important;
+
+  height:
+    auto!important;
+
+  padding:
+    0!important;
 
   overflow:
     hidden;
 
-  padding:
-    6px;
+  border:
+    0!important;
 
   border-radius:
-    clamp(
-      22px,
-      2vw,
-      32px
-    )!important;
+    6px!important;
 
   background:
-    linear-gradient(
-      145deg,
-      rgba(
-        72,
-        96,
-        73,
-        .42
-      ),
-      rgba(
-        19,
-        29,
-        20,
-        .78
-      )
-    )!important;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .115
-    );
+    #111!important;
 
   box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .11
-    ),
-    0
-    18px
-    44px
-    rgba(
-      0,
-      0,
-      0,
-      .23
-    );
+    none!important;
 
   backdrop-filter:
-    blur(
-      26px
-    )
-    saturate(
-      145%
-    );
+    none!important;
 
   -webkit-backdrop-filter:
-    blur(
-      26px
-    )
-    saturate(
-      145%
-    );
+    none!important;
 }
 
 body.is-home .latest-card img{
@@ -1497,28 +1246,19 @@ body.is-home .latest-card img{
     cover!important;
 
   border-radius:
-    clamp(
-      17px,
-      1.6vw,
-      26px
-    );
+    6px!important;
 
   filter:
-    brightness(
-      1.035
-    )
-    contrast(
-      1.015
-    )!important;
+    none!important;
 
   transition:
     transform
-    .75s
+    .7s
     var(
-      --v4-ease
+      --v5-ease
     ),
     filter
-    .5s
+    .45s
     ease!important;
 }
 
@@ -1527,22 +1267,377 @@ body.is-home .latest-card img{
   body.is-home .latest-card:hover img{
     transform:
       scale(
-        1.025
+        1.02
       )!important;
 
     filter:
       brightness(
-        1.08
-      )
-      contrast(
-        1.02
+        1.04
       )!important;
   }
 }
 
+body.is-home .editorial-social-link{
+  display:
+    block;
+
+  width:
+    calc(
+      100% -
+      clamp(
+        40px,
+        6vw,
+        100px
+      )
+    );
+
+  margin:
+    13px
+    auto
+    0!important;
+
+  border:
+    0!important;
+
+  font-size:
+    11px;
+}
+
 
 /* ==========================================================================
-   MOBILE NAVIGATION — DENSE iPHONE-LIKE GLASS
+   RECOGNITION
+   Dense glass but clean square geometry.
+   ========================================================================== */
+
+body.is-home .recognition-section{
+  background:
+    #0a0f0a!important;
+}
+
+body.is-home .recognition-row{
+  margin-bottom:
+    7px;
+
+  padding:
+    17px
+    19px!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .07
+    )!important;
+
+  border-radius:
+    8px!important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        42,
+        58,
+        43,
+        .5
+      ),
+      rgba(
+        16,
+        24,
+        17,
+        .72
+      )
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .06
+    );
+
+  backdrop-filter:
+    blur(
+      28px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      28px
+    );
+}
+
+
+/* ==========================================================================
+   BOOK / CONTACT
+   Improve alignment + dense material.
+   ========================================================================== */
+
+.booking-page .contact-booking{
+  align-items:
+    start!important;
+
+  gap:
+    clamp(
+      48px,
+      6vw,
+      100px
+    )!important;
+}
+
+.booking-page .contact-copy{
+  padding-top:
+    4px;
+}
+
+.booking-page .inquiry-form{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        42,
+        57,
+        43,
+        .42
+      ),
+      rgba(
+        14,
+        21,
+        15,
+        .76
+      )
+    )!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .075
+    )!important;
+
+  border-radius:
+    10px!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .065
+    );
+
+  backdrop-filter:
+    blur(
+      32px
+    )
+    saturate(
+      125%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      32px
+    )
+    saturate(
+      125%
+    );
+}
+
+.booking-page .inquiry-form input,
+.booking-page .inquiry-form textarea,
+.booking-page .inquiry-form select{
+  background:
+    rgba(
+      6,
+      10,
+      7,
+      .28
+    )!important;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      .11
+    )!important;
+}
+
+.booking-page .submit-button{
+  border-radius:
+    5px!important;
+}
+
+
+/* ==========================================================================
+   CONTACT SECTION — HOMEPAGE
+   ========================================================================== */
+
+body.is-home .contact-section{
+  border-radius:
+    var(
+      --v5-section-cut
+    )
+    var(
+      --v5-section-cut
+    )
+    0
+    0!important;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================================
+   FOOTER — FULL WIDTH
+   Fixes the floating centred-box appearance.
+   ========================================================================== */
+
+footer{
+  width:
+    100%!important;
+
+  max-width:
+    none!important;
+
+  margin:
+    0!important;
+
+  padding-left:
+    max(
+      var(
+        --page-pad
+      ),
+      calc(
+        (
+          100vw -
+          var(
+            --content-max
+          )
+        ) /
+        2 +
+        var(
+          --page-pad
+        )
+      )
+    )!important;
+
+  padding-right:
+    max(
+      var(
+        --page-pad
+      ),
+      calc(
+        (
+          100vw -
+          var(
+            --content-max
+          )
+        ) /
+        2 +
+        var(
+          --page-pad
+        )
+      )
+    )!important;
+
+  background:
+    #050805!important;
+
+  border-radius:
+    0!important;
+
+  box-shadow:
+    none!important;
+}
+
+body.is-home footer{
+  width:
+    100%!important;
+
+  max-width:
+    none!important;
+
+  margin:
+    0!important;
+
+  background:
+    #050805!important;
+}
+
+
+/* ==========================================================================
+   LIGHTBOX
+   Prevent all white flashes while the image is fitting/loading.
+   ========================================================================== */
+
+dialog.lightbox,
+dialog.lightbox[open],
+.lightbox{
+  background:
+    #030503!important;
+
+  background-color:
+    #030503!important;
+
+  border:
+    0!important;
+
+  color:
+    #fff!important;
+}
+
+dialog.lightbox::backdrop,
+.lightbox::backdrop{
+  background:
+    #030503!important;
+}
+
+.lightbox-photo,
+.lightbox img,
+.lightbox-video{
+  background:
+    #030503!important;
+
+  background-color:
+    #030503!important;
+}
+
+html.lightbox-open,
+html.lightbox-open body,
+html.lightbox-open main{
+  background:
+    #030503!important;
+}
+
+
+/* gallery surface behind images */
+
+.gallery,
+.gallery figure,
+.gallery figure>a{
+  background:
+    #030503!important;
+}
+
+
+/* ==========================================================================
+   MOBILE MENU — DENSE GLASS
+   Glassy but NOT made of pill buttons.
    ========================================================================== */
 
 @media(max-width:1000px){
@@ -1550,141 +1645,38 @@ body.is-home .latest-card img{
   .mobile-menu-screen{
     background:
       linear-gradient(
-        165deg,
+        160deg,
         rgba(
-          37,
-          54,
-          39,
-          .92
+          43,
+          60,
+          44,
+          .94
         )
         0%,
         rgba(
           17,
           27,
-          19,
-          .95
+          18,
+          .965
         )
-        48%,
+        46%,
         rgba(
+          7,
+          12,
           8,
-          13,
-          9,
-          .97
+          .98
         )
         100%
       )!important;
 
     border:
-      1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .11
-      );
+      0!important;
 
     box-shadow:
       inset
       0
       1px
       0
-      rgba(
-        255,
-        255,
-        255,
-        .14
-      ),
-      0
-      30px
-      90px
-      rgba(
-        0,
-        0,
-        0,
-        .48
-      );
-
-    backdrop-filter:
-      blur(
-        52px
-      )
-      saturate(
-        145%
-      );
-
-    -webkit-backdrop-filter:
-      blur(
-        52px
-      )
-      saturate(
-        145%
-      );
-  }
-
-
-  /* subtle luminous internal reflection */
-
-  .mobile-menu-screen::before{
-    content:
-      "";
-
-    position:
-      absolute;
-
-    inset:
-      0;
-
-    pointer-events:
-      none;
-
-    background:
-      radial-gradient(
-        ellipse
-        at
-        20%
-        0%,
-        rgba(
-          130,
-          165,
-          132,
-          .13
-        ),
-        transparent
-        39%
-      ),
-      linear-gradient(
-        120deg,
-        rgba(
-          255,
-          255,
-          255,
-          .035
-        ),
-        transparent
-        28%
-      );
-  }
-
-
-  .mobile-menu-head,
-  .mobile-menu nav,
-  .mobile-menu-footer{
-    position:
-      relative;
-
-    z-index:
-      2;
-  }
-
-
-  /* navigation becomes one dense material */
-
-  .mobile-menu nav{
-    padding:
-      8px;
-
-    border:
-      1px solid
       rgba(
         255,
         255,
@@ -1692,274 +1684,81 @@ body.is-home .latest-card img{
         .09
       );
 
-    border-radius:
-      30px;
-
-    background:
-      linear-gradient(
-        145deg,
-        rgba(
-          65,
-          88,
-          67,
-          .28
-        ),
-        rgba(
-          19,
-          29,
-          21,
-          .5
-        )
-      );
-
-    box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(
-        255,
-        255,
-        255,
-        .085
-      );
-
     backdrop-filter:
       blur(
-        28px
+        50px
+      )
+      saturate(
+        135%
       );
 
     -webkit-backdrop-filter:
       blur(
-        28px
+        50px
+      )
+      saturate(
+        135%
       );
   }
 
-  .mobile-menu nav a{
-    min-height:
-      53px!important;
-
-    margin:
-      2px
-      0;
-
+  .mobile-menu-screen nav{
     padding:
-      9px
-      15px!important;
+      0!important;
 
     border:
       0!important;
 
     border-radius:
-      999px;
-
-    color:
-      rgba(
-        247,
-        247,
-        240,
-        .92
-      )!important;
-
-    transition:
-      background
-      .22s
-      ease,
-      transform
-      .22s
-      ease;
-  }
-
-  .mobile-menu nav a:active,
-  .mobile-menu nav a:hover{
-    padding-left:
-      15px!important;
+      0!important;
 
     background:
-      linear-gradient(
-        145deg,
-        rgba(
-          102,
-          134,
-          104,
-          .26
-        ),
-        rgba(
-          56,
-          78,
-          58,
-          .2
-        )
-      );
+      transparent!important;
 
     box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(
-        255,
-        255,
-        255,
-        .09
-      );
+      none!important;
+
+    backdrop-filter:
+      none!important;
   }
 
+  .mobile-menu-screen nav>a{
+    margin:
+      0!important;
 
-  /* burger/header itself is a compact pill */
+    padding:
+      13px
+      0!important;
 
-  .site-header{
     border:
+      0!important;
+
+    border-bottom:
       1px solid
       rgba(
         255,
         255,
         255,
-        .1
-      );
-
-    border-radius:
-      999px;
-
-    background:
-      linear-gradient(
-        145deg,
-        rgba(
-          52,
-          73,
-          53,
-          .79
-        ),
-        rgba(
-          14,
-          22,
-          15,
-          .9
-        )
+        .09
       )!important;
 
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
     box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(
-        255,
-        255,
-        255,
-        .13
-      ),
-      0
-      12px
-      36px
-      rgba(
-        0,
-        0,
-        0,
-        .28
-      );
-
-    backdrop-filter:
-      blur(
-        34px
-      )
-      saturate(
-        145%
-      );
-
-    -webkit-backdrop-filter:
-      blur(
-        34px
-      )
-      saturate(
-        145%
-      );
+      none!important;
   }
-}
 
+  .mobile-menu-screen nav>a:hover,
+  .mobile-menu-screen nav>a:active{
+    padding-left:
+      7px!important;
 
-/* ==========================================================================
-   LIGHTBOX FIX
-   Removes white flash / white background while photo is fitting in place.
-   Applies to Index / Weddings / Portraits / project galleries.
-   ========================================================================== */
-
-dialog.lightbox,
-dialog.lightbox[open],
-.lightbox{
-  background:
-    #050705!important;
-
-  background-color:
-    #050705!important;
-
-  color:
-    #fff!important;
-
-  border:
-    0!important;
-}
-
-dialog.lightbox::backdrop,
-.lightbox::backdrop{
-  background:
-    rgba(
-      2,
-      4,
-      2,
-      .98
-    )!important;
-
-  backdrop-filter:
-    blur(
-      10px
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      10px
-    );
-}
-
-.lightbox-photo,
-.lightbox img,
-.lightbox-video{
-  background:
-    #050705!important;
-
-  background-color:
-    #050705!important;
-}
-
-html.lightbox-open,
-html.lightbox-open body{
-  background:
-    #050705!important;
-}
-
-html.lightbox-open body::before{
-  background:
-    #050705!important;
-}
-
-
-/* also remove white flash behind image cards while images decode */
-
-body:not(.is-home) .project-image,
-body:not(.is-home) .project-card,
-.gallery figure,
-.gallery figure > a{
-  background:
-    #070907;
-}
-
-
-/* actual images remain unchanged */
-
-body:not(.is-home) .project-image img,
-.gallery img{
-  background:
-    #070907;
+    background:
+      transparent!important;
+  }
 }
 
 
@@ -1969,47 +1768,42 @@ body:not(.is-home) .project-image img,
 
 @media(max-width:700px){
 
-  /* IN BETWEEN becomes a compact horizontal capsule rail */
+  /* clean curved SECTION cut */
 
   body.is-home .filmstrip-section{
     padding:
       44px
       0
-      50px!important;
+      52px!important;
+
+    border-radius:
+      var(
+        --v5-section-cut-mobile
+      )
+      var(
+        --v5-section-cut-mobile
+      )
+      0
+      0!important;
   }
 
   body.is-home .filmstrip-heading{
+    display:
+      block!important;
+
     width:
       calc(
         100% -
         34px
-      );
-
-    display:
-      block;
+      )!important;
 
     margin-bottom:
-      28px!important;
-  }
-
-  body.is-home .filmstrip-heading h2{
-    max-width:
-      88%;
-
-    font-size:
-      clamp(
-        38px,
-        11vw,
-        54px
-      )!important;
+      27px!important;
   }
 
   body.is-home .filmstrip-copy{
-    max-width:
-      34ch!important;
-
     margin-top:
-      16px!important;
+      17px!important;
   }
 
   body.is-home .filmstrip-track{
@@ -2020,66 +1814,80 @@ body:not(.is-home) .project-image img,
       17px!important;
 
     padding-right:
-      40px!important;
+      38px!important;
   }
 
   body.is-home .filmstrip-item,
   body.is-home .filmstrip-item:nth-child(even){
     width:
       min(
-        74vw,
-        310px
+        78vw,
+        325px
       )!important;
 
-    flex:
-      0
-      0
+    flex-basis:
       min(
-        74vw,
-        310px
+        78vw,
+        325px
       )!important;
-
-    margin:
-      0!important;
   }
 
   body.is-home .filmstrip-image{
     height:
       min(
-        88vw,
-        370px
+        102vw,
+        430px
       )!important;
 
-    padding:
-      5px;
-
     border-radius:
-      44px!important;
+      5px!important;
   }
 
   body.is-home .filmstrip-image img{
     border-radius:
-      39px!important;
+      5px!important;
   }
 
 
-  /* artist becomes a single premium glass card */
+  /* project / about intro */
+
+  .collection-intro{
+    width:
+      calc(
+        100% -
+        18px
+      )!important;
+
+    padding:
+      42px
+      22px
+      48px!important;
+
+    border-radius:
+      0
+      0
+      14px
+      14px!important;
+  }
+
+
+  /* Behind the Lens */
 
   body.is-home .artist-section{
     width:
       calc(
         100% -
-        24px
+        20px
       )!important;
 
     margin:
-      46px
+      45px
       auto!important;
 
     padding:
-      10px
-      10px
-      28px!important;
+      9px
+      9px
+      30px!important;
 
     grid-template-columns:
       1fr!important;
@@ -2088,42 +1896,32 @@ body:not(.is-home) .project-image img,
       0!important;
 
     border-radius:
-      34px!important;
+      14px!important;
   }
 
   body.is-home .artist-section::before{
-    width:
-      100%;
-
-    height:
-      min(
-        112vw,
-        520px
-      );
-
     grid-column:
       1;
 
     grid-row:
       1;
 
+    height:
+      min(
+        115vw,
+        530px
+      )!important;
+
     border-radius:
-      27px
-      27px
-      110px
-      110px;
+      6px!important;
   }
 
   body.is-home .artist-label{
     top:
-      23px;
+      27px!important;
 
     left:
-      24px;
-
-    padding:
-      9px
-      12px;
+      27px!important;
   }
 
   body.is-home .artist-copy{
@@ -2131,49 +1929,130 @@ body:not(.is-home) .project-image img,
       1!important;
 
     grid-row:
-      2;
+      2!important;
 
     padding:
-      30px
-      16px
-      4px!important;
-  }
-
-  body.is-home .artist-copy h2{
-    font-size:
-      clamp(
-        42px,
-        12vw,
-        58px
-      )!important;
-
-    line-height:
-      .94!important;
+      29px
+      14px
+      3px!important;
   }
 
 
-  /* Instagram cards slightly rounder/mobile iOS card feeling */
+  /* Instagram becomes swipeable clean strip rather than 2-column bubbles */
 
   body.is-home .latest-grid{
+    width:
+      100%!important;
+
+    display:
+      flex!important;
+
     gap:
       7px!important;
+
+    overflow-x:
+      auto;
+
+    overscroll-behavior-x:
+      contain;
+
+    scrollbar-width:
+      none;
+
+    padding:
+      0
+      17px!important;
   }
 
-  body.is-home .latest-card{
-    padding:
-      4px;
+  body.is-home .latest-grid::-webkit-scrollbar{
+    display:
+      none;
+  }
+
+  body.is-home .latest-card,
+  body.is-home .latest-card:nth-child(n){
+    flex:
+      0
+      0
+      52vw!important;
+
+    width:
+      52vw!important;
+
+    max-width:
+      230px;
+
+    aspect-ratio:
+      4 /
+      5!important;
 
     border-radius:
-      22px!important;
+      5px!important;
   }
 
   body.is-home .latest-card img{
     border-radius:
-      18px!important;
+      5px!important;
+  }
+
+  body.is-home .latest-section .work-heading,
+  body.is-home .latest-intro{
+    width:
+      calc(
+        100% -
+        34px
+      )!important;
+  }
+
+  body.is-home .editorial-social-link{
+    width:
+      calc(
+        100% -
+        34px
+      )!important;
   }
 
 
-  /* lightbox genuinely edge-to-edge dark */
+  /* Contact curved section */
+
+  body.is-home .contact-section{
+    border-radius:
+      var(
+        --v5-section-cut-mobile
+      )
+      var(
+        --v5-section-cut-mobile
+      )
+      0
+      0!important;
+  }
+
+
+  /* Footer full edge */
+
+  footer,
+  body.is-home footer{
+    width:
+      100%!important;
+
+    max-width:
+      none!important;
+
+    margin:
+      0!important;
+
+    padding-left:
+      18px!important;
+
+    padding-right:
+      18px!important;
+
+    border-radius:
+      0!important;
+  }
+
+
+  /* full dark lightbox */
 
   dialog.lightbox,
   dialog.lightbox[open]{
@@ -2183,12 +2062,6 @@ body:not(.is-home) .project-image img,
     height:
       100dvh!important;
 
-    min-width:
-      100vw;
-
-    min-height:
-      100dvh;
-
     margin:
       0!important;
 
@@ -2198,16 +2071,11 @@ body:not(.is-home) .project-image img,
     background:
       #030503!important;
   }
-
-  .lightbox-photo{
-    background:
-      #030503!important;
-  }
 }
 
 
 /* ==========================================================================
-   VERY SMALL MOBILE
+   SMALL MOBILE
    ========================================================================== */
 
 @media(max-width:420px){
@@ -2215,26 +2083,19 @@ body:not(.is-home) .project-image img,
   body.is-home .filmstrip-item,
   body.is-home .filmstrip-item:nth-child(even){
     width:
-      78vw!important;
+      82vw!important;
 
     flex-basis:
-      78vw!important;
+      82vw!important;
   }
 
-  body.is-home .filmstrip-image{
-    height:
-      96vw!important;
+  body.is-home .latest-card,
+  body.is-home .latest-card:nth-child(n){
+    flex-basis:
+      57vw!important;
 
-    max-height:
-      390px;
-  }
-
-  body.is-home .artist-section{
     width:
-      calc(
-        100% -
-        18px
-      )!important;
+      57vw!important;
   }
 }
 
@@ -2245,15 +2106,12 @@ body:not(.is-home) .project-image img,
 
 @media(prefers-reduced-motion:reduce){
 
-  body.is-home .filmstrip-item,
   body.is-home .filmstrip-image img,
-  body.is-home .latest-card img,
-  .mobile-menu nav a{
+  body.is-home .latest-card img{
     transition:
       none!important;
   }
 
-  body.is-home .filmstrip-item:hover,
   body.is-home .filmstrip-item:hover .filmstrip-image img,
   body.is-home .latest-card:hover img{
     transform:
