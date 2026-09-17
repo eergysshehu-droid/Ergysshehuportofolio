@@ -1357,3 +1357,277 @@ article,
     padding: 14px 14px 12px;
   }
 }
+/* ==========================================================================
+   V6 — FILTER STABILITY / ACCESSIBILITY
+   --------------------------------------------------------------------------
+   Does NOT change homepage sticky stacking geometry.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   FILTER BASE
+   -------------------------------------------------------------------------- */
+
+.work-section .filters{
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+}
+
+
+.work-section .filters button{
+  min-height:
+    36px;
+
+  padding:
+    8px
+    12px;
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius:
+    4px;
+
+  background:
+    transparent;
+
+  color:
+    rgba(
+      245,
+      243,
+      237,
+      .56
+    );
+
+  font-size:
+    11px;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .08em;
+
+  transition:
+    color
+    160ms
+    ease,
+    background-color
+    160ms
+    ease,
+    border-color
+    160ms
+    ease,
+    opacity
+    160ms
+    ease,
+    transform
+    120ms
+    ease;
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+/* --------------------------------------------------------------------------
+   HOVER / FOCUS
+   -------------------------------------------------------------------------- */
+
+@media(
+  hover:
+    hover
+) and (
+  pointer:
+    fine
+){
+
+  .work-section .filters button:hover{
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        .9
+      );
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .1
+      );
+  }
+}
+
+
+.work-section .filters button:focus-visible{
+  outline:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .72
+    );
+
+  outline-offset:
+    3px;
+}
+
+
+/* --------------------------------------------------------------------------
+   ACTIVE FILTER
+   Fixes the previous dark-text-on-dark-background state.
+   -------------------------------------------------------------------------- */
+
+body.is-home
+.work-section
+.filters
+button[aria-pressed="true"],
+body.is-home
+.work-section
+.filters
+button.is-active{
+  color:
+    #f5f3ed!important;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .095
+    )!important;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      .14
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .06
+    );
+}
+
+
+/* --------------------------------------------------------------------------
+   PRESS FEEDBACK
+   Small tactile response without changing layout.
+   -------------------------------------------------------------------------- */
+
+.work-section .filters button:active{
+  transform:
+    scale(
+      .97
+    );
+}
+
+
+/* --------------------------------------------------------------------------
+   HIDDEN PROJECTS
+   Hidden cards must be physically removed from layout and stacking.
+   -------------------------------------------------------------------------- */
+
+body.is-home
+.work-section
+.project-card[hidden]{
+  display:
+    none!important;
+}
+
+
+/* --------------------------------------------------------------------------
+   EMPTY STATE
+   -------------------------------------------------------------------------- */
+
+.work-empty{
+  padding:
+    32px
+    0;
+
+  color:
+    rgba(
+      245,
+      243,
+      237,
+      .55
+    );
+
+  font-size:
+    13px;
+
+  line-height:
+    1.6;
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE
+   Keep controls easy to tap without turning them into giant pills.
+   -------------------------------------------------------------------------- */
+
+@media(max-width:700px){
+
+  .work-section .filters{
+    gap:
+      6px;
+  }
+
+
+  .work-section .filters button{
+    min-height:
+      44px;
+
+    padding:
+      10px
+      12px;
+
+    font-size:
+      11px;
+
+    border-radius:
+      4px;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+
+@media(
+  prefers-reduced-motion:
+    reduce
+){
+
+  .work-section .filters button{
+    transition:
+      none!important;
+
+    transform:
+      none!important;
+  }
+}
