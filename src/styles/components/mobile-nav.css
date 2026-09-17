@@ -1,1 +1,164 @@
+/* ============================================================
+   ERGYS SHEHU — MOBILE NAVIGATION
+   ============================================================ */
 
+@media (max-width: 700px) {
+
+  html body
+  .mobile-menu-screen {
+    padding:
+      max(
+        18px,
+        env(safe-area-inset-top)
+      )
+      20px
+      max(
+        20px,
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    background:
+      linear-gradient(
+        155deg,
+        rgba(12, 21, 14, .99) 0%,
+        rgba(5, 11, 7, .995) 50%,
+        rgba(2, 6, 4, .998) 100%
+      ) !important;
+
+    backdrop-filter:
+      blur(34px)
+      saturate(110%) !important;
+
+    -webkit-backdrop-filter:
+      blur(34px)
+      saturate(110%) !important;
+  }
+
+
+  html body
+  .mobile-menu-screen::before {
+    opacity:
+      .35 !important;
+  }
+
+
+  html body
+  .mobile-menu-head {
+    min-height:
+      48px !important;
+  }
+
+
+  html body
+  .mobile-menu-screen nav {
+    min-height:
+      auto !important;
+
+    margin:
+      clamp(
+        24px,
+        4.5vh,
+        40px
+      )
+      0
+      0 !important;
+
+    padding:
+      0 !important;
+  }
+
+
+  html body
+  .mobile-menu-screen nav > a {
+    min-height:
+      46px !important;
+
+    padding:
+      clamp(
+        9px,
+        1.65vh,
+        13px
+      )
+      0 !important;
+
+    font-size:
+      clamp(
+        24px,
+        6.4vw,
+        30px
+      ) !important;
+
+    font-weight:
+      300 !important;
+
+    line-height:
+      1 !important;
+
+    letter-spacing:
+      -.035em !important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .065
+      ) !important;
+  }
+
+
+  html body
+  .mobile-menu-screen nav > a:hover,
+  html body
+  .mobile-menu-screen nav > a:active {
+    padding-left:
+      5px !important;
+
+    opacity:
+      .72 !important;
+  }
+
+
+  html body
+  .mobile-menu-footer {
+    margin-top:
+      24px !important;
+
+    padding-top:
+      18px !important;
+
+    gap:
+      12px !important;
+
+    border-top:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .065
+      );
+  }
+
+
+  html body
+  .mobile-book {
+    font-size:
+      11px;
+
+    letter-spacing:
+      .17em;
+  }
+
+
+  html body
+  .mobile-location {
+    font-size:
+      9px;
+
+    line-height:
+      1.5;
+  }
+
+}
