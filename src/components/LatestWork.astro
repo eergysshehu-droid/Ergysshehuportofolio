@@ -4,6 +4,10 @@ import {
 } from '../lib/instagram';
 
 import {
+  instagramSelection
+} from '../data/editorial-selection';
+
+import {
   languageFromPath
 } from '../lib/i18n';
 
@@ -15,16 +19,56 @@ const lang =
 const isSq =
   lang === 'sq';
 
-// instagramMedia() already validates every item.
-// cover and permalink are guaranteed to be well-formed http(s) URLs here.
+const availableItems =
+  await instagramMedia(
+    24
+  );
+
+const normalized = (
+  url: string
+) =>
+  url.replace(
+    /\/$/,
+    ''
+  );
+
+const pinnedItems =
+  instagramSelection.permalinks.flatMap(
+    url => {
+      const item =
+        availableItems.find(
+          item =>
+            normalized(
+              item.permalink
+            ) ===
+            normalized(
+              url
+            )
+        );
+
+      return item
+        ? [
+            item
+          ]
+        : [];
+    }
+  );
+
+const fallbackItems =
+  availableItems.filter(
+    item =>
+      item.media_type !==
+      'VIDEO'
+  );
+
 const usableItems =
   (
-    await instagramMedia(
-      24
-    )
+    pinnedItems.length
+      ? pinnedItems
+      : fallbackItems
   ).slice(
     0,
-    18
+    instagramSelection.limit
   );
 ---
 
@@ -42,110 +86,142 @@ const usableItems =
         <div>
           <p
             class="kicker"
-            data-en="LATEST · CURRENT WORK"
-            data-sq="MË TË FUNDIT · PUNA AKTUALE"
+            data-en="FROM THE STUDIO"
+            data-sq="NGA STUDIOJA"
           >
             {
               isSq
-                ? 'MË TË FUNDIT · PUNA AKTUALE'
-                : 'LATEST · CURRENT WORK'
+                ? 'NGA STUDIOJA'
+                : 'FROM THE STUDIO'
             }
           </p>
 
           <h2
-            data-en="Right now."
-            data-sq="Tani."
+            data-en="Selected moments."
+            data-sq="Momente të zgjedhura."
           >
             {
               isSq
-                ? 'Tani.'
-                : 'Right now.'
+                ? 'Momente të zgjedhura.'
+                : 'Selected moments.'
             }
           </h2>
         </div>
       </div>
 
+      <p
+        class="latest-intro"
+        data-en="Photographs, details and moments from recent commissions, personal work and life behind the camera."
+        data-sq="Fotografi, detaje dhe momente nga punët e fundit, projektet personale dhe jeta pas kamerës."
+      >
+        {
+          isSq
+            ? 'Fotografi, detaje dhe momente nga punët e fundit, projektet personale dhe jeta pas kamerës.'
+            : 'Photographs, details and moments from recent commissions, personal work and life behind the camera.'
+        }
+      </p>
+
       <div class="latest-grid">
         {
           usableItems.map(
-            item => (
-              <a
-                class="latest-card"
-                data-image-reveal
-                href={
-                  item.permalink
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={
-                  item.caption?.slice(
-                    0,
-                    140
-                  ) ||
-                  (
-                    isSq
-                      ? 'Shiko punën e fundit në Instagram'
-                      : 'View recent work on Instagram'
-                  )
-                }
-                data-media-type={
-                  item.media_type
-                }
-                data-media-url={
-                  item.media_type ===
-                    'VIDEO'
-                    ? item.media_url
-                    : undefined
-                }
-                data-poster={
-                  item.media_type ===
-                    'VIDEO'
-                    ? (
-                        item.thumbnail_url ||
-                        item.cover
+            item => {
+              const alt =
+                item.caption?.trim()
+                  ? item.caption
+                      .trim()
+                      .slice(
+                        0,
+                        160
                       )
-                    : undefined
-                }
-              >
-                <img
-                  src={
-                    item.cover
+                  : (
+                      isSq
+                        ? 'Punë e fundit nga Ergys Shehu'
+                        : 'Recent work by Ergys Shehu'
+                    );
+
+              return (
+                <a
+                  class="latest-card"
+                  data-image-reveal
+                  href={
+                    item.permalink
                   }
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  width="800"
-                  height="800"
-                />
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={alt}
+                  data-media-type={
+                    item.media_type
+                  }
+                  data-media-url={
+                    item.media_type ===
+                      'VIDEO'
+                      ? item.media_url
+                      : undefined
+                  }
+                  data-poster={
+                    item.media_type ===
+                      'VIDEO'
+                      ? (
+                          item.thumbnail_url ||
+                          item.cover
+                        )
+                      : undefined
+                  }
+                >
+                  <img
+                    src={
+                      item.cover
+                    }
+                    alt={alt}
+                    loading="lazy"
+                    decoding="async"
+                    width="800"
+                    height="800"
+                  />
 
-                {
-                  item.media_type ===
-                    'VIDEO' && (
-                    <span
-                      class="icon-badge latest-icon"
-                      aria-hidden="true"
-                    >
-                      ▶
-                    </span>
-                  )
-                }
+                  {
+                    item.media_type ===
+                      'VIDEO' && (
+                      <span
+                        class="icon-badge latest-icon"
+                        aria-hidden="true"
+                      >
+                        ▶
+                      </span>
+                    )
+                  }
 
-                {
-                  item.media_type ===
-                    'CAROUSEL_ALBUM' && (
-                    <span
-                      class="icon-badge latest-icon-carousel"
-                      aria-hidden="true"
-                    >
-                      ⧉
-                    </span>
-                  )
-                }
-              </a>
-            )
+                  {
+                    item.media_type ===
+                      'CAROUSEL_ALBUM' && (
+                      <span
+                        class="icon-badge latest-icon-carousel"
+                        aria-hidden="true"
+                      >
+                        ⧉
+                      </span>
+                    )
+                  }
+                </a>
+              );
+            }
           )
         }
       </div>
+
+      <a
+        class="editorial-social-link"
+        href="https://www.instagram.com/ergys.shehu/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={
+          isSq
+            ? 'Hap Instagramin e Ergys Shehut'
+            : 'Open Ergys Shehu on Instagram'
+        }
+      >
+        @ergys.shehu ↗
+      </a>
 
       <dialog
         class="lightbox latest-lightbox"
