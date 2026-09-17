@@ -1747,3 +1747,123 @@ footer{
       none!important;
   }
 }
+/* ==========================================================================
+   HOME HERO — GOLD PROGRESS
+   Visual only. Does not change hero JS or stacking.
+   ========================================================================== */
+
+body.is-home .hero-progress{
+  width:
+    min(
+      350px,
+      60vw
+    )!important;
+
+  max-width:
+    300px;
+
+  height:
+    2px!important;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .2
+    )!important;
+}
+
+body.is-home .hero-progress span{
+  display:
+    block;
+
+  height:
+    100%;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f2a52c 0%,
+      #ffd27a 72%,
+      #fff0c2 100%
+    )!important;
+
+  box-shadow:
+    0
+    0
+    7px
+    rgba(
+      242,
+      165,
+      44,
+      .55
+    ),
+    0
+    0
+    15px
+    rgba(
+      242,
+      165,
+      44,
+      .22
+    );
+
+  filter:
+    saturate(
+      1.08
+    );
+}
+
+@media(max-width:700px){
+
+  body.is-home .hero-progress{
+    width:
+      min(
+        270px,
+        66vw
+      )!important;
+
+    height:
+      1.5px!important;
+  }
+
+  body.is-home .hero-progress span{
+    box-shadow:
+      0
+      0
+      6px
+      rgba(
+        242,
+        165,
+        44,
+        .48
+      ),
+      0
+      0
+      12px
+      rgba(
+        242,
+        165,
+        44,
+        .18
+      );
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  body.is-home .hero-progress span{
+    box-shadow:
+      none;
+  }
+}
