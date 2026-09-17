@@ -9,11 +9,13 @@ import type {
   Photo
 } from './content';
 
+
 export interface PortableSpan {
   _type: 'span';
   text: string;
   marks?: string[];
 }
+
 
 export interface PortableMarkDef {
   _key: string;
@@ -21,16 +23,22 @@ export interface PortableMarkDef {
   href?: string;
 }
 
+
 export interface PortableBlock {
   _type: 'block';
+
   style?: string;
+
   children:
     PortableSpan[];
+
   childrenSq?:
     PortableSpan[];
+
   markDefs?:
     PortableMarkDef[];
 }
+
 
 export type PortableItem =
   | PortableBlock
@@ -40,6 +48,7 @@ export type PortableItem =
           'portfolioPhoto';
       }
     );
+
 
 export interface Post {
   title: string;
@@ -64,26 +73,39 @@ export interface Post {
   publishedAt: string;
 }
 
+
+type ContentLanguage =
+  | 'en'
+  | 'sq';
+
+
 const projectId =
   import.meta.env
     .PUBLIC_SANITY_PROJECT_ID ||
   '46mghxoy';
+
 
 const dataset =
   import.meta.env
     .PUBLIC_SANITY_DATASET ||
   'production';
 
+
 const client =
   projectId
     ? createClient({
         projectId,
         dataset,
+
         apiVersion:
           '2026-09-01',
-        useCdn: true,
+
+        useCdn:
+          true,
+
         perspective:
           'published',
+
         token:
           import.meta.env
             .SANITY_API_READ_TOKEN ||
@@ -91,14 +113,22 @@ const client =
       })
     : null;
 
+
 let cached:
   | Promise<Post[]>
   | undefined;
 
+
+/*
+ * Normalises bilingual metadata on photographs.
+ */
 function normalizePhoto(
   photo?: Photo
 ): Photo | undefined {
-  if (!photo) {
+
+  if (
+    !photo
+  ) {
     return undefined;
   }
 
@@ -115,10 +145,27 @@ function normalizePhoto(
   };
 }
 
+
+/*
+ * Normalises a Portable Text item.
+ *
+ * Important:
+ * local-journal.json stores some Albanian translations
+ * inside childrenSq on the same block.
+ *
+ * Previously those translations existed in the data,
+ * but the rendered body still used children.
+ *
+ * For the SQ version we now promote childrenSq to children.
+ * This means the existing article renderer can continue
+ * rendering item.children without special cases.
+ */
 function normalizePortableItem(
-  item:
-    PortableItem
+  item: PortableItem,
+  language:
+    ContentLanguage
 ): PortableItem {
+
   if (
     item._type ===
     'portfolioPhoto'
@@ -136,28 +183,62 @@ function normalizePortableItem(
     };
   }
 
-  return item;
+  const translatedChildren =
+    language ===
+      'sq' &&
+    item.childrenSq &&
+    item.childrenSq.length
+      ? item.childrenSq
+      : item.children;
+
+  return {
+    ...item,
+
+    children:
+      translatedChildren
+  };
 }
 
+
+/*
+ * Normalises a full journal post into two explicit bodies:
+ *
+ * body   -> English
+ * bodySq -> Albanian
+ *
+ * Sanity posts with a dedicated bodySq continue to work.
+ * Local posts that use childrenSq now work correctly too.
+ */
 function normalizePost(
   post: Post
 ): Post {
+
+  const originalBody =
+    post.body ||
+    [];
+
   const body =
-    (
-      post.body ||
-      []
-    ).map(
-      normalizePortableItem
+    originalBody.map(
+      item =>
+        normalizePortableItem(
+          item,
+          'en'
+        )
     );
 
+  const sqSource =
+    post.bodySq &&
+    post.bodySq.length
+      ? post.bodySq
+      : originalBody;
+
   const bodySq =
-    (
-      post.bodySq &&
-      post.bodySq.length
-        ? post.bodySq
-        : body
-    ).map(
-      normalizePortableItem
+    sqSource.map(
+      item =>
+        normalizePortableItem(
+          item,
+          'sq'
+        )
     );
 
   return {
@@ -186,12 +267,24 @@ function normalizePost(
   };
 }
 
+
+function localPosts() {
+  return (
+    localJournal as
+    Post[]
+  ).map(
+    normalizePost
+  );
+}
+
+
 export function journal():
   Promise<Post[]> {
 
   if (
     import.meta.env
-      .DESIGN_PREVIEW === '1'
+      .DESIGN_PREVIEW ===
+    '1'
   ) {
     if (
       import.meta.env
@@ -203,14 +296,10 @@ export function journal():
     }
 
     return Promise.resolve(
-      (
-        localJournal as
-        Post[]
-      ).map(
-        normalizePost
-      )
+      localPosts()
     );
   }
+
 
   return cached ??=
     (
@@ -248,6 +337,7 @@ export function journal():
 
   body[] {
     ...,
+
     _type == "portfolioPhoto" => {
       ...,
       alt,
@@ -260,6 +350,7 @@ export function journal():
 
   bodySq[] {
     ...,
+
     _type == "portfolioPhoto" => {
       ...,
       alt,
@@ -279,13 +370,8 @@ export function journal():
                   Post[]
               ) => {
 
-                const localPosts =
-                  (
-                    localJournal as
-                    Post[]
-                  ).map(
-                    normalizePost
-                  );
+                const local =
+                  localPosts();
 
                 const sanityPosts =
                   (
@@ -295,10 +381,18 @@ export function journal():
                     normalizePost
                   );
 
+                /*
+                 * Preserve the current behaviour:
+                 * local content is available as a fallback,
+                 * while a Sanity post with the same slug wins.
+                 *
+                 * We are NOT changing the content-source
+                 * architecture in this batch.
+                 */
                 return [
                   ...new Map(
                     [
-                      ...localPosts,
+                      ...local,
                       ...sanityPosts
                     ].map(
                       post => [
@@ -321,20 +415,11 @@ export function journal():
             )
             .catch(
               () =>
-                (
-                  localJournal as
-                  Post[]
-                ).map(
-                  normalizePost
-                )
+                localPosts()
             )
+
         : Promise.resolve(
-            (
-              localJournal as
-              Post[]
-            ).map(
-              normalizePost
-            )
+            localPosts()
           )
     );
 }
