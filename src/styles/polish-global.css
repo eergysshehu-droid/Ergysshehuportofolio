@@ -591,3 +591,207 @@
       4px!important;
   }
 }
+/* =========================================================
+   FINAL HEADER / NAV / BOOK NOW POLISH
+   Paste at the END of src/styles/polish-global.css
+   ========================================================= */
+
+:root {
+  --nav-bg: rgba(7, 8, 7, 0.78);
+  --nav-border: rgba(255,255,255,0.08);
+  --nav-text: rgba(255,255,255,0.84);
+  --nav-text-soft: rgba(255,255,255,0.62);
+  --nav-hover: #ffffff;
+  --nav-gold: #f2a52c;
+}
+
+/* Header shell */
+.site-header,
+.header,
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--nav-bg);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Inner row: keep it tighter and more editorial */
+.site-header__inner,
+.header-inner,
+.nav-inner {
+  width: min(1680px, calc(100% - 56px));
+  margin-inline: auto;
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Brand */
+.site-brand,
+.logo,
+.header-logo {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Main menu */
+.site-nav,
+.main-nav,
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 1.4vw, 28px);
+}
+
+.site-nav a,
+.main-nav a,
+.header-nav a {
+  position: relative;
+  color: var(--nav-text-soft);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  line-height: 1;
+  transition:
+    color 0.22s ease,
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.site-nav a:hover,
+.main-nav a:hover,
+.header-nav a:hover {
+  color: var(--nav-hover);
+  transform: translateY(-1px);
+}
+
+.site-nav a[aria-current="page"],
+.main-nav a[aria-current="page"],
+.header-nav a[aria-current="page"],
+.site-nav .is-active,
+.main-nav .is-active,
+.header-nav .is-active {
+  color: #fff;
+}
+
+.site-nav a[aria-current="page"]::after,
+.main-nav a[aria-current="page"]::after,
+.header-nav a[aria-current="page"]::after,
+.site-nav .is-active::after,
+.main-nav .is-active::after,
+.header-nav .is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 1px;
+  background: rgba(255,255,255,0.92);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.site-nav a::after,
+.main-nav a::after,
+.header-nav a::after {
+  transition: transform 0.25s ease;
+}
+
+/* Book now button: restore elegant outline hover */
+.book-now,
+.nav-book,
+.header-cta,
+.site-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.book-now:hover,
+.nav-book:hover,
+.header-cta:hover,
+.site-cta:hover {
+  border-color: rgba(242,165,44,0.72);
+  background: rgba(242,165,44,0.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(242,165,44,0.20),
+    0 0 0 1px rgba(242,165,44,0.14);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Language switcher */
+.language-switcher,
+.lang-switcher,
+.locale-switcher {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.02);
+}
+
+.language-switcher a,
+.lang-switcher a,
+.locale-switcher a {
+  min-width: 42px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: rgba(255,255,255,0.62);
+  transition: background 0.22s ease, color 0.22s ease;
+}
+
+.language-switcher a[aria-current="page"],
+.lang-switcher a[aria-current="page"],
+.locale-switcher a[aria-current="page"],
+.language-switcher .is-active,
+.lang-switcher .is-active,
+.locale-switcher .is-active {
+  background: #f2a52c;
+  color: #111;
+}
+
+/* Mobile */
+@media (max-width: 1023px) {
+  .site-header__inner,
+  .header-inner,
+  .nav-inner {
+    width: min(100% - 28px, 100%);
+    min-height: 74px;
+    gap: 14px;
+  }
+
+  .site-brand,
+  .logo,
+  .header-logo {
+    font-size: clamp(1.65rem, 6vw, 2.2rem);
+  }
+}
