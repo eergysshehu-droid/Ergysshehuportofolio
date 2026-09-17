@@ -927,3 +927,229 @@ footer>a:last-child{justify-self:end}
   }
   .scroll-progress{display:none}
 }
+/* =========================================================
+   FINAL HERO / CURVED STRIP / GOLD PROGRESS
+   Paste at the END of src/styles/portfolio.css
+   ========================================================= */
+
+:root {
+  --hero-ink: #060806;
+  --hero-surface: #0b100c;
+  --hero-surface-2: #0e140f;
+  --hero-gold: #f2a52c;
+  --hero-gold-soft: #ffd27a;
+  --hero-white-soft: rgba(255,255,255,0.78);
+  --hero-white-faint: rgba(255,255,255,0.22);
+}
+
+/* Hero wrapper */
+.home-hero,
+.hero-shell,
+.hero-stage,
+.editorial-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(5,7,5,0.36) 0%, rgba(5,7,5,0.18) 12%, rgba(5,7,5,0.46) 100%),
+    var(--hero-ink);
+  isolation: isolate;
+}
+
+/* Media image/video inside hero */
+.home-hero__media,
+.hero-media,
+.hero-slide__media,
+.editorial-hero__media,
+.hero-image {
+  display: block;
+  width: 100%;
+  height: min(84vh, 920px);
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Dark cinematic overlay so text sits better */
+.home-hero::before,
+.hero-shell::before,
+.hero-stage::before,
+.editorial-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(180deg,
+      rgba(3,4,3,0.46) 0%,
+      rgba(3,4,3,0.12) 18%,
+      rgba(3,4,3,0.12) 58%,
+      rgba(3,4,3,0.34) 100%
+    );
+}
+
+/* =========================================================
+   CLEAN BOTTOM CURVED STRIP
+   - symmetrical left/right slant
+   - deeper center dip
+   - cleaner than the current green shape
+   ========================================================= */
+
+.home-hero::after,
+.hero-shell::after,
+.hero-stage::after,
+.editorial-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: clamp(72px, 9vw, 124px);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 16, 12, 0.18) 0%,
+    rgba(11, 16, 12, 0.92) 16%,
+    var(--hero-surface-2) 100%
+  );
+  clip-path: polygon(
+    0 22%,
+    8% 22%,
+    17% 36%,
+    29% 56%,
+    50% 100%,
+    71% 56%,
+    83% 36%,
+    92% 22%,
+    100% 22%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* Hero content should sit above overlays */
+.home-hero__content,
+.hero-content,
+.hero-copy,
+.editorial-hero__content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Typography in hero */
+.hero-kicker,
+.home-hero__kicker,
+.hero-eyebrow {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+}
+
+.hero-title,
+.home-hero__title,
+.editorial-hero__title {
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.hero-subtitle,
+.home-hero__subtitle {
+  color: rgba(255,255,255,0.82);
+}
+
+/* =========================================================
+   GOLD PROGRESS LINE
+   ========================================================= */
+
+.hero-progress {
+  width: min(360px, 60vw);
+  max-width: 300px;
+  height: 2px;
+  margin-top: clamp(18px, 2vw, 28px);
+  background: rgba(255,255,255,0.20);
+  overflow: hidden;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.hero-progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--hero-gold) 0%,
+    var(--hero-gold-soft) 100%
+  );
+  box-shadow:
+    0 0 8px rgba(242,165,44,0.55),
+    0 0 16px rgba(242,165,44,0.25);
+}
+
+/* Explore controls cleaner */
+.hero-cta,
+.hero-controls,
+.hero-meta {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-cta a,
+.hero-controls button {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.hero-cta a:hover,
+.hero-controls button:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Better desktop spacing for the hero */
+@media (min-width: 1024px) {
+  .home-hero__content,
+  .hero-content,
+  .hero-copy,
+  .editorial-hero__content {
+    padding-bottom: clamp(68px, 8vw, 104px);
+  }
+}
+
+/* Mobile: softer curve and lower hero height */
+@media (max-width: 767px) {
+  .home-hero__media,
+  .hero-media,
+  .hero-slide__media,
+  .editorial-hero__media,
+  .hero-image {
+    height: min(78vh, 760px);
+  }
+
+  .home-hero::after,
+  .hero-shell::after,
+  .hero-stage::after,
+  .editorial-hero::after {
+    height: 68px;
+    clip-path: polygon(
+      0 30%,
+      10% 30%,
+      22% 46%,
+      50% 100%,
+      78% 46%,
+      90% 30%,
+      100% 30%,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .hero-progress {
+    width: min(240px, 62vw);
+    max-width: 240px;
+  }
+}
