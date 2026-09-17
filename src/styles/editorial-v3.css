@@ -1,786 +1,223 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap');
-
 /* ==========================================================================
-   ERGYS SHEHU — EDITORIAL V3.1
-   Typography + UI + curated Instagram
+   WORK MODE EDITORIAL HOMEPAGE — SAFE VISUAL UPGRADE
    --------------------------------------------------------------------------
-   STACKING SAFETY:
-   This stylesheet deliberately does NOT change:
-   - .project-card position
-   - .project-card top
-   - .work-section overflow
-   - .project-grid overflow
-   - --stack-blur
-   - --stack-darkness
+   Transforms the existing homepage sections into:
+   - IN BETWEEN
+   - BEHIND THE LENS editorial portrait panel
+   - STORIES IN MOTION cinematic panel
+
+   DOES NOT TOUCH:
+   - project-card sticky
+   - project-card top
+   - work-section overflow
+   - project-grid overflow
+   - stack blur/darkness
    ========================================================================== */
-
-:root{
-  --serif:
-    'Instrument Serif',
-    Georgia,
-    serif;
-
-  --sans:
-    'Inter Tight',
-    'Inter',
-    Arial,
-    sans-serif;
-
-  --v3-pad:
-    clamp(
-      20px,
-      3.4vw,
-      64px
-    );
-
-  --v3-ease:
-    cubic-bezier(
-      .18,
-      .72,
-      .18,
-      1
-    );
-
-  --v3-fast:
-    220ms;
-
-  --v3-medium:
-    520ms;
-
-  --v3-line:
-    rgba(
-      127,
-      127,
-      127,
-      .18
-    );
-}
 
 
 /* ==========================================================================
-   BASE
+   01 — FILMSTRIP → "IN BETWEEN"
    ========================================================================== */
 
-html{
-  text-rendering:
-    optimizeLegibility;
-}
+body.is-home .filmstrip-section{
+  position:
+    relative;
 
-body{
-  font-family:
-    var(
-      --sans
-    );
+  padding-top:
+    clamp(
+      100px,
+      10vw,
+      170px
+    )!important;
 
-  -webkit-font-smoothing:
-    antialiased;
+  padding-bottom:
+    clamp(
+      100px,
+      10vw,
+      170px
+    )!important;
 
-  -moz-osx-font-smoothing:
-    grayscale;
-}
-
-::selection{
   background:
-    var(
-      --accent
-    );
+    #11140f!important;
 
   color:
-    #161612;
-}
-
-.kicker{
-  font-family:
-    var(
-      --sans
-    )!important;
-
-  font-size:
-    clamp(
-      9px,
-      .58vw,
-      12px
-    )!important;
-
-  font-weight:
-    500!important;
-
-  line-height:
-    1.2;
-
-  letter-spacing:
-    .18em!important;
-
-  text-transform:
-    uppercase;
-}
-
-h1,
-h2,
-h3,
-.hero-project-title,
-.artist-copy h2,
-.contact-section h2,
-.work-heading h2,
-.collection-intro h1,
-.journal-card-copy h2{
-  text-wrap:
-    balance;
-}
-
-
-/* ==========================================================================
-   HEADER
-   ========================================================================== */
-
-.site-header{
-  margin:
-    10px
-    var(
-      --v3-pad
-    )
-    0;
-
-  width:
-    calc(
-      100% -
-      (
-        var(
-          --v3-pad
-        ) *
-        2
-      )
-    );
-
-  border-radius:
-    999px;
-
-  padding:
-    9px
-    12px
-    9px
-    18px;
-
-  transition:
-    background
-    var(
-      --v3-medium
-    )
-    var(
-      --v3-ease
-    ),
-    color
-    var(
-      --v3-medium
-    )
-    var(
-      --v3-ease
-    ),
-    box-shadow
-    var(
-      --v3-medium
-    )
-    var(
-      --v3-ease
-    ),
-    backdrop-filter
-    var(
-      --v3-medium
-    )
-    var(
-      --v3-ease
-    );
-}
-
-.site-header.is-scrolled{
-  backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      130%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      130%
-    );
-
-  box-shadow:
-    0
-    12px
-    44px
-    rgba(
-      0,
-      0,
-      0,
-      .08
-    );
-}
-
-.ergys-wordmark{
-  letter-spacing:
-    .1em!important;
-
-  transition:
-    opacity
-    var(
-      --v3-fast
-    )
-    ease;
-}
-
-.ergys-wordmark:hover{
-  opacity:
-    .64;
-}
-
-.desktop-nav{
-  gap:
-    clamp(
-      4px,
-      .5vw,
-      11px
-    )!important;
-}
-
-.desktop-nav>a{
-  padding:
-    9px
-    8px;
-
-  border-radius:
-    999px;
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-weight:
-    500;
-
-  letter-spacing:
-    .09em!important;
-
-  transition:
-    opacity
-    var(
-      --v3-fast
-    )
-    ease,
-    background
-    var(
-      --v3-fast
-    )
-    ease,
-    transform
-    var(
-      --v3-fast
-    )
-    var(
-      --v3-ease
-    );
-}
-
-.desktop-nav>a:not(.nav-book):hover{
-  background:
-    rgba(
-      127,
-      127,
-      127,
-      .08
-    );
-
-  transform:
-    translateY(
-      -1px
-    );
-}
-
-.nav-book{
-  padding:
-    10px
-    15px!important;
-
-  border:
-    1px solid
-    currentColor;
-
-  transition:
-    color
-    var(
-      --v3-fast
-    )
-    ease,
-    background
-    var(
-      --v3-fast
-    )
-    ease,
-    border-color
-    var(
-      --v3-fast
-    )
-    ease!important;
-}
-
-.nav-book:hover{
-  color:
-    #171714!important;
-
-  background:
-    var(
-      --accent
-    )!important;
-
-  border-color:
-    var(
-      --accent
-    )!important;
-}
-
-
-/* ==========================================================================
-   LANGUAGE SWITCH
-   ========================================================================== */
-
-.language-switch{
-  min-height:
-    34px;
+    #f3efe7!important;
 
   overflow:
     hidden;
-
-  border:
-    1px solid
-    var(
-      --v3-line
-    );
-
-  border-radius:
-    999px;
-}
-
-.language-switch button{
-  min-width:
-    41px;
-
-  min-height:
-    32px;
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-weight:
-    500;
 }
 
 
-/* ==========================================================================
-   HERO
-   ========================================================================== */
+/* softer top transition */
 
-.hero-scroll-scene{
-  background:
-    #070807;
-}
+body.is-home .filmstrip-section::before{
+  content:
+    "";
 
-.hero-project-title{
-  max-width:
-    min(
-      1500px,
-      92vw
-    )!important;
+  position:
+    absolute;
 
-  font-family:
-    var(
-      --serif
-    )!important;
+  top:
+    0;
 
-  font-size:
-    clamp(
-      54px,
-      7.15vw,
-      122px
-    )!important;
+  left:
+    0;
 
-  font-weight:
-    400!important;
+  right:
+    0;
 
-  line-height:
-    .88!important;
-
-  letter-spacing:
-    -.048em!important;
-}
-
-.hero-project-title em{
-  font-style:
-    italic;
-}
-
-.hero-feature .kicker,
-.hero-topline,
-.hero-controls{
-  font-family:
-    var(
-      --sans
-    );
-}
-
-.hero-light-sweep{
-  opacity:
-    .7;
+  height:
+    150px;
 
   pointer-events:
     none;
-}
-
-
-/* ==========================================================================
-   SELECTED WORK
-   IMPORTANT: NO STICKY/OVERFLOW RULES HERE
-   ========================================================================== */
-
-body.is-home .work-heading h2{
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-size:
-    clamp(
-      44px,
-      5vw,
-      82px
-    )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    .96!important;
-
-  letter-spacing:
-    -.035em!important;
-}
-
-body.is-home .work-toolbar{
-  padding-top:
-    16px!important;
-
-  padding-bottom:
-    21px!important;
-}
-
-body.is-home .filters{
-  gap:
-    7px!important;
-}
-
-body.is-home .filters button{
-  padding:
-    8px
-    12px!important;
-
-  border:
-    1px solid
-    rgba(
-      127,
-      127,
-      127,
-      .18
-    )!important;
-
-  border-radius:
-    999px;
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-size:
-    11px;
-
-  font-weight:
-    500;
-
-  letter-spacing:
-    .08em;
-
-  transition:
-    color
-    var(
-      --v3-fast
-    )
-    ease,
-    background
-    var(
-      --v3-fast
-    )
-    ease,
-    border-color
-    var(
-      --v3-fast
-    )
-    ease;
-}
-
-body.is-home .filters button[aria-pressed="true"]{
-  color:
-    #171714!important;
 
   background:
-    var(
-      --accent
-    )!important;
-
-  border-color:
-    var(
-      --accent
-    )!important;
-}
-
-body.is-home .project-image img{
-  transition:
-    transform
-    900ms
-    var(
-      --v3-ease
-    ),
-    filter
-    700ms
-    var(
-      --v3-ease
-    );
-}
-
-@media(hover:hover) and (pointer:fine){
-
-  body.is-home .project-card:hover .project-image img{
-    transform:
-      scale(
-        1.016
-      );
-  }
-}
-
-
-/* ==========================================================================
-   ARTIST / BEHIND THE LENS
-   ========================================================================== */
-
-body.is-home .artist-section{
-  min-height:
-    0!important;
-
-  padding-top:
-    clamp(
-      54px,
-      5vw,
-      76px
-    )!important;
-
-  padding-bottom:
-    clamp(
-      56px,
-      5vw,
-      80px
-    )!important;
-}
-
-body.is-home .artist-label{
-  align-self:
-    start;
-}
-
-body.is-home .artist-copy{
-  max-width:
-    760px;
-}
-
-body.is-home .artist-copy h2{
-  margin:
-    0
-    0
-    clamp(
-      22px,
-      2.4vw,
-      34px
-    )!important;
-
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-size:
-    clamp(
-      52px,
-      5.2vw,
-      88px
-    )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    .94!important;
-
-  letter-spacing:
-    -.043em!important;
-}
-
-body.is-home .artist-copy h2 em{
-  font-style:
-    italic;
-}
-
-body.is-home .artist-copy p{
-  max-width:
-    58ch;
-
-  font-family:
-    var(
-      --sans
+    linear-gradient(
+      180deg,
+      rgba(
+        7,
+        8,
+        7,
+        .72
+      ),
+      transparent
     );
 
-  font-size:
-    clamp(
-      14px,
-      .92vw,
-      17px
-    )!important;
-
-  line-height:
-    1.72!important;
+  z-index:
+    0;
 }
 
-body.is-home .artist-section::after{
+
+/* use current curve but make it subtle */
+
+body.is-home .filmstrip-curve{
   opacity:
-    .012!important;
+    .32!important;
 
-  font-family:
-    var(
-      --sans
-    )!important;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    -.07em;
-}
-
-
-/* ==========================================================================
-   RECOGNITION / AWARDS
-   ========================================================================== */
-
-.recognition-heading h2{
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-weight:
-    400!important;
-
-  letter-spacing:
-    -.035em!important;
-}
-
-.recognition-row{
-  transition:
-    padding-left
-    var(
-      --v3-fast
-    )
-    var(
-      --v3-ease
-    ),
-    opacity
-    var(
-      --v3-fast
-    )
-    ease;
-}
-
-@media(hover:hover) and (pointer:fine){
-
-  .recognition-row:hover{
-    padding-left:
-      9px!important;
-  }
-}
-
-
-/* ==========================================================================
-   INSTAGRAM / CURRENT WORK
-   ========================================================================== */
-
-.latest-section{
-  min-height:
-    0!important;
-
-  padding-top:
-    clamp(
-      72px,
-      7vw,
-      112px
-    )!important;
-
-  padding-right:
-    var(
-      --v3-pad
-    )!important;
-
-  padding-bottom:
+  height:
     clamp(
       76px,
       8vw,
-      126px
-    )!important;
-
-  padding-left:
-    var(
-      --v3-pad
+      130px
     )!important;
 }
 
-.latest-section .work-heading{
+body.is-home .filmstrip-curve path{
+  fill:
+    #11140f!important;
+}
+
+
+/* heading becomes smaller / magazine-like */
+
+body.is-home .filmstrip-heading{
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  width:
+    min(
+      1500px,
+      calc(
+        100% -
+        80px
+      )
+    );
+
+  margin:
+    0
+    auto
+    clamp(
+      44px,
+      5vw,
+      80px
+    )!important;
+
   display:
     grid;
 
   grid-template-columns:
     minmax(
       0,
-      1fr
+      1.15fr
     )
-    auto;
+    minmax(
+      260px,
+      .85fr
+    );
+
+  gap:
+    clamp(
+      28px,
+      6vw,
+      110px
+    );
 
   align-items:
     end;
-
-  gap:
-    30px;
-
-  margin-bottom:
-    26px!important;
 }
 
-.latest-section .work-heading h2{
+
+/* visually rename kicker through CSS overlay */
+
+body.is-home .filmstrip-heading .kicker{
+  position:
+    relative;
+
+  color:
+    transparent!important;
+
+  user-select:
+    none;
+}
+
+body.is-home .filmstrip-heading .kicker::after{
+  content:
+    "IN BETWEEN";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .66
+    );
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    10px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    .18em;
+}
+
+
+/* headline */
+
+body.is-home .filmstrip-heading h2{
   margin:
     12px
     0
-    0;
+    0!important;
+
+  max-width:
+    720px;
 
   font-family:
     var(
@@ -789,38 +226,38 @@ body.is-home .artist-section::after{
 
   font-size:
     clamp(
-      46px,
-      5vw,
-      82px
+      54px,
+      6vw,
+      102px
     )!important;
 
   font-weight:
     400!important;
 
   line-height:
-    .93!important;
+    .9!important;
 
   letter-spacing:
-    -.043em!important;
+    -.045em!important;
 }
 
-.latest-intro{
+
+/* smaller supporting text */
+
+body.is-home .filmstrip-copy{
   max-width:
-    510px;
+    430px;
 
   margin:
-    0
-    0
-    clamp(
-      30px,
-      3.3vw,
-      48px
-    );
+    0!important;
 
   color:
-    var(
-      --muted
-    );
+    rgba(
+      243,
+      239,
+      231,
+      .62
+    )!important;
 
   font-family:
     var(
@@ -830,184 +267,727 @@ body.is-home .artist-section::after{
   font-size:
     clamp(
       13px,
-      .86vw,
-      15px
-    );
+      .9vw,
+      16px
+    )!important;
 
   line-height:
-    1.65;
+    1.7!important;
 }
 
-.latest-grid{
+
+/* view all button */
+
+body.is-home .filmstrip-view-all{
   display:
-    grid!important;
+    inline-flex;
 
-  grid-template-columns:
-    repeat(
-      5,
-      minmax(
-        0,
-        1fr
-      )
-    )!important;
-
-  grid-auto-flow:
-    dense;
-
-  grid-auto-rows:
-    clamp(
-      130px,
-      10.5vw,
-      215px
-    );
+  align-items:
+    center;
 
   gap:
-    clamp(
-      8px,
-      .8vw,
-      14px
-    )!important;
+    9px;
+
+  width:
+    fit-content;
+
+  margin-top:
+    24px!important;
+
+  padding-bottom:
+    5px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      243,
+      239,
+      231,
+      .34
+    );
+
+  color:
+    #f3efe7!important;
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    11px!important;
+
+  letter-spacing:
+    .11em!important;
 }
 
-.latest-card{
+
+/* track becomes editorial */
+
+body.is-home .filmstrip-track-wrap{
   position:
     relative;
 
-  display:
-    block;
+  z-index:
+    2;
+}
 
-  min-width:
-    0;
+body.is-home .filmstrip-track{
+  gap:
+    clamp(
+      12px,
+      1.3vw,
+      24px
+    )!important;
 
+  padding-left:
+    max(
+      20px,
+      calc(
+        (
+          100vw -
+          1500px
+        ) /
+        2
+      )
+    )!important;
+
+  padding-right:
+    clamp(
+      40px,
+      6vw,
+      100px
+    )!important;
+}
+
+
+/* intentionally different sizes for editorial rhythm */
+
+body.is-home .filmstrip-item{
+  width:
+    clamp(
+      280px,
+      28vw,
+      470px
+    )!important;
+
+  flex:
+    0
+    0
+    clamp(
+      280px,
+      28vw,
+      470px
+    )!important;
+
+  transition:
+    transform
+    500ms
+    var(
+      --v3-ease
+    );
+}
+
+body.is-home .filmstrip-item:nth-child(even){
+  margin-top:
+    clamp(
+      44px,
+      5vw,
+      86px
+    );
+}
+
+body.is-home .filmstrip-image{
   height:
-    100%;
+    clamp(
+      390px,
+      42vw,
+      650px
+    )!important;
 
   overflow:
     hidden;
 
-  aspect-ratio:
-    auto!important;
-
   border-radius:
     2px;
-
-  background:
-    #111;
 }
 
-.latest-card:nth-child(1){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 2;
-}
-
-.latest-card:nth-child(2){
-  grid-column:
-    span 1;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(3){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(4){
-  grid-column:
-    span 1;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(5){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(6){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 2;
-}
-
-.latest-card:nth-child(7){
-  grid-column:
-    span 1;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(8){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(9){
-  grid-column:
-    span 1;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card:nth-child(10){
-  grid-column:
-    span 2;
-
-  grid-row:
-    span 1;
-}
-
-.latest-card img{
-  display:
-    block;
-
+body.is-home .filmstrip-image img{
   width:
-    100%!important;
+    100%;
 
   height:
     100%!important;
 
   object-fit:
-    cover!important;
-
-  filter:
-    none!important;
-
-  transform:
-    scale(
-      1.001
-    );
+    cover;
 
   transition:
     transform
-    800ms
+    900ms
     var(
       --v3-ease
-    ),
-    filter
-    500ms
-    ease!important;
+    );
 }
 
-.latest-card::after{
+@media(hover:hover) and (pointer:fine){
+
+  body.is-home .filmstrip-item:hover{
+    transform:
+      translateY(
+        -7px
+      );
+  }
+
+  body.is-home .filmstrip-item:hover .filmstrip-image img{
+    transform:
+      scale(
+        1.025
+      );
+  }
+}
+
+
+/* counter less dominant */
+
+body.is-home .filmstrip-counter{
+  margin-top:
+    12px;
+
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .42
+    )!important;
+
+  font-size:
+    10px!important;
+
+  letter-spacing:
+    .12em;
+}
+
+
+/* next control */
+
+body.is-home .filmstrip-next{
+  width:
+    48px!important;
+
+  height:
+    48px!important;
+
+  border-radius:
+    50%!important;
+
+  background:
+    rgba(
+      17,
+      20,
+      15,
+      .72
+    )!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .14
+    )!important;
+
+  backdrop-filter:
+    blur(
+      12px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      12px
+    );
+}
+
+
+/* ==========================================================================
+   02 — BEHIND THE LENS WITH PORTRAIT
+   Uses the existing Behind the Lens portfolio image.
+   ========================================================================== */
+
+body.is-home .artist-section{
+  position:
+    relative;
+
+  min-height:
+    clamp(
+      680px,
+      74vw,
+      930px
+    )!important;
+
+  display:
+    grid!important;
+
+  grid-template-columns:
+    minmax(
+      280px,
+      .78fr
+    )
+    minmax(
+      420px,
+      1.22fr
+    )!important;
+
+  align-items:
+    end!important;
+
+  gap:
+    clamp(
+      40px,
+      7vw,
+      130px
+    )!important;
+
+  padding:
+    clamp(
+      70px,
+      7vw,
+      120px
+    )
+    var(
+      --v3-pad
+    )!important;
+
+  background:
+    #171b15!important;
+
+  overflow:
+    hidden;
+}
+
+
+/* actual Ergys portrait / self portrait */
+
+body.is-home .artist-section::before{
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    clamp(
+      50px,
+      6vw,
+      110px
+    );
+
+  left:
+    var(
+      --v3-pad
+    );
+
+  width:
+    min(
+      37vw,
+      590px
+    );
+
+  height:
+    calc(
+      100% -
+      clamp(
+        100px,
+        11vw,
+        190px
+      )
+    );
+
+  background-image:
+    linear-gradient(
+      180deg,
+      transparent
+      60%,
+      rgba(
+        11,
+        13,
+        10,
+        .18
+      )
+      100%
+    ),
+    url(
+      '/images/5998b542175204-1800.webp'
+    );
+
+  background-size:
+    cover;
+
+  background-position:
+    50%
+    50%;
+
+  border-radius:
+    2px;
+
+  z-index:
+    0;
+
+  transform:
+    rotate(
+      -.6deg
+    );
+}
+
+
+/* remove old giant ERGYS background */
+
+body.is-home .artist-section::after{
+  content:
+    "BEHIND THE LENS"!important;
+
+  position:
+    absolute;
+
+  right:
+    -2vw;
+
+  bottom:
+    -4vw;
+
+  width:
+    auto;
+
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .024
+    )!important;
+
+  opacity:
+    1!important;
+
+  font-family:
+    var(
+      --sans
+    )!important;
+
+  font-size:
+    clamp(
+      100px,
+      14vw,
+      260px
+    );
+
+  font-weight:
+    600;
+
+  line-height:
+    .8;
+
+  letter-spacing:
+    -.075em!important;
+
+  white-space:
+    nowrap;
+
+  pointer-events:
+    none;
+
+  z-index:
+    0;
+}
+
+
+/* label goes above portrait */
+
+body.is-home .artist-label{
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  align-self:
+    start!important;
+
+  min-height:
+    100%;
+}
+
+body.is-home .artist-label .kicker{
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .68
+    )!important;
+}
+
+body.is-home .artist-number{
+  position:
+    absolute;
+
+  left:
+    0;
+
+  bottom:
+    0;
+
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .46
+    )!important;
+
+  font-size:
+    10px!important;
+
+  letter-spacing:
+    .12em;
+}
+
+
+/* copy becomes main editorial statement */
+
+body.is-home .artist-copy{
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  grid-column:
+    2;
+
+  max-width:
+    760px!important;
+
+  padding-bottom:
+    clamp(
+      20px,
+      3vw,
+      50px
+    );
+}
+
+
+/* hide original wording visually and replace with Work mode idea */
+
+body.is-home .artist-copy h2{
+  position:
+    relative;
+
+  min-height:
+    2.9em;
+
+  margin-bottom:
+    30px!important;
+
+  color:
+    transparent!important;
+
+  font-size:
+    clamp(
+      56px,
+      6vw,
+      105px
+    )!important;
+}
+
+body.is-home .artist-copy h2::after{
+  content:
+    "An eye for light.\\A A feeling for story.";
+
+  white-space:
+    pre;
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  color:
+    #f3efe7;
+
+  font-family:
+    var(
+      --serif
+    );
+
+  font-size:
+    inherit;
+
+  font-weight:
+    400;
+
+  line-height:
+    .91;
+
+  letter-spacing:
+    -.045em;
+}
+
+
+/* original bio */
+
+body.is-home .artist-copy p{
+  max-width:
+    55ch!important;
+
+  color:
+    rgba(
+      243,
+      239,
+      231,
+      .66
+    )!important;
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    clamp(
+      14px,
+      1vw,
+      17px
+    )!important;
+
+  line-height:
+    1.76!important;
+}
+
+
+/* about link */
+
+body.is-home .artist-copy .text-link{
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+
+  margin-top:
+    26px!important;
+
+  padding-bottom:
+    5px;
+
+  color:
+    #f3efe7!important;
+
+  border-bottom:
+    1px solid
+    rgba(
+      243,
+      239,
+      231,
+      .34
+    )!important;
+
+  font-size:
+    11px;
+
+  letter-spacing:
+    .1em;
+}
+
+
+/* ==========================================================================
+   03 — MOTION → STORIES IN MOTION
+   ========================================================================== */
+
+body.is-home .motion-section{
+  position:
+    relative;
+
+  min-height:
+    clamp(
+      620px,
+      70vw,
+      900px
+    );
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    flex-end;
+
+  align-items:
+    flex-start;
+
+  padding:
+    clamp(
+      70px,
+      7vw,
+      120px
+    )
+    var(
+      --v3-pad
+    )!important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(
+        6,
+        7,
+        6,
+        .88
+      )
+      0%,
+      rgba(
+        6,
+        7,
+        6,
+        .48
+      )
+      44%,
+      rgba(
+        6,
+        7,
+        6,
+        .16
+      )
+      75%
+    ),
+    url(
+      '/images/7b83c3acfdc8b9-1800.webp'
+    )
+    center
+    44%
+    /
+    cover
+    no-repeat!important;
+
+  color:
+    #f4f0e8;
+
+  overflow:
+    hidden;
+}
+
+
+/* cinematic vignette */
+
+body.is-home .motion-section::before{
   content:
     "";
 
@@ -1023,84 +1003,171 @@ body.is-home .artist-section::after{
   background:
     linear-gradient(
       180deg,
-      transparent
-      66%,
       rgba(
         0,
         0,
         0,
-        .16
+        .08
+      )
+      0%,
+      rgba(
+        0,
+        0,
+        0,
+        .05
+      )
+      50%,
+      rgba(
+        0,
+        0,
+        0,
+        .58
       )
       100%
     );
 
-  opacity:
-    .45;
-
-  transition:
-    opacity
-    var(
-      --v3-fast
-    )
-    ease;
+  z-index:
+    0;
 }
 
-@media(hover:hover) and (pointer:fine){
 
-  .latest-card:hover img{
-    transform:
-      scale(
-        1.028
-      )!important;
-  }
+/* film-style frame marker */
 
-  .latest-card:hover::after{
-    opacity:
-      .16;
-  }
-}
+body.is-home .motion-section::after{
+  content:
+    "16 : 9";
 
-.latest-icon,
-.latest-icon-carousel{
+  position:
+    absolute;
+
   top:
-    12px!important;
+    clamp(
+      28px,
+      3vw,
+      48px
+    );
 
   right:
-    12px!important;
+    var(
+      --v3-pad
+    );
 
-  left:
-    auto!important;
-
-  width:
-    34px!important;
-
-  height:
-    34px!important;
-
-  border:
-    1px solid
+  color:
     rgba(
       255,
       255,
       255,
-      .22
+      .54
     );
 
-  background:
-    rgba(
-      8,
-      8,
-      8,
-      .38
-    )!important;
-
-  backdrop-filter:
-    blur(
-      10px
+  font-family:
+    var(
+      --sans
     );
+
+  font-size:
+    10px;
+
+  letter-spacing:
+    .18em;
+
+  z-index:
+    2;
 }
 
-.editorial-social-link{
+
+/* all content above image */
+
+body.is-home .motion-section > *{
+  position:
+    relative;
+
+  z-index:
+    2;
+}
+
+
+/* kicker */
+
+body.is-home .motion-section .kicker{
+  margin-bottom:
+    18px!important;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      .68
+    )!important;
+}
+
+
+/* replace Beyond the still */
+
+body.is-home .motion-section h2{
+  position:
+    relative;
+
+  min-height:
+    1.2em;
+
+  width:
+    min(
+      900px,
+      88vw
+    );
+
+  margin:
+    0
+    0
+    28px!important;
+
+  color:
+    transparent!important;
+
+  font-family:
+    var(
+      --serif
+    )!important;
+
+  font-size:
+    clamp(
+      66px,
+      8vw,
+      140px
+    )!important;
+
+  font-weight:
+    400!important;
+
+  line-height:
+    .86!important;
+
+  letter-spacing:
+    -.055em!important;
+}
+
+body.is-home .motion-section h2::after{
+  content:
+    "Stories in motion.";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  color:
+    #fff;
+
+  font: inherit;
+}
+
+
+/* CTA */
+
+body.is-home .motion-section > a{
   display:
     inline-flex;
 
@@ -1108,17 +1175,27 @@ body.is-home .artist-section::after{
     center;
 
   gap:
-    7px;
+    10px;
 
   margin-top:
-    28px;
+    4px!important;
 
-  padding-bottom:
-    5px;
+  padding:
+    12px
+    0
+    7px!important;
+
+  color:
+    #fff!important;
 
   border-bottom:
     1px solid
-    currentColor;
+    rgba(
+      255,
+      255,
+      255,
+      .48
+    );
 
   font-family:
     var(
@@ -1126,282 +1203,30 @@ body.is-home .artist-section::after{
     );
 
   font-size:
-    12px;
-
-  font-weight:
-    500;
+    11px!important;
 
   letter-spacing:
-    .08em;
-
-  text-transform:
-    uppercase;
+    .12em!important;
 
   transition:
     opacity
+    220ms
+    ease,
+    transform
+    220ms
     var(
-      --v3-fast
-    )
-    ease;
+      --v3-ease
+    );
 }
 
-.editorial-social-link:hover{
+body.is-home .motion-section > a:hover{
   opacity:
-    .55;
-}
+    .7;
 
-
-/* ==========================================================================
-   CONTACT
-   ========================================================================== */
-
-body.is-home .contact-section{
-  min-height:
-    0!important;
-
-  padding-top:
-    clamp(
-      58px,
-      5vw,
-      80px
-    )!important;
-
-  padding-bottom:
-    clamp(
-      60px,
-      5.2vw,
-      84px
-    )!important;
-}
-
-body.is-home .contact-section h2{
-  max-width:
-    680px;
-
-  margin-top:
-    16px!important;
-
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-size:
-    clamp(
-      48px,
-      5vw,
-      80px
-    )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    .95!important;
-
-  letter-spacing:
-    -.042em!important;
-}
-
-body.is-home .contact-section h2 em{
-  font-style:
-    italic;
-}
-
-body.is-home .contact-section::after{
-  opacity:
-    .006!important;
-
-  font-family:
-    var(
-      --sans
-    )!important;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    -.08em;
-}
-
-
-/* ==========================================================================
-   INNER PAGE TITLES
-   ========================================================================== */
-
-.collection-intro{
-  position:
-    relative;
-}
-
-.collection-intro h1{
-  max-width:
-    1100px!important;
-
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-size:
-    clamp(
-      48px,
-      6.1vw,
-      94px
-    )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    .98!important;
-
-  letter-spacing:
-    -.043em!important;
-}
-
-.collection-intro>p:not(.kicker){
-  max-width:
-    680px!important;
-
-  font-family:
-    var(
-      --sans
+  transform:
+    translateX(
+      5px
     );
-
-  font-size:
-    clamp(
-      14px,
-      .95vw,
-      17px
-    );
-
-  line-height:
-    1.72;
-}
-
-.journal-post .collection-intro h1{
-  max-width:
-    900px!important;
-
-  font-size:
-    clamp(
-      42px,
-      5vw,
-      76px
-    )!important;
-
-  line-height:
-    1!important;
-}
-
-.journal-card-copy h2{
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-size:
-    clamp(
-      28px,
-      2.5vw,
-      40px
-    )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    1.03!important;
-
-  letter-spacing:
-    -.035em!important;
-}
-
-
-/* ==========================================================================
-   BOOK
-   ========================================================================== */
-
-.booking-page h1,
-.booking-page h2,
-.booking-page .section-heading h2,
-.booking-page .collab-copy h2{
-  font-family:
-    var(
-      --serif
-    )!important;
-
-  font-weight:
-    400!important;
-
-  letter-spacing:
-    -.04em!important;
-}
-
-.booking-page input,
-.booking-page select,
-.booking-page textarea,
-.booking-page button{
-  font-family:
-    var(
-      --sans
-    );
-}
-
-
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
-
-footer{
-  font-family:
-    var(
-      --sans
-    );
-}
-
-.footer-name{
-  letter-spacing:
-    .04em!important;
-}
-
-
-/* ==========================================================================
-   DARK MODE DETAILS
-   ========================================================================== */
-
-@media(prefers-color-scheme:dark){
-
-  .site-header.is-scrolled{
-    background:
-      rgba(
-        10,
-        11,
-        9,
-        .76
-      )!important;
-  }
-
-  .desktop-nav>a:not(.nav-book):hover{
-    background:
-      rgba(
-        255,
-        255,
-        255,
-        .06
-      );
-  }
-
-  .latest-intro{
-    color:
-      rgba(
-        243,
-        239,
-        231,
-        .58
-      );
-  }
 }
 
 
@@ -1411,52 +1236,41 @@ footer{
 
 @media(max-width:1000px){
 
-  .site-header{
-    margin:
-      8px
-      12px
-      0;
-
+  body.is-home .filmstrip-heading{
     width:
       calc(
         100% -
-        24px
+        44px
       );
-  }
 
-  .latest-grid{
     grid-template-columns:
-      repeat(
-        4,
-        minmax(
-          0,
-          1fr
-        )
-      )!important;
+      1fr;
 
-    grid-auto-rows:
+    gap:
+      22px;
+  }
+
+  body.is-home .artist-section{
+    grid-template-columns:
+      .9fr
+      1.1fr!important;
+
+    gap:
+      36px!important;
+  }
+
+  body.is-home .artist-section::before{
+    width:
+      42vw;
+  }
+
+  body.is-home .artist-copy h2{
+    font-size:
       clamp(
-        130px,
-        17vw,
-        200px
-      );
-  }
-
-  .latest-card:nth-child(1),
-  .latest-card:nth-child(6){
-    grid-column:
-      span 2;
-
-    grid-row:
-      span 2;
-  }
-
-  .latest-card:nth-child(3),
-  .latest-card:nth-child(5),
-  .latest-card:nth-child(8),
-  .latest-card:nth-child(10){
-    grid-column:
-      span 2;
+        50px,
+        7vw,
+        74px
+      )!important;
   }
 }
 
@@ -1467,262 +1281,221 @@ footer{
 
 @media(max-width:700px){
 
-  :root{
-    --v3-pad:
-      17px;
+  /* IN BETWEEN */
+
+  body.is-home .filmstrip-section{
+    padding-top:
+      72px!important;
+
+    padding-bottom:
+      82px!important;
   }
 
-  .site-header{
-    margin:
-      8px
-      9px
-      0;
-
+  body.is-home .filmstrip-heading{
     width:
       calc(
         100% -
-        18px
+        34px
       );
 
-    padding:
-      8px
-      9px
-      8px
-      14px;
+    margin-bottom:
+      36px!important;
+
+    grid-template-columns:
+      1fr;
   }
 
-  .mobile-menu-screen{
-    backdrop-filter:
-      blur(
-        24px
-      );
-
-    -webkit-backdrop-filter:
-      blur(
-        24px
-      );
-  }
-
-  .mobile-menu nav a{
-    font-family:
-      var(
-        --serif
-      )!important;
-
+  body.is-home .filmstrip-heading h2{
     font-size:
       clamp(
-        30px,
-        9vw,
-        43px
+        48px,
+        13vw,
+        66px
       )!important;
-
-    font-weight:
-      400;
-
-    line-height:
-      .98;
-
-    letter-spacing:
-      -.035em!important;
   }
 
-  .hero-project-title{
+  body.is-home .filmstrip-copy{
     max-width:
-      94vw!important;
-
-    font-size:
-      clamp(
-        43px,
-        11.2vw,
-        62px
-      )!important;
-
-    line-height:
-      .91!important;
+      34ch;
   }
 
-  body.is-home .work-heading h2{
-    font-size:
-      clamp(
-        39px,
-        11vw,
-        56px
-      )!important;
+  body.is-home .filmstrip-track{
+    padding-left:
+      17px!important;
   }
 
-  /*
-     DO NOT change position/top/overflow here.
-     Existing sticky stack remains responsible for card movement.
-  */
+  body.is-home .filmstrip-item,
+  body.is-home .filmstrip-item:nth-child(even){
+    width:
+      76vw!important;
 
-  body.is-home .project-image img{
-    transition:
-      filter
-      500ms
-      ease;
+    flex-basis:
+      76vw!important;
+
+    margin-top:
+      0!important;
   }
+
+  body.is-home .filmstrip-item:nth-child(even){
+    transform:
+      translateY(
+        34px
+      );
+  }
+
+  body.is-home .filmstrip-image{
+    height:
+      105vw!important;
+  }
+
+
+  /* BEHIND THE LENS */
 
   body.is-home .artist-section{
-    padding-top:
-      50px!important;
+    min-height:
+      0!important;
 
-    padding-bottom:
-      56px!important;
-  }
-
-  body.is-home .artist-copy h2{
-    font-size:
-      clamp(
-        45px,
-        12vw,
-        64px
-      )!important;
-  }
-
-  body.is-home .artist-section::after{
     display:
-      none!important;
-  }
+      block!important;
 
-  .latest-section{
     padding:
       60px
       17px
       70px!important;
   }
 
-  .latest-section .work-heading{
+  body.is-home .artist-section::before{
+    position:
+      relative;
+
     display:
       block;
-  }
 
-  .latest-section .work-heading h2{
-    font-size:
-      clamp(
-        42px,
-        12vw,
-        60px
-      )!important;
-  }
+    top:
+      auto;
 
-  .latest-intro{
-    max-width:
-      34ch;
+    left:
+      auto;
 
-    margin-bottom:
-      26px;
-  }
+    width:
+      100%;
 
-  .latest-grid{
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(
-          0,
-          1fr
-        )
-      )!important;
+    height:
+      auto;
 
-    grid-auto-rows:
-      clamp(
-        150px,
-        47vw,
-        220px
-      );
+    aspect-ratio:
+      4 /
+      5;
 
-    gap:
-      6px!important;
-  }
+    margin:
+      34px
+      0
+      44px;
 
-  .latest-card:nth-child(n){
-    grid-column:
-      span 1;
+    background-position:
+      center;
 
-    grid-row:
-      span 1;
-  }
+    transform:
+      none;
 
-  .latest-card:nth-child(1),
-  .latest-card:nth-child(6){
-    grid-column:
-      span 2;
-
-    grid-row:
-      span 2;
-  }
-
-  .latest-card{
     border-radius:
       0;
   }
 
-  .editorial-social-link{
-    margin-top:
-      22px;
-  }
-
-  body.is-home .contact-section h2{
-    font-size:
-      clamp(
-        44px,
-        12vw,
-        62px
-      )!important;
-
-    line-height:
-      .95!important;
-  }
-
-  body.is-home .contact-section::after{
+  body.is-home .artist-section::after{
     display:
-      none!important;
+      none;
   }
 
-  .collection-intro h1{
+  body.is-home .artist-label{
+    min-height:
+      0;
+
+    display:
+      flex;
+
+    justify-content:
+      space-between;
+
+    align-items:
+      center;
+  }
+
+  body.is-home .artist-number{
+    position:
+      static;
+  }
+
+  body.is-home .artist-copy{
+    max-width:
+      none!important;
+
+    padding:
+      0!important;
+  }
+
+  body.is-home .artist-copy h2{
+    min-height:
+      3em;
+
+    margin:
+      0
+      0
+      24px!important;
+
     font-size:
       clamp(
-        42px,
-        12vw,
-        60px
+        48px,
+        13vw,
+        68px
+      )!important;
+  }
+
+  body.is-home .artist-copy h2::after{
+    white-space:
+      pre-wrap;
+  }
+
+
+  /* STORIES IN MOTION */
+
+  body.is-home .motion-section{
+    min-height:
+      78svh;
+
+    padding:
+      56px
+      17px!important;
+
+    background-position:
+      58%
+      center!important;
+  }
+
+  body.is-home .motion-section h2{
+    width:
+      100%;
+
+    min-height:
+      2em;
+
+    font-size:
+      clamp(
+        56px,
+        16vw,
+        82px
       )!important;
 
     line-height:
-      .98!important;
+      .88!important;
   }
 
-  .journal-post .collection-intro h1{
-    font-size:
-      clamp(
-        38px,
-        10.3vw,
-        52px
-      )!important;
-  }
-}
+  body.is-home .motion-section::after{
+    top:
+      20px;
 
-
-/* ==========================================================================
-   SMALL MOBILE
-   ========================================================================== */
-
-@media(max-width:420px){
-
-  :root{
-    --v3-pad:
-      14px;
-  }
-
-  .latest-section{
-    padding-left:
-      14px!important;
-
-    padding-right:
-      14px!important;
-  }
-
-  .latest-grid{
-    gap:
-      4px!important;
+    right:
+      17px;
   }
 }
 
@@ -1733,1139 +1506,17 @@ footer{
 
 @media(prefers-reduced-motion:reduce){
 
-  .latest-card img,
-  body.is-home .project-image img,
-  .desktop-nav>a,
-  .site-header{
+  body.is-home .filmstrip-item,
+  body.is-home .filmstrip-image img,
+  body.is-home .motion-section > a{
     transition:
       none!important;
   }
 
-  .latest-card:hover img,
-  body.is-home .project-card:hover .project-image img{
+  body.is-home .filmstrip-item:hover,
+  body.is-home .filmstrip-item:hover .filmstrip-image img,
+  body.is-home .motion-section > a:hover{
     transform:
       none!important;
   }
-}
-/* ==========================================================================
-   HOME HERO — GOLD PROGRESS
-   Visual only. Does not change hero JS or stacking.
-   ========================================================================== */
-
-body.is-home .hero-progress{
-  width:
-    min(
-      350px,
-      60vw
-    )!important;
-
-  max-width:
-    300px;
-
-  height:
-    2px!important;
-
-  overflow:
-    hidden;
-
-  border-radius:
-    999px;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      .2
-    )!important;
-}
-
-body.is-home .hero-progress span{
-  display:
-    block;
-
-  height:
-    100%;
-
-  border-radius:
-    999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #f2a52c 0%,
-      #ffd27a 72%,
-      #fff0c2 100%
-    )!important;
-
-  box-shadow:
-    0
-    0
-    7px
-    rgba(
-      242,
-      165,
-      44,
-      .55
-    ),
-    0
-    0
-    15px
-    rgba(
-      242,
-      165,
-      44,
-      .22
-    );
-
-  filter:
-    saturate(
-      1.08
-    );
-}
-
-@media(max-width:700px){
-
-  body.is-home .hero-progress{
-    width:
-      min(
-        270px,
-        66vw
-      )!important;
-
-    height:
-      1.5px!important;
-  }
-
-  body.is-home .hero-progress span{
-    box-shadow:
-      0
-      0
-      6px
-      rgba(
-        242,
-        165,
-        44,
-        .48
-      ),
-      0
-      0
-      12px
-      rgba(
-        242,
-        165,
-        44,
-        .18
-      );
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-
-  body.is-home .hero-progress span{
-    box-shadow:
-      none;
-  }
-}
-/* ==========================================================================
-   V3.2 — NAVIGATION / COLLECTIONS / INSTAGRAM / LIGHTBOX
-   Safe UI refinement only.
-   Does NOT touch homepage stacking mechanics.
-   ========================================================================== */
-
-
-/* ==========================================================================
-   HEADER — FULL WIDTH, CLEANER, LESS "PILL"
-   ========================================================================== */
-
-.site-header{
-  left:
-    0!important;
-
-  right:
-    0!important;
-
-  width:
-    100%!important;
-
-  max-width:
-    none!important;
-
-  margin:
-    0!important;
-
-  padding:
-    18px
-    clamp(
-      22px,
-      3.5vw,
-      72px
-    )!important;
-
-  border:
-    0!important;
-
-  border-bottom:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .065
-    )!important;
-
-  border-radius:
-    0!important;
-
-  background:
-    rgba(
-      8,
-      9,
-      7,
-      .92
-    )!important;
-
-  backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      120%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      120%
-    );
-
-  box-shadow:
-    none!important;
-}
-
-.site-header.is-scrolled{
-  background:
-    rgba(
-      8,
-      9,
-      7,
-      .96
-    )!important;
-
-  box-shadow:
-    0
-    8px
-    30px
-    rgba(
-      0,
-      0,
-      0,
-      .12
-    )!important;
-}
-
-.ergys-wordmark{
-  font-family:
-    var(
-      --sans
-    )!important;
-
-  font-size:
-    clamp(
-      23px,
-      1.7vw,
-      31px
-    )!important;
-
-  letter-spacing:
-    .045em!important;
-}
-
-.desktop-nav{
-  gap:
-    clamp(
-      10px,
-      1vw,
-      20px
-    )!important;
-}
-
-.desktop-nav>a{
-  padding:
-    8px
-    2px!important;
-
-  border-radius:
-    0!important;
-
-  font-size:
-    12px!important;
-
-  font-weight:
-    500!important;
-
-  letter-spacing:
-    .055em!important;
-
-  opacity:
-    .78;
-
-  background:
-    transparent!important;
-}
-
-.desktop-nav>a:hover{
-  opacity:
-    1;
-
-  transform:
-    none!important;
-}
-
-.desktop-nav>a:not(.nav-book)::after{
-  content:
-    "";
-
-  position:
-    absolute;
-
-  left:
-    0;
-
-  right:
-    0;
-
-  bottom:
-    2px;
-
-  height:
-    1px;
-
-  background:
-    currentColor;
-
-  transform:
-    scaleX(
-      0
-    );
-
-  transform-origin:
-    right;
-
-  transition:
-    transform
-    280ms
-    var(
-      --v3-ease
-    );
-}
-
-.desktop-nav>a:not(.nav-book):hover::after{
-  transform:
-    scaleX(
-      1
-    );
-
-  transform-origin:
-    left;
-}
-
-.nav-book{
-  padding:
-    9px
-    15px!important;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .55
-    )!important;
-
-  border-radius:
-    999px!important;
-
-  opacity:
-    1!important;
-}
-
-
-/* ==========================================================================
-   COLLECTION HERO — REMOVE THE GREEN BOX FEEL
-   ========================================================================== */
-
-.collection-intro{
-  width:
-    min(
-      calc(
-        100% -
-        clamp(
-          28px,
-          7vw,
-          140px
-        )
-      ),
-      1680px
-    )!important;
-
-  margin:
-    0
-    auto!important;
-
-  padding-top:
-    clamp(
-      94px,
-      8vw,
-      132px
-    )!important;
-
-  padding-right:
-    0!important;
-
-  padding-bottom:
-    clamp(
-      48px,
-      5vw,
-      74px
-    )!important;
-
-  padding-left:
-    0!important;
-
-  border:
-    0!important;
-
-  background:
-    transparent!important;
-}
-
-.collection-intro::after{
-  left:
-    0!important;
-
-  right:
-    0!important;
-
-  bottom:
-    0!important;
-
-  opacity:
-    .12!important;
-}
-
-.collection-intro h1{
-  margin-top:
-    20px!important;
-
-  margin-bottom:
-    22px!important;
-
-  font-size:
-    clamp(
-      52px,
-      5.4vw,
-      86px
-    )!important;
-
-  line-height:
-    .92!important;
-}
-
-.collection-intro>p:not(.kicker){
-  margin:
-    0!important;
-
-  color:
-    rgba(
-      243,
-      239,
-      231,
-      .66
-    )!important;
-}
-
-
-/* ==========================================================================
-   REMOVE GREEN PANEL FEEL FROM INNER PAGES
-   ========================================================================== */
-
-@media(prefers-color-scheme:dark){
-
-  .collection-intro{
-    background:
-      transparent!important;
-  }
-
-  .collection-body,
-  .journal-list{
-    background:
-      #0d0f0c!important;
-  }
-}
-
-
-/* ==========================================================================
-   REMOVE WHITE FLASHES AROUND PHOTOGRAPHY
-   ========================================================================== */
-
-.project-image,
-.project-image img,
-.gallery,
-.gallery figure,
-.gallery figure>a,
-.gallery img,
-.latest-card,
-.latest-card img{
-  background:
-    transparent!important;
-}
-
-@media(prefers-color-scheme:dark){
-
-  .project-image,
-  .gallery figure,
-  .gallery figure>a{
-    background:
-      #0b0c0a!important;
-  }
-}
-
-
-/* ==========================================================================
-   INSTAGRAM DESKTOP — NATURAL PHOTO RATIOS / EDITORIAL COLUMNS
-   No head cropping.
-   ========================================================================== */
-
-@media(min-width:701px){
-
-  .latest-grid{
-    display:
-      block!important;
-
-    columns:
-      4;
-
-    column-gap:
-      clamp(
-        8px,
-        .8vw,
-        14px
-      );
-  }
-
-  .latest-card,
-  .latest-card:nth-child(n){
-    display:
-      inline-block!important;
-
-    width:
-      100%!important;
-
-    height:
-      auto!important;
-
-    margin:
-      0
-      0
-      clamp(
-        8px,
-        .8vw,
-        14px
-      )!important;
-
-    break-inside:
-      avoid;
-
-    grid-column:
-      auto!important;
-
-    grid-row:
-      auto!important;
-
-    aspect-ratio:
-      auto!important;
-
-    vertical-align:
-      top;
-  }
-
-  .latest-card img{
-    width:
-      100%!important;
-
-    height:
-      auto!important;
-
-    aspect-ratio:
-      auto!important;
-
-    object-fit:
-      contain!important;
-
-    object-position:
-      center!important;
-  }
-}
-
-@media(min-width:1400px){
-
-  .latest-grid{
-    columns:
-      5;
-  }
-}
-
-
-/* ==========================================================================
-   MOBILE NAVIGATION — TRUE FULL SCREEN
-   ========================================================================== */
-
-@media(max-width:1000px){
-
-  .site-header{
-    padding:
-      15px
-      18px!important;
-  }
-
-  .mobile-menu-screen{
-    position:
-      fixed!important;
-
-    inset:
-      0!important;
-
-    z-index:
-      9999!important;
-
-    display:
-      flex!important;
-
-    flex-direction:
-      column!important;
-
-    width:
-      100vw!important;
-
-    height:
-      100dvh!important;
-
-    min-height:
-      100svh!important;
-
-    padding:
-      max(
-        20px,
-        env(
-          safe-area-inset-top
-        )
-      )
-      20px
-      max(
-        24px,
-        env(
-          safe-area-inset-bottom
-        )
-      )!important;
-
-    border:
-      0!important;
-
-    border-radius:
-      0!important;
-
-    background:
-      rgba(
-        8,
-        9,
-        7,
-        .985
-      )!important;
-
-    backdrop-filter:
-      blur(
-        24px
-      );
-
-    -webkit-backdrop-filter:
-      blur(
-        24px
-      );
-
-    overflow-y:
-      auto;
-  }
-
-  .mobile-menu-head{
-    flex:
-      0
-      0
-      auto;
-
-    padding-bottom:
-      18px!important;
-
-    border-bottom:
-      1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .08
-      )!important;
-  }
-
-  .mobile-menu nav{
-    flex:
-      1
-      0
-      auto;
-
-    display:
-      flex!important;
-
-    flex-direction:
-      column!important;
-
-    justify-content:
-      center!important;
-
-    margin:
-      26px
-      0!important;
-  }
-
-  .mobile-menu nav a{
-    min-height:
-      0!important;
-
-    padding:
-      10px
-      0!important;
-
-    border:
-      0!important;
-
-    font-family:
-      var(
-        --sans
-      )!important;
-
-    font-size:
-      clamp(
-        25px,
-        7.5vw,
-        39px
-      )!important;
-
-    font-weight:
-      400!important;
-
-    line-height:
-      1.08!important;
-
-    letter-spacing:
-      -.018em!important;
-
-    opacity:
-      .88;
-  }
-
-  .mobile-menu nav a:hover{
-    padding-left:
-      0!important;
-
-    opacity:
-      1;
-  }
-
-  .mobile-menu-footer{
-    flex:
-      0
-      0
-      auto;
-
-    padding-top:
-      16px!important;
-
-    border-top:
-      1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .08
-      );
-  }
-}
-
-
-/* ==========================================================================
-   LIGHTBOX — MODERN OPEN / CLOSE FEEL
-   ========================================================================== */
-
-.lightbox{
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  width:
-    100vw;
-
-  max-width:
-    none!important;
-
-  height:
-    100dvh;
-
-  max-height:
-    none!important;
-
-  margin:
-    0!important;
-
-  padding:
-    0!important;
-
-  border:
-    0!important;
-
-  background:
-    transparent!important;
-
-  overflow:
-    hidden;
-
-  color:
-    #fff;
-
-  opacity:
-    0;
-
-  transform:
-    scale(
-      .985
-    );
-
-  transition:
-    opacity
-    260ms
-    ease,
-    transform
-    360ms
-    var(
-      --v3-ease
-    );
-
-  overscroll-behavior:
-    contain;
-}
-
-.lightbox[open]{
-  opacity:
-    1;
-
-  transform:
-    scale(
-      1
-    );
-}
-
-.lightbox::backdrop{
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      .94
-    );
-
-  backdrop-filter:
-    blur(
-      12px
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      12px
-    );
-}
-
-.lightbox.is-closing{
-  opacity:
-    0;
-
-  transform:
-    scale(
-      .97
-    );
-}
-
-.lightbox-photo,
-.lightbox-video{
-  transition:
-    transform
-    300ms
-    var(
-      --v3-ease
-    ),
-    opacity
-    240ms
-    ease;
-
-  will-change:
-    transform,
-    opacity;
-
-  touch-action:
-    none;
-}
-
-.lightbox.is-dragging .lightbox-photo,
-.lightbox.is-dragging .lightbox-video{
-  transition:
-    none!important;
-}
-
-.lightbox.is-dismiss-up .lightbox-photo,
-.lightbox.is-dismiss-up .lightbox-video{
-  transform:
-    translateY(
-      -120vh
-    )
-    scale(
-      .94
-    );
-
-  opacity:
-    0;
-}
-
-.lightbox.is-dismiss-down .lightbox-photo,
-.lightbox.is-dismiss-down .lightbox-video{
-  transform:
-    translateY(
-      120vh
-    )
-    scale(
-      .94
-    );
-
-  opacity:
-    0;
-}
-
-.lightbox-toolbar,
-.lightbox-nav,
-.lightbox-caption,
-.lightbox-book{
-  z-index:
-    3;
-}
-
-
-/* ==========================================================================
-   MOBILE COLLECTION PAGE
-   ========================================================================== */
-
-@media(max-width:700px){
-
-  .collection-intro{
-    width:
-      calc(
-        100% -
-        34px
-      )!important;
-
-    padding-top:
-      90px!important;
-
-    padding-right:
-      0!important;
-
-    padding-bottom:
-      42px!important;
-
-    padding-left:
-      0!important;
-  }
-
-  .collection-intro h1{
-    margin-top:
-      16px!important;
-
-    font-size:
-      clamp(
-        44px,
-        13vw,
-        62px
-      )!important;
-  }
-
-  .latest-grid{
-    display:
-      grid!important;
-
-    columns:
-      auto!important;
-
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(
-          0,
-          1fr
-        )
-      )!important;
-
-    grid-auto-rows:
-      auto!important;
-  }
-
-  .latest-card,
-  .latest-card:nth-child(n){
-    width:
-      auto!important;
-
-    height:
-      auto!important;
-
-    margin:
-      0!important;
-  }
-
-  .latest-card img{
-    width:
-      100%!important;
-
-    height:
-      auto!important;
-
-    object-fit:
-      contain!important;
-  }
-}
-/* ==========================================================================
-   BOOK NOW — PREMIUM OUTLINE BUTTON
-   ========================================================================== */
-
-.nav-book{
-  position:
-    relative!important;
-
-  padding:
-    10px
-    17px!important;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .58
-    )!important;
-
-  border-radius:
-    999px!important;
-
-  background:
-    transparent!important;
-
-  color:
-    #fff!important;
-
-  opacity:
-    1!important;
-
-  overflow:
-    hidden;
-
-  transition:
-    color
-    280ms
-    var(
-      --v3-ease
-    ),
-    border-color
-    280ms
-    var(
-      --v3-ease
-    ),
-    transform
-    280ms
-    var(
-      --v3-ease
-    )!important;
-}
-
-.nav-book::before{
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  border-radius:
-    inherit;
-
-  background:
-    var(
-      --accent
-    );
-
-  transform:
-    scaleX(
-      0
-    );
-
-  transform-origin:
-    right;
-
-  transition:
-    transform
-    320ms
-    var(
-      --v3-ease
-    );
-
-  z-index:
-    -1;
-}
-
-.nav-book:hover{
-  color:
-    #171714!important;
-
-  border-color:
-    var(
-      --accent
-    )!important;
-
-  background:
-    transparent!important;
-
-  transform:
-    translateY(
-      -1px
-    );
-}
-
-.nav-book:hover::before{
-  transform:
-    scaleX(
-      1
-    );
-
-  transform-origin:
-    left;
 }
