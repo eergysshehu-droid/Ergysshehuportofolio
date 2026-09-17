@@ -4,13 +4,16 @@ import {
   localizedHref
 } from '../lib/i18n';
 
+
 const lang =
   languageFromPath(
     Astro.url.pathname
   );
 
+
 const isSq =
   lang === 'sq';
+
 
 const bookingHref =
   localizedHref(
@@ -19,8 +22,10 @@ const bookingHref =
   );
 ---
 
+
 <dialog
   class="lightbox"
+  data-gallery-lightbox
   aria-label={
     isSq
       ? 'Shikuesi i fotografive'
@@ -50,6 +55,7 @@ const bookingHref =
     </button>
   </div>
 
+
   <button
     type="button"
     class="lightbox-nav lightbox-prev"
@@ -72,6 +78,7 @@ const bookingHref =
       <path d="M15 4L7 12l8 8"/>
     </svg>
   </button>
+
 
   <button
     type="button"
@@ -96,6 +103,7 @@ const bookingHref =
     </svg>
   </button>
 
+
   <img
     class="lightbox-photo"
     alt=""
@@ -103,7 +111,12 @@ const bookingHref =
     draggable="false"
   />
 
-  <p class="lightbox-caption"></p>
+
+  <p
+    class="lightbox-caption"
+    aria-live="polite"
+  ></p>
+
 
   <a
     class="lightbox-book"
@@ -119,592 +132,1868 @@ const bookingHref =
   </a>
 </dialog>
 
-<script>
-const dialog =
-  document.querySelector<HTMLDialogElement>(
-    '.lightbox:not(.latest-lightbox)'
-  );
 
-const links =
-  Array.from(
-    document.querySelectorAll<HTMLAnchorElement>(
-      '.gallery figure > a'
-    )
-  );
+<style>
+  .lightbox[data-gallery-lightbox]{
+    --lb-overlay-alpha:
+      .985;
 
-if (
-  dialog &&
-  links.length
-) {
-  const lightbox =
-    dialog;
+    background:
+      rgba(
+        3,
+        5,
+        3,
+        var(--lb-overlay-alpha)
+      )!important;
 
-  const photo =
-    lightbox.querySelector<HTMLImageElement>(
-      '.lightbox-photo'
-    )!;
+    opacity:
+      1;
 
-  const counter =
-    lightbox.querySelector<HTMLElement>(
-      '.lightbox-counter'
-    )!;
+    transition:
+      opacity
+      200ms
+      cubic-bezier(
+        .22,
+        1,
+        .36,
+        1
+      ),
+      background-color
+      180ms
+      ease;
 
-  const caption =
-    lightbox.querySelector<HTMLElement>(
-      '.lightbox-caption'
-    )!;
-
-  let active = 0;
-
-  let startX = 0;
-  let startY = 0;
-
-  let currentX = 0;
-  let currentY = 0;
-
-  let dragging = false;
-
-  let pointerId:
-    number |
-    null =
-    null;
-
-
-  function preload(
-    index: number
-  ) {
-    const normalized =
-      (
-        index +
-        links.length
-      ) %
-      links.length;
-
-    const href =
-      links[
-        normalized
-      ]?.href;
-
-    if (!href) {
-      return;
-    }
-
-    const image =
-      new Image();
-
-    image.decoding =
-      'async';
-
-    image.src =
-      href;
+    overscroll-behavior:
+      contain;
   }
 
 
-  function resetPhoto() {
-    lightbox.classList.remove(
-      'is-dragging',
-      'is-dismiss-up',
-      'is-dismiss-down'
-    );
-
-    photo.style.transform =
-      '';
-
-    photo.style.opacity =
-      '';
+  .lightbox[data-gallery-lightbox][open]{
+    animation:
+      gallery-lightbox-open
+      220ms
+      cubic-bezier(
+        .22,
+        1,
+        .36,
+        1
+      )
+      both;
   }
 
 
-  function show(
-    index: number,
-    direction:
-      'next' |
-      'prev' |
-      'direct' =
-      'direct'
-  ) {
-    active =
-      (
-        index +
-        links.length
-      ) %
-      links.length;
+  .lightbox[data-gallery-lightbox]::backdrop{
+    background:
+      rgba(
+        3,
+        5,
+        3,
+        var(--lb-overlay-alpha)
+      )!important;
 
-    const link =
-      links[active];
+    transition:
+      background-color
+      180ms
+      ease;
 
-    if (!link) {
-      return;
-    }
-
-    const sourceImage =
-      link.querySelector<HTMLImageElement>(
-        'img'
-      );
-
-    if (
-      direction !==
-      'direct'
-    ) {
-      photo.style.opacity =
-        '0';
-
-      photo.style.transform =
-        direction === 'next'
-          ? 'translateX(28px) scale(.985)'
-          : 'translateX(-28px) scale(.985)';
-    }
-
-    photo.src =
-      link.href;
-
-    photo.alt =
-      sourceImage?.alt ||
-      '';
-
-    counter.textContent =
-      `${active + 1} / ${links.length}`;
-
-    caption.textContent =
-      link
-        .closest('figure')
-        ?.querySelector('figcaption')
-        ?.textContent ||
-      '';
-
-    requestAnimationFrame(
-      () => {
-        photo.style.opacity =
-          '1';
-
-        photo.style.transform =
-          'translate3d(0,0,0) scale(1)';
-      }
-    );
-
-    preload(
-      active + 1
-    );
-
-    preload(
-      active - 1
-    );
+    animation:
+      gallery-backdrop-open
+      220ms
+      ease
+      both;
   }
 
 
-  function closeLightbox(
-    direction:
-      'up' |
-      'down' |
-      'fade' =
-      'fade'
-  ) {
-    if (
-      !lightbox.open
-    ) {
-      return;
+  .lightbox[data-gallery-lightbox].is-closing{
+    animation:
+      none!important;
+
+    opacity:
+      0;
+  }
+
+
+  .lightbox[data-gallery-lightbox].is-closing::backdrop{
+    background:
+      rgba(
+        3,
+        5,
+        3,
+        0
+      )!important;
+  }
+
+
+  .lightbox[data-gallery-lightbox] .lightbox-photo{
+    will-change:
+      transform,
+      opacity;
+
+    backface-visibility:
+      hidden;
+
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      scale(1);
+
+    opacity:
+      1;
+
+    touch-action:
+      none!important;
+
+    user-select:
+      none;
+
+    -webkit-user-drag:
+      none;
+
+    transition:
+      transform
+      240ms
+      cubic-bezier(
+        .22,
+        1,
+        .36,
+        1
+      ),
+      opacity
+      180ms
+      ease;
+  }
+
+
+  .lightbox[data-gallery-lightbox].is-dragging
+  .lightbox-photo{
+    transition:
+      none!important;
+
+    cursor:
+      grabbing;
+  }
+
+
+  .lightbox[data-gallery-lightbox].is-switching
+  .lightbox-photo{
+    pointer-events:
+      none;
+  }
+
+
+  .lightbox[data-gallery-lightbox].is-dismiss-down
+  .lightbox-photo{
+    transform:
+      translate3d(
+        0,
+        56px,
+        0
+      )
+      scale(.965)!important;
+
+    opacity:
+      0!important;
+  }
+
+
+  .lightbox[data-gallery-lightbox].is-dismiss-up
+  .lightbox-photo{
+    transform:
+      translate3d(
+        0,
+        -56px,
+        0
+      )
+      scale(.965)!important;
+
+    opacity:
+      0!important;
+  }
+
+
+  .lightbox[data-gallery-lightbox]
+  .lightbox-toolbar button,
+  .lightbox[data-gallery-lightbox]
+  .lightbox-nav{
+    min-width:
+      44px;
+
+    min-height:
+      44px;
+
+    -webkit-tap-highlight-color:
+      transparent;
+  }
+
+
+  .lightbox[data-gallery-lightbox]
+  .lightbox-toolbar button:active,
+  .lightbox[data-gallery-lightbox]
+  .lightbox-nav:active,
+  .lightbox[data-gallery-lightbox]
+  .lightbox-book:active{
+    transform:
+      scale(.96);
+  }
+
+
+  .lightbox[data-gallery-lightbox].has-load-error
+  .lightbox-caption{
+    opacity:
+      .9;
+  }
+
+
+  @keyframes gallery-lightbox-open{
+    from{
+      opacity:
+        0;
     }
 
-    if (
-      direction === 'up'
-    ) {
-      lightbox.classList.add(
-        'is-dismiss-up'
-      );
+    to{
+      opacity:
+        1;
+    }
+  }
+
+
+  @keyframes gallery-backdrop-open{
+    from{
+      background:
+        rgba(
+          3,
+          5,
+          3,
+          0
+        );
     }
 
-    if (
-      direction === 'down'
-    ) {
-      lightbox.classList.add(
-        'is-dismiss-down'
-      );
+    to{
+      background:
+        rgba(
+          3,
+          5,
+          3,
+          .985
+        );
     }
+  }
 
-    lightbox.classList.add(
-      'is-closing'
-    );
 
-    window.setTimeout(
-      () => {
-        lightbox.close();
+  @media(max-width:700px){
 
-        lightbox.classList.remove(
-          'is-closing',
-          'is-dismiss-up',
-          'is-dismiss-down',
-          'is-dragging'
+    .lightbox[data-gallery-lightbox]
+    .lightbox-toolbar{
+      padding-top:
+        max(
+          14px,
+          env(
+            safe-area-inset-top
+          )
         );
 
-        resetPhoto();
-      },
-      260
-    );
+      padding-left:
+        max(
+          16px,
+          env(
+            safe-area-inset-left
+          )
+        );
+
+      padding-right:
+        max(
+          16px,
+          env(
+            safe-area-inset-right
+          )
+        );
+    }
+
+
+    .lightbox[data-gallery-lightbox]
+    .lightbox-book{
+      bottom:
+        max(
+          18px,
+          calc(
+            env(
+              safe-area-inset-bottom
+            ) +
+            10px
+          )
+        );
+    }
   }
 
 
-  links.forEach(
-    (
-      link,
-      i
-    ) => {
-      link.addEventListener(
-        'click',
-        event => {
-          if (
-            event.ctrlKey ||
-            event.metaKey ||
-            event.shiftKey ||
-            event.altKey
-          ) {
-            return;
-          }
+  @media(
+    prefers-reduced-motion:
+      reduce
+  ){
 
-          event.preventDefault();
+    .lightbox[data-gallery-lightbox],
+    .lightbox[data-gallery-lightbox][open],
+    .lightbox[data-gallery-lightbox]::backdrop,
+    .lightbox[data-gallery-lightbox]
+    .lightbox-photo{
+      animation:
+        none!important;
 
-          resetPhoto();
+      transition-duration:
+        1ms!important;
+    }
+  }
+</style>
 
-          show(i);
 
-          lightbox.showModal();
+<script>
+  const dialog =
+    document
+      .querySelector<HTMLDialogElement>(
+        '.lightbox[data-gallery-lightbox]'
+      );
 
-          document
-            .documentElement
-            .classList
-            .add(
-              'lightbox-open'
-            );
+
+  const links =
+    Array.from(
+      document
+        .querySelectorAll<HTMLAnchorElement>(
+          '.gallery figure > a'
+        )
+    );
+
+
+  if (
+    dialog &&
+    links.length
+  ) {
+    const lightbox =
+      dialog;
+
+
+    const photo =
+      lightbox
+        .querySelector<HTMLImageElement>(
+          '.lightbox-photo'
+        )!;
+
+
+    const counter =
+      lightbox
+        .querySelector<HTMLElement>(
+          '.lightbox-counter'
+        )!;
+
+
+    const caption =
+      lightbox
+        .querySelector<HTMLElement>(
+          '.lightbox-caption'
+        )!;
+
+
+    const previousButton =
+      lightbox
+        .querySelector<HTMLButtonElement>(
+          '[data-prev]'
+        );
+
+
+    const nextButton =
+      lightbox
+        .querySelector<HTMLButtonElement>(
+          '[data-next]'
+        );
+
+
+    const closeButton =
+      lightbox
+        .querySelector<HTMLButtonElement>(
+          '[data-close]'
+        );
+
+
+    const reduceMotion =
+      window
+        .matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        );
+
+
+    const decodedImages =
+      new Map<
+        string,
+        Promise<void>
+      >();
+
+
+    let active =
+      0;
+
+
+    let renderToken =
+      0;
+
+
+    let lastOpener:
+      HTMLAnchorElement |
+      null =
+      null;
+
+
+    let startX =
+      0;
+
+
+    let startY =
+      0;
+
+
+    let currentX =
+      0;
+
+
+    let currentY =
+      0;
+
+
+    let gestureStartedAt =
+      0;
+
+
+    let dragging =
+      false;
+
+
+    let pointerId:
+      number |
+      null =
+      null;
+
+
+    let gestureAxis:
+      'x' |
+      'y' |
+      null =
+      null;
+
+
+    if (
+      links.length <
+      2
+    ) {
+      if (
+        previousButton
+      ) {
+        previousButton.hidden =
+          true;
+      }
+
+      if (
+        nextButton
+      ) {
+        nextButton.hidden =
+          true;
+      }
+    }
+
+
+    function normalizeIndex(
+      index:
+        number
+    ) {
+      return (
+        (
+          index %
+          links.length
+        ) +
+        links.length
+      ) %
+      links.length;
+    }
+
+
+    function wait(
+      milliseconds:
+        number
+    ) {
+      if (
+        milliseconds <=
+        0
+      ) {
+        return Promise.resolve();
+      }
+
+      return new Promise<void>(
+        resolve => {
+          window.setTimeout(
+            resolve,
+            milliseconds
+          );
         }
       );
     }
-  );
 
 
-  lightbox
-    .querySelector(
-      '[data-prev]'
-    )
-    ?.addEventListener(
-      'click',
-      event => {
-        event.stopPropagation();
-
-        show(
-          active - 1,
-          'prev'
-        );
-      }
-    );
-
-
-  lightbox
-    .querySelector(
-      '[data-next]'
-    )
-    ?.addEventListener(
-      'click',
-      event => {
-        event.stopPropagation();
-
-        show(
-          active + 1,
-          'next'
-        );
-      }
-    );
-
-
-  lightbox
-    .querySelector(
-      '[data-close]'
-    )
-    ?.addEventListener(
-      'click',
-      event => {
-        event.stopPropagation();
-
-        closeLightbox(
-          'fade'
-        );
-      }
-    );
-
-
-  lightbox.addEventListener(
-    'click',
-    event => {
-      if (
-        event.target ===
-        lightbox
-      ) {
-        closeLightbox(
-          'fade'
-        );
-      }
+    function frame() {
+      return new Promise<void>(
+        resolve => {
+          requestAnimationFrame(
+            () => {
+              resolve();
+            }
+          );
+        }
+      );
     }
-  );
 
 
-  lightbox.addEventListener(
-    'close',
-    () => {
+    /*
+     * Load and decode the real full-size image before
+     * replacing the photograph currently on screen.
+     *
+     * This prevents the blank flash between photographs.
+     */
+    function prepareImage(
+      source:
+        string
+    ) {
+      const existing =
+        decodedImages.get(
+          source
+        );
+
+      if (
+        existing
+      ) {
+        return existing;
+      }
+
+
+      const promise =
+        new Promise<void>(
+          async (
+            resolve,
+            reject
+          ) => {
+            const image =
+              new Image();
+
+
+            image.decoding =
+              'async';
+
+
+            image.src =
+              source;
+
+
+            try {
+              if (
+                typeof image.decode ===
+                'function'
+              ) {
+                await image.decode();
+
+              } else {
+                await new Promise<void>(
+                  (
+                    loaded,
+                    failed
+                  ) => {
+                    if (
+                      image.complete
+                    ) {
+                      if (
+                        image.naturalWidth >
+                        0
+                      ) {
+                        loaded();
+
+                      } else {
+                        failed(
+                          new Error(
+                            'Image failed to load.'
+                          )
+                        );
+                      }
+
+                      return;
+                    }
+
+
+                    image.addEventListener(
+                      'load',
+                      () => {
+                        loaded();
+                      },
+                      {
+                        once:
+                          true
+                      }
+                    );
+
+
+                    image.addEventListener(
+                      'error',
+                      () => {
+                        failed(
+                          new Error(
+                            'Image failed to load.'
+                          )
+                        );
+                      },
+                      {
+                        once:
+                          true
+                      }
+                    );
+                  }
+                );
+              }
+
+
+              if (
+                image.naturalWidth <=
+                0
+              ) {
+                throw new Error(
+                  'Image failed to decode.'
+                );
+              }
+
+
+              resolve();
+
+            } catch (
+              error
+            ) {
+              reject(
+                error
+              );
+            }
+          }
+        );
+
+
+      decodedImages.set(
+        source,
+        promise
+      );
+
+
+      promise.catch(
+        () => {
+          decodedImages.delete(
+            source
+          );
+        }
+      );
+
+
+      return promise;
+    }
+
+
+    function preload(
+      index:
+        number
+    ) {
+      const normalized =
+        normalizeIndex(
+          index
+        );
+
+
+      const source =
+        links[
+          normalized
+        ]?.href;
+
+
+      if (
+        !source
+      ) {
+        return;
+      }
+
+
+      void prepareImage(
+        source
+      ).catch(
+        () => {
+          /*
+           * Preloading is opportunistic.
+           * A failed neighbour must not affect
+           * the photograph currently displayed.
+           */
+        }
+      );
+    }
+
+
+    function metadataFor(
+      index:
+        number
+    ) {
+      const link =
+        links[
+          normalizeIndex(
+            index
+          )
+        ];
+
+
+      const sourceImage =
+        link
+          ?.querySelector<HTMLImageElement>(
+            'img'
+          );
+
+
+      const figure =
+        link
+          ?.closest(
+            'figure'
+          );
+
+
+      const figureCaption =
+        figure
+          ?.querySelector(
+            'figcaption'
+          )
+          ?.textContent
+          ?.trim() ||
+        '';
+
+
+      return {
+        link,
+
+        sourceImage,
+
+        alt:
+          sourceImage
+            ?.alt ||
+          '',
+
+        caption:
+          figureCaption
+      };
+    }
+
+
+    function updateMetadata(
+      index:
+        number
+    ) {
+      const metadata =
+        metadataFor(
+          index
+        );
+
+
+      photo.alt =
+        metadata.alt;
+
+
+      counter.textContent =
+        `${normalizeIndex(index) + 1} / ${links.length}`;
+
+
+      caption.textContent =
+        metadata.caption;
+
+
+      lightbox.classList.remove(
+        'has-load-error'
+      );
+    }
+
+
+    function resetOverlay() {
+      lightbox.style
+        .removeProperty(
+          '--lb-overlay-alpha'
+        );
+    }
+
+
+    function resetPhoto() {
+      lightbox.classList.remove(
+        'is-dragging',
+        'is-dismiss-up',
+        'is-dismiss-down',
+        'is-switching',
+        'is-closing',
+        'has-load-error'
+      );
+
+
+      photo.style.transform =
+        'translate3d(0,0,0) scale(1)';
+
+
+      photo.style.opacity =
+        '1';
+
+
+      resetOverlay();
+    }
+
+
+    function showLoadError() {
+      lightbox.classList.add(
+        'has-load-error'
+      );
+
+
+      caption.textContent =
+        document
+          .documentElement
+          .lang ===
+          'sq'
+          ? 'Fotografia nuk u ngarkua. Provo përsëri.'
+          : 'The photograph could not be loaded. Try again.';
+    }
+
+
+    /*
+     * Replace the current photograph only after
+     * the next full-size image has decoded.
+     */
+    async function show(
+      index:
+        number,
+
+      direction:
+        'next' |
+        'prev' |
+        'direct' =
+        'direct'
+    ) {
+      const target =
+        normalizeIndex(
+          index
+        );
+
+
+      active =
+        target;
+
+
+      const metadata =
+        metadataFor(
+          target
+        );
+
+
+      if (
+        !metadata.link
+      ) {
+        return;
+      }
+
+
+      const source =
+        metadata.link.href;
+
+
+      const token =
+        ++renderToken;
+
+
+      lightbox.setAttribute(
+        'aria-busy',
+        'true'
+      );
+
+
+      try {
+        await prepareImage(
+          source
+        );
+
+      } catch {
+        if (
+          token !==
+          renderToken
+        ) {
+          return;
+        }
+
+
+        lightbox.removeAttribute(
+          'aria-busy'
+        );
+
+
+        showLoadError();
+
+        return;
+      }
+
+
+      if (
+        token !==
+        renderToken ||
+        !lightbox.open
+      ) {
+        return;
+      }
+
+
+      const transitionTime =
+        reduceMotion.matches
+          ? 0
+          : 105;
+
+
+      lightbox.classList.add(
+        'is-switching'
+      );
+
+
+      if (
+        direction !==
+        'direct'
+      ) {
+        photo.style.transform =
+          direction ===
+          'next'
+            ? 'translate3d(-20px,0,0) scale(.992)'
+            : 'translate3d(20px,0,0) scale(.992)';
+
+
+        photo.style.opacity =
+          '0';
+
+
+        await wait(
+          transitionTime
+        );
+
+
+        if (
+          token !==
+          renderToken ||
+          !lightbox.open
+        ) {
+          return;
+        }
+      }
+
+
+      updateMetadata(
+        target
+      );
+
+
+      if (
+        direction ===
+        'next'
+      ) {
+        photo.style.transition =
+          'none';
+
+        photo.style.transform =
+          'translate3d(20px,0,0) scale(.992)';
+
+        photo.style.opacity =
+          '0';
+
+      } else if (
+        direction ===
+        'prev'
+      ) {
+        photo.style.transition =
+          'none';
+
+        photo.style.transform =
+          'translate3d(-20px,0,0) scale(.992)';
+
+        photo.style.opacity =
+          '0';
+
+      } else {
+        photo.style.transition =
+          'none';
+
+        photo.style.opacity =
+          '.86';
+      }
+
+
+      photo.src =
+        source;
+
+
+      await frame();
+
+
+      if (
+        token !==
+        renderToken ||
+        !lightbox.open
+      ) {
+        return;
+      }
+
+
+      photo.style.transition =
+        '';
+
+
+      await frame();
+
+
+      photo.style.transform =
+        'translate3d(0,0,0) scale(1)';
+
+
+      photo.style.opacity =
+        '1';
+
+
+      lightbox.classList.remove(
+        'is-switching'
+      );
+
+
+      lightbox.removeAttribute(
+        'aria-busy'
+      );
+
+
+      preload(
+        target + 1
+      );
+
+
+      preload(
+        target - 1
+      );
+    }
+
+
+    function openLightbox(
+      index:
+        number,
+
+      opener:
+        HTMLAnchorElement
+    ) {
+      const target =
+        normalizeIndex(
+          index
+        );
+
+
+      active =
+        target;
+
+
+      lastOpener =
+        opener;
+
+
+      renderToken +=
+        1;
+
+
+      resetPhoto();
+
+
+      updateMetadata(
+        target
+      );
+
+
+      const metadata =
+        metadataFor(
+          target
+        );
+
+
+      /*
+       * Use the already-visible thumbnail immediately,
+       * then replace it with the decoded full-size file.
+       */
+      const immediateSource =
+        metadata.sourceImage
+          ?.currentSrc ||
+        metadata.sourceImage
+          ?.src ||
+        metadata.link
+          ?.href;
+
+
+      if (
+        immediateSource
+      ) {
+        photo.src =
+          immediateSource;
+      }
+
+
+      if (
+        !lightbox.open
+      ) {
+        lightbox.showModal();
+      }
+
+
       document
         .documentElement
         .classList
-        .remove(
+        .add(
           'lightbox-open'
         );
 
-      photo.removeAttribute(
-        'src'
+
+      void show(
+        target,
+        'direct'
       );
 
-      resetPhoto();
+
+      window.setTimeout(
+        () => {
+          closeButton
+            ?.focus({
+              preventScroll:
+                true
+            });
+        },
+        0
+      );
     }
-  );
 
 
-  lightbox.addEventListener(
-    'keydown',
-    event => {
+    async function closeLightbox(
+      direction:
+        'up' |
+        'down' |
+        'fade' =
+        'fade'
+    ) {
       if (
-        event.key ===
-        'ArrowLeft'
-      ) {
-        event.preventDefault();
-
-        show(
-          active - 1,
-          'prev'
-        );
-      }
-
-      if (
-        event.key ===
-        'ArrowRight'
-      ) {
-        event.preventDefault();
-
-        show(
-          active + 1,
-          'next'
-        );
-      }
-
-      if (
-        event.key ===
-        'Escape'
-      ) {
-        event.preventDefault();
-
-        closeLightbox(
-          'fade'
-        );
-      }
-    }
-  );
-
-
-  photo.addEventListener(
-    'pointerdown',
-    event => {
-      if (
-        event.pointerType ===
-          'mouse' &&
-        event.button !==
-          0
+        !lightbox.open ||
+        lightbox.classList.contains(
+          'is-closing'
+        )
       ) {
         return;
       }
 
-      pointerId =
-        event.pointerId;
 
-      startX =
-        event.clientX;
+      renderToken +=
+        1;
 
-      startY =
-        event.clientY;
 
-      currentX = 0;
-      currentY = 0;
+      lightbox.removeAttribute(
+        'aria-busy'
+      );
 
-      dragging =
-        true;
+
+      lightbox.classList.remove(
+        'is-dragging',
+        'is-switching'
+      );
+
+
+      if (
+        direction ===
+        'up'
+      ) {
+        lightbox.classList.add(
+          'is-dismiss-up'
+        );
+      }
+
+
+      if (
+        direction ===
+        'down'
+      ) {
+        lightbox.classList.add(
+          'is-dismiss-down'
+        );
+      }
+
 
       lightbox.classList.add(
-        'is-dragging'
+        'is-closing'
       );
 
-      photo
-        .setPointerCapture?.(
-          event.pointerId
-        );
-    }
-  );
+
+      await wait(
+        reduceMotion.matches
+          ? 0
+          : 200
+      );
 
 
-  photo.addEventListener(
-    'pointermove',
-    event => {
       if (
-        !dragging ||
-        pointerId !==
-          event.pointerId
+        lightbox.open
       ) {
-        return;
+        lightbox.close();
       }
-
-      currentX =
-        event.clientX -
-        startX;
-
-      currentY =
-        event.clientY -
-        startY;
-
-      const distance =
-        Math.sqrt(
-          currentX *
-            currentX +
-          currentY *
-            currentY
-        );
-
-      const scale =
-        Math.max(
-          .94,
-          1 -
-            distance /
-              2400
-        );
-
-      const opacity =
-        Math.max(
-          .38,
-          1 -
-            distance /
-              620
-        );
-
-      photo.style.transform =
-        `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
-
-      photo.style.opacity =
-        String(opacity);
-    }
-  );
-
-
-  function finishGesture(
-    event:
-      PointerEvent
-  ) {
-    if (
-      !dragging ||
-      pointerId !==
-        event.pointerId
-    ) {
-      return;
     }
 
-    dragging =
-      false;
 
-    pointerId =
-      null;
-
-    lightbox.classList.remove(
-      'is-dragging'
-    );
-
-    const absX =
-      Math.abs(
-        currentX
-      );
-
-    const absY =
-      Math.abs(
-        currentY
-      );
-
-    if (
-      absY > 90 &&
-      absY >
-        absX *
-          1.15
-    ) {
-      closeLightbox(
-        currentY < 0
-          ? 'up'
-          : 'down'
-      );
-
-      return;
-    }
-
-    if (
-      absX > 70 &&
-      absX >
-        absY *
-          1.15
-    ) {
-      show(
-        active +
-          (
-            currentX < 0
-              ? 1
-              : -1
-          ),
-        currentX < 0
-          ? 'next'
-          : 'prev'
-      );
-
-      return;
-    }
-
-    photo.style.transform =
-      'translate3d(0,0,0) scale(1)';
-
-    photo.style.opacity =
-      '1';
-  }
-
-
-  photo.addEventListener(
-    'pointerup',
-    finishGesture
-  );
-
-
-  photo.addEventListener(
-    'pointercancel',
-    event => {
-      if (
-        !dragging ||
-        pointerId !==
-          event.pointerId
-      ) {
-        return;
-      }
-
+    function snapBack() {
       dragging =
         false;
 
+
       pointerId =
         null;
+
+
+      gestureAxis =
+        null;
+
+
+      currentX =
+        0;
+
+
+      currentY =
+        0;
+
 
       lightbox.classList.remove(
         'is-dragging'
       );
 
+
       photo.style.transform =
         'translate3d(0,0,0) scale(1)';
 
+
       photo.style.opacity =
         '1';
+
+
+      resetOverlay();
     }
-  );
-}
+
+
+    links.forEach(
+      (
+        link,
+        index
+      ) => {
+        link.addEventListener(
+          'click',
+          event => {
+
+            if (
+              event.ctrlKey ||
+              event.metaKey ||
+              event.shiftKey ||
+              event.altKey
+            ) {
+              return;
+            }
+
+
+            event.preventDefault();
+
+
+            openLightbox(
+              index,
+              link
+            );
+          }
+        );
+      }
+    );
+
+
+    previousButton
+      ?.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+
+          void show(
+            active - 1,
+            'prev'
+          );
+        }
+      );
+
+
+    nextButton
+      ?.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+
+          void show(
+            active + 1,
+            'next'
+          );
+        }
+      );
+
+
+    closeButton
+      ?.addEventListener(
+        'click',
+        event => {
+
+          event.stopPropagation();
+
+
+          void closeLightbox(
+            'fade'
+          );
+        }
+      );
+
+
+    /*
+     * Click on empty backdrop / stage closes the viewer.
+     */
+    lightbox.addEventListener(
+      'click',
+      event => {
+
+        if (
+          event.target ===
+          lightbox
+        ) {
+          void closeLightbox(
+            'fade'
+          );
+        }
+      }
+    );
+
+
+    /*
+     * Native dialog Escape would close immediately.
+     * Prevent that so our closing transition can finish.
+     */
+    lightbox.addEventListener(
+      'cancel',
+      event => {
+
+        event.preventDefault();
+
+
+        void closeLightbox(
+          'fade'
+        );
+      }
+    );
+
+
+    lightbox.addEventListener(
+      'keydown',
+      event => {
+
+        if (
+          event.key ===
+          'ArrowLeft'
+        ) {
+          event.preventDefault();
+
+
+          void show(
+            active - 1,
+            'prev'
+          );
+        }
+
+
+        if (
+          event.key ===
+          'ArrowRight'
+        ) {
+          event.preventDefault();
+
+
+          void show(
+            active + 1,
+            'next'
+          );
+        }
+      }
+    );
+
+
+    lightbox.addEventListener(
+      'close',
+      () => {
+
+        document
+          .documentElement
+          .classList
+          .remove(
+            'lightbox-open'
+          );
+
+
+        lightbox.removeAttribute(
+          'aria-busy'
+        );
+
+
+        lightbox.classList.remove(
+          'is-closing',
+          'is-dismiss-up',
+          'is-dismiss-down',
+          'is-dragging',
+          'is-switching',
+          'has-load-error'
+        );
+
+
+        photo.removeAttribute(
+          'src'
+        );
+
+
+        photo.style.transition =
+          '';
+
+
+        resetPhoto();
+
+
+        const opener =
+          lastOpener;
+
+
+        lastOpener =
+          null;
+
+
+        if (
+          opener
+        ) {
+          requestAnimationFrame(
+            () => {
+              opener.focus({
+                preventScroll:
+                  true
+              });
+            }
+          );
+        }
+      }
+    );
+
+
+    photo.addEventListener(
+      'pointerdown',
+      event => {
+
+        if (
+          lightbox.classList.contains(
+            'is-switching'
+          )
+        ) {
+          return;
+        }
+
+
+        if (
+          event.pointerType ===
+            'mouse' &&
+          event.button !==
+            0
+        ) {
+          return;
+        }
+
+
+        pointerId =
+          event.pointerId;
+
+
+        startX =
+          event.clientX;
+
+
+        startY =
+          event.clientY;
+
+
+        currentX =
+          0;
+
+
+        currentY =
+          0;
+
+
+        gestureAxis =
+          null;
+
+
+        gestureStartedAt =
+          performance.now();
+
+
+        dragging =
+          true;
+
+
+        lightbox.classList.add(
+          'is-dragging'
+        );
+
+
+        photo
+          .setPointerCapture?.(
+            event.pointerId
+          );
+      }
+    );
+
+
+    photo.addEventListener(
+      'pointermove',
+      event => {
+
+        if (
+          !dragging ||
+          pointerId !==
+            event.pointerId
+        ) {
+          return;
+        }
+
+
+        const rawX =
+          event.clientX -
+          startX;
+
+
+        const rawY =
+          event.clientY -
+          startY;
+
+
+        const absRawX =
+          Math.abs(
+            rawX
+          );
+
+
+        const absRawY =
+          Math.abs(
+            rawY
+          );
+
+
+        if (
+          !gestureAxis &&
+          Math.max(
+            absRawX,
+            absRawY
+          ) >
+            10
+        ) {
+          gestureAxis =
+            absRawX >
+            absRawY
+              ? 'x'
+              : 'y';
+        }
+
+
+        if (
+          gestureAxis ===
+          'x'
+        ) {
+          currentX =
+            rawX;
+
+
+          currentY =
+            0;
+
+
+          const distance =
+            Math.abs(
+              currentX
+            );
+
+
+          const scale =
+            Math.max(
+              .975,
+              1 -
+                distance /
+                  4200
+            );
+
+
+          const opacity =
+            Math.max(
+              .55,
+              1 -
+                distance /
+                  900
+            );
+
+
+          photo.style.transform =
+            `translate3d(${currentX}px,0,0) scale(${scale})`;
+
+
+          photo.style.opacity =
+            String(
+              opacity
+            );
+
+
+          return;
+        }
+
+
+        if (
+          gestureAxis ===
+          'y'
+        ) {
+          currentX =
+            0;
+
+
+          currentY =
+            rawY;
+
+
+          const distance =
+            Math.abs(
+              currentY
+            );
+
+
+          const scale =
+            Math.max(
+              .94,
+              1 -
+                distance /
+                  2300
+            );
+
+
+          const opacity =
+            Math.max(
+              .45,
+              1 -
+                distance /
+                  760
+            );
+
+
+          const overlayAlpha =
+            Math.max(
+              .36,
+              .985 -
+                distance /
+                  650
+            );
+
+
+          photo.style.transform =
+            `translate3d(0,${currentY}px,0) scale(${scale})`;
+
+
+          photo.style.opacity =
+            String(
+              opacity
+            );
+
+
+          lightbox.style
+            .setProperty(
+              '--lb-overlay-alpha',
+              String(
+                overlayAlpha
+              )
+            );
+        }
+      }
+    );
+
+
+    function finishGesture(
+      event:
+        PointerEvent
+    ) {
+      if (
+        !dragging ||
+        pointerId !==
+          event.pointerId
+      ) {
+        return;
+      }
+
+
+      const duration =
+        Math.max(
+          1,
+          performance.now() -
+            gestureStartedAt
+        );
+
+
+      const velocityX =
+        currentX /
+        duration;
+
+
+      const velocityY =
+        currentY /
+        duration;
+
+
+      const absX =
+        Math.abs(
+          currentX
+        );
+
+
+      const absY =
+        Math.abs(
+          currentY
+        );
+
+
+      dragging =
+        false;
+
+
+      pointerId =
+        null;
+
+
+      lightbox.classList.remove(
+        'is-dragging'
+      );
+
+
+      /*
+       * Vertical dismiss:
+       * distance OR velocity can complete the gesture.
+       */
+      if (
+        gestureAxis ===
+          'y' &&
+        (
+          absY >
+            88 ||
+          Math.abs(
+            velocityY
+          ) >
+            .72
+        )
+      ) {
+        void closeLightbox(
+          currentY <
+            0
+            ? 'up'
+            : 'down'
+        );
+
+        return;
+      }
+
+
+      /*
+       * Horizontal navigation:
+       * also velocity-aware for quick flicks.
+       */
+      if (
+        gestureAxis ===
+          'x' &&
+        links.length >
+          1 &&
+        (
+          absX >
+            64 ||
+          Math.abs(
+            velocityX
+          ) >
+            .62
+        )
+      ) {
+        const goingNext =
+          currentX <
+          0;
+
+
+        currentX =
+          0;
+
+
+        currentY =
+          0;
+
+
+        gestureAxis =
+          null;
+
+
+        resetOverlay();
+
+
+        void show(
+          active +
+            (
+              goingNext
+                ? 1
+                : -1
+            ),
+          goingNext
+            ? 'next'
+            : 'prev'
+        );
+
+        return;
+      }
+
+
+      snapBack();
+    }
+
+
+    photo.addEventListener(
+      'pointerup',
+      finishGesture
+    );
+
+
+    photo.addEventListener(
+      'pointercancel',
+      event => {
+
+        if (
+          !dragging ||
+          pointerId !==
+            event.pointerId
+        ) {
+          return;
+        }
+
+
+        snapBack();
+      }
+    );
+  }
 </script>
