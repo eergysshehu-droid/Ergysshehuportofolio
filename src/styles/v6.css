@@ -647,3 +647,338 @@ body.is-home .work-section{
     transform:none!important;
   }
 }
+/* ============================================================
+   ERGYS SHEHU — FINAL MEDIA / HEADER NORMALIZATION
+   ------------------------------------------------------------
+   PURPOSE
+   - one full-width desktop header surface
+   - no second/cropped header background
+   - no black/white/grey image placeholders
+   - page background remains visible while photos load
+   - loaded photos appear cleanly
+   ============================================================ */
+
+
+/* ============================================================
+   1. DESKTOP HEADER — ONE TRUE EDGE-TO-EDGE STRIP
+   ============================================================ */
+
+@media (min-width: 1001px) {
+
+  /*
+   * The header itself stays constrained to --content-max
+   * so logo/nav alignment does NOT change.
+   *
+   * The visual glass/background is rendered only by ::before,
+   * which spans the entire viewport.
+   */
+
+  html body .site-header,
+  html body .site-header.is-scrolled,
+  html body.is-home .site-header,
+  html body.is-home .site-header.is-scrolled {
+    background: transparent !important;
+
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+
+  /*
+   * TRUE FULL-VIEWPORT HEADER SURFACE.
+   */
+
+  html body .site-header::before {
+    display: block !important;
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: 0 !important;
+    bottom: 0 !important;
+
+    left: 50% !important;
+    right: auto !important;
+
+    width: 100vw !important;
+    max-width: none !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+
+    transform: translateX(-50%) !important;
+
+    border-radius: 0 !important;
+
+    background: var(--header-bg) !important;
+
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+
+    border-bottom:
+      1px solid
+      var(--header-line) !important;
+
+    box-shadow: none !important;
+
+    pointer-events: none !important;
+
+    z-index: -1 !important;
+  }
+
+
+  /*
+   * Apply glass blur to the FULL-WIDTH surface,
+   * not only to the centered navigation container.
+   */
+
+  html body:not(.is-home) .site-header::before,
+  html body.is-home .site-header.is-scrolled::before {
+    backdrop-filter:
+      saturate(125%)
+      blur(18px) !important;
+
+    -webkit-backdrop-filter:
+      saturate(125%)
+      blur(18px) !important;
+  }
+
+
+  /*
+   * Home at the very top remains transparent over the hero.
+   */
+
+  html body.is-home
+  .site-header:not(.is-scrolled)::before {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    background: transparent !important;
+
+    border-bottom-color:
+      transparent !important;
+  }
+}
+
+
+/* ============================================================
+   2. PHOTO SURFACES — NEVER PAINT A PLACEHOLDER
+   ============================================================ */
+
+/*
+ * These elements are only layout/media containers.
+ *
+ * They must NEVER decide whether the loading area
+ * is black, white, beige or grey.
+ *
+ * The PAGE/SECTION underneath is the only background.
+ */
+
+.project-image,
+.filmstrip-image,
+.journal-card-image,
+.journal-post-cover,
+.gallery.collection-body figure,
+.gallery.collection-body figure > a,
+.gallery.collection-body [data-image-reveal],
+.latest-card {
+  background: transparent !important;
+}
+
+
+/*
+ * Explicitly kill the old black/grey image backgrounds.
+ */
+
+.project-image img,
+.filmstrip-image img,
+.latest-card img,
+.journal-card-image img,
+.journal-post-cover img,
+.gallery.collection-body img,
+.gallery.collection-body picture,
+.gallery.collection-body figure {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+
+/*
+ * portfolio.css currently paints project placeholders grey.
+ * Home also paints them #050505 for the stack effect.
+ *
+ * The stack blur/dark overlay continues to work;
+ * we remove ONLY the surface behind the photograph.
+ */
+
+html body .project-image,
+html.motion-ready
+body.is-home
+.project-card
+.project-image {
+  background: transparent !important;
+}
+
+
+/*
+ * portfolio.css currently paints filmstrip placeholders grey.
+ */
+
+html body .filmstrip-image {
+  background: transparent !important;
+}
+
+
+/*
+ * v6.css previously uses:
+ *
+ * .gallery.collection-body img {
+ *   background:#0c0e0c;
+ * }
+ *
+ * Override it permanently.
+ */
+
+html body
+.gallery.collection-body img {
+  background: transparent !important;
+}
+
+
+/* ============================================================
+   3. REMOVE DEFAULT FIGURE / PICTURE SURFACES
+   ============================================================ */
+
+html body figure,
+html body picture {
+  background-color: transparent;
+}
+
+
+/*
+ * Do NOT globally remove overlays.
+ *
+ * Project title gradients, hero overlays and the homepage
+ * stack-darkness system remain untouched.
+ */
+
+
+/* ============================================================
+   4. ZERO-FLASH IMAGE LOADING
+   ============================================================ */
+
+/*
+ * JS adds .image-load-system to <html> before the first paint.
+ *
+ * Until the real image has loaded AND decoded,
+ * it is completely transparent.
+ *
+ * Therefore what we see behind it is always the actual page,
+ * never a fake black/white placeholder.
+ */
+
+html.image-load-system
+:is(
+  [data-image-reveal] img,
+  .project-image img,
+  .filmstrip-image img,
+  .latest-card img,
+  .journal-card-image img,
+  .journal-post-cover img,
+  .gallery.collection-body img
+):not(.image-ready) {
+  opacity: 0 !important;
+}
+
+
+/*
+ * Once decoded, existing portfolio reveal animation takes over.
+ *
+ * No forced opacity:1 here because [data-image-reveal]
+ * already has its own viewport animation.
+ */
+
+
+/*
+ * Broken photographs should not create the browser's
+ * ugly broken-image square.
+ */
+
+html.image-load-system
+img.image-error {
+  opacity: 0 !important;
+}
+
+
+/* ============================================================
+   5. MEDIA BOX RESET
+   ============================================================ */
+
+.gallery.collection-body figure,
+.gallery.collection-body figure > a,
+.gallery.collection-body [data-image-reveal] {
+  border: 0;
+  outline: 0;
+
+  box-shadow: none;
+
+  background: transparent !important;
+}
+
+
+/* ============================================================
+   6. PREVENT INLINE-IMAGE BASELINE / GHOST SPACE
+   ============================================================ */
+
+.project-image img,
+.filmstrip-image img,
+.latest-card img,
+.journal-card-image img,
+.journal-post-cover img,
+.gallery.collection-body img {
+  display: block;
+
+  border: 0;
+
+  background: transparent !important;
+}
+
+
+/* ============================================================
+   7. MOBILE
+   ============================================================ */
+
+/*
+ * polish-global.css already makes the mobile header:
+ *
+ * left:0
+ * right:0
+ * width:100%
+ * max-width:none
+ *
+ * So DO NOT rebuild the mobile header here.
+ *
+ * We only guarantee transparent photo surfaces.
+ */
+
+@media (max-width: 1000px) {
+
+  html body .project-image,
+  html body .filmstrip-image,
+  html body .journal-card-image,
+  html body .journal-post-cover,
+  html body
+  .gallery.collection-body
+  [data-image-reveal] {
+    background: transparent !important;
+  }
+
+}
