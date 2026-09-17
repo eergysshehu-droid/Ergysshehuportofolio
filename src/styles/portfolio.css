@@ -1189,3 +1189,171 @@ footer>a:last-child{justify-self:end}
     will-change: transform;
   }
 }
+/* =========================
+   FINAL DARK IMAGE REVEAL FIX
+   ========================= */
+
+.project-grid,
+.latest-work__grid {
+  width: 100%;
+}
+
+.project-card,
+.latest-work__item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card__media,
+.latest-work__media {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(10, 12, 10, 0.92), rgba(8, 9, 8, 0.98));
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* aspect ratio stabile që të mos shfaqet “white jump” */
+.project-card__media {
+  aspect-ratio: 16 / 10;
+}
+
+.latest-work__media {
+  aspect-ratio: 4 / 5;
+}
+
+/* shimmer shumë i lehtë dark në vend të bardhës */
+.project-card__media::before,
+.latest-work__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.02) 0%,
+      rgba(255,255,255,0.05) 50%,
+      rgba(255,255,255,0.02) 100%
+    );
+  transform: translateX(-100%);
+  animation: imageShimmer 1.3s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.project-card__media.is-loaded::before,
+.latest-work__media.is-loaded::before {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes imageShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* vetë fotoja */
+.project-card__media img,
+.latest-work__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: transparent !important;
+  opacity: 0;
+  transform: scale(1.02);
+  transition:
+    opacity 0.45s ease,
+    transform 0.7s ease;
+  z-index: 2;
+}
+
+/* kur fotoja u ngarkua */
+.project-card__media.is-loaded img,
+.latest-work__media.is-loaded img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* hover i butë në desktop */
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover .project-card__media img,
+  .latest-work__item:hover .latest-work__media img {
+    transform: scale(1.02);
+  }
+}
+
+/* overlay tekstesh */
+.project-card__meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  padding: 18px 18px 16px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.68) 0%,
+    rgba(0, 0, 0, 0.22) 42%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.project-card__index {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.72);
+}
+
+.project-card__text h3 {
+  margin: 0;
+  color: #f5f1e8;
+}
+
+.project-card__text p {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* anti-white flash gjatë route/content switch */
+img,
+picture,
+canvas,
+video {
+  background-color: transparent;
+}
+
+main,
+section,
+article,
+.project-card,
+.latest-work__item,
+.project-card__media,
+.latest-work__media {
+  contain: layout paint;
+}
+
+/* mobil */
+@media (max-width: 820px) {
+  .project-card__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .project-card__meta {
+    padding: 14px 14px 12px;
+  }
+}
