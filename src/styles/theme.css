@@ -1,40 +1,1032 @@
 @import './editorial-v3.css';
 
+
 /* ==========================================================================
-   AUTOMATIC SYSTEM THEME
-   Light = original editorial identity.
-   Dark = warm layered charcoal / olive, never flat black-on-black.
+   ERGYS SHEHU — AUTOMATIC SYSTEM THEME
+   --------------------------------------------------------------------------
+   LIGHT:
+   warm ivory / pale sage / soft transparent glass
+
+   DARK:
+   deep olive / charcoal / dense liquid glass
+
+   ALWAYS DARK:
+   - Mobile navigation
+   - Booking page
+   - Lightbox
+
+   IMPORTANT:
+   Photography is never recoloured.
+   Homepage sticky stacking mechanics are never changed.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   BASE TOKENS — LIGHT
    ========================================================================== */
 
 :root{
   color-scheme:
     light;
 
-  --dark-deep:
-    #080908;
+  --paper:
+    #f1efe8;
 
-  --dark-base:
-    #10110e;
+  --ink:
+    #171914;
 
-  --dark-soft:
-    #151712;
+  --muted:
+    #73766d;
 
-  --dark-olive:
-    #1b1f18;
-
-  --dark-ink:
-    #f3efe7;
-
-  --dark-muted:
-    #aaa69d;
-
-  --dark-line:
+  --line:
     rgba(
-      243,
-      239,
-      231,
-      .11
+      23,
+      25,
+      20,
+      .14
     );
+
+  --theme-bg:
+    #f1efe8;
+
+  --theme-bg-soft:
+    #e8e9e2;
+
+  --theme-panel:
+    rgba(
+      239,
+      240,
+      232,
+      .91
+    );
+
+  --theme-panel-deep:
+    rgba(
+      218,
+      224,
+      213,
+      .91
+    );
+
+  --theme-text:
+    #171914;
+
+  --theme-muted:
+    rgba(
+      23,
+      25,
+      20,
+      .61
+    );
+
+  --theme-line:
+    rgba(
+      23,
+      25,
+      20,
+      .12
+    );
+
+  --theme-glass-highlight:
+    rgba(
+      255,
+      255,
+      255,
+      .62
+    );
+}
+
+
+/* ==========================================================================
+   SMOOTH SYSTEM CHANGE
+   ========================================================================== */
+
+html,
+body,
+.site-header,
+.filmstrip-section,
+.artist-section,
+.recognition-section,
+.latest-section,
+.contact-section,
+.collection-intro,
+.collection-body,
+.journal-list,
+.journal-feature,
+footer{
+  transition:
+    background-color
+    .38s
+    ease,
+    color
+    .38s
+    ease,
+    border-color
+    .38s
+    ease;
+}
+
+
+/* ==========================================================================
+   LIGHT MODE
+   ========================================================================== */
+
+@media(prefers-color-scheme:light){
+
+  :root{
+    color-scheme:
+      light;
+
+    --paper:
+      #f1efe8;
+
+    --ink:
+      #171914;
+
+    --muted:
+      #73766d;
+
+    --line:
+      rgba(
+        23,
+        25,
+        20,
+        .14
+      );
+  }
+
+
+  html{
+    background:
+      #ebe9e2!important;
+  }
+
+
+  body{
+    background:
+      #f1efe8!important;
+
+    color:
+      #171914!important;
+  }
+
+
+  /* ========================================================================
+     DESKTOP HEADER
+     Mobile is intentionally kept dark later in this file.
+     ======================================================================== */
+
+  @media(min-width:1001px){
+
+    .site-header{
+      --header-fg:
+        #171914;
+
+      --header-bg:
+        rgba(
+          241,
+          239,
+          232,
+          .88
+        );
+
+      --header-line:
+        rgba(
+          23,
+          25,
+          20,
+          .095
+        );
+    }
+
+
+    .is-home .site-header{
+      --header-fg:
+        #fff;
+
+      --header-bg:
+        transparent;
+
+      --header-line:
+        transparent;
+    }
+
+
+    .is-home .site-header.is-scrolled{
+      --header-fg:
+        #171914;
+
+      --header-bg:
+        rgba(
+          241,
+          239,
+          232,
+          .91
+        );
+
+      --header-line:
+        rgba(
+          23,
+          25,
+          20,
+          .095
+        );
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(
+            244,
+            242,
+            235,
+            .9
+          ),
+          rgba(
+            230,
+            232,
+            224,
+            .92
+          )
+        )!important;
+
+      border-color:
+        rgba(
+          23,
+          25,
+          20,
+          .08
+        )!important;
+
+      box-shadow:
+        inset
+        0
+        1px
+        0
+        rgba(
+          255,
+          255,
+          255,
+          .72
+        ),
+        0
+        10px
+        36px
+        rgba(
+          35,
+          42,
+          32,
+          .08
+        )!important;
+
+      backdrop-filter:
+        blur(
+          32px
+        )
+        saturate(
+          125%
+        );
+
+      -webkit-backdrop-filter:
+        blur(
+          32px
+        )
+        saturate(
+          125%
+        );
+    }
+  }
+
+
+  /* ========================================================================
+     FILMSTRIP / IN BETWEEN
+     ======================================================================== */
+
+  body.is-home .filmstrip-section{
+    background:
+      linear-gradient(
+        180deg,
+        #e5e8df
+        0%,
+        #eef0e9
+        100%
+      )!important;
+
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .filmstrip-curve path{
+    fill:
+      #e5e8df!important;
+  }
+
+
+  body.is-home .filmstrip-heading .kicker{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .54
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-heading .kicker::after{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .54
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-heading h2{
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .filmstrip-copy{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .58
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-view-all{
+    color:
+      #171914!important;
+
+    border-bottom-color:
+      rgba(
+        23,
+        25,
+        20,
+        .28
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-counter{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .42
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-next{
+    color:
+      #171914!important;
+
+    background:
+      rgba(
+        236,
+        239,
+        231,
+        .88
+      )!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .11
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .72
+      ),
+      0
+      10px
+      28px
+      rgba(
+        36,
+        44,
+        34,
+        .09
+      )!important;
+  }
+
+
+  /* ========================================================================
+     SELECTED WORK
+     Intentionally stays cinematic dark in both themes.
+     This also protects the stacking design.
+     ======================================================================== */
+
+  body.is-home .work-section{
+    background:
+      #050505!important;
+
+    color:
+      #f3f1eb!important;
+  }
+
+
+  body.is-home .work-toolbar{
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .1
+      )!important;
+  }
+
+
+  body.is-home .filters button{
+    color:
+      rgba(
+        243,
+        241,
+        235,
+        .56
+      )!important;
+  }
+
+
+  body.is-home .filters button[aria-pressed="true"]{
+    color:
+      #171714!important;
+  }
+
+
+  /* ========================================================================
+     BEHIND THE LENS — LIGHT LIQUID GLASS
+     ======================================================================== */
+
+  body.is-home .artist-section{
+    color:
+      #171914!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          247,
+          246,
+          240,
+          .93
+        )
+        0%,
+        rgba(
+          224,
+          230,
+          218,
+          .91
+        )
+        50%,
+        rgba(
+          211,
+          219,
+          207,
+          .92
+        )
+        100%
+      )!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .1
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .74
+      ),
+      inset
+      0
+      -1px
+      0
+      rgba(
+        23,
+        25,
+        20,
+        .025
+      ),
+      0
+      28px
+      70px
+      rgba(
+        52,
+        62,
+        48,
+        .11
+      )!important;
+
+    backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        120%
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        120%
+      );
+  }
+
+
+  body.is-home .artist-copy,
+  body.is-home .artist-copy h2{
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .artist-copy p{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .61
+      )!important;
+  }
+
+
+  body.is-home .artist-copy .text-link{
+    color:
+      #171914!important;
+
+    border-bottom-color:
+      rgba(
+        23,
+        25,
+        20,
+        .34
+      )!important;
+  }
+
+
+  /*
+    Label sits over photography, therefore remains white.
+  */
+
+  body.is-home .artist-label .kicker{
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        .88
+      )!important;
+  }
+
+
+  /* ========================================================================
+     RECOGNITION
+     ======================================================================== */
+
+  body.is-home .recognition-section{
+    background:
+      #ebece5!important;
+
+    color:
+      #171914!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .09
+      )!important;
+  }
+
+
+  body.is-home .recognition-heading,
+  body.is-home .recognition-row{
+    color:
+      #171914!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .1
+      )!important;
+  }
+
+
+  body.is-home .recognition-row{
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          255,
+          255,
+          255,
+          .44
+        ),
+        rgba(
+          217,
+          223,
+          211,
+          .55
+        )
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .56
+      )!important;
+
+    backdrop-filter:
+      blur(
+        24px
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        24px
+      );
+  }
+
+
+  body.is-home .recognition-meta{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .5
+      )!important;
+  }
+
+
+  /* ========================================================================
+     FROM THE STUDIO
+     ======================================================================== */
+
+  body.is-home .latest-section{
+    background:
+      linear-gradient(
+        180deg,
+        #f0eee7
+        0%,
+        #e6e9df
+        100%
+      )!important;
+
+    color:
+      #171914!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .08
+      )!important;
+  }
+
+
+  body.is-home .latest-section .kicker,
+  body.is-home .latest-section h2,
+  body.is-home .editorial-social-link{
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .latest-intro{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .58
+      )!important;
+  }
+
+
+  /* ========================================================================
+     JOURNAL FEATURE
+     ======================================================================== */
+
+  body.is-home .journal-feature{
+    background:
+      #e3e6dc!important;
+
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .journal-feature p{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .6
+      )!important;
+  }
+
+
+  /* ========================================================================
+     CONTACT
+     ======================================================================== */
+
+  body.is-home .contact-section{
+    background:
+      linear-gradient(
+        145deg,
+        #e2e6dc
+        0%,
+        #eff0e9
+        100%
+      )!important;
+
+    color:
+      #171914!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .09
+      )!important;
+  }
+
+
+  body.is-home .contact-section .kicker,
+  body.is-home .contact-section h2,
+  body.is-home .contact-details,
+  body.is-home .contact-details a,
+  body.is-home .contact-details .email{
+    color:
+      #171914!important;
+  }
+
+
+  body.is-home .contact-details p{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .58
+      )!important;
+  }
+
+
+  body.is-home .contact-details .email{
+    border-bottom-color:
+      rgba(
+        23,
+        25,
+        20,
+        .3
+      )!important;
+  }
+
+
+  /* ========================================================================
+     INNER PAGE GLASS HEADER
+     Sara Fani / Ergys Shehu / etc.
+     ======================================================================== */
+
+  .collection-intro{
+    color:
+      #171914!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          248,
+          247,
+          241,
+          .94
+        )
+        0%,
+        rgba(
+          225,
+          230,
+          219,
+          .92
+        )
+        52%,
+        rgba(
+          216,
+          223,
+          211,
+          .94
+        )
+        100%
+      )!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .095
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .76
+      ),
+      0
+      24px
+      64px
+      rgba(
+        54,
+        64,
+        50,
+        .09
+      )!important;
+
+    backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        118%
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        118%
+      );
+  }
+
+
+  .collection-intro h1,
+  .collection-intro .back-link{
+    color:
+      #171914!important;
+  }
+
+
+  .collection-intro .kicker,
+  .collection-intro>p:not(.kicker){
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .6
+      )!important;
+  }
+
+
+  /* ========================================================================
+     INNER PAGE BODIES
+     ======================================================================== */
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    background:
+      #f1efe8!important;
+
+    color:
+      #171914!important;
+  }
+
+
+  .journal-card,
+  .journal-card-copy h2,
+  .journal-read,
+  .journal-post-body h2,
+  .journal-post-body h3,
+  .journal-post-body strong,
+  .bio-language summary,
+  blockquote{
+    color:
+      #171914!important;
+  }
+
+
+  .journal-card-copy p,
+  .journal-post-body,
+  .contact-copy,
+  .bio-language p,
+  .biography-layout aside>p:not(.kicker){
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .64
+      )!important;
+  }
+
+
+  .journal-date,
+  .journal-post-body figcaption{
+    color:
+      rgba(
+        23,
+        25,
+        20,
+        .48
+      )!important;
+  }
+
+
+  .bio-language,
+  .bio-milestones,
+  .bio-milestones p{
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .12
+      )!important;
+  }
+
+
+  /* ========================================================================
+     FOOTER
+     Keep it visually grounded / dark in both themes.
+     ======================================================================== */
+
+  footer,
+  body.is-home footer{
+    background:
+      #080b08!important;
+
+    color:
+      #f1efe8!important;
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .07
+      )!important;
+  }
+
+
+  footer a,
+  .footer-contact,
+  .footer-name{
+    color:
+      #f1efe8!important;
+  }
 }
 
 
@@ -58,134 +1050,297 @@
       #aaa69d;
 
     --line:
-      #30312c;
+      rgba(
+        243,
+        239,
+        231,
+        .11
+      );
+
+    --theme-bg:
+      #10110e;
+
+    --theme-bg-soft:
+      #151712;
+
+    --theme-panel:
+      rgba(
+        30,
+        42,
+        31,
+        .92
+      );
+
+    --theme-panel-deep:
+      rgba(
+        13,
+        20,
+        14,
+        .96
+      );
+
+    --theme-text:
+      #f3efe7;
+
+    --theme-muted:
+      rgba(
+        243,
+        239,
+        231,
+        .62
+      );
+
+    --theme-line:
+      rgba(
+        243,
+        239,
+        231,
+        .1
+      );
   }
+
 
   html{
     background:
-      var(
-        --dark-deep
-      );
+      #080908!important;
   }
+
 
   body{
     background:
-      var(
-        --dark-base
-      );
+      #10110e!important;
 
     color:
-      var(
-        --dark-ink
-      );
+      #f3efe7!important;
   }
 
 
   /* ========================================================================
-     HEADER
+     DESKTOP HEADER
      ======================================================================== */
 
-  .site-header{
-    --header-fg:
-      var(
-        --dark-ink
-      );
+  @media(min-width:1001px){
 
-    --header-bg:
-      rgba(
-        12,
-        13,
-        11,
-        .96
-      );
+    .site-header{
+      --header-fg:
+        #f3efe7;
 
-    --header-line:
-      var(
-        --dark-line
-      );
-  }
+      --header-bg:
+        rgba(
+          12,
+          13,
+          11,
+          .94
+        );
 
-  .is-home .site-header{
-    --header-fg:
-      #fff;
+      --header-line:
+        rgba(
+          243,
+          239,
+          231,
+          .1
+        );
+    }
 
-    --header-bg:
-      transparent;
 
-    --header-line:
-      transparent;
-  }
+    .is-home .site-header{
+      --header-fg:
+        #fff;
 
-  .is-home .site-header.is-scrolled{
-    --header-fg:
-      var(
-        --dark-ink
-      );
+      --header-bg:
+        transparent;
 
-    --header-bg:
-      rgba(
-        10,
-        11,
-        9,
-        .96
-      );
+      --header-line:
+        transparent;
+    }
 
-    --header-line:
-      var(
-        --dark-line
-      );
+
+    .is-home .site-header.is-scrolled{
+      --header-fg:
+        #f3efe7;
+
+      --header-bg:
+        rgba(
+          10,
+          11,
+          9,
+          .95
+        );
+
+      --header-line:
+        rgba(
+          243,
+          239,
+          231,
+          .1
+        );
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(
+            31,
+            43,
+            32,
+            .92
+          ),
+          rgba(
+            10,
+            15,
+            11,
+            .97
+          )
+        )!important;
+
+      border-color:
+        rgba(
+          255,
+          255,
+          255,
+          .075
+        )!important;
+
+      box-shadow:
+        inset
+        0
+        1px
+        0
+        rgba(
+          255,
+          255,
+          255,
+          .07
+        ),
+        0
+        10px
+        38px
+        rgba(
+          0,
+          0,
+          0,
+          .27
+        )!important;
+
+      backdrop-filter:
+        blur(
+          34px
+        )
+        saturate(
+          125%
+        );
+
+      -webkit-backdrop-filter:
+        blur(
+          34px
+        )
+        saturate(
+          125%
+        );
+    }
   }
 
 
   /* ========================================================================
-     HOME — FILMSTRIP
+     FILMSTRIP
      ======================================================================== */
 
   body.is-home .filmstrip-section{
     background:
-      #151712!important;
+      linear-gradient(
+        180deg,
+        #111711
+        0%,
+        #0c110c
+        100%
+      )!important;
 
     color:
-      var(
-        --dark-ink
-      )!important;
+      #f3efe7!important;
   }
+
 
   body.is-home .filmstrip-curve path{
     fill:
-      #151712!important;
+      #111711!important;
   }
 
 
-  /* ========================================================================
-     HOME — SELECTED WORK
-     ======================================================================== */
-
-  body.is-home .work-section{
-    background:
-      #0b0c0a!important;
-
+  body.is-home .filmstrip-heading h2,
+  body.is-home .filmstrip-view-all{
     color:
-      var(
-        --dark-ink
+      #f3efe7!important;
+  }
+
+
+  body.is-home .filmstrip-heading .kicker,
+  body.is-home .filmstrip-heading .kicker::after,
+  body.is-home .filmstrip-copy{
+    color:
+      rgba(
+        243,
+        239,
+        231,
+        .58
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-counter{
+    color:
+      rgba(
+        243,
+        239,
+        231,
+        .4
+      )!important;
+  }
+
+
+  body.is-home .filmstrip-next{
+    background:
+      rgba(
+        27,
+        38,
+        28,
+        .9
       )!important;
 
-    border-top:
-      1px solid
+    color:
+      #f3efe7!important;
+
+    border-color:
       rgba(
         255,
         255,
         255,
-        .035
-      );
+        .1
+      )!important;
   }
+
+
+  /* ========================================================================
+     SELECTED WORK
+     ======================================================================== */
+
+  body.is-home .work-section{
+    background:
+      #050505!important;
+
+    color:
+      #f3efe7!important;
+  }
+
 
   body.is-home .work-toolbar{
     border-color:
-      var(
-        --dark-line
+      rgba(
+        255,
+        255,
+        255,
+        .1
       )!important;
   }
+
 
   body.is-home .filters button{
     color:
@@ -197,73 +1352,254 @@
       )!important;
   }
 
+
   body.is-home .filters button[aria-pressed="true"]{
     color:
-      var(
-        --dark-ink
+      #171714!important;
+  }
+
+
+  /* ========================================================================
+     ARTIST / BEHIND THE LENS
+     ======================================================================== */
+
+  body.is-home .artist-section{
+    color:
+      #f3efe7!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          45,
+          61,
+          46,
+          .86
+        )
+        0%,
+        rgba(
+          24,
+          34,
+          25,
+          .93
+        )
+        50%,
+        rgba(
+          12,
+          19,
+          13,
+          .97
+        )
+        100%
+      )!important;
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .085
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .085
+      ),
+      0
+      30px
+      78px
+      rgba(
+        0,
+        0,
+        0,
+        .27
       )!important;
   }
 
-  body.is-home .project-image{
-    background:
-      #171914;
+
+  body.is-home .artist-copy,
+  body.is-home .artist-copy h2{
+    color:
+      #f3efe7!important;
   }
 
-  body.is-home .project-fallback{
+
+  body.is-home .artist-copy p{
     color:
       rgba(
         243,
         239,
         231,
-        .5
-      );
+        .66
+      )!important;
+  }
+
+
+  body.is-home .artist-copy .text-link{
+    color:
+      #f3efe7!important;
+
+    border-bottom-color:
+      rgba(
+        243,
+        239,
+        231,
+        .34
+      )!important;
   }
 
 
   /* ========================================================================
-     HOME — ARTIST
+     RECOGNITION
      ======================================================================== */
 
-  body.is-home .artist-section{
+  body.is-home .recognition-section{
     background:
-      var(
-        --dark-olive
-      )!important;
+      #0b0f0b!important;
 
     color:
-      var(
-        --dark-ink
-      )!important;
+      #f3efe7!important;
+  }
 
-    border-top:
-      1px solid
+
+  body.is-home .recognition-heading,
+  body.is-home .recognition-row{
+    color:
+      #f3efe7!important;
+
+    border-color:
       rgba(
         255,
         255,
         255,
-        .04
-      );
+        .075
+      )!important;
+  }
 
-    border-bottom:
-      1px solid
+
+  body.is-home .recognition-row{
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          42,
+          58,
+          43,
+          .48
+        ),
+        rgba(
+          15,
+          23,
+          16,
+          .74
+        )
+      )!important;
+  }
+
+
+  body.is-home .recognition-meta{
+    color:
+      rgba(
+        243,
+        239,
+        231,
+        .48
+      )!important;
+  }
+
+
+  /* ========================================================================
+     LATEST
+     ======================================================================== */
+
+  body.is-home .latest-section{
+    background:
+      linear-gradient(
+        180deg,
+        #0c110c,
+        #101610
+      )!important;
+
+    color:
+      #f3efe7!important;
+  }
+
+
+  body.is-home .latest-section h2,
+  body.is-home .latest-section .kicker,
+  body.is-home .editorial-social-link{
+    color:
+      #f3efe7!important;
+  }
+
+
+  body.is-home .latest-intro{
+    color:
+      rgba(
+        243,
+        239,
+        231,
+        .56
+      )!important;
+  }
+
+
+  /* ========================================================================
+     JOURNAL
+     ======================================================================== */
+
+  body.is-home .journal-feature{
+    background:
+      #151812!important;
+
+    color:
+      #f3efe7!important;
+  }
+
+
+  /* ========================================================================
+     CONTACT
+     ======================================================================== */
+
+  body.is-home .contact-section{
+    background:
+      linear-gradient(
+        145deg,
+        #131a13,
+        #080c08
+      )!important;
+
+    color:
+      #f3efe7!important;
+
+    border-color:
       rgba(
         255,
         255,
         255,
-        .04
-      );
-  }
-
-  body.is-home .artist-label,
-  body.is-home .artist-copy,
-  body.is-home .artist-copy h2{
-    color:
-      var(
-        --dark-ink
+        .065
       )!important;
   }
 
-  body.is-home .artist-label .kicker{
+
+  body.is-home .contact-section .kicker,
+  body.is-home .contact-section h2,
+  body.is-home .contact-details,
+  body.is-home .contact-details a,
+  body.is-home .contact-details .email{
+    color:
+      #f3efe7!important;
+  }
+
+
+  body.is-home .contact-details p{
     color:
       rgba(
         243,
@@ -273,246 +1609,116 @@
       )!important;
   }
 
-  body.is-home .artist-number{
-    color:
-      rgba(
-        243,
-        239,
-        231,
-        .42
-      )!important;
-  }
-
-  body.is-home .artist-copy p{
-    color:
-      rgba(
-        243,
-        239,
-        231,
-        .74
-      )!important;
-  }
-
-  body.is-home .artist-section .text-link{
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    border-bottom-color:
-      rgba(
-        243,
-        239,
-        231,
-        .36
-      )!important;
-  }
-
-  body.is-home .artist-section .text-link:hover{
-    border-bottom-color:
-      rgba(
-        243,
-        239,
-        231,
-        .72
-      )!important;
-  }
-
-  body.is-home .artist-section:after{
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    opacity:
-      .026!important;
-  }
-
 
   /* ========================================================================
-     HOME — AWARDS / CURRENT / JOURNAL
-     ======================================================================== */
-
-  body.is-home .recognition-section{
-    background:
-      #131510!important;
-
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    border-top:
-      1px solid
-      var(
-        --dark-line
-      );
-  }
-
-  body.is-home .latest-section{
-    background:
-      #10120e!important;
-
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    border-top:
-      1px solid
-      var(
-        --dark-line
-      );
-  }
-
-  body.is-home .journal-feature{
-    background:
-      #161812!important;
-
-    color:
-      var(
-        --dark-ink
-      )!important;
-  }
-
-
-  /* ========================================================================
-     HOME — CONTACT
-     ======================================================================== */
-
-  body.is-home .contact-section{
-    background:
-      #090a08!important;
-
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    border-top:
-      1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .06
-      );
-
-    border-bottom:
-      1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .06
-      );
-  }
-
-  body.is-home .contact-section .kicker{
-    color:
-      rgba(
-        243,
-        239,
-        231,
-        .72
-      )!important;
-  }
-
-  body.is-home .contact-section h2,
-  body.is-home .contact-details,
-  body.is-home .contact-details .email,
-  body.is-home .contact-details a{
-    color:
-      var(
-        --dark-ink
-      )!important;
-  }
-
-  body.is-home .contact-details .email{
-    border-bottom-color:
-      rgba(
-        243,
-        239,
-        231,
-        .5
-      )!important;
-  }
-
-  body.is-home .contact-details p{
-    color:
-      rgba(
-        243,
-        239,
-        231,
-        .62
-      )!important;
-  }
-
-  body.is-home .contact-section:after{
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    opacity:
-      .014!important;
-  }
-
-
-  /* ========================================================================
-     FOOTER
-     ======================================================================== */
-
-  body.is-home footer{
-    background:
-      #070806!important;
-
-    color:
-      var(
-        --dark-ink
-      )!important;
-
-    border-color:
-      var(
-        --dark-line
-      )!important;
-  }
-
-
-  /* ========================================================================
-     INNER PAGES
+     INNER PAGE GLASS
      ======================================================================== */
 
   .collection-intro{
-    background:
-      #141610;
-
     color:
-      var(
-        --dark-ink
-      );
+      #f3efe7!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          45,
+          61,
+          46,
+          .87
+        )
+        0%,
+        rgba(
+          23,
+          33,
+          24,
+          .94
+        )
+        52%,
+        rgba(
+          12,
+          18,
+          13,
+          .97
+        )
+        100%
+      )!important;
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .085
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .085
+      ),
+      0
+      26px
+      68px
+      rgba(
+        0,
+        0,
+        0,
+        .24
+      )!important;
   }
+
+
+  .collection-intro h1,
+  .collection-intro .back-link{
+    color:
+      #f3efe7!important;
+  }
+
+
+  .collection-intro .kicker,
+  .collection-intro>p:not(.kicker){
+    color:
+      rgba(
+        243,
+        239,
+        231,
+        .61
+      )!important;
+  }
+
 
   .collection-body,
-  .journal-list{
-    background:
-      #10110e;
-
-    color:
-      var(
-        --dark-ink
-      );
-  }
-
+  .journal-list,
   .journal-post,
   .biography-layout{
+    background:
+      #10110e!important;
+
     color:
-      var(
-        --dark-ink
-      );
+      #f3efe7!important;
   }
 
-  .collection-intro>p:not(.kicker),
+
+  .journal-card,
+  .journal-card-copy h2,
+  .journal-read,
+  .journal-post-body h2,
+  .journal-post-body h3,
+  .journal-post-body strong,
+  .bio-language summary,
+  blockquote{
+    color:
+      #f3efe7!important;
+  }
+
+
   .journal-card-copy p,
   .journal-post-body,
   .contact-copy,
@@ -522,276 +1728,289 @@
       #beb9b0!important;
   }
 
-  .collection-intro .kicker,
+
   .journal-date,
-  .recognition-meta{
-    color:
-      var(
-        --dark-muted
-      )!important;
-  }
-
-
-  /* ========================================================================
-     JOURNAL
-     ======================================================================== */
-
-  .journal-card,
-  .journal-card-copy h2,
-  .journal-read{
-    color:
-      var(
-        --dark-ink
-      );
-  }
-
-  .journal-post-body h2,
-  .journal-post-body h3,
-  .journal-post-body strong{
-    color:
-      var(
-        --dark-ink
-      );
-  }
-
-  .journal-post-body blockquote{
-    color:
-      #d7d2c9;
-
-    border-color:
-      var(
-        --dark-line
-      );
-  }
-
   .journal-post-body figcaption{
     color:
-      var(
-        --dark-muted
-      );
+      #aaa69d!important;
   }
 
-
-  /* ========================================================================
-     ABOUT
-     ======================================================================== */
 
   .bio-language,
   .bio-milestones,
   .bio-milestones p{
     border-color:
-      var(
-        --dark-line
-      );
-  }
-
-  .bio-language summary,
-  blockquote{
-    color:
-      var(
-        --dark-ink
-      );
-  }
-
-
-  /* ========================================================================
-     AWARDS
-     ======================================================================== */
-
-  .recognition-heading,
-  .recognition-row{
-    border-color:
-      var(
-        --dark-line
+      rgba(
+        243,
+        239,
+        231,
+        .1
       )!important;
   }
 
-  .recognition-row{
-    color:
-      var(
-        --dark-ink
-      );
-  }
-
 
   /* ========================================================================
-     FILMSTRIP CONTROL
+     FOOTER
      ======================================================================== */
 
-  .filmstrip-next{
+  footer,
+  body.is-home footer{
     background:
-      #1b1d17;
+      #050805!important;
 
     color:
-      var(
-        --dark-ink
-      );
+      #f3efe7!important;
 
     border-color:
-      var(
-        --dark-line
-      );
-
-    box-shadow:
-      0
-      10px
-      30px
       rgba(
-        0,
-        0,
-        0,
-        .32
-      );
-  }
-
-  .filmstrip-next:hover{
-    background:
-      var(
-        --accent
-      );
-
-    color:
-      #171714;
-
-    border-color:
-      var(
-        --accent
-      );
+        255,
+        255,
+        255,
+        .065
+      )!important;
   }
 
 
-  /* ========================================================================
-     GENERIC
-     ======================================================================== */
-
-  .back-link,
+  footer a,
   .footer-contact,
   .footer-name{
     color:
-      var(
-        --dark-ink
-      );
+      #f3efe7!important;
   }
+}
 
-  footer{
+
+/* ==========================================================================
+   ALWAYS DARK — BOOK
+   ========================================================================== */
+
+.booking-page{
+  background:
+    #080b08!important;
+
+  color:
+    #f4f0e8!important;
+
+  color-scheme:
+    dark;
+}
+
+
+.booking-page .eyebrow,
+.booking-page .hero-intro,
+.booking-page .section-copy,
+.booking-page .contact-intro,
+.booking-page .form-note,
+.booking-page .collab-copy p:not(.eyebrow){
+  color:
+    rgba(
+      244,
+      240,
+      232,
+      .72
+    )!important;
+}
+
+
+.booking-page h1,
+.booking-page h2,
+.booking-page h3,
+.booking-page label,
+.booking-page .contact-copy,
+.booking-page .contact-copy a{
+  color:
+    #f4f0e8!important;
+}
+
+
+.booking-page input,
+.booking-page textarea,
+.booking-page select{
+  color:
+    #f4f0e8!important;
+
+  background:
+    rgba(
+      7,
+      11,
+      8,
+      .46
+    )!important;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      .11
+    )!important;
+
+  color-scheme:
+    dark;
+}
+
+
+/* ==========================================================================
+   ALWAYS DARK — MOBILE NAVIGATION
+   Keeps the single full-screen dense glass direction.
+   ========================================================================== */
+
+@media(max-width:1000px){
+
+  .site-header,
+  .site-header.is-scrolled,
+  body.is-home .site-header,
+  body.is-home .site-header.is-scrolled{
+    --header-fg:
+      #f4f3ed!important;
+
     color:
-      var(
-        --dark-ink
-      );
-
-    border-color:
-      var(
-        --dark-line
-      );
+      #f4f3ed!important;
   }
 
-  .skip{
+
+  .mobile-menu-screen{
+    color-scheme:
+      dark;
+
+    color:
+      #f4f3ed!important;
+
     background:
-      var(
-        --dark-base
-      );
+      linear-gradient(
+        155deg,
+        rgba(
+          21,
+          31,
+          22,
+          .985
+        )
+        0%,
+        rgba(
+          9,
+          15,
+          10,
+          .992
+        )
+        46%,
+        rgba(
+          4,
+          8,
+          5,
+          .998
+        )
+        100%
+      )!important;
 
-    color:
-      var(
-        --dark-ink
-      );
-  }
+    backdrop-filter:
+      blur(
+        54px
+      )
+      saturate(
+        110%
+      )!important;
 
-  .gallery-cta,
-  .circle-btn{
-    color:
-      #171714;
-  }
-
-
-  /* ========================================================================
-     BOOK
-     Intentionally remains a cinematic dark page.
-     ======================================================================== */
-
-  .booking-page{
-    color:
-      #f4f0e8;
-
-    background:
-      #0a0b0a;
-  }
-
-  .booking-page .eyebrow,
-  .booking-page .hero-intro,
-  .booking-page .section-copy,
-  .booking-page .contact-intro,
-  .booking-page .form-note,
-  .booking-page .collab-copy p:not(.eyebrow){
-    color:
-      rgba(
-        244,
-        240,
-        232,
-        .78
+    -webkit-backdrop-filter:
+      blur(
+        54px
+      )
+      saturate(
+        110%
       )!important;
   }
 
-  .booking-page input,
-  .booking-page textarea,
-  .booking-page select{
+
+  .mobile-menu-screen nav>a,
+  .mobile-menu-brand,
+  .mobile-book{
     color:
-      #f4f0e8;
+      rgba(
+        247,
+        246,
+        240,
+        .93
+      )!important;
   }
+}
 
 
-  /* ========================================================================
-     PHOTOGRAPHY
-     Never recolor the images.
-     ======================================================================== */
+/* ==========================================================================
+   ALWAYS DARK — LIGHTBOX
+   ========================================================================== */
 
-  img,
-  picture,
-  video{
-    color-scheme:
-      normal;
-  }
+dialog.lightbox,
+dialog.lightbox[open],
+.lightbox{
+  color-scheme:
+    dark;
+
+  background:
+    #030503!important;
+
+  color:
+    #fff!important;
+}
 
 
-  /* ========================================================================
-     MOBILE DARK MODE
-     ======================================================================== */
+dialog.lightbox::backdrop,
+.lightbox::backdrop{
+  background:
+    #030503!important;
+}
 
-  @media(max-width:700px){
 
-    body.is-home .filmstrip-section{
-      background:
-        #141610!important;
-    }
+.lightbox-photo,
+.lightbox img,
+.lightbox-video{
+  background:
+    #030503!important;
+}
 
-    body.is-home .work-section{
-      background:
-        #0a0b09!important;
-    }
 
-    body.is-home .artist-section{
-      background:
-        #1a1e17!important;
-    }
+html.lightbox-open,
+html.lightbox-open body,
+html.lightbox-open main{
+  background:
+    #030503!important;
+}
 
-    body.is-home .recognition-section{
-      background:
-        #12140f!important;
-    }
 
-    body.is-home .latest-section{
-      background:
-        #0f110d!important;
-    }
+/* ==========================================================================
+   PHOTOGRAPHY
+   Never change brightness/invert/filter based on theme.
+   ========================================================================== */
 
-    body.is-home .contact-section{
-      background:
-        #080907!important;
-    }
+img,
+picture,
+video{
+  color-scheme:
+    normal;
 
-    body.is-home footer{
-      background:
-        #070806!important;
-    }
+  forced-color-adjust:
+    none;
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+  html,
+  body,
+  .site-header,
+  .filmstrip-section,
+  .artist-section,
+  .recognition-section,
+  .latest-section,
+  .contact-section,
+  .collection-intro,
+  .collection-body,
+  .journal-list,
+  .journal-feature,
+  footer{
+    transition:
+      none!important;
   }
 }
