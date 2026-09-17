@@ -1,129 +1,408 @@
 /* ==========================================================================
-   WORK MODE EDITORIAL HOMEPAGE — SAFE VISUAL UPGRADE
+   ERGYS SHEHU — EDITORIAL V4
+   DENSE LIQUID GLASS / MODERN MINIMAL
    --------------------------------------------------------------------------
-   Transforms the existing homepage sections into:
-   - IN BETWEEN
-   - BEHIND THE LENS editorial portrait panel
-   - STORIES IN MOTION cinematic panel
+   IMPORTANT — HOMEPAGE STACKING IS UNTOUCHED.
 
-   DOES NOT TOUCH:
-   - project-card sticky
-   - project-card top
-   - work-section overflow
-   - project-grid overflow
-   - stack blur/darkness
+   This file NEVER changes:
+   - .project-card position
+   - .project-card top
+   - .work-section overflow
+   - .project-grid overflow
+   - --stack-blur
+   - --stack-darkness
    ========================================================================== */
 
 
 /* ==========================================================================
-   01 — FILMSTRIP → "IN BETWEEN"
+   DESIGN TOKENS
+   ========================================================================== */
+
+:root{
+  --glass-deep:
+    rgba(
+      12,
+      18,
+      13,
+      .92
+    );
+
+  --glass-green:
+    rgba(
+      27,
+      40,
+      29,
+      .86
+    );
+
+  --glass-green-bright:
+    rgba(
+      43,
+      62,
+      45,
+      .78
+    );
+
+  --glass-soft:
+    rgba(
+      76,
+      96,
+      77,
+      .18
+    );
+
+  --glass-highlight:
+    rgba(
+      255,
+      255,
+      255,
+      .16
+    );
+
+  --glass-highlight-soft:
+    rgba(
+      255,
+      255,
+      255,
+      .075
+    );
+
+  --glass-line:
+    rgba(
+      255,
+      255,
+      255,
+      .12
+    );
+
+  --glass-text:
+    #f2f1eb;
+
+  --glass-muted:
+    rgba(
+      242,
+      241,
+      235,
+      .62
+    );
+
+  --glass-blur:
+    38px;
+
+  --glass-shadow:
+    0
+    26px
+    70px
+    rgba(
+      0,
+      0,
+      0,
+      .36
+    );
+
+  --glass-inner:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .13
+    ),
+    inset
+    0
+    -1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .035
+    );
+
+  --editorial-radius:
+    34px;
+
+  --editorial-radius-mobile:
+    25px;
+
+  --v4-ease:
+    cubic-bezier(
+      .18,
+      .72,
+      .18,
+      1
+    );
+}
+
+
+/* ==========================================================================
+   DENSE GLASS MATERIAL
+   ========================================================================== */
+
+.glass-material{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        50,
+        70,
+        51,
+        .86
+      )
+      0%,
+      rgba(
+        24,
+        36,
+        26,
+        .91
+      )
+      54%,
+      rgba(
+        14,
+        21,
+        15,
+        .94
+      )
+      100%
+    );
+
+  border:
+    1px solid
+    var(
+      --glass-line
+    );
+
+  box-shadow:
+    var(
+      --glass-inner
+    ),
+    var(
+      --glass-shadow
+    );
+
+  backdrop-filter:
+    blur(
+      var(
+        --glass-blur
+      )
+    )
+    saturate(
+      145%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      var(
+        --glass-blur
+      )
+    )
+    saturate(
+      145%
+    );
+}
+
+
+/* ==========================================================================
+   GLOBAL TYPOGRAPHY POLISH
+   ========================================================================== */
+
+body{
+  text-rendering:
+    optimizeLegibility;
+}
+
+body.is-home h2{
+  text-wrap:
+    balance;
+}
+
+body.is-home .kicker{
+  font-size:
+    clamp(
+      9px,
+      .55vw,
+      11px
+    )!important;
+
+  font-weight:
+    500!important;
+
+  letter-spacing:
+    .18em!important;
+}
+
+
+/* ==========================================================================
+   HEADER — DESKTOP LIQUID GLASS
+   ========================================================================== */
+
+.site-header{
+  transition:
+    background
+    .42s
+    var(
+      --v4-ease
+    ),
+    box-shadow
+    .42s
+    var(
+      --v4-ease
+    ),
+    backdrop-filter
+    .42s
+    var(
+      --v4-ease
+    ),
+    border-color
+    .42s
+    var(
+      --v4-ease
+    );
+}
+
+.site-header.is-scrolled{
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .09
+    );
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        47,
+        63,
+        48,
+        .78
+      ),
+      rgba(
+        16,
+        23,
+        17,
+        .91
+      )
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .11
+    ),
+    0
+    14px
+    44px
+    rgba(
+      0,
+      0,
+      0,
+      .27
+    );
+
+  backdrop-filter:
+    blur(
+      34px
+    )
+    saturate(
+      145%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      34px
+    )
+    saturate(
+      145%
+    );
+}
+
+
+/* ==========================================================================
+   IN BETWEEN
+   Shorter, cleaner, horizontally editorial.
    ========================================================================== */
 
 body.is-home .filmstrip-section{
   position:
     relative;
 
-  padding-top:
-    clamp(
-      100px,
-      10vw,
-      170px
-    )!important;
+  min-height:
+    0!important;
 
-  padding-bottom:
+  padding:
     clamp(
-      100px,
-      10vw,
-      170px
+      52px,
+      5vw,
+      78px
+    )
+    0
+    clamp(
+      54px,
+      5vw,
+      82px
     )!important;
 
   background:
-    #11140f!important;
+    linear-gradient(
+      180deg,
+      #0c100c
+      0%,
+      #121812
+      48%,
+      #0c100c
+      100%
+    )!important;
 
   color:
-    #f3efe7!important;
+    var(
+      --glass-text
+    )!important;
 
   overflow:
     hidden;
 }
 
 
-/* softer top transition */
-
-body.is-home .filmstrip-section::before{
-  content:
-    "";
-
-  position:
-    absolute;
-
-  top:
-    0;
-
-  left:
-    0;
-
-  right:
-    0;
-
-  height:
-    150px;
-
-  pointer-events:
-    none;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(
-        7,
-        8,
-        7,
-        .72
-      ),
-      transparent
-    );
-
-  z-index:
-    0;
-}
-
-
-/* use current curve but make it subtle */
+/* remove huge decorative curve feeling */
 
 body.is-home .filmstrip-curve{
   opacity:
-    .32!important;
+    .08!important;
 
   height:
-    clamp(
-      76px,
-      8vw,
-      130px
-    )!important;
+    48px!important;
 }
 
 body.is-home .filmstrip-curve path{
   fill:
-    #11140f!important;
+    #101610!important;
 }
 
 
-/* heading becomes smaller / magazine-like */
+/* compact header */
 
 body.is-home .filmstrip-heading{
-  position:
-    relative;
-
-  z-index:
-    2;
-
   width:
     min(
-      1500px,
+      1360px,
       calc(
         100% -
-        80px
+        64px
       )
     );
 
@@ -131,9 +410,9 @@ body.is-home .filmstrip-heading{
     0
     auto
     clamp(
-      44px,
-      5vw,
-      80px
+      28px,
+      3vw,
+      42px
     )!important;
 
   display:
@@ -142,202 +421,81 @@ body.is-home .filmstrip-heading{
   grid-template-columns:
     minmax(
       0,
-      1.15fr
+      1fr
     )
     minmax(
-      260px,
-      .85fr
-    );
-
-  gap:
-    clamp(
-      28px,
-      6vw,
-      110px
+      240px,
+      390px
     );
 
   align-items:
     end;
-}
 
-
-/* visually rename kicker through CSS overlay */
-
-body.is-home .filmstrip-heading .kicker{
-  position:
-    relative;
-
-  color:
-    transparent!important;
-
-  user-select:
-    none;
-}
-
-body.is-home .filmstrip-heading .kicker::after{
-  content:
-    "IN BETWEEN";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  color:
-    rgba(
-      243,
-      239,
-      231,
-      .66
+  gap:
+    clamp(
+      26px,
+      5vw,
+      80px
     );
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-size:
-    10px;
-
-  font-weight:
-    500;
-
-  letter-spacing:
-    .18em;
 }
-
-
-/* headline */
 
 body.is-home .filmstrip-heading h2{
+  max-width:
+    620px;
+
   margin:
-    12px
+    9px
     0
     0!important;
 
-  max-width:
-    720px;
-
-  font-family:
-    var(
-      --serif
-    )!important;
-
   font-size:
     clamp(
-      54px,
-      6vw,
-      102px
+      42px,
+      4.7vw,
+      74px
     )!important;
 
-  font-weight:
-    400!important;
-
   line-height:
-    .9!important;
+    .94!important;
 
   letter-spacing:
-    -.045em!important;
+    -.04em!important;
 }
-
-
-/* smaller supporting text */
 
 body.is-home .filmstrip-copy{
   max-width:
-    430px;
-
-  margin:
-    0!important;
+    390px!important;
 
   color:
     rgba(
-      243,
-      239,
-      231,
-      .62
+      242,
+      241,
+      235,
+      .54
     )!important;
-
-  font-family:
-    var(
-      --sans
-    );
 
   font-size:
     clamp(
-      13px,
-      .9vw,
-      16px
+      12px,
+      .82vw,
+      14px
     )!important;
 
   line-height:
-    1.7!important;
+    1.68!important;
 }
 
 
-/* view all button */
-
-body.is-home .filmstrip-view-all{
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  gap:
-    9px;
-
-  width:
-    fit-content;
-
-  margin-top:
-    24px!important;
-
-  padding-bottom:
-    5px;
-
-  border-bottom:
-    1px solid
-    rgba(
-      243,
-      239,
-      231,
-      .34
-    );
-
-  color:
-    #f3efe7!important;
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-size:
-    11px!important;
-
-  letter-spacing:
-    .11em!important;
-}
-
-
-/* track becomes editorial */
-
-body.is-home .filmstrip-track-wrap{
-  position:
-    relative;
-
-  z-index:
-    2;
-}
+/* ==========================================================================
+   FILMSTRIP — PILL CARDS
+   ========================================================================== */
 
 body.is-home .filmstrip-track{
   gap:
     clamp(
-      12px,
-      1.3vw,
-      24px
+      10px,
+      1vw,
+      17px
     )!important;
 
   padding-left:
@@ -346,7 +504,7 @@ body.is-home .filmstrip-track{
       calc(
         (
           100vw -
-          1500px
+          1360px
         ) /
         2
       )
@@ -354,80 +512,170 @@ body.is-home .filmstrip-track{
 
   padding-right:
     clamp(
-      40px,
-      6vw,
-      100px
+      30px,
+      5vw,
+      80px
     )!important;
+
+  align-items:
+    center;
 }
 
 
-/* intentionally different sizes for editorial rhythm */
+/* all same visual rhythm */
 
-body.is-home .filmstrip-item{
+body.is-home .filmstrip-item,
+body.is-home .filmstrip-item:nth-child(even){
   width:
     clamp(
-      280px,
-      28vw,
-      470px
+      250px,
+      23vw,
+      370px
     )!important;
 
   flex:
     0
     0
     clamp(
-      280px,
-      28vw,
-      470px
+      250px,
+      23vw,
+      370px
     )!important;
+
+  margin-top:
+    0!important;
+
+  transform:
+    none;
 
   transition:
     transform
-    500ms
+    .55s
     var(
-      --v3-ease
+      --v4-ease
     );
 }
 
-body.is-home .filmstrip-item:nth-child(even){
-  margin-top:
-    clamp(
-      44px,
-      5vw,
-      86px
-    );
-}
+
+/* actual pill */
 
 body.is-home .filmstrip-image{
+  position:
+    relative;
+
+  width:
+    100%;
+
   height:
     clamp(
-      390px,
-      42vw,
-      650px
+      230px,
+      24vw,
+      340px
     )!important;
 
   overflow:
     hidden;
 
   border-radius:
-    2px;
+    clamp(
+      34px,
+      4vw,
+      64px
+    )!important;
+
+  padding:
+    7px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        69,
+        91,
+        70,
+        .45
+      ),
+      rgba(
+        17,
+        25,
+        18,
+        .85
+      )
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .12
+    );
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .12
+    ),
+    0
+    17px
+    48px
+    rgba(
+      0,
+      0,
+      0,
+      .27
+    );
+
+  backdrop-filter:
+    blur(
+      25px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      25px
+    );
 }
+
+
+/* inner photo itself */
 
 body.is-home .filmstrip-image img{
   width:
-    100%;
+    100%!important;
 
   height:
     100%!important;
 
   object-fit:
-    cover;
+    cover!important;
+
+  object-position:
+    center;
+
+  border-radius:
+    clamp(
+      28px,
+      3.4vw,
+      56px
+    );
 
   transition:
     transform
-    900ms
+    .85s
     var(
-      --v3-ease
-    );
+      --v4-ease
+    ),
+    filter
+    .6s
+    ease;
 }
 
 @media(hover:hover) and (pointer:fine){
@@ -435,7 +683,7 @@ body.is-home .filmstrip-image img{
   body.is-home .filmstrip-item:hover{
     transform:
       translateY(
-        -7px
+        -5px
       );
   }
 
@@ -448,29 +696,26 @@ body.is-home .filmstrip-image img{
 }
 
 
-/* counter less dominant */
+/* subdued metadata */
 
 body.is-home .filmstrip-counter{
   margin-top:
-    12px;
+    10px!important;
+
+  padding-left:
+    9px;
 
   color:
     rgba(
-      243,
-      239,
-      231,
-      .42
+      242,
+      241,
+      235,
+      .4
     )!important;
-
-  font-size:
-    10px!important;
-
-  letter-spacing:
-    .12em;
 }
 
 
-/* next control */
+/* arrow becomes proper liquid-glass control */
 
 body.is-home .filmstrip-next{
   width:
@@ -480,14 +725,26 @@ body.is-home .filmstrip-next{
     48px!important;
 
   border-radius:
-    50%!important;
+    999px!important;
+
+  color:
+    #f5f5ef!important;
 
   background:
-    rgba(
-      17,
-      20,
-      15,
-      .72
+    linear-gradient(
+      145deg,
+      rgba(
+        61,
+        83,
+        62,
+        .8
+      ),
+      rgba(
+        17,
+        25,
+        18,
+        .92
+      )
     )!important;
 
   border:
@@ -499,32 +756,77 @@ body.is-home .filmstrip-next{
       .14
     )!important;
 
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .15
+    ),
+    0
+    12px
+    30px
+    rgba(
+      0,
+      0,
+      0,
+      .3
+    );
+
   backdrop-filter:
     blur(
-      12px
+      26px
     );
 
   -webkit-backdrop-filter:
     blur(
-      12px
+      26px
     );
 }
 
 
 /* ==========================================================================
-   02 — BEHIND THE LENS WITH PORTRAIT
-   Uses the existing Behind the Lens portfolio image.
+   BEHIND THE LENS
+   Compact glass editorial card instead of giant poster section.
    ========================================================================== */
 
 body.is-home .artist-section{
   position:
     relative;
 
+  width:
+    min(
+      1420px,
+      calc(
+        100% -
+        clamp(
+          28px,
+          6vw,
+          96px
+        )
+      )
+    )!important;
+
   min-height:
+    0!important;
+
+  margin:
     clamp(
-      680px,
-      74vw,
-      930px
+      60px,
+      7vw,
+      110px
+    )
+    auto!important;
+
+  padding:
+    clamp(
+      22px,
+      2.4vw,
+      34px
     )!important;
 
   display:
@@ -533,88 +835,162 @@ body.is-home .artist-section{
   grid-template-columns:
     minmax(
       280px,
-      .78fr
+      .84fr
     )
     minmax(
-      420px,
-      1.22fr
+      320px,
+      1.16fr
     )!important;
-
-  align-items:
-    end!important;
 
   gap:
     clamp(
-      40px,
-      7vw,
-      130px
+      28px,
+      5vw,
+      78px
     )!important;
 
-  padding:
+  align-items:
+    center!important;
+
+  border-radius:
     clamp(
-      70px,
-      7vw,
-      120px
-    )
-    var(
-      --v3-pad
+      34px,
+      4vw,
+      58px
     )!important;
 
   background:
-    #171b15!important;
+    linear-gradient(
+      145deg,
+      rgba(
+        52,
+        72,
+        53,
+        .83
+      )
+      0%,
+      rgba(
+        28,
+        41,
+        29,
+        .9
+      )
+      44%,
+      rgba(
+        14,
+        21,
+        15,
+        .95
+      )
+      100%
+    )!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .12
+    );
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .14
+    ),
+    inset
+    0
+    -1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .025
+    ),
+    0
+    35px
+    90px
+    rgba(
+      0,
+      0,
+      0,
+      .32
+    );
+
+  backdrop-filter:
+    blur(
+      42px
+    )
+    saturate(
+      138%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      42px
+    )
+    saturate(
+      138%
+    );
 
   overflow:
     hidden;
 }
 
 
-/* actual Ergys portrait / self portrait */
+/* photo becomes pill / capsule */
 
 body.is-home .artist-section::before{
   content:
     "";
 
   position:
-    absolute;
+    relative;
 
-  top:
-    clamp(
-      50px,
-      6vw,
-      110px
-    );
-
-  left:
-    var(
-      --v3-pad
-    );
+  display:
+    block;
 
   width:
-    min(
-      37vw,
+    100%;
+
+  height:
+    clamp(
+      370px,
+      43vw,
       590px
     );
 
-  height:
-    calc(
-      100% -
-      clamp(
-        100px,
-        11vw,
-        190px
-      )
+  grid-column:
+    1;
+
+  grid-row:
+    1;
+
+  border-radius:
+    clamp(
+      90px,
+      10vw,
+      170px
     );
 
   background-image:
     linear-gradient(
       180deg,
       transparent
-      60%,
+      52%,
       rgba(
-        11,
-        13,
+        7,
         10,
-        .18
+        7,
+        .2
       )
       100%
     ),
@@ -626,652 +1002,964 @@ body.is-home .artist-section::before{
     cover;
 
   background-position:
-    50%
-    50%;
+    center;
 
-  border-radius:
-    2px;
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .11
+    );
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .13
+    ),
+    0
+    20px
+    50px
+    rgba(
+      0,
+      0,
+      0,
+      .25
+    );
 
   z-index:
-    0;
-
-  transform:
-    rotate(
-      -.6deg
-    );
+    1;
 }
 
 
-/* remove old giant ERGYS background */
+/* remove giant background words */
 
 body.is-home .artist-section::after{
-  content:
-    "BEHIND THE LENS"!important;
-
-  position:
-    absolute;
-
-  right:
-    -2vw;
-
-  bottom:
-    -4vw;
-
-  width:
-    auto;
-
-  color:
-    rgba(
-      243,
-      239,
-      231,
-      .024
-    )!important;
-
-  opacity:
-    1!important;
-
-  font-family:
-    var(
-      --sans
-    )!important;
-
-  font-size:
-    clamp(
-      100px,
-      14vw,
-      260px
-    );
-
-  font-weight:
-    600;
-
-  line-height:
-    .8;
-
-  letter-spacing:
-    -.075em!important;
-
-  white-space:
-    nowrap;
-
-  pointer-events:
-    none;
-
-  z-index:
-    0;
+  display:
+    none!important;
 }
 
 
-/* label goes above portrait */
+/* label becomes tiny floating glass badge */
 
 body.is-home .artist-label{
   position:
-    relative;
+    absolute!important;
+
+  top:
+    clamp(
+      34px,
+      3vw,
+      48px
+    );
+
+  left:
+    clamp(
+      34px,
+      3vw,
+      48px
+    );
 
   z-index:
-    2;
-
-  align-self:
-    start!important;
+    4!important;
 
   min-height:
-    100%;
-}
+    0!important;
 
-body.is-home .artist-label .kicker{
-  color:
+  padding:
+    10px
+    14px;
+
+  border-radius:
+    999px;
+
+  background:
     rgba(
-      243,
-      239,
-      231,
-      .68
-    )!important;
+      18,
+      28,
+      20,
+      .78
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .13
+    );
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .12
+    );
+
+  backdrop-filter:
+    blur(
+      24px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      24px
+    );
 }
 
 body.is-home .artist-number{
-  position:
-    absolute;
+  display:
+    none!important;
+}
 
-  left:
-    0;
-
-  bottom:
-    0;
+body.is-home .artist-label .kicker{
+  margin:
+    0!important;
 
   color:
     rgba(
-      243,
-      239,
-      231,
-      .46
+      245,
+      244,
+      237,
+      .76
     )!important;
-
-  font-size:
-    10px!important;
-
-  letter-spacing:
-    .12em;
 }
 
 
-/* copy becomes main editorial statement */
+/* content */
 
 body.is-home .artist-copy{
   position:
     relative;
 
+  grid-column:
+    2!important;
+
+  grid-row:
+    1;
+
   z-index:
     2;
 
-  grid-column:
-    2;
-
   max-width:
-    760px!important;
+    660px!important;
 
-  padding-bottom:
+  padding:
     clamp(
-      20px,
+      18px,
       3vw,
-      50px
-    );
+      46px
+    )
+    clamp(
+      10px,
+      2vw,
+      28px
+    )!important;
 }
-
-
-/* hide original wording visually and replace with Work mode idea */
 
 body.is-home .artist-copy h2{
   position:
-    relative;
+    static!important;
 
   min-height:
-    2.9em;
+    0!important;
 
-  margin-bottom:
-    30px!important;
+  margin:
+    0
+    0
+    clamp(
+      22px,
+      2.2vw,
+      32px
+    )!important;
 
   color:
-    transparent!important;
+    #f2f1eb!important;
 
   font-size:
     clamp(
-      56px,
-      6vw,
-      105px
+      47px,
+      5vw,
+      78px
     )!important;
-}
-
-body.is-home .artist-copy h2::after{
-  content:
-    "An eye for light.\\A A feeling for story.";
-
-  white-space:
-    pre;
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  color:
-    #f3efe7;
-
-  font-family:
-    var(
-      --serif
-    );
-
-  font-size:
-    inherit;
-
-  font-weight:
-    400;
 
   line-height:
-    .91;
+    .93!important;
 
   letter-spacing:
-    -.045em;
+    -.043em!important;
 }
 
 
-/* original bio */
+/* remove Work-mode pseudo replacement */
+
+body.is-home .artist-copy h2::after{
+  display:
+    none!important;
+}
 
 body.is-home .artist-copy p{
   max-width:
-    55ch!important;
+    54ch!important;
 
   color:
     rgba(
-      243,
-      239,
-      231,
-      .66
+      242,
+      241,
+      235,
+      .64
     )!important;
-
-  font-family:
-    var(
-      --sans
-    );
 
   font-size:
     clamp(
-      14px,
-      1vw,
-      17px
+      13px,
+      .92vw,
+      16px
     )!important;
 
   line-height:
-    1.76!important;
+    1.74!important;
 }
-
-
-/* about link */
 
 body.is-home .artist-copy .text-link{
   display:
     inline-flex;
 
-  align-items:
-    center;
-
-  gap:
-    9px;
-
   margin-top:
-    26px!important;
+    25px!important;
 
-  padding-bottom:
-    5px;
+  padding:
+    11px
+    17px!important;
 
-  color:
-    #f3efe7!important;
-
-  border-bottom:
+  border:
     1px solid
     rgba(
-      243,
-      239,
-      231,
-      .34
+      255,
+      255,
+      255,
+      .13
     )!important;
 
-  font-size:
-    11px;
+  border-radius:
+    999px;
 
-  letter-spacing:
-    .1em;
+  background:
+    rgba(
+      60,
+      83,
+      61,
+      .22
+    );
+
+  color:
+    #f3f2ec!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .09
+    );
+
+  backdrop-filter:
+    blur(
+      18px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      18px
+    );
 }
 
 
 /* ==========================================================================
-   03 — MOTION → STORIES IN MOTION
+   RECOGNITION — DENSE GLASS ROWS
    ========================================================================== */
 
-body.is-home .motion-section{
-  position:
-    relative;
+body.is-home .recognition-section{
+  background:
+    #0b0f0b!important;
+}
 
-  min-height:
-    clamp(
-      620px,
-      70vw,
-      900px
-    );
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  justify-content:
-    flex-end;
-
-  align-items:
-    flex-start;
+body.is-home .recognition-row{
+  margin-bottom:
+    8px;
 
   padding:
-    clamp(
-      70px,
-      7vw,
-      120px
-    )
-    var(
-      --v3-pad
+    17px
+    18px!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .085
     )!important;
+
+  border-radius:
+    18px;
 
   background:
     linear-gradient(
-      90deg,
+      135deg,
       rgba(
-        6,
-        7,
-        6,
-        .88
-      )
-      0%,
+        54,
+        75,
+        55,
+        .4
+      ),
       rgba(
-        6,
-        7,
-        6,
-        .48
+        18,
+        27,
+        19,
+        .74
       )
-      44%,
-      rgba(
-        6,
-        7,
-        6,
-        .16
-      )
-      75%
-    ),
-    url(
-      '/images/7b83c3acfdc8b9-1800.webp'
+    );
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .075
+    );
+
+  backdrop-filter:
+    blur(
+      28px
     )
-    center
-    44%
-    /
-    cover
-    no-repeat!important;
+    saturate(
+      135%
+    );
 
-  color:
-    #f4f0e8;
-
-  overflow:
-    hidden;
+  -webkit-backdrop-filter:
+    blur(
+      28px
+    )
+    saturate(
+      135%
+    );
 }
 
 
-/* cinematic vignette */
+/* ==========================================================================
+   INSTAGRAM / FROM THE STUDIO
+   Glass photo cards instead of plain Instagram grid.
+   ========================================================================== */
 
-body.is-home .motion-section::before{
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  pointer-events:
-    none;
-
+body.is-home .latest-section{
   background:
     linear-gradient(
       180deg,
-      rgba(
-        0,
-        0,
-        0,
-        .08
-      )
-      0%,
-      rgba(
-        0,
-        0,
-        0,
-        .05
-      )
-      50%,
-      rgba(
-        0,
-        0,
-        0,
-        .58
-      )
-      100%
-    );
+      #0c100c,
+      #111711
+    )!important;
 
-  z-index:
-    0;
-}
-
-
-/* film-style frame marker */
-
-body.is-home .motion-section::after{
-  content:
-    "16 : 9";
-
-  position:
-    absolute;
-
-  top:
+  padding-top:
     clamp(
-      28px,
-      3vw,
-      48px
-    );
-
-  right:
-    var(
-      --v3-pad
-    );
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      .54
-    );
-
-  font-family:
-    var(
-      --sans
-    );
-
-  font-size:
-    10px;
-
-  letter-spacing:
-    .18em;
-
-  z-index:
-    2;
-}
-
-
-/* all content above image */
-
-body.is-home .motion-section > *{
-  position:
-    relative;
-
-  z-index:
-    2;
-}
-
-
-/* kicker */
-
-body.is-home .motion-section .kicker{
-  margin-bottom:
-    18px!important;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      .68
-    )!important;
-}
-
-
-/* replace Beyond the still */
-
-body.is-home .motion-section h2{
-  position:
-    relative;
-
-  min-height:
-    1.2em;
-
-  width:
-    min(
-      900px,
-      88vw
-    );
-
-  margin:
-    0
-    0
-    28px!important;
-
-  color:
-    transparent!important;
-
-  font-family:
-    var(
-      --serif
+      62px,
+      6vw,
+      92px
     )!important;
 
-  font-size:
+  padding-bottom:
     clamp(
-      66px,
-      8vw,
-      140px
+      68px,
+      6.5vw,
+      100px
     )!important;
-
-  font-weight:
-    400!important;
-
-  line-height:
-    .86!important;
-
-  letter-spacing:
-    -.055em!important;
 }
 
-body.is-home .motion-section h2::after{
-  content:
-    "Stories in motion.";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  color:
-    #fff;
-
-  font: inherit;
-}
-
-
-/* CTA */
-
-body.is-home .motion-section > a{
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
+body.is-home .latest-grid{
   gap:
-    10px;
+    clamp(
+      10px,
+      1vw,
+      16px
+    )!important;
+}
 
-  margin-top:
-    4px!important;
+body.is-home .latest-card{
+  position:
+    relative;
+
+  overflow:
+    hidden;
 
   padding:
-    12px
-    0
-    7px!important;
+    6px;
 
-  color:
-    #fff!important;
+  border-radius:
+    clamp(
+      22px,
+      2vw,
+      32px
+    )!important;
 
-  border-bottom:
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        72,
+        96,
+        73,
+        .42
+      ),
+      rgba(
+        19,
+        29,
+        20,
+        .78
+      )
+    )!important;
+
+  border:
     1px solid
     rgba(
       255,
       255,
       255,
-      .48
+      .115
     );
 
-  font-family:
-    var(
-      --sans
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .11
+    ),
+    0
+    18px
+    44px
+    rgba(
+      0,
+      0,
+      0,
+      .23
     );
 
-  font-size:
-    11px!important;
+  backdrop-filter:
+    blur(
+      26px
+    )
+    saturate(
+      145%
+    );
 
-  letter-spacing:
-    .12em!important;
-
-  transition:
-    opacity
-    220ms
-    ease,
-    transform
-    220ms
-    var(
-      --v3-ease
+  -webkit-backdrop-filter:
+    blur(
+      26px
+    )
+    saturate(
+      145%
     );
 }
 
-body.is-home .motion-section > a:hover{
-  opacity:
-    .7;
+body.is-home .latest-card img{
+  width:
+    100%!important;
 
-  transform:
-    translateX(
-      5px
+  height:
+    100%!important;
+
+  object-fit:
+    cover!important;
+
+  border-radius:
+    clamp(
+      17px,
+      1.6vw,
+      26px
     );
+
+  filter:
+    brightness(
+      1.035
+    )
+    contrast(
+      1.015
+    )!important;
+
+  transition:
+    transform
+    .75s
+    var(
+      --v4-ease
+    ),
+    filter
+    .5s
+    ease!important;
+}
+
+@media(hover:hover) and (pointer:fine){
+
+  body.is-home .latest-card:hover img{
+    transform:
+      scale(
+        1.025
+      )!important;
+
+    filter:
+      brightness(
+        1.08
+      )
+      contrast(
+        1.02
+      )!important;
+  }
 }
 
 
 /* ==========================================================================
-   TABLET
+   MOBILE NAVIGATION — DENSE iPHONE-LIKE GLASS
    ========================================================================== */
 
 @media(max-width:1000px){
 
-  body.is-home .filmstrip-heading{
-    width:
-      calc(
-        100% -
-        44px
+  .mobile-menu-screen{
+    background:
+      linear-gradient(
+        165deg,
+        rgba(
+          37,
+          54,
+          39,
+          .92
+        )
+        0%,
+        rgba(
+          17,
+          27,
+          19,
+          .95
+        )
+        48%,
+        rgba(
+          8,
+          13,
+          9,
+          .97
+        )
+        100%
+      )!important;
+
+    border:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .11
       );
 
-    grid-template-columns:
-      1fr;
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .14
+      ),
+      0
+      30px
+      90px
+      rgba(
+        0,
+        0,
+        0,
+        .48
+      );
 
-    gap:
-      22px;
+    backdrop-filter:
+      blur(
+        52px
+      )
+      saturate(
+        145%
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        52px
+      )
+      saturate(
+        145%
+      );
   }
 
-  body.is-home .artist-section{
-    grid-template-columns:
-      .9fr
-      1.1fr!important;
 
-    gap:
-      36px!important;
+  /* subtle luminous internal reflection */
+
+  .mobile-menu-screen::before{
+    content:
+      "";
+
+    position:
+      absolute;
+
+    inset:
+      0;
+
+    pointer-events:
+      none;
+
+    background:
+      radial-gradient(
+        ellipse
+        at
+        20%
+        0%,
+        rgba(
+          130,
+          165,
+          132,
+          .13
+        ),
+        transparent
+        39%
+      ),
+      linear-gradient(
+        120deg,
+        rgba(
+          255,
+          255,
+          255,
+          .035
+        ),
+        transparent
+        28%
+      );
   }
 
-  body.is-home .artist-section::before{
-    width:
-      42vw;
+
+  .mobile-menu-head,
+  .mobile-menu nav,
+  .mobile-menu-footer{
+    position:
+      relative;
+
+    z-index:
+      2;
   }
 
-  body.is-home .artist-copy h2{
-    font-size:
-      clamp(
-        50px,
-        7vw,
-        74px
+
+  /* navigation becomes one dense material */
+
+  .mobile-menu nav{
+    padding:
+      8px;
+
+    border:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .09
+      );
+
+    border-radius:
+      30px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          65,
+          88,
+          67,
+          .28
+        ),
+        rgba(
+          19,
+          29,
+          21,
+          .5
+        )
+      );
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .085
+      );
+
+    backdrop-filter:
+      blur(
+        28px
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        28px
+      );
+  }
+
+  .mobile-menu nav a{
+    min-height:
+      53px!important;
+
+    margin:
+      2px
+      0;
+
+    padding:
+      9px
+      15px!important;
+
+    border:
+      0!important;
+
+    border-radius:
+      999px;
+
+    color:
+      rgba(
+        247,
+        247,
+        240,
+        .92
       )!important;
+
+    transition:
+      background
+      .22s
+      ease,
+      transform
+      .22s
+      ease;
   }
+
+  .mobile-menu nav a:active,
+  .mobile-menu nav a:hover{
+    padding-left:
+      15px!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          102,
+          134,
+          104,
+          .26
+        ),
+        rgba(
+          56,
+          78,
+          58,
+          .2
+        )
+      );
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .09
+      );
+  }
+
+
+  /* burger/header itself is a compact pill */
+
+  .site-header{
+    border:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .1
+      );
+
+    border-radius:
+      999px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          52,
+          73,
+          53,
+          .79
+        ),
+        rgba(
+          14,
+          22,
+          15,
+          .9
+        )
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .13
+      ),
+      0
+      12px
+      36px
+      rgba(
+        0,
+        0,
+        0,
+        .28
+      );
+
+    backdrop-filter:
+      blur(
+        34px
+      )
+      saturate(
+        145%
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        34px
+      )
+      saturate(
+        145%
+      );
+  }
+}
+
+
+/* ==========================================================================
+   LIGHTBOX FIX
+   Removes white flash / white background while photo is fitting in place.
+   Applies to Index / Weddings / Portraits / project galleries.
+   ========================================================================== */
+
+dialog.lightbox,
+dialog.lightbox[open],
+.lightbox{
+  background:
+    #050705!important;
+
+  background-color:
+    #050705!important;
+
+  color:
+    #fff!important;
+
+  border:
+    0!important;
+}
+
+dialog.lightbox::backdrop,
+.lightbox::backdrop{
+  background:
+    rgba(
+      2,
+      4,
+      2,
+      .98
+    )!important;
+
+  backdrop-filter:
+    blur(
+      10px
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      10px
+    );
+}
+
+.lightbox-photo,
+.lightbox img,
+.lightbox-video{
+  background:
+    #050705!important;
+
+  background-color:
+    #050705!important;
+}
+
+html.lightbox-open,
+html.lightbox-open body{
+  background:
+    #050705!important;
+}
+
+html.lightbox-open body::before{
+  background:
+    #050705!important;
+}
+
+
+/* also remove white flash behind image cards while images decode */
+
+body:not(.is-home) .project-image,
+body:not(.is-home) .project-card,
+.gallery figure,
+.gallery figure > a{
+  background:
+    #070907;
+}
+
+
+/* actual images remain unchanged */
+
+body:not(.is-home) .project-image img,
+.gallery img{
+  background:
+    #070907;
 }
 
 
@@ -1281,14 +1969,13 @@ body.is-home .motion-section > a:hover{
 
 @media(max-width:700px){
 
-  /* IN BETWEEN */
+  /* IN BETWEEN becomes a compact horizontal capsule rail */
 
   body.is-home .filmstrip-section{
-    padding-top:
-      72px!important;
-
-    padding-bottom:
-      82px!important;
+    padding:
+      44px
+      0
+      50px!important;
   }
 
   body.is-home .filmstrip-heading{
@@ -1298,204 +1985,256 @@ body.is-home .motion-section > a:hover{
         34px
       );
 
-    margin-bottom:
-      36px!important;
+    display:
+      block;
 
-    grid-template-columns:
-      1fr;
+    margin-bottom:
+      28px!important;
   }
 
   body.is-home .filmstrip-heading h2{
+    max-width:
+      88%;
+
     font-size:
       clamp(
-        48px,
-        13vw,
-        66px
+        38px,
+        11vw,
+        54px
       )!important;
   }
 
   body.is-home .filmstrip-copy{
     max-width:
-      34ch;
+      34ch!important;
+
+    margin-top:
+      16px!important;
   }
 
   body.is-home .filmstrip-track{
+    gap:
+      9px!important;
+
     padding-left:
       17px!important;
+
+    padding-right:
+      40px!important;
   }
 
   body.is-home .filmstrip-item,
   body.is-home .filmstrip-item:nth-child(even){
     width:
-      76vw!important;
+      min(
+        74vw,
+        310px
+      )!important;
 
-    flex-basis:
-      76vw!important;
+    flex:
+      0
+      0
+      min(
+        74vw,
+        310px
+      )!important;
 
-    margin-top:
+    margin:
       0!important;
-  }
-
-  body.is-home .filmstrip-item:nth-child(even){
-    transform:
-      translateY(
-        34px
-      );
   }
 
   body.is-home .filmstrip-image{
     height:
-      105vw!important;
+      min(
+        88vw,
+        370px
+      )!important;
+
+    padding:
+      5px;
+
+    border-radius:
+      44px!important;
+  }
+
+  body.is-home .filmstrip-image img{
+    border-radius:
+      39px!important;
   }
 
 
-  /* BEHIND THE LENS */
+  /* artist becomes a single premium glass card */
 
   body.is-home .artist-section{
-    min-height:
-      0!important;
+    width:
+      calc(
+        100% -
+        24px
+      )!important;
 
-    display:
-      block!important;
+    margin:
+      46px
+      auto!important;
 
     padding:
-      60px
-      17px
-      70px!important;
+      10px
+      10px
+      28px!important;
+
+    grid-template-columns:
+      1fr!important;
+
+    gap:
+      0!important;
+
+    border-radius:
+      34px!important;
   }
 
   body.is-home .artist-section::before{
-    position:
-      relative;
-
-    display:
-      block;
-
-    top:
-      auto;
-
-    left:
-      auto;
-
     width:
       100%;
 
     height:
-      auto;
+      min(
+        112vw,
+        520px
+      );
 
-    aspect-ratio:
-      4 /
-      5;
+    grid-column:
+      1;
 
-    margin:
-      34px
-      0
-      44px;
-
-    background-position:
-      center;
-
-    transform:
-      none;
+    grid-row:
+      1;
 
     border-radius:
-      0;
-  }
-
-  body.is-home .artist-section::after{
-    display:
-      none;
+      27px
+      27px
+      110px
+      110px;
   }
 
   body.is-home .artist-label{
-    min-height:
-      0;
+    top:
+      23px;
 
-    display:
-      flex;
+    left:
+      24px;
 
-    justify-content:
-      space-between;
-
-    align-items:
-      center;
-  }
-
-  body.is-home .artist-number{
-    position:
-      static;
+    padding:
+      9px
+      12px;
   }
 
   body.is-home .artist-copy{
-    max-width:
-      none!important;
+    grid-column:
+      1!important;
+
+    grid-row:
+      2;
 
     padding:
-      0!important;
+      30px
+      16px
+      4px!important;
   }
 
   body.is-home .artist-copy h2{
-    min-height:
-      3em;
-
-    margin:
-      0
-      0
-      24px!important;
-
     font-size:
       clamp(
-        48px,
-        13vw,
-        68px
-      )!important;
-  }
-
-  body.is-home .artist-copy h2::after{
-    white-space:
-      pre-wrap;
-  }
-
-
-  /* STORIES IN MOTION */
-
-  body.is-home .motion-section{
-    min-height:
-      78svh;
-
-    padding:
-      56px
-      17px!important;
-
-    background-position:
-      58%
-      center!important;
-  }
-
-  body.is-home .motion-section h2{
-    width:
-      100%;
-
-    min-height:
-      2em;
-
-    font-size:
-      clamp(
-        56px,
-        16vw,
-        82px
+        42px,
+        12vw,
+        58px
       )!important;
 
     line-height:
-      .88!important;
+      .94!important;
   }
 
-  body.is-home .motion-section::after{
-    top:
-      20px;
 
-    right:
-      17px;
+  /* Instagram cards slightly rounder/mobile iOS card feeling */
+
+  body.is-home .latest-grid{
+    gap:
+      7px!important;
+  }
+
+  body.is-home .latest-card{
+    padding:
+      4px;
+
+    border-radius:
+      22px!important;
+  }
+
+  body.is-home .latest-card img{
+    border-radius:
+      18px!important;
+  }
+
+
+  /* lightbox genuinely edge-to-edge dark */
+
+  dialog.lightbox,
+  dialog.lightbox[open]{
+    width:
+      100vw!important;
+
+    height:
+      100dvh!important;
+
+    min-width:
+      100vw;
+
+    min-height:
+      100dvh;
+
+    margin:
+      0!important;
+
+    padding:
+      0!important;
+
+    background:
+      #030503!important;
+  }
+
+  .lightbox-photo{
+    background:
+      #030503!important;
+  }
+}
+
+
+/* ==========================================================================
+   VERY SMALL MOBILE
+   ========================================================================== */
+
+@media(max-width:420px){
+
+  body.is-home .filmstrip-item,
+  body.is-home .filmstrip-item:nth-child(even){
+    width:
+      78vw!important;
+
+    flex-basis:
+      78vw!important;
+  }
+
+  body.is-home .filmstrip-image{
+    height:
+      96vw!important;
+
+    max-height:
+      390px;
+  }
+
+  body.is-home .artist-section{
+    width:
+      calc(
+        100% -
+        18px
+      )!important;
   }
 }
 
@@ -1508,282 +2247,16 @@ body.is-home .motion-section > a:hover{
 
   body.is-home .filmstrip-item,
   body.is-home .filmstrip-image img,
-  body.is-home .motion-section > a{
+  body.is-home .latest-card img,
+  .mobile-menu nav a{
     transition:
       none!important;
   }
 
   body.is-home .filmstrip-item:hover,
   body.is-home .filmstrip-item:hover .filmstrip-image img,
-  body.is-home .motion-section > a:hover{
+  body.is-home .latest-card:hover img{
     transform:
       none!important;
-  }
-}
-/* ==========================================================================
-   FINAL CLEANUP — BEHIND THE LENS
-   Remove original title underneath Work Mode editorial title.
-   ========================================================================== */
-
-body.is-home .artist-copy h2 > span,
-body.is-home .artist-copy h2 > em,
-body.is-home .artist-copy h2 > br {
-  display: none !important;
-}
-
-body.is-home .artist-copy h2 {
-  min-height: auto !important;
-  height: auto !important;
-  margin: 0 0 28px !important;
-  color: transparent !important;
-}
-
-body.is-home .artist-copy h2::after {
-  content: "An eye for light.\A A feeling for story." !important;
-
-  position: relative !important;
-  inset: auto !important;
-
-  display: block;
-
-  white-space: pre-line !important;
-
-  color: #f3efe7 !important;
-
-  font-family: var(--serif) !important;
-  font-size: clamp(54px, 5.3vw, 92px) !important;
-  font-weight: 400 !important;
-  line-height: .92 !important;
-  letter-spacing: -.045em !important;
-}
-
-body.is-home .artist-copy {
-  align-self: center !important;
-}
-
-body.is-home .artist-copy p {
-  margin-top: 0 !important;
-}
-
-@media (max-width: 700px) {
-
-  body.is-home .artist-copy h2::after {
-    font-size: clamp(44px, 12vw, 62px) !important;
-    line-height: .94 !important;
-  }
-}
-/* ==========================================================================
-   BEHIND THE LENS — FINAL DESKTOP LAYOUT FIX
-   Keeps the Work Mode look without the huge empty viewport.
-   ========================================================================== */
-
-body.is-home .artist-section{
-  min-height:
-    0!important;
-
-  display:
-    grid!important;
-
-  grid-template-columns:
-    minmax(
-      320px,
-      .82fr
-    )
-    minmax(
-      420px,
-      1.18fr
-    )!important;
-
-  align-items:
-    center!important;
-
-  gap:
-    clamp(
-      46px,
-      6vw,
-      110px
-    )!important;
-
-  padding:
-    clamp(
-      72px,
-      7vw,
-      118px
-    )
-    var(
-      --v3-pad
-    )!important;
-}
-
-
-/* Put portrait back into normal grid flow */
-
-body.is-home .artist-section::before{
-  position:
-    relative!important;
-
-  top:
-    auto!important;
-
-  left:
-    auto!important;
-
-  grid-column:
-    1;
-
-  grid-row:
-    1 /
-    span 2;
-
-  display:
-    block;
-
-  width:
-    100%!important;
-
-  height:
-    auto!important;
-
-  aspect-ratio:
-    4 /
-    5;
-
-  align-self:
-    center;
-
-  background-size:
-    cover!important;
-
-  background-position:
-    center!important;
-
-  transform:
-    none!important;
-}
-
-
-/* Label stays above/alongside portrait */
-
-body.is-home .artist-label{
-  position:
-    absolute!important;
-
-  top:
-    clamp(
-      30px,
-      3vw,
-      48px
-    );
-
-  left:
-    var(
-      --v3-pad
-    );
-
-  min-height:
-    0!important;
-
-  z-index:
-    3;
-}
-
-
-/* Remove ES/01 from floating awkwardly */
-
-body.is-home .artist-number{
-  display:
-    none!important;
-}
-
-
-/* Main copy stays vertically centered */
-
-body.is-home .artist-copy{
-  grid-column:
-    2!important;
-
-  grid-row:
-    1 /
-    span 2;
-
-  align-self:
-    center!important;
-
-  max-width:
-    760px!important;
-
-  padding:
-    0!important;
-}
-
-
-/* Keep large background word subtle */
-
-body.is-home .artist-section::after{
-  right:
-    -1vw!important;
-
-  bottom:
-    -2vw!important;
-
-  opacity:
-    .7!important;
-}
-
-
-/* Tablet */
-
-@media(max-width:1000px){
-
-  body.is-home .artist-section{
-    grid-template-columns:
-      .9fr
-      1.1fr!important;
-
-    gap:
-      34px!important;
-  }
-}
-
-
-/* Mobile remains stacked */
-
-@media(max-width:700px){
-
-  body.is-home .artist-section{
-    display:
-      block!important;
-
-    padding:
-      58px
-      17px
-      68px!important;
-  }
-
-  body.is-home .artist-section::before{
-    display:
-      block;
-
-    width:
-      100%!important;
-
-    aspect-ratio:
-      4 /
-      5;
-
-    margin:
-      38px
-      0
-      38px!important;
-  }
-
-  body.is-home .artist-label{
-    position:
-      static!important;
-  }
-
-  body.is-home .artist-copy{
-    padding:
-      0!important;
   }
 }
