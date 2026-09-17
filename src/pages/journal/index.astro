@@ -385,7 +385,7 @@ const collectionLd = {
                               post.cover
                             )
                           }
-                          sizes="(max-width:700px) 90vw, 42vw"
+                          sizes="(max-width:760px) 92vw, (max-width:1599px) 44vw, 500px"
                           width={
                             post.cover
                               .width
@@ -397,8 +397,19 @@ const collectionLd = {
                           alt={
                             coverAlt
                           }
-                          loading="lazy"
-                          decoding="async"
+                          loading={
+  index === 0
+    ? 'eager'
+    : 'lazy'
+}
+
+fetchpriority={
+  index === 0
+    ? 'high'
+    : undefined
+}
+
+decoding="async"
                         />
                       </div>
                     )
