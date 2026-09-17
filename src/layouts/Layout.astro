@@ -1892,6 +1892,21 @@ if(
       )
       .matches
   ){
+    /*
+     * Bind the already-validated elements to non-null constants.
+     *
+     * TypeScript does not always preserve DOM null narrowing
+     * inside nested callbacks/functions, so these constants
+     * make the guarantee explicit without unsafe repeated checks.
+     */
+    const activeSectionVeil =
+      sectionVeil;
+
+
+    const activeWorkSection =
+      veilWorkSection;
+
+
     let veilActive =
       false;
 
@@ -1903,7 +1918,7 @@ if(
 
     function updateVeil(){
       const wsTop =
-        veilWorkSection
+        activeWorkSection
           .getBoundingClientRect()
           .top;
 
@@ -1920,7 +1935,7 @@ if(
         );
 
 
-      sectionVeil
+      activeSectionVeil
         .style
         .setProperty(
           '--veil-p',
@@ -1938,14 +1953,17 @@ if(
 
     function scheduleVeil(){
       if(
-        veilRafId ===
+        veilRafId !==
         undefined
       ){
-        veilRafId =
-          requestAnimationFrame(
-            updateVeil
-          );
+        return;
       }
+
+
+      veilRafId =
+        requestAnimationFrame(
+          updateVeil
+        );
     }
 
 
@@ -1977,7 +1995,7 @@ if(
 
     veilObserver
       .observe(
-        veilWorkSection
+        activeWorkSection
       );
 
 
@@ -1994,6 +2012,45 @@ if(
         {
           passive:
             true
+        }
+      );
+
+
+    /*
+     * Keep veil geometry correct after viewport changes.
+     */
+    window
+      .addEventListener(
+        'resize',
+        ()=>{
+          if(
+            veilActive
+          ){
+            scheduleVeil();
+          }
+        },
+        {
+          passive:
+            true
+        }
+      );
+
+
+    window
+      .addEventListener(
+        'orientationchange',
+        ()=>{
+          window
+            .setTimeout(
+              ()=>{
+                if(
+                  veilActive
+                ){
+                  scheduleVeil();
+                }
+              },
+              120
+            );
         }
       );
   }
