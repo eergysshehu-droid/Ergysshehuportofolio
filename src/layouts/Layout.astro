@@ -1339,6 +1339,130 @@ if(
         );
     }
   }
+            revealObserver
+              .observe(
+                element
+              );
+          }
+        );
+    }
+  }
+
+
+  /* =========================================================
+     IMAGE LOAD / DECODE SYSTEM
+     ========================================================= */
+
+  const managedImages =
+    Array.from(
+      document.querySelectorAll<HTMLImageElement>(
+        [
+          '[data-image-reveal] img',
+          '.project-image img',
+          '.filmstrip-image img',
+          '.latest-card img',
+          '.journal-card-image img',
+          '.journal-post-cover img',
+          '.gallery.collection-body img'
+        ].join(',')
+      )
+    );
+
+
+  const markImageReady =
+    async(
+      image: HTMLImageElement
+    )=>{
+
+      if(
+        image
+          .classList
+          .contains(
+            'image-ready'
+          )
+      ){
+        return;
+      }
+
+
+      try{
+
+        if(
+          image.naturalWidth >
+            0 &&
+          typeof image.decode ===
+            'function'
+        ){
+          await image.decode();
+        }
+
+      }catch{
+        /* decoding failed but image can still be shown */
+      }
+
+
+      image
+        .classList
+        .add(
+          'image-ready'
+        );
+    };
+
+
+  managedImages
+    .forEach(
+      image=>{
+
+        if(
+          image.complete &&
+          image.naturalWidth >
+            0
+        ){
+          void markImageReady(
+            image
+          );
+
+          return;
+        }
+
+
+        image
+          .addEventListener(
+            'load',
+
+            ()=>{
+              void markImageReady(
+                image
+              );
+            },
+
+            {
+              once:
+                true
+            }
+          );
+
+
+        image
+          .addEventListener(
+            'error',
+
+            ()=>{
+              image
+                .classList
+                .add(
+                  'image-error',
+                  'image-ready'
+                );
+            },
+
+            {
+              once:
+                true
+            }
+          );
+      }
+    );
 
 
   /*
