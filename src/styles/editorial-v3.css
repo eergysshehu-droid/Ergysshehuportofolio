@@ -2751,3 +2751,121 @@ body.is-home .hero-progress span{
       contain!important;
   }
 }
+/* ==========================================================================
+   BOOK NOW — PREMIUM OUTLINE BUTTON
+   ========================================================================== */
+
+.nav-book{
+  position:
+    relative!important;
+
+  padding:
+    10px
+    17px!important;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .58
+    )!important;
+
+  border-radius:
+    999px!important;
+
+  background:
+    transparent!important;
+
+  color:
+    #fff!important;
+
+  opacity:
+    1!important;
+
+  overflow:
+    hidden;
+
+  transition:
+    color
+    280ms
+    var(
+      --v3-ease
+    ),
+    border-color
+    280ms
+    var(
+      --v3-ease
+    ),
+    transform
+    280ms
+    var(
+      --v3-ease
+    )!important;
+}
+
+.nav-book::before{
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  border-radius:
+    inherit;
+
+  background:
+    var(
+      --accent
+    );
+
+  transform:
+    scaleX(
+      0
+    );
+
+  transform-origin:
+    right;
+
+  transition:
+    transform
+    320ms
+    var(
+      --v3-ease
+    );
+
+  z-index:
+    -1;
+}
+
+.nav-book:hover{
+  color:
+    #171714!important;
+
+  border-color:
+    var(
+      --accent
+    )!important;
+
+  background:
+    transparent!important;
+
+  transform:
+    translateY(
+      -1px
+    );
+}
+
+.nav-book:hover::before{
+  transform:
+    scaleX(
+      1
+    );
+
+  transform-origin:
+    left;
+}
