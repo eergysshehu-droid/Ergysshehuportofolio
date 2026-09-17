@@ -2480,66 +2480,196 @@ const homeDescription =
       );
 
 
-    buttons.forEach(
-      button =>
-        button.addEventListener(
-          'click',
+    const filterButtons =
+  Array.from(
+    document.querySelectorAll<HTMLButtonElement>(
+      '[data-filter]'
+    )
+  );
 
-          () => {
-            buttons.forEach(
-              b =>
-                b.setAttribute(
-                  'aria-pressed',
 
-                  String(
-                    b ===
-                    button
-                  )
-                )
+const projectCards =
+  Array.from(
+    document.querySelectorAll<HTMLElement>(
+      '.work-section .project-card[data-kind]'
+    )
+  );
+
+
+const workEmpty =
+  document.querySelector<HTMLElement>(
+    '.work-empty'
+  );
+
+
+function applyProjectFilter(
+  selectedButton:
+    HTMLButtonElement
+){
+  const selectedFilter =
+    selectedButton
+      .dataset
+      .filter ||
+    'all';
+
+
+  filterButtons
+    .forEach(
+      button=>{
+        const active =
+          button ===
+          selectedButton;
+
+
+        button
+          .setAttribute(
+            'aria-pressed',
+            String(
+              active
+            )
+          );
+
+
+        button
+          .classList
+          .toggle(
+            'is-active',
+            active
+          );
+      }
+    );
+
+
+  let visibleCount =
+    0;
+
+
+  projectCards
+    .forEach(
+      card=>{
+        const visible =
+          selectedFilter ===
+            'all' ||
+          card.dataset.kind ===
+            selectedFilter;
+
+
+        card.hidden =
+          !visible;
+
+
+        card
+          .setAttribute(
+            'aria-hidden',
+            String(
+              !visible
+            )
+          );
+
+
+        if(
+          visible
+        ){
+          visibleCount++;
+        }else{
+          /*
+           * A hidden card must never retain
+           * old mobile stack visual state.
+           */
+          const image =
+            card
+              .querySelector<HTMLElement>(
+                '.project-image'
+              );
+
+
+          image
+            ?.style
+            .setProperty(
+              '--stack-blur',
+              '0px'
             );
 
 
-            let count =
-              0;
-
-
-            document
-              .querySelectorAll<HTMLElement>(
-                '[data-kind]'
-              )
-              .forEach(
-                card => {
-                  card.hidden =
-                    button.dataset.filter !==
-                      'all' &&
-                    card.dataset.kind !==
-                      button.dataset.filter;
-
-
-                  if (
-                    !card.hidden
-                  ) {
-                    count++;
-                  }
-                }
-              );
-
-
-            const empty =
-              document.querySelector<HTMLElement>(
-                '.work-empty'
-              );
-
-
-            if (
-              empty
-            ) {
-              empty.hidden =
-                count >
-                0;
-            }
-          }
-        )
+          image
+            ?.style
+            .setProperty(
+              '--stack-darkness',
+              '0'
+            );
+        }
+      }
     );
+
+
+  if(
+    workEmpty
+  ){
+    workEmpty.hidden =
+      visibleCount >
+      0;
+  }
+
+
+  /*
+   * Tell the mobile stacking controller
+   * to rebuild its visible-card measurements.
+   */
+  document
+    .dispatchEvent(
+      new CustomEvent(
+        'portfolio:filter-change',
+        {
+          detail: {
+            filter:
+              selectedFilter,
+
+            visibleCount
+          }
+        }
+      )
+    );
+}
+
+
+filterButtons
+  .forEach(
+    button=>{
+      button
+        .addEventListener(
+          'click',
+          ()=>{
+            applyProjectFilter(
+              button
+            );
+          }
+        );
+    }
+  );
+
+
+/*
+ * Synchronise the initial state too.
+ */
+const initiallyActive =
+  filterButtons
+    .find(
+      button=>
+        button
+          .getAttribute(
+            'aria-pressed'
+          ) ===
+        'true'
+    ) ||
+  filterButtons[0];
+
+
+if(
+  initiallyActive
+){
+  applyProjectFilter(
+    initiallyActive
+  );
+}
   </script>
 </Layout>
