@@ -143,21 +143,57 @@ const actionSq =
   </button>
 
 
-  <img
-    class="lightbox-photo"
-    alt=""
-    decoding="async"
-    draggable="false"
-  />
+  <div
+    class="lightbox-stage"
+    data-stage
+  >
+    <img
+      class="lightbox-photo"
+      alt=""
+      decoding="async"
+      draggable="false"
+    />
 
 
-  <video
-    class="lightbox-video"
-    controls
-    playsinline
-    preload="metadata"
-    hidden
-  ></video>
+    <video
+      class="lightbox-video"
+      controls
+      playsinline
+      preload="metadata"
+      hidden
+    ></video>
+
+
+    <div
+      class="lightbox-error"
+      data-error
+      hidden
+      role="status"
+      aria-live="polite"
+    >
+      <span
+        data-en="The media could not be loaded."
+        data-sq="Media nuk mund të ngarkohej."
+      >
+        {
+          isSq
+            ? 'Media nuk mund të ngarkohej.'
+            : 'The media could not be loaded.'
+        }
+      </span>
+
+      <button
+        type="button"
+        data-retry
+      >
+        {
+          isSq
+            ? 'Provo përsëri'
+            : 'Try again'
+        }
+      </button>
+    </div>
+  </div>
 
 
   <p
@@ -268,10 +304,37 @@ const actionSq =
   }
 
 
+  .lightbox-stage{
+    position:
+      relative;
+
+    display:
+      grid;
+
+    place-items:
+      center;
+
+    width:
+      100%;
+
+    height:
+      100%;
+
+    min-width:
+      0;
+
+    min-height:
+      0;
+  }
+
+
   .lightbox[data-unified-lightbox]
   .lightbox-photo,
   .lightbox[data-unified-lightbox]
   .lightbox-video{
+    grid-area:
+      1 / 1;
+
     will-change:
       transform,
       opacity;
@@ -310,6 +373,28 @@ const actionSq =
 
     -webkit-user-drag:
       none;
+  }
+
+
+  .lightbox[data-unified-lightbox]
+  .lightbox-video{
+    max-width:
+      min(
+        94vw,
+        1600px
+      );
+
+    max-height:
+      calc(
+        100dvh -
+        130px
+      );
+
+    object-fit:
+      contain;
+
+    background:
+      #030503;
   }
 
 
@@ -392,6 +477,101 @@ const actionSq =
   }
 
 
+  .lightbox-error{
+    grid-area:
+      1 / 1;
+
+    z-index:
+      5;
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    gap:
+      14px;
+
+    max-width:
+      320px;
+
+    padding:
+      26px;
+
+    text-align:
+      center;
+
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        .74
+      );
+
+    font-size:
+      13px;
+
+    line-height:
+      1.55;
+
+    letter-spacing:
+      .01em;
+  }
+
+
+  .lightbox-error[hidden]{
+    display:
+      none!important;
+  }
+
+
+  .lightbox-error button{
+    min-width:
+      44px;
+
+    min-height:
+      44px;
+
+    padding:
+      10px
+      15px;
+
+    border:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .18
+      );
+
+    border-radius:
+      4px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .08
+      );
+
+    color:
+      #fff;
+
+    cursor:
+      pointer;
+  }
+
+
   @keyframes unified-lightbox-open{
     from{
       opacity:
@@ -471,6 +651,19 @@ const actionSq =
           )
         );
     }
+
+
+    .lightbox[data-unified-lightbox]
+    .lightbox-video{
+      max-width:
+        100vw;
+
+      max-height:
+        calc(
+          100dvh -
+          112px
+        );
+    }
   }
 
 
@@ -497,7 +690,7 @@ const actionSq =
 
 
 <script>
-  const lightbox =
+  const dialogElement =
     document
       .querySelector<HTMLDialogElement>(
         '.lightbox[data-unified-lightbox]'
@@ -505,10 +698,21 @@ const actionSq =
 
 
   if(
-    lightbox
+    dialogElement
   ){
+    /*
+     * IMPORTANT:
+     *
+     * Store the non-null dialog inside a new constant.
+     * TypeScript now knows this value can never become null
+     * inside nested callbacks and async functions.
+     */
+    const viewer =
+      dialogElement;
+
+
     const sourceMode =
-      lightbox.dataset.mediaSource ===
+      viewer.dataset.mediaSource ===
         'instagram'
         ? 'instagram'
         : 'gallery';
@@ -529,56 +733,70 @@ const actionSq =
       links.length
     ){
       const photo =
-        lightbox
+        viewer
           .querySelector<HTMLImageElement>(
             '.lightbox-photo'
           )!;
 
 
       const video =
-        lightbox
+        viewer
           .querySelector<HTMLVideoElement>(
             '.lightbox-video'
           )!;
 
 
       const counter =
-        lightbox
+        viewer
           .querySelector<HTMLElement>(
             '.lightbox-counter'
           )!;
 
 
       const caption =
-        lightbox
+        viewer
           .querySelector<HTMLElement>(
             '.lightbox-caption'
           )!;
 
 
       const action =
-        lightbox
+        viewer
           .querySelector<HTMLAnchorElement>(
             '[data-media-action]'
           )!;
 
 
+      const errorState =
+        viewer
+          .querySelector<HTMLElement>(
+            '[data-error]'
+          )!;
+
+
+      const retryButton =
+        viewer
+          .querySelector<HTMLButtonElement>(
+            '[data-retry]'
+          );
+
+
       const previousButton =
-        lightbox
+        viewer
           .querySelector<HTMLButtonElement>(
             '[data-prev]'
           );
 
 
       const nextButton =
-        lightbox
+        viewer
           .querySelector<HTMLButtonElement>(
             '[data-next]'
           );
 
 
       const closeButton =
-        lightbox
+        viewer
           .querySelector<HTMLButtonElement>(
             '[data-close]'
           );
@@ -593,7 +811,7 @@ const actionSq =
       const decodedImages =
         new Map<
           string,
-          Promise<void>
+          Promise<boolean>
         >();
 
 
@@ -720,6 +938,31 @@ const actionSq =
       }
 
 
+      function showError(){
+        errorState.hidden =
+          false;
+
+
+        photo.hidden =
+          true;
+
+
+        video.hidden =
+          true;
+
+
+        viewer.removeAttribute(
+          'aria-busy'
+        );
+      }
+
+
+      function hideError(){
+        errorState.hidden =
+          true;
+      }
+
+
       function prepareImage(
         source:
           string
@@ -727,7 +970,9 @@ const actionSq =
         if(
           !source
         ){
-          return Promise.resolve();
+          return Promise.resolve(
+            false
+          );
         }
 
 
@@ -762,45 +1007,74 @@ const actionSq =
               if(
                 !image.complete
               ){
-                await new Promise<void>(
-                  resolve=>{
-                    const done =
-                      ()=>{
-                        resolve();
-                      };
+                const loaded =
+                  await new Promise<boolean>(
+                    resolve=>{
+                      image.addEventListener(
+                        'load',
+                        ()=>{
+                          resolve(
+                            true
+                          );
+                        },
+                        {
+                          once:
+                            true
+                        }
+                      );
 
 
-                    image.addEventListener(
-                      'load',
-                      done,
-                      {
-                        once:
-                          true
-                      }
-                    );
+                      image.addEventListener(
+                        'error',
+                        ()=>{
+                          resolve(
+                            false
+                          );
+                        },
+                        {
+                          once:
+                            true
+                        }
+                      );
+                    }
+                  );
 
 
-                    image.addEventListener(
-                      'error',
-                      done,
-                      {
-                        once:
-                          true
-                      }
-                    );
-                  }
-                );
+                if(
+                  !loaded
+                ){
+                  return false;
+                }
+              }
+
+
+              if(
+                image.naturalWidth <=
+                0
+              ){
+                return false;
               }
 
 
               try{
                 if(
-                  image.naturalWidth >
-                  0
+                  typeof image.decode ===
+                    'function'
                 ){
                   await image.decode();
                 }
-              }catch{}
+              }catch{
+                /*
+                 * A successful load with a decode rejection
+                 * can still be displayed safely.
+                 */
+              }
+
+
+              return (
+                image.naturalWidth >
+                0
+              );
             }
           )();
 
@@ -808,6 +1082,19 @@ const actionSq =
         decodedImages.set(
           source,
           promise
+        );
+
+
+        promise.then(
+          success=>{
+            if(
+              !success
+            ){
+              decodedImages.delete(
+                source
+              );
+            }
+          }
         );
 
 
@@ -968,7 +1255,7 @@ const actionSq =
 
 
       function resetOverlay(){
-        lightbox.style
+        viewer.style
           .removeProperty(
             '--lb-overlay-alpha'
           );
@@ -976,7 +1263,7 @@ const actionSq =
 
 
       function resetMedia(){
-        lightbox.classList.remove(
+        viewer.classList.remove(
           'is-dragging',
           'is-dismiss-up',
           'is-dismiss-down',
@@ -993,12 +1280,23 @@ const actionSq =
           '1';
 
 
+        photo.style.transition =
+          '';
+
+
         video.style.transform =
           'translate3d(0,0,0) scale(1)';
 
 
         video.style.opacity =
           '1';
+
+
+        video.style.transition =
+          '';
+
+
+        hideError();
 
 
         resetOverlay();
@@ -1095,33 +1393,52 @@ const actionSq =
           ++renderToken;
 
 
-        lightbox.setAttribute(
+        viewer.setAttribute(
           'aria-busy',
           'true'
         );
 
 
-        /*
-         * Decode the next photograph before
-         * removing the one currently visible.
-         */
+        hideError();
+
+
+        let imageReady =
+          true;
+
+
         if(
           !metadata.isVideo &&
           metadata.fullSource
         ){
-          await prepareImage(
-            metadata.fullSource
-          );
+          imageReady =
+            await prepareImage(
+              metadata.fullSource
+            );
         }
 
 
         if(
           token !==
           renderToken ||
-          !lightbox.open
+          !viewer.open
         ){
           return;
         }
+
+
+        if(
+          !metadata.isVideo &&
+          !imageReady
+        ){
+          showError();
+
+          return;
+        }
+
+
+        viewer.classList.add(
+          'is-switching'
+        );
 
 
         const previousMedia =
@@ -1130,7 +1447,7 @@ const actionSq =
 
         if(
           direction !==
-          'direct' &&
+            'direct' &&
           !reduceMotion.matches
         ){
           previousMedia.style.opacity =
@@ -1153,7 +1470,7 @@ const actionSq =
         if(
           token !==
           renderToken ||
-          !lightbox.open
+          !viewer.open
         ){
           return;
         }
@@ -1234,7 +1551,12 @@ const actionSq =
           void video
             .play()
             .catch(
-              ()=>{}
+              ()=>{
+                /*
+                 * Autoplay can be rejected.
+                 * Controls remain visible.
+                 */
+              }
             );
 
         }else{
@@ -1251,14 +1573,20 @@ const actionSq =
 
 
           photo.style.opacity =
-            '0';
+            direction ===
+              'direct'
+              ? '1'
+              : '0';
 
 
           photo.style.transform =
             direction ===
               'prev'
               ? 'translate3d(-20px,0,0) scale(.988)'
-              : 'translate3d(20px,0,0) scale(.988)';
+              : direction ===
+                  'next'
+                ? 'translate3d(20px,0,0) scale(.988)'
+                : 'translate3d(0,0,0) scale(1)';
 
 
           photo.src =
@@ -1285,12 +1613,12 @@ const actionSq =
         }
 
 
-        lightbox.classList.remove(
+        viewer.classList.remove(
           'is-switching'
         );
 
 
-        lightbox.removeAttribute(
+        viewer.removeAttribute(
           'aria-busy'
         );
 
@@ -1348,8 +1676,8 @@ const actionSq =
 
 
         /*
-         * Immediate thumbnail first,
-         * decoded large image second.
+         * Display the already-loaded thumbnail immediately.
+         * The full-size image replaces it only after decode().
          */
         if(
           !metadata.isVideo &&
@@ -1387,9 +1715,9 @@ const actionSq =
 
 
         if(
-          !lightbox.open
+          !viewer.open
         ){
-          lightbox.showModal();
+          viewer.showModal();
         }
 
 
@@ -1428,8 +1756,8 @@ const actionSq =
           'fade'
       ){
         if(
-          !lightbox.open ||
-          lightbox.classList.contains(
+          !viewer.open ||
+          viewer.classList.contains(
             'is-closing'
           )
         ){
@@ -1441,12 +1769,12 @@ const actionSq =
           1;
 
 
-        lightbox.removeAttribute(
+        viewer.removeAttribute(
           'aria-busy'
         );
 
 
-        lightbox.classList.remove(
+        viewer.classList.remove(
           'is-dragging',
           'is-switching'
         );
@@ -1456,7 +1784,7 @@ const actionSq =
           direction ===
             'up'
         ){
-          lightbox.classList.add(
+          viewer.classList.add(
             'is-dismiss-up'
           );
         }
@@ -1466,13 +1794,13 @@ const actionSq =
           direction ===
             'down'
         ){
-          lightbox.classList.add(
+          viewer.classList.add(
             'is-dismiss-down'
           );
         }
 
 
-        lightbox.classList.add(
+        viewer.classList.add(
           'is-closing'
         );
 
@@ -1485,9 +1813,9 @@ const actionSq =
 
 
         if(
-          lightbox.open
+          viewer.open
         ){
-          lightbox.close();
+          viewer.close();
         }
       }
 
@@ -1513,7 +1841,7 @@ const actionSq =
           0;
 
 
-        lightbox.classList.remove(
+        viewer.classList.remove(
           'is-dragging'
         );
 
@@ -1608,12 +1936,42 @@ const actionSq =
         );
 
 
-      lightbox.addEventListener(
+      retryButton
+        ?.addEventListener(
+          'click',
+          ()=>{
+            const metadata =
+              metadataFor(
+                active
+              );
+
+
+            if(
+              metadata.fullSource
+            ){
+              decodedImages.delete(
+                metadata.fullSource
+              );
+            }
+
+
+            hideError();
+
+
+            void show(
+              active,
+              'direct'
+            );
+          }
+        );
+
+
+      viewer.addEventListener(
         'click',
         event=>{
           if(
             event.target ===
-            lightbox
+            viewer
           ){
             void closeLightbox(
               'fade'
@@ -1623,7 +1981,7 @@ const actionSq =
       );
 
 
-      lightbox.addEventListener(
+      viewer.addEventListener(
         'cancel',
         event=>{
           event.preventDefault();
@@ -1636,7 +1994,7 @@ const actionSq =
       );
 
 
-      lightbox.addEventListener(
+      viewer.addEventListener(
         'keydown',
         event=>{
           if(
@@ -1671,7 +2029,7 @@ const actionSq =
       );
 
 
-      lightbox.addEventListener(
+      viewer.addEventListener(
         'close',
         ()=>{
           document
@@ -1682,7 +2040,7 @@ const actionSq =
             );
 
 
-          lightbox.removeAttribute(
+          viewer.removeAttribute(
             'aria-busy'
           );
 
@@ -1690,7 +2048,7 @@ const actionSq =
           stopVideo();
 
 
-          lightbox.classList.remove(
+          viewer.classList.remove(
             'is-closing',
             'is-dismiss-up',
             'is-dismiss-down',
@@ -1735,7 +2093,7 @@ const actionSq =
         'pointerdown',
         event=>{
           if(
-            lightbox.classList.contains(
+            viewer.classList.contains(
               'is-switching'
             )
           ){
@@ -1785,7 +2143,7 @@ const actionSq =
             true;
 
 
-          lightbox.classList.add(
+          viewer.classList.add(
             'is-dragging'
           );
 
@@ -1945,7 +2303,7 @@ const actionSq =
               );
 
 
-            lightbox.style
+            viewer.style
               .setProperty(
                 '--lb-overlay-alpha',
                 String(
@@ -2008,7 +2366,7 @@ const actionSq =
           null;
 
 
-        lightbox.classList.remove(
+        viewer.classList.remove(
           'is-dragging'
         );
 
@@ -2111,6 +2469,28 @@ const actionSq =
 
 
           snapBack();
+        }
+      );
+
+
+      window.addEventListener(
+        'orientationchange',
+        ()=>{
+          /*
+           * The viewer uses max viewport dimensions,
+           * but clearing inline drag transforms after
+           * orientation prevents stale geometry.
+           */
+          window.setTimeout(
+            ()=>{
+              if(
+                viewer.open
+              ){
+                snapBack();
+              }
+            },
+            120
+          );
         }
       );
     }
