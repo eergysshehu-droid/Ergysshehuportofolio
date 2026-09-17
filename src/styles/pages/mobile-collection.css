@@ -1,17 +1,11 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE COLLECTION / PROJECT INTRO
+   ERGYS SHEHU — MOBILE COLLECTION
    ============================================================ */
 
 @media (max-width: 700px) {
 
-  /*
-   * Smaller, tighter project intro.
-   * Keeps editorial scale without swallowing the viewport.
-   */
-
   html body .collection-intro {
     width: calc(100% - 18px) !important;
-
     margin-inline: auto !important;
 
     padding:
@@ -33,27 +27,21 @@
     background:
       linear-gradient(
         155deg,
-        rgba(24, 40, 27, .92) 0%,
-        rgba(10, 22, 13, .965) 52%,
-        rgba(5, 12, 7, .985) 100%
+        rgba(24,40,27,.92) 0%,
+        rgba(10,22,13,.965) 52%,
+        rgba(5,12,7,.985) 100%
       ) !important;
 
     border:
       1px solid
-      rgba(255, 255, 255, .07) !important;
+      rgba(255,255,255,.07) !important;
 
-    border-top: 0 !important;
+    border-top:
+      0 !important;
 
     box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(255, 255, 255, .055),
-      0
-      18px
-      48px
-      rgba(0, 0, 0, .14) !important;
+      inset 0 1px 0 rgba(255,255,255,.055),
+      0 18px 48px rgba(0,0,0,.14) !important;
 
     backdrop-filter:
       blur(28px)
@@ -78,7 +66,6 @@
   html body
   .collection-intro .kicker {
     margin-top: 18px !important;
-
     margin-bottom: 0;
 
     font-size:
@@ -93,16 +80,6 @@
     letter-spacing: .19em;
   }
 
-
-  /*
-   * THIS is the important title change.
-   *
-   * Before:
-   * clamp(2.7rem, 15vw, 5.8rem)
-   *
-   * Now:
-   * editorial but controlled.
-   */
 
   html body
   .collection-intro h1 {
@@ -154,14 +131,11 @@
     line-height:
       1.65 !important;
 
-    opacity:
-      .72;
+    opacity: .72;
   }
 
 }
 
-
-/* Extra-small phones */
 
 @media (max-width: 390px) {
 
@@ -176,8 +150,10 @@
   }
 
 }
+
+
 /* ============================================================
-   COMPACT ROLL-UP TITLE
+   MOBILE TITLE ROLL-UP
    ============================================================ */
 
 .mobile-title-rollup {
@@ -188,20 +164,13 @@
 @media (max-width: 700px) {
 
   .mobile-title-rollup {
-    position:
-      fixed;
+    position: fixed;
 
-    display:
-      flex;
+    display: flex;
+    align-items: center;
 
-    align-items:
-      center;
-
-    left:
-      9px;
-
-    right:
-      9px;
+    left: 9px;
+    right: 9px;
 
     top:
       var(
@@ -209,56 +178,35 @@
         82px
       );
 
-    min-height:
-      48px;
+    min-height: 48px;
 
     padding:
       10px
       16px;
 
-    z-index:
-      4900;
+    z-index: 4900;
 
-    pointer-events:
-      none;
+    pointer-events: none;
 
     color:
-      rgba(
-        246,
-        244,
-        237,
-        .94
-      );
+      rgba(246,244,237,.94);
 
     background:
       linear-gradient(
         145deg,
-        rgba(28, 46, 31, .91),
-        rgba(7, 17, 10, .96)
+        rgba(28,46,31,.91),
+        rgba(7,17,10,.96)
       );
 
     border:
       1px solid
-      rgba(
-        255,
-        255,
-        255,
-        .075
-      );
+      rgba(255,255,255,.075);
 
-    border-radius:
-      10px;
+    border-radius: 10px;
 
     box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(255,255,255,.07),
-      0
-      14px
-      36px
-      rgba(0,0,0,.22);
+      inset 0 1px 0 rgba(255,255,255,.07),
+      0 14px 36px rgba(0,0,0,.22);
 
     backdrop-filter:
       blur(28px)
@@ -268,11 +216,9 @@
       blur(28px)
       saturate(125%);
 
-    opacity:
-      0;
+    opacity: 0;
 
-    visibility:
-      hidden;
+    visibility: hidden;
 
     transform:
       translate3d(
@@ -291,20 +237,10 @@
       ease,
       transform
       340ms
-      cubic-bezier(
-        .16,
-        1,
-        .3,
-        1
-      ),
+      cubic-bezier(.16,1,.3,1),
       top
       280ms
-      cubic-bezier(
-        .16,
-        1,
-        .3,
-        1
-      ),
+      cubic-bezier(.16,1,.3,1),
       visibility
       0s
       linear
@@ -313,11 +249,9 @@
 
 
   .mobile-title-rollup.is-visible {
-    opacity:
-      1;
+    opacity: 1;
 
-    visibility:
-      visible;
+    visibility: visible;
 
     transform:
       translate3d(
@@ -333,34 +267,21 @@
       ease,
       transform
       340ms
-      cubic-bezier(
-        .16,
-        1,
-        .3,
-        1
-      ),
+      cubic-bezier(.16,1,.3,1),
       top
       280ms
-      cubic-bezier(
-        .16,
-        1,
-        .3,
-        1
-      ),
+      cubic-bezier(.16,1,.3,1),
       visibility
       0s;
   }
 
 
   .mobile-title-rollup span {
-    overflow:
-      hidden;
+    overflow: hidden;
 
-    text-overflow:
-      ellipsis;
+    text-overflow: ellipsis;
 
-    white-space:
-      nowrap;
+    white-space: nowrap;
 
     font-family:
       var(--serif);
@@ -372,14 +293,11 @@
         21px
       );
 
-    font-weight:
-      400;
+    font-weight: 400;
 
-    line-height:
-      1;
+    line-height: 1;
 
-    letter-spacing:
-      -.025em;
+    letter-spacing: -.025em;
   }
 
 }
