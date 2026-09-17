@@ -1,1392 +1,298 @@
 /* ==========================================================================
-   GLOBAL PRODUCTION POLISH
-   Typography, spacing, journal, awards, current work and responsive safety.
+   MOBILE GLASS MENU + HERO SCROLL + CURVE RESTORE
    ========================================================================== */
 
-.collection-intro{
-  min-height:0!important;
 
-  padding-top:
-    clamp(
-      46px,
-      4vw,
-      64px
-    );
+/* --------------------------------------------------------------------------
+   MOBILE CLOSED HEADER — dark green glass
+   -------------------------------------------------------------------------- */
 
-  padding-bottom:
-    clamp(
-      40px,
-      4vw,
-      58px
-    );
-}
-
-.collection-intro h1{
-  max-width:
-    min(
-      1200px,
-      100%
-    );
-
-  margin:
-    18px
-    0
-    24px;
-
-  font-size:
-    clamp(
-      44px,
-      6.2vw,
-      96px
-    )!important;
-
-  line-height:
-    1.02!important;
-
-  letter-spacing:
-    -.04em;
-
-  overflow-wrap:
-    break-word;
-
-  word-break:
-    normal;
-}
-
-.collection-intro>p:not(.kicker){
-  max-width:
-    720px;
-}
-
-
-/* ==========================================================================
-   JOURNAL ARTICLE
-   ========================================================================== */
-
-.journal-post .collection-intro{
-  padding-bottom:
-    clamp(
-      32px,
-      3.5vw,
-      48px
-    );
-}
-
-.journal-post .collection-intro h1{
-  max-width:
-    980px;
-
-  font-size:
-    clamp(
-      40px,
-      5vw,
-      76px
-    )!important;
-
-  line-height:
-    1.04!important;
-}
-
-.journal-post .collection-intro>p:not(.kicker){
-  max-width:
-    760px;
-}
-
-.journal-post-cover{
-  margin-bottom:
-    clamp(
-      34px,
-      4vw,
-      48px
-    )!important;
-
-  overflow:
-    hidden;
-}
-
-.journal-post-cover img{
-  display:
-    block;
-
-  width:
-    100%;
-
-  height:
-    auto;
-}
-
-.journal-post-body{
-  padding-bottom:
-    clamp(
-      68px,
-      7vw,
-      100px
-    )!important;
-}
-
-
-/* ==========================================================================
-   JOURNAL INDEX
-   ========================================================================== */
-
-.journal-list{
-  gap:
-    clamp(
-      34px,
-      3.6vw,
-      56px
-    )!important;
-
-  padding-bottom:
-    clamp(
-      68px,
-      7vw,
-      100px
-    )!important;
-}
-
-.journal-card{
-  min-width:
-    0;
-}
-
-.journal-card-image{
-  overflow:
-    hidden;
-}
-
-.journal-card-image img{
-  display:
-    block;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  object-fit:
-    cover;
-}
-
-.journal-card-copy{
-  min-width:
-    0;
-
-  padding-top:
-    clamp(
-      14px,
-      1.4vw,
-      20px
-    );
-}
-
-.journal-card-copy h2{
-  margin-bottom:
-    12px!important;
-
-  font-size:
-    clamp(
-      25px,
-      2.2vw,
-      34px
-    )!important;
-
-  line-height:
-    1.12!important;
-
-  letter-spacing:
-    -.025em!important;
-
-  overflow-wrap:
-    break-word;
-}
-
-.journal-card-copy p{
-  max-width:
-    62ch;
-
-  margin-bottom:
-    16px!important;
-
-  font-size:
-    clamp(
-      13px,
-      .86vw,
-      15px
-    )!important;
-
-  line-height:
-    1.68!important;
-}
-
-.journal-read{
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  gap:
-    .25em;
-}
-
-
-/* ==========================================================================
-   RECOGNITION / AWARDS
-   ========================================================================== */
-
-.recognition-section{
-  min-height:
-    0!important;
-
-  padding-bottom:
-    clamp(
-      54px,
-      5.5vw,
-      82px
-    )!important;
-}
-
-.recognition-heading{
-  padding-top:
-    clamp(
-      36px,
-      4vw,
-      56px
-    )!important;
-}
-
-.recognition-list{
-  margin-top:
-    clamp(
-      20px,
-      2.7vw,
-      36px
-    )!important;
-}
-
-.recognition-row{
-  padding:
-    clamp(
-      18px,
-      2.1vw,
-      29px
-    )
-    0!important;
-}
-
-
-/* ==========================================================================
-   CURRENT WORK / INSTAGRAM
-   ========================================================================== */
-
-.latest-section{
-  min-height:
-    0!important;
-
-  padding-top:
-    clamp(
-      64px,
-      6.5vw,
-      96px
-    )!important;
-
-  padding-bottom:
-    clamp(
-      58px,
-      6vw,
-      86px
-    )!important;
-}
-
-.latest-grid{
-  gap:
-    clamp(
-      7px,
-      .75vw,
-      13px
-    )!important;
-}
-
-.latest-card{
-  overflow:
-    hidden;
-
-  background:
-    #111;
-}
-
-.latest-card img{
-  display:
-    block;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  object-fit:
-    cover;
-
-  transform:
-    scale(
-      1.001
-    );
-}
-
-
-/* ==========================================================================
-   ABOUT / INNER PAGE LOWER SPACING
-   ========================================================================== */
-
-.biography-layout.collection-body{
-  min-height:
-    0!important;
-
-  padding-bottom:
-    clamp(
-      64px,
-      6.5vw,
-      96px
-    )!important;
-}
-
-.collection-body{
-  padding-bottom:
-    clamp(
-      64px,
-      6.5vw,
-      96px
-    );
-}
-
-.bio-language:last-of-type{
-  margin-bottom:
-    clamp(
-      22px,
-      3vw,
-      40px
-    );
-}
-
-
-/* ==========================================================================
-   FORM STATUS
-   ========================================================================== */
-
-.form-status:not([hidden]){
-  display:
-    block;
-
-  padding:
-    12px
-    14px;
-
-  border:
-    1px solid
-    rgba(
-      244,
-      240,
-      232,
-      .16
-    );
-
-  line-height:
-    1.5;
-}
-
-.form-status[data-state="success"]{
-  border-color:
-    rgba(
-      170,
-      210,
-      175,
-      .34
-    );
-}
-
-.form-status[data-state="error"]{
-  border-color:
-    rgba(
-      230,
-      150,
-      140,
-      .36
-    );
-}
-
-
-/* ==========================================================================
-   ACCESSIBILITY
-   ========================================================================== */
-
-:focus-visible{
-  outline:
-    2px solid
-    var(
-      --accent
-    );
-
-  outline-offset:
-    4px;
-}
-
-@media(prefers-reduced-motion:reduce){
-  html{
-    scroll-behavior:
-      auto!important;
-  }
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:
-      .01ms!important;
-
-    animation-iteration-count:
-      1!important;
-
-    transition-duration:
-      .01ms!important;
-  }
-}
-
-
-/* ==========================================================================
-   TABLET
-   ========================================================================== */
-
-@media(max-width:900px){
-  .collection-intro h1{
-    font-size:
-      clamp(
-        42px,
-        8vw,
-        72px
-      )!important;
-  }
-}
-
-
-/* ==========================================================================
-   MOBILE
-   ========================================================================== */
-
-@media(max-width:700px){
-
-  .collection-intro{
-    padding-top:
-      36px;
-
-    padding-bottom:
-      36px;
-  }
-
-  .collection-intro h1{
-    margin:
-      16px
-      0
-      21px;
-
-    font-size:
-      clamp(
-        38px,
-        11.5vw,
-        60px
-      )!important;
-
-    line-height:
-      1.03!important;
-  }
-
-  .journal-post .collection-intro h1{
-    font-size:
-      clamp(
-        34px,
-        9.5vw,
-        50px
-      )!important;
-
-    line-height:
-      1.06!important;
-  }
-
-  .journal-list{
-    gap:
-      40px!important;
-
-    padding-bottom:
-      60px!important;
-  }
-
-  .journal-card-copy{
-    padding-top:
-      13px;
-  }
-
-  .journal-card-copy h2{
-    font-size:
-      25px!important;
-  }
-
-  .recognition-section{
-    padding-bottom:
-      50px!important;
-  }
-
-  .recognition-heading{
-    padding-top:
-      34px!important;
-  }
-
-  .recognition-row{
-    padding:
-      18px
-      0!important;
-  }
-
-  .latest-section{
-    padding-top:
-      58px!important;
-
-    padding-bottom:
-      54px!important;
-  }
-
-  .latest-grid{
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(
-          0,
-          1fr
-        )
-      )!important;
-
-    gap:
-      6px!important;
-  }
-
-  .biography-layout.collection-body{
-    padding-bottom:
-      58px!important;
-  }
-}
-
-@media(max-width:420px){
-
-  .collection-intro h1{
-    font-size:
-      clamp(
-        36px,
-        11vw,
-        48px
-      )!important;
-  }
-
-  .latest-grid{
-    gap:
-      4px!important;
-  }
-}
-/* =========================================================
-   FINAL HEADER / NAV / BOOK NOW POLISH
-   Paste at the END of src/styles/polish-global.css
-   ========================================================= */
-
-:root {
-  --nav-bg: rgba(7, 8, 7, 0.78);
-  --nav-border: rgba(255,255,255,0.08);
-  --nav-text: rgba(255,255,255,0.84);
-  --nav-text-soft: rgba(255,255,255,0.62);
-  --nav-hover: #ffffff;
-  --nav-gold: #f2a52c;
-}
-
-/* Header shell */
-.site-header,
-.header,
-.main-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: var(--nav-bg);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-/* Inner row: keep it tighter and more editorial */
-.site-header__inner,
-.header-inner,
-.nav-inner {
-  width: min(1680px, calc(100% - 56px));
-  margin-inline: auto;
-  min-height: 86px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-/* Brand */
-.site-brand,
-.logo,
-.header-logo {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-/* Main menu */
-.site-nav,
-.main-nav,
-.header-nav {
-  display: flex;
-  align-items: center;
-  gap: clamp(18px, 1.4vw, 28px);
-}
-
-.site-nav a,
-.main-nav a,
-.header-nav a {
-  position: relative;
-  color: var(--nav-text-soft);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.82rem;
-  line-height: 1;
-  transition:
-    color 0.22s ease,
-    opacity 0.22s ease,
-    transform 0.22s ease;
-}
-
-.site-nav a:hover,
-.main-nav a:hover,
-.header-nav a:hover {
-  color: var(--nav-hover);
-  transform: translateY(-1px);
-}
-
-.site-nav a[aria-current="page"],
-.main-nav a[aria-current="page"],
-.header-nav a[aria-current="page"],
-.site-nav .is-active,
-.main-nav .is-active,
-.header-nav .is-active {
-  color: #fff;
-}
-
-.site-nav a[aria-current="page"]::after,
-.main-nav a[aria-current="page"]::after,
-.header-nav a[aria-current="page"]::after,
-.site-nav .is-active::after,
-.main-nav .is-active::after,
-.header-nav .is-active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -14px;
-  height: 1px;
-  background: rgba(255,255,255,0.92);
-  transform: scaleX(1);
-  transform-origin: left center;
-}
-
-.site-nav a::after,
-.main-nav a::after,
-.header-nav a::after {
-  transition: transform 0.25s ease;
-}
-
-/* Book now button: restore elegant outline hover */
-.book-now,
-.nav-book,
-.header-cta,
-.site-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 1px solid rgba(255,255,255,0.24);
-  border-radius: 999px;
-  background: transparent;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  transition:
-    border-color 0.22s ease,
-    background 0.22s ease,
-    color 0.22s ease,
-    box-shadow 0.22s ease,
-    transform 0.22s ease;
-}
-
-.book-now:hover,
-.nav-book:hover,
-.header-cta:hover,
-.site-cta:hover {
-  border-color: rgba(242,165,44,0.72);
-  background: rgba(242,165,44,0.08);
-  box-shadow:
-    inset 0 0 0 1px rgba(242,165,44,0.20),
-    0 0 0 1px rgba(242,165,44,0.14);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-/* Language switcher */
-.language-switcher,
-.lang-switcher,
-.locale-switcher {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 999px;
-  background: rgba(255,255,255,0.02);
-}
-
-.language-switcher a,
-.lang-switcher a,
-.locale-switcher a {
-  min-width: 42px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  color: rgba(255,255,255,0.62);
-  transition: background 0.22s ease, color 0.22s ease;
-}
-
-.language-switcher a[aria-current="page"],
-.lang-switcher a[aria-current="page"],
-.locale-switcher a[aria-current="page"],
-.language-switcher .is-active,
-.lang-switcher .is-active,
-.locale-switcher .is-active {
-  background: #f2a52c;
-  color: #111;
-}
-
-/* Mobile */
-@media (max-width: 1023px) {
-  .site-header__inner,
-  .header-inner,
-  .nav-inner {
-    width: min(100% - 28px, 100%);
-    min-height: 74px;
-    gap: 14px;
-  }
-
-  .site-brand,
-  .logo,
-  .header-logo {
-    font-size: clamp(1.65rem, 6vw, 2.2rem);
-  }
-}
-/* ==========================================================================
-   FINAL GLASS SYSTEM
-   One continuous header/footer surface + dark green glass panels.
-   ========================================================================== */
-
-:root{
-  --glass-green:
-    rgba(
-      14,
-      20,
-      15,
-      .72
-    );
-
-  --glass-green-strong:
-    rgba(
-      12,
-      18,
-      13,
-      .86
-    );
-
-  --glass-line:
-    rgba(
-      226,
-      236,
-      224,
-      .10
-    );
-
-  --glass-highlight:
-    rgba(
-      255,
-      255,
-      255,
-      .055
-    );
-
-  --glass-shadow:
-    rgba(
-      0,
-      0,
-      0,
-      .26
-    );
-}
-
-
-/* ==========================================================================
-   HEADER — ONE CONTINUOUS GLASS BAR
-   ========================================================================== */
-
-.site-header{
-  background:
-    transparent!important;
-
-  border:
-    0!important;
-
-  box-shadow:
-    none!important;
-}
-
-
-/* Existing full-width pseudo element becomes the ONLY header surface */
-
-.site-header::before{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(
-        18,
-        25,
-        19,
-        .82
-      )
-      0%,
-      rgba(
-        11,
-        16,
-        12,
-        .72
-      )
-      100%
-    )!important;
-
-  border-bottom:
-    1px solid
-    var(
-      --glass-line
-    )!important;
-
-  box-shadow:
-    inset
-    0
-    1px
-    0
-    var(
-      --glass-highlight
-    ),
-    0
-    10px
-    32px
-    rgba(
-      0,
-      0,
-      0,
-      .08
-    )!important;
-
-  backdrop-filter:
-    blur(
-      22px
-    )
-    saturate(
-      135%
-    )!important;
-
-  -webkit-backdrop-filter:
-    blur(
-      22px
-    )
-    saturate(
-      135%
-    )!important;
-}
-
-
-/* Do not switch home header back to a separate solid strip */
-
-.is-home .site-header,
-.is-home .site-header.is-scrolled{
-  --header-bg:
-    transparent!important;
-
-  --header-line:
-    transparent!important;
-}
-
-
-/* ==========================================================================
-   FOOTER — FULL WIDTH / SAME MATERIAL AS HEADER
-   ========================================================================== */
-
-footer{
-  width:
-    100%!important;
-
-  max-width:
-    none!important;
-
-  margin:
-    0!important;
-
-  box-sizing:
-    border-box;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(
-        12,
-        18,
-        13,
-        .78
-      ),
-      rgba(
-        9,
-        14,
-        10,
-        .88
-      )
-    )!important;
-
-  border-top:
-    1px solid
-    var(
-      --glass-line
-    )!important;
-
-  box-shadow:
-    inset
-    0
-    1px
-    0
-    var(
-      --glass-highlight
-    )!important;
-
-  backdrop-filter:
-    blur(
-      22px
-    )
-    saturate(
-      130%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      22px
-    )
-    saturate(
-      130%
-    );
-}
-
-
-/* Keep footer content aligned with the rest of the site */
-
-footer{
-  padding-left:
-    max(
-      var(
-        --page-pad
-      ),
-      calc(
-        (
-          100vw -
-          var(
-            --content-max
-          )
-        ) /
-        2 +
-        var(
-          --page-pad
-        )
-      )
-    )!important;
-
-  padding-right:
-    max(
-      var(
-        --page-pad
-      ),
-      calc(
-        (
-          100vw -
-          var(
-            --content-max
-          )
-        ) /
-        2 +
-        var(
-          --page-pad
-        )
-      )
-    )!important;
-}
-
-
-/* ==========================================================================
-   GREEN GLASS PANELS
-   ========================================================================== */
-
-.collection-intro,
-body.is-home .artist-section,
-.recognition-section,
-.inquiry-form{
-  position:
-    relative;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(
-        23,
-        32,
-        24,
-        .74
-      )
-      0%,
-      rgba(
-        13,
-        20,
-        15,
-        .64
-      )
-      52%,
-      rgba(
-        11,
-        17,
-        13,
-        .76
-      )
-      100%
-    )!important;
-
-  border:
-    1px solid
-    rgba(
-      220,
-      235,
-      220,
-      .075
-    )!important;
-
-  box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .045
-    ),
-    0
-    18px
-    50px
-    rgba(
-      0,
-      0,
-      0,
-      .12
-    )!important;
-
-  backdrop-filter:
-    blur(
-      24px
-    )
-    saturate(
-      125%
-    )!important;
-
-  -webkit-backdrop-filter:
-    blur(
-      24px
-    )
-    saturate(
-      125%
-    )!important;
-}
-
-
-/* Collection headers: softer modern corners */
-
-.collection-intro{
-  border-radius:
-    28px!important;
-
-  overflow:
-    hidden;
-}
-
-
-/* Behind the Lens: keep larger editorial radius */
-
-body.is-home .artist-section{
-  border-radius:
-    32px
-    32px
-    0
-    0!important;
-}
-
-
-/* ==========================================================================
-   SMALLER CARDS — GLASS GREEN
-   ========================================================================== */
-
-.service-card,
-.recognition-row,
-.journal-card,
-.latest-card{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(
-        24,
-        34,
-        25,
-        .56
-      ),
-      rgba(
-        10,
-        16,
-        12,
-        .50
-      )
-    )!important;
-
-  border:
-    1px solid
-    rgba(
-      225,
-      238,
-      225,
-      .075
-    )!important;
-
-  box-shadow:
-    inset
-    0
-    1px
-    0
-    rgba(
-      255,
-      255,
-      255,
-      .04
-    ),
-    0
-    12px
-    32px
-    rgba(
-      0,
-      0,
-      0,
-      .10
-    );
-
-  backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      120%
-    );
-
-  -webkit-backdrop-filter:
-    blur(
-      18px
-    )
-    saturate(
-      120%
-    );
-}
-
-
-/* ==========================================================================
-   DESKTOP — restrained glass, no floating-box feeling
-   ========================================================================== */
-
-@media(min-width:701px){
-
-  .collection-intro{
-    border-radius:
-      24px!important;
-  }
-
-  .service-card,
-  .recognition-row{
-    transition:
-      background
-      260ms
-      ease,
-      border-color
-      260ms
-      ease,
-      transform
-      260ms
-      ease;
-  }
-
-  .service-card:hover,
-  .recognition-row:hover{
-    background:
-      linear-gradient(
-        145deg,
-        rgba(
-          30,
-          43,
-          31,
-          .68
-        ),
-        rgba(
-          13,
-          20,
-          15,
-          .60
-        )
-      )!important;
-
-    border-color:
-      rgba(
-        242,
-        165,
-        44,
-        .18
-      )!important;
-
-    transform:
-      translateY(
-        -2px
-      );
-  }
-}
-
-
-/* ==========================================================================
-   MOBILE — IPHONE-LIKE DARK GLASS
-   ========================================================================== */
-
-@media(max-width:700px){
+@media(max-width:1000px){
 
   .site-header::before{
     background:
-      rgba(
-        13,
-        18,
-        14,
-        .72
-      )!important;
+      linear-gradient(
+        180deg,
+        rgba(18,25,19,.78) 0%,
+        rgba(10,15,11,.68) 100%
+      ) !important;
+
+    border-bottom:
+      1px solid
+      rgba(255,255,255,.075) !important;
 
     backdrop-filter:
-      blur(
-        28px
-      )
-      saturate(
-        145%
-      )!important;
+      blur(24px)
+      saturate(145%) !important;
 
     -webkit-backdrop-filter:
-      blur(
-        28px
-      )
-      saturate(
-        145%
-      )!important;
+      blur(24px)
+      saturate(145%) !important;
+
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.045),
+      0 8px 28px rgba(0,0,0,.10) !important;
   }
 
 
-  .collection-intro,
-  body.is-home .artist-section,
-  .inquiry-form{
-    border-radius:
-      22px!important;
+  /* ------------------------------------------------------------------------
+     MOBILE OPEN MENU — iPhone-like dark glass
+     ------------------------------------------------------------------------ */
 
+  .mobile-menu-screen{
     background:
       linear-gradient(
         145deg,
-        rgba(
-          25,
-          35,
-          26,
-          .66
-        ),
-        rgba(
-          10,
-          16,
-          12,
-          .72
-        )
-      )!important;
+        rgba(20,29,21,.88) 0%,
+        rgba(9,14,10,.90) 58%,
+        rgba(7,11,8,.94) 100%
+      ) !important;
+
+    border:
+      0 !important;
 
     backdrop-filter:
-      blur(
-        26px
-      )
-      saturate(
-        140%
-      )!important;
+      blur(30px)
+      saturate(150%) !important;
 
     -webkit-backdrop-filter:
-      blur(
-        26px
-      )
-      saturate(
-        140%
-      )!important;
+      blur(30px)
+      saturate(150%) !important;
 
     box-shadow:
-      inset
-      0
-      1px
-      0
-      rgba(
-        255,
-        255,
-        255,
-        .055
-      ),
-      0
-      16px
-      42px
-      rgba(
-        0,
-        0,
-        0,
-        .16
-      )!important;
+      inset 0 1px 0
+      rgba(255,255,255,.055) !important;
   }
 
 
-  footer{
+  /* subtle glass glow */
+
+  .mobile-menu-screen::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
     background:
-      rgba(
-        11,
-        16,
-        12,
-        .86
-      )!important;
+      radial-gradient(
+        circle at 20% 0%,
+        rgba(119,145,119,.10),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 100% 80%,
+        rgba(242,165,44,.035),
+        transparent 30%
+      );
+
+    z-index:-1;
+  }
+
+
+  /* menu links less rigid */
+
+  .mobile-menu-screen nav a{
+    color:
+      rgba(247,245,239,.88) !important;
+
+    font-weight:
+      300 !important;
+
+    letter-spacing:
+      -.018em !important;
+
+    transition:
+      opacity .22s ease,
+      transform .28s var(--ease-editorial),
+      color .22s ease !important;
+  }
+
+  .mobile-menu-screen nav a:active{
+    color:
+      #fff !important;
+
+    transform:
+      translateX(5px);
+  }
+
+
+  /* menu button itself gets a soft glass circle */
+
+  .mobile-menu summary{
+    background:
+      rgba(255,255,255,.045) !important;
+
+    border:
+      1px solid
+      rgba(255,255,255,.08);
+
+    backdrop-filter:
+      blur(14px);
+
+    -webkit-backdrop-filter:
+      blur(14px);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   RESTORE HERO SCROLL INDICATOR
+   Keep it ABOVE the curve, never hidden.
+   -------------------------------------------------------------------------- */
+
+body.is-home .scroll-indicator{
+  display:
+    grid !important;
+
+  visibility:
+    visible !important;
+
+  opacity:
+    1 !important;
+
+  z-index:
+    30 !important;
+
+  right:
+    var(--gutter) !important;
+
+  bottom:
+    clamp(
+      32px,
+      4.2vh,
+      54px
+    ) !important;
+
+  color:
+    #fff !important;
+
+  filter:
+    drop-shadow(
+      0 2px 8px rgba(0,0,0,.55)
+    );
+}
+
+
+body.is-home .scroll-indicator svg{
+  width:
+    18px;
+
+  height:
+    18px;
+
+  animation:
+    heroScrollArrow
+    1.65s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes heroScrollArrow{
+
+  0%,
+  100%{
+    transform:
+      translateY(0);
+
+    opacity:
+      .55;
+  }
+
+  50%{
+    transform:
+      translateY(7px);
+
+    opacity:
+      1;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   CURVE — restore presence and clean edge
+   -------------------------------------------------------------------------- */
+
+body.is-home .filmstrip-curve{
+  opacity:
+    1 !important;
+
+  height:
+    clamp(
+      70px,
+      7vw,
+      112px
+    ) !important;
+
+  bottom:
+    calc(
+      100% -
+      2px
+    ) !important;
+
+  z-index:
+    6 !important;
+
+  overflow:
+    visible !important;
+}
+
+
+body.is-home .filmstrip-curve path{
+  fill:
+    #151b15 !important;
+
+  stroke:
+    none !important;
+}
+
+
+/* filmstrip itself continues exactly into the curve */
+
+body.is-home .filmstrip-section{
+  background:
+    #151b15 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   MOBILE CURVE
+   -------------------------------------------------------------------------- */
+
+@media(max-width:700px){
+
+  body.is-home .filmstrip-curve{
+    height:
+      56px !important;
+
+    bottom:
+      calc(
+        100% -
+        2px
+      ) !important;
+  }
+
+
+  body.is-home .scroll-indicator{
+    right:
+      18px !important;
+
+    bottom:
+      28px !important;
+
+    gap:
+      5px !important;
+  }
+
+
+  body.is-home .scroll-indicator span{
+    font-size:
+      9px !important;
+
+    letter-spacing:
+      .18em !important;
   }
 }
