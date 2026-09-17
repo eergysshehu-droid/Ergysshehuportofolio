@@ -5,6 +5,19 @@ import {
 } from '../lib/i18n';
 
 
+interface Props {
+  source?:
+    'gallery' |
+    'instagram';
+}
+
+
+const {
+  source =
+    'gallery'
+} = Astro.props;
+
+
 const lang =
   languageFromPath(
     Astro.url.pathname
@@ -15,21 +28,47 @@ const isSq =
   lang === 'sq';
 
 
+const isInstagram =
+  source ===
+    'instagram';
+
+
 const bookingHref =
   localizedHref(
     '/book/#contact',
     lang
   );
+
+
+const actionEn =
+  isInstagram
+    ? 'View on Instagram ↗'
+    : 'Book now ↗';
+
+
+const actionSq =
+  isInstagram
+    ? 'Shiko në Instagram ↗'
+    : 'Rezervo ↗';
 ---
 
 
 <dialog
   class="lightbox"
-  data-gallery-lightbox
+  data-unified-lightbox
+  data-media-source={source}
   aria-label={
-    isSq
-      ? 'Shikuesi i fotografive'
-      : 'Photograph viewer'
+    isInstagram
+      ? (
+          isSq
+            ? 'Shikuesi i punëve të fundit'
+            : 'Recent work viewer'
+        )
+      : (
+          isSq
+            ? 'Shikuesi i fotografive'
+            : 'Photograph viewer'
+        )
   }
 >
   <div class="lightbox-toolbar">
@@ -43,8 +82,8 @@ const bookingHref =
       data-close
       aria-label={
         isSq
-          ? 'Mbyll shikuesin e fotografive'
-          : 'Close photograph viewer'
+          ? 'Mbyll'
+          : 'Close'
       }
     >
       {
@@ -62,8 +101,8 @@ const bookingHref =
     data-prev
     aria-label={
       isSq
-        ? 'Fotografia e mëparshme'
-        : 'Previous photograph'
+        ? 'Media e mëparshme'
+        : 'Previous media'
     }
   >
     <svg
@@ -86,8 +125,8 @@ const bookingHref =
     data-next
     aria-label={
       isSq
-        ? 'Fotografia tjetër'
-        : 'Next photograph'
+        ? 'Media tjetër'
+        : 'Next media'
     }
   >
     <svg
@@ -112,6 +151,15 @@ const bookingHref =
   />
 
 
+  <video
+    class="lightbox-video"
+    controls
+    playsinline
+    preload="metadata"
+    hidden
+  ></video>
+
+
   <p
     class="lightbox-caption"
     aria-live="polite"
@@ -120,21 +168,36 @@ const bookingHref =
 
   <a
     class="lightbox-book"
-    href={bookingHref}
-    data-en="Book now ↗"
-    data-sq="Rezervo ↗"
+    data-media-action
+    href={
+      isInstagram
+        ? '#'
+        : bookingHref
+    }
+    target={
+      isInstagram
+        ? '_blank'
+        : undefined
+    }
+    rel={
+      isInstagram
+        ? 'noopener noreferrer'
+        : undefined
+    }
+    data-en={actionEn}
+    data-sq={actionSq}
   >
     {
       isSq
-        ? 'Rezervo ↗'
-        : 'Book now ↗'
+        ? actionSq
+        : actionEn
     }
   </a>
 </dialog>
 
 
 <style>
-  .lightbox[data-gallery-lightbox]{
+  .lightbox[data-unified-lightbox]{
     --lb-overlay-alpha:
       .985;
 
@@ -152,12 +215,7 @@ const bookingHref =
     transition:
       opacity
       200ms
-      cubic-bezier(
-        .22,
-        1,
-        .36,
-        1
-      ),
+      cubic-bezier(.22,1,.36,1),
       background-color
       180ms
       ease;
@@ -167,21 +225,16 @@ const bookingHref =
   }
 
 
-  .lightbox[data-gallery-lightbox][open]{
+  .lightbox[data-unified-lightbox][open]{
     animation:
-      gallery-lightbox-open
+      unified-lightbox-open
       220ms
-      cubic-bezier(
-        .22,
-        1,
-        .36,
-        1
-      )
+      cubic-bezier(.22,1,.36,1)
       both;
   }
 
 
-  .lightbox[data-gallery-lightbox]::backdrop{
+  .lightbox[data-unified-lightbox]::backdrop{
     background:
       rgba(
         3,
@@ -190,29 +243,21 @@ const bookingHref =
         var(--lb-overlay-alpha)
       )!important;
 
-    transition:
-      background-color
-      180ms
-      ease;
-
     animation:
-      gallery-backdrop-open
+      unified-backdrop-open
       220ms
       ease
       both;
   }
 
 
-  .lightbox[data-gallery-lightbox].is-closing{
-    animation:
-      none!important;
-
+  .lightbox[data-unified-lightbox].is-closing{
     opacity:
       0;
   }
 
 
-  .lightbox[data-gallery-lightbox].is-closing::backdrop{
+  .lightbox[data-unified-lightbox].is-closing::backdrop{
     background:
       rgba(
         3,
@@ -223,7 +268,10 @@ const bookingHref =
   }
 
 
-  .lightbox[data-gallery-lightbox] .lightbox-photo{
+  .lightbox[data-unified-lightbox]
+  .lightbox-photo,
+  .lightbox[data-unified-lightbox]
+  .lightbox-video{
     will-change:
       transform,
       opacity;
@@ -242,6 +290,18 @@ const bookingHref =
     opacity:
       1;
 
+    transition:
+      transform
+      240ms
+      cubic-bezier(.22,1,.36,1),
+      opacity
+      180ms
+      ease;
+  }
+
+
+  .lightbox[data-unified-lightbox]
+  .lightbox-photo{
     touch-action:
       none!important;
 
@@ -250,23 +310,10 @@ const bookingHref =
 
     -webkit-user-drag:
       none;
-
-    transition:
-      transform
-      240ms
-      cubic-bezier(
-        .22,
-        1,
-        .36,
-        1
-      ),
-      opacity
-      180ms
-      ease;
   }
 
 
-  .lightbox[data-gallery-lightbox].is-dragging
+  .lightbox[data-unified-lightbox].is-dragging
   .lightbox-photo{
     transition:
       none!important;
@@ -276,46 +323,52 @@ const bookingHref =
   }
 
 
-  .lightbox[data-gallery-lightbox].is-switching
-  .lightbox-photo{
+  .lightbox[data-unified-lightbox].is-switching
+  .lightbox-photo,
+  .lightbox[data-unified-lightbox].is-switching
+  .lightbox-video{
     pointer-events:
       none;
   }
 
 
-  .lightbox[data-gallery-lightbox].is-dismiss-down
-  .lightbox-photo{
+  .lightbox[data-unified-lightbox].is-dismiss-down
+  .lightbox-photo,
+  .lightbox[data-unified-lightbox].is-dismiss-down
+  .lightbox-video{
     transform:
       translate3d(
         0,
-        56px,
+        60px,
         0
       )
-      scale(.965)!important;
+      scale(.955)!important;
 
     opacity:
       0!important;
   }
 
 
-  .lightbox[data-gallery-lightbox].is-dismiss-up
-  .lightbox-photo{
+  .lightbox[data-unified-lightbox].is-dismiss-up
+  .lightbox-photo,
+  .lightbox[data-unified-lightbox].is-dismiss-up
+  .lightbox-video{
     transform:
       translate3d(
         0,
-        -56px,
+        -60px,
         0
       )
-      scale(.965)!important;
+      scale(.955)!important;
 
     opacity:
       0!important;
   }
 
 
-  .lightbox[data-gallery-lightbox]
+  .lightbox[data-unified-lightbox]
   .lightbox-toolbar button,
-  .lightbox[data-gallery-lightbox]
+  .lightbox[data-unified-lightbox]
   .lightbox-nav{
     min-width:
       44px;
@@ -328,25 +381,18 @@ const bookingHref =
   }
 
 
-  .lightbox[data-gallery-lightbox]
+  .lightbox[data-unified-lightbox]
   .lightbox-toolbar button:active,
-  .lightbox[data-gallery-lightbox]
+  .lightbox[data-unified-lightbox]
   .lightbox-nav:active,
-  .lightbox[data-gallery-lightbox]
+  .lightbox[data-unified-lightbox]
   .lightbox-book:active{
     transform:
       scale(.96);
   }
 
 
-  .lightbox[data-gallery-lightbox].has-load-error
-  .lightbox-caption{
-    opacity:
-      .9;
-  }
-
-
-  @keyframes gallery-lightbox-open{
+  @keyframes unified-lightbox-open{
     from{
       opacity:
         0;
@@ -359,7 +405,7 @@ const bookingHref =
   }
 
 
-  @keyframes gallery-backdrop-open{
+  @keyframes unified-backdrop-open{
     from{
       background:
         rgba(
@@ -384,7 +430,7 @@ const bookingHref =
 
   @media(max-width:700px){
 
-    .lightbox[data-gallery-lightbox]
+    .lightbox[data-unified-lightbox]
     .lightbox-toolbar{
       padding-top:
         max(
@@ -412,7 +458,7 @@ const bookingHref =
     }
 
 
-    .lightbox[data-gallery-lightbox]
+    .lightbox[data-unified-lightbox]
     .lightbox-book{
       bottom:
         max(
@@ -433,11 +479,13 @@ const bookingHref =
       reduce
   ){
 
-    .lightbox[data-gallery-lightbox],
-    .lightbox[data-gallery-lightbox][open],
-    .lightbox[data-gallery-lightbox]::backdrop,
-    .lightbox[data-gallery-lightbox]
-    .lightbox-photo{
+    .lightbox[data-unified-lightbox],
+    .lightbox[data-unified-lightbox][open],
+    .lightbox[data-unified-lightbox]::backdrop,
+    .lightbox[data-unified-lightbox]
+    .lightbox-photo,
+    .lightbox[data-unified-lightbox]
+    .lightbox-video{
       animation:
         none!important;
 
@@ -449,286 +497,282 @@ const bookingHref =
 
 
 <script>
-  const dialog =
+  const lightbox =
     document
       .querySelector<HTMLDialogElement>(
-        '.lightbox[data-gallery-lightbox]'
+        '.lightbox[data-unified-lightbox]'
       );
 
 
-  const links =
-    Array.from(
-      document
-        .querySelectorAll<HTMLAnchorElement>(
-          '.gallery figure > a'
+  if(
+    lightbox
+  ){
+    const sourceMode =
+      lightbox.dataset.mediaSource ===
+        'instagram'
+        ? 'instagram'
+        : 'gallery';
+
+
+    const links =
+      Array.from(
+        document.querySelectorAll<HTMLAnchorElement>(
+          sourceMode ===
+            'instagram'
+            ? '.latest-card'
+            : '.gallery figure > a'
         )
-    );
+      );
 
 
-  if (
-    dialog &&
-    links.length
-  ) {
-    const lightbox =
-      dialog;
+    if(
+      links.length
+    ){
+      const photo =
+        lightbox
+          .querySelector<HTMLImageElement>(
+            '.lightbox-photo'
+          )!;
 
 
-    const photo =
-      lightbox
-        .querySelector<HTMLImageElement>(
-          '.lightbox-photo'
-        )!;
+      const video =
+        lightbox
+          .querySelector<HTMLVideoElement>(
+            '.lightbox-video'
+          )!;
 
 
-    const counter =
-      lightbox
-        .querySelector<HTMLElement>(
-          '.lightbox-counter'
-        )!;
+      const counter =
+        lightbox
+          .querySelector<HTMLElement>(
+            '.lightbox-counter'
+          )!;
 
 
-    const caption =
-      lightbox
-        .querySelector<HTMLElement>(
-          '.lightbox-caption'
-        )!;
+      const caption =
+        lightbox
+          .querySelector<HTMLElement>(
+            '.lightbox-caption'
+          )!;
 
 
-    const previousButton =
-      lightbox
-        .querySelector<HTMLButtonElement>(
-          '[data-prev]'
-        );
+      const action =
+        lightbox
+          .querySelector<HTMLAnchorElement>(
+            '[data-media-action]'
+          )!;
 
 
-    const nextButton =
-      lightbox
-        .querySelector<HTMLButtonElement>(
-          '[data-next]'
-        );
+      const previousButton =
+        lightbox
+          .querySelector<HTMLButtonElement>(
+            '[data-prev]'
+          );
 
 
-    const closeButton =
-      lightbox
-        .querySelector<HTMLButtonElement>(
-          '[data-close]'
-        );
+      const nextButton =
+        lightbox
+          .querySelector<HTMLButtonElement>(
+            '[data-next]'
+          );
 
 
-    const reduceMotion =
-      window
-        .matchMedia(
+      const closeButton =
+        lightbox
+          .querySelector<HTMLButtonElement>(
+            '[data-close]'
+          );
+
+
+      const reduceMotion =
+        window.matchMedia(
           '(prefers-reduced-motion: reduce)'
         );
 
 
-    const decodedImages =
-      new Map<
-        string,
-        Promise<void>
-      >();
+      const decodedImages =
+        new Map<
+          string,
+          Promise<void>
+        >();
 
 
-    let active =
-      0;
+      let active =
+        0;
 
 
-    let renderToken =
-      0;
+      let renderToken =
+        0;
 
 
-    let lastOpener:
-      HTMLAnchorElement |
-      null =
-      null;
+      let lastOpener:
+        HTMLAnchorElement |
+        null =
+        null;
 
 
-    let startX =
-      0;
+      let startX =
+        0;
 
 
-    let startY =
-      0;
+      let startY =
+        0;
 
 
-    let currentX =
-      0;
+      let currentX =
+        0;
 
 
-    let currentY =
-      0;
+      let currentY =
+        0;
 
 
-    let gestureStartedAt =
-      0;
+      let gestureStartedAt =
+        0;
 
 
-    let dragging =
-      false;
+      let dragging =
+        false;
 
 
-    let pointerId:
-      number |
-      null =
-      null;
+      let pointerId:
+        number |
+        null =
+        null;
 
 
-    let gestureAxis:
-      'x' |
-      'y' |
-      null =
-      null;
+      let gestureAxis:
+        'x' |
+        'y' |
+        null =
+        null;
 
 
-    if (
-      links.length <
-      2
-    ) {
-      if (
-        previousButton
-      ) {
-        previousButton.hidden =
-          true;
+      if(
+        links.length <
+        2
+      ){
+        if(
+          previousButton
+        ){
+          previousButton.hidden =
+            true;
+        }
+
+
+        if(
+          nextButton
+        ){
+          nextButton.hidden =
+            true;
+        }
       }
 
-      if (
-        nextButton
-      ) {
-        nextButton.hidden =
-          true;
-      }
-    }
 
-
-    function normalizeIndex(
-      index:
-        number
-    ) {
-      return (
-        (
-          index %
+      function normalizeIndex(
+        index:
+          number
+      ){
+        return (
+          (
+            index %
+            links.length
+          ) +
           links.length
-        ) +
-        links.length
-      ) %
-      links.length;
-    }
-
-
-    function wait(
-      milliseconds:
-        number
-    ) {
-      if (
-        milliseconds <=
-        0
-      ) {
-        return Promise.resolve();
+        ) %
+        links.length;
       }
 
-      return new Promise<void>(
-        resolve => {
-          window.setTimeout(
-            resolve,
-            milliseconds
-          );
+
+      function wait(
+        milliseconds:
+          number
+      ){
+        if(
+          milliseconds <=
+          0
+        ){
+          return Promise.resolve();
         }
-      );
-    }
 
 
-    function frame() {
-      return new Promise<void>(
-        resolve => {
-          requestAnimationFrame(
-            () => {
-              resolve();
-            }
-          );
-        }
-      );
-    }
-
-
-    /*
-     * Load and decode the real full-size image before
-     * replacing the photograph currently on screen.
-     *
-     * This prevents the blank flash between photographs.
-     */
-    function prepareImage(
-      source:
-        string
-    ) {
-      const existing =
-        decodedImages.get(
-          source
+        return new Promise<void>(
+          resolve=>{
+            window.setTimeout(
+              resolve,
+              milliseconds
+            );
+          }
         );
-
-      if (
-        existing
-      ) {
-        return existing;
       }
 
 
-      const promise =
-        new Promise<void>(
-          async (
-            resolve,
-            reject
-          ) => {
-            const image =
-              new Image();
+      function nextFrame(){
+        return new Promise<void>(
+          resolve=>{
+            requestAnimationFrame(
+              ()=>{
+                resolve();
+              }
+            );
+          }
+        );
+      }
 
 
-            image.decoding =
-              'async';
+      function prepareImage(
+        source:
+          string
+      ){
+        if(
+          !source
+        ){
+          return Promise.resolve();
+        }
 
 
-            image.src =
-              source;
+        const existing =
+          decodedImages.get(
+            source
+          );
 
 
-            try {
-              if (
-                typeof image.decode ===
-                'function'
-              ) {
-                await image.decode();
+        if(
+          existing
+        ){
+          return existing;
+        }
 
-              } else {
+
+        const promise =
+          (
+            async()=>{
+              const image =
+                new Image();
+
+
+              image.decoding =
+                'async';
+
+
+              image.src =
+                source;
+
+
+              if(
+                !image.complete
+              ){
                 await new Promise<void>(
-                  (
-                    loaded,
-                    failed
-                  ) => {
-                    if (
-                      image.complete
-                    ) {
-                      if (
-                        image.naturalWidth >
-                        0
-                      ) {
-                        loaded();
-
-                      } else {
-                        failed(
-                          new Error(
-                            'Image failed to load.'
-                          )
-                        );
-                      }
-
-                      return;
-                    }
+                  resolve=>{
+                    const done =
+                      ()=>{
+                        resolve();
+                      };
 
 
                     image.addEventListener(
                       'load',
-                      () => {
-                        loaded();
-                      },
+                      done,
                       {
                         once:
                           true
@@ -738,13 +782,7 @@ const bookingHref =
 
                     image.addEventListener(
                       'error',
-                      () => {
-                        failed(
-                          new Error(
-                            'Image failed to load.'
-                          )
-                        );
-                      },
+                      done,
                       {
                         once:
                           true
@@ -755,275 +793,501 @@ const bookingHref =
               }
 
 
-              if (
-                image.naturalWidth <=
-                0
-              ) {
-                throw new Error(
-                  'Image failed to decode.'
-                );
-              }
-
-
-              resolve();
-
-            } catch (
-              error
-            ) {
-              reject(
-                error
-              );
+              try{
+                if(
+                  image.naturalWidth >
+                  0
+                ){
+                  await image.decode();
+                }
+              }catch{}
             }
-          }
+          )();
+
+
+        decodedImages.set(
+          source,
+          promise
         );
 
 
-      decodedImages.set(
-        source,
-        promise
-      );
-
-
-      promise.catch(
-        () => {
-          decodedImages.delete(
-            source
-          );
-        }
-      );
-
-
-      return promise;
-    }
-
-
-    function preload(
-      index:
-        number
-    ) {
-      const normalized =
-        normalizeIndex(
-          index
-        );
-
-
-      const source =
-        links[
-          normalized
-        ]?.href;
-
-
-      if (
-        !source
-      ) {
-        return;
+        return promise;
       }
 
 
-      void prepareImage(
-        source
-      ).catch(
-        () => {
-          /*
-           * Preloading is opportunistic.
-           * A failed neighbour must not affect
-           * the photograph currently displayed.
-           */
+      function metadataFor(
+        index:
+          number
+      ){
+        const link =
+          links[
+            normalizeIndex(
+              index
+            )
+          ];
+
+
+        const sourceImage =
+          link
+            ?.querySelector<HTMLImageElement>(
+              'img'
+            );
+
+
+        const isVideo =
+          sourceMode ===
+            'instagram' &&
+          link
+            ?.dataset
+            .mediaType ===
+            'VIDEO';
+
+
+        const fullSource =
+          sourceMode ===
+            'gallery'
+            ? (
+                link
+                  ?.href ||
+                ''
+              )
+            : (
+                sourceImage
+                  ?.currentSrc ||
+                sourceImage
+                  ?.src ||
+                ''
+              );
+
+
+        const immediateSource =
+          sourceImage
+            ?.currentSrc ||
+          sourceImage
+            ?.src ||
+          fullSource;
+
+
+        const figure =
+          sourceMode ===
+            'gallery'
+            ? link
+                ?.closest(
+                  'figure'
+                )
+            : null;
+
+
+        const figureCaption =
+          figure
+            ?.querySelector(
+              'figcaption'
+            )
+            ?.textContent
+            ?.trim() ||
+          '';
+
+
+        const cardCaption =
+          link
+            ?.dataset
+            .caption ||
+          '';
+
+
+        return {
+          link,
+
+          sourceImage,
+
+          isVideo,
+
+          fullSource,
+
+          immediateSource,
+
+          videoSource:
+            link
+              ?.dataset
+              .mediaUrl ||
+            '',
+
+          poster:
+            link
+              ?.dataset
+              .poster ||
+            immediateSource,
+
+          alt:
+            sourceImage
+              ?.alt ||
+            link
+              ?.getAttribute(
+                'aria-label'
+              ) ||
+            '',
+
+          caption:
+            sourceMode ===
+              'instagram'
+              ? cardCaption
+              : figureCaption
+        };
+      }
+
+
+      function stopVideo(){
+        video.pause();
+
+
+        video.removeAttribute(
+          'src'
+        );
+
+
+        video.removeAttribute(
+          'poster'
+        );
+
+
+        video.load();
+
+
+        video.hidden =
+          true;
+      }
+
+
+      function activeMedia():
+        HTMLElement {
+
+        return video.hidden
+          ? photo
+          : video;
+      }
+
+
+      function resetOverlay(){
+        lightbox.style
+          .removeProperty(
+            '--lb-overlay-alpha'
+          );
+      }
+
+
+      function resetMedia(){
+        lightbox.classList.remove(
+          'is-dragging',
+          'is-dismiss-up',
+          'is-dismiss-down',
+          'is-switching',
+          'is-closing'
+        );
+
+
+        photo.style.transform =
+          'translate3d(0,0,0) scale(1)';
+
+
+        photo.style.opacity =
+          '1';
+
+
+        video.style.transform =
+          'translate3d(0,0,0) scale(1)';
+
+
+        video.style.opacity =
+          '1';
+
+
+        resetOverlay();
+      }
+
+
+      function updateMetadata(
+        index:
+          number
+      ){
+        const metadata =
+          metadataFor(
+            index
+          );
+
+
+        photo.alt =
+          metadata.alt;
+
+
+        caption.textContent =
+          metadata.caption;
+
+
+        counter.textContent =
+          `${normalizeIndex(index) + 1} / ${links.length}`;
+
+
+        if(
+          sourceMode ===
+            'instagram' &&
+          metadata.link
+        ){
+          action.href =
+            metadata.link.href;
         }
-      );
-    }
+      }
 
 
-    function metadataFor(
-      index:
-        number
-    ) {
-      const link =
-        links[
+      function preloadNeighbour(
+        index:
+          number
+      ){
+        const metadata =
+          metadataFor(
+            index
+          );
+
+
+        if(
+          metadata.isVideo ||
+          !metadata.fullSource
+        ){
+          return;
+        }
+
+
+        void prepareImage(
+          metadata.fullSource
+        );
+      }
+
+
+      async function show(
+        index:
+          number,
+
+        direction:
+          'next' |
+          'prev' |
+          'direct' =
+          'direct'
+      ){
+        const target =
           normalizeIndex(
             index
-          )
-        ];
-
-
-      const sourceImage =
-        link
-          ?.querySelector<HTMLImageElement>(
-            'img'
           );
 
 
-      const figure =
-        link
-          ?.closest(
-            'figure'
+        const metadata =
+          metadataFor(
+            target
           );
 
 
-      const figureCaption =
-        figure
-          ?.querySelector(
-            'figcaption'
-          )
-          ?.textContent
-          ?.trim() ||
-        '';
+        if(
+          !metadata.link
+        ){
+          return;
+        }
 
 
-      return {
-        link,
-
-        sourceImage,
-
-        alt:
-          sourceImage
-            ?.alt ||
-          '',
-
-        caption:
-          figureCaption
-      };
-    }
+        const token =
+          ++renderToken;
 
 
-    function updateMetadata(
-      index:
-        number
-    ) {
-      const metadata =
-        metadataFor(
-          index
+        lightbox.setAttribute(
+          'aria-busy',
+          'true'
         );
 
 
-      photo.alt =
-        metadata.alt;
+        /*
+         * Decode the next photograph before
+         * removing the one currently visible.
+         */
+        if(
+          !metadata.isVideo &&
+          metadata.fullSource
+        ){
+          await prepareImage(
+            metadata.fullSource
+          );
+        }
 
 
-      counter.textContent =
-        `${normalizeIndex(index) + 1} / ${links.length}`;
+        if(
+          token !==
+          renderToken ||
+          !lightbox.open
+        ){
+          return;
+        }
 
 
-      caption.textContent =
-        metadata.caption;
+        const previousMedia =
+          activeMedia();
 
 
-      lightbox.classList.remove(
-        'has-load-error'
-      );
-    }
+        if(
+          direction !==
+          'direct' &&
+          !reduceMotion.matches
+        ){
+          previousMedia.style.opacity =
+            '0';
 
 
-    function resetOverlay() {
-      lightbox.style
-        .removeProperty(
-          '--lb-overlay-alpha'
-        );
-    }
+          previousMedia.style.transform =
+            direction ===
+              'next'
+              ? 'translate3d(-22px,0,0) scale(.988)'
+              : 'translate3d(22px,0,0) scale(.988)';
 
 
-    function resetPhoto() {
-      lightbox.classList.remove(
-        'is-dragging',
-        'is-dismiss-up',
-        'is-dismiss-down',
-        'is-switching',
-        'is-closing',
-        'has-load-error'
-      );
+          await wait(
+            105
+          );
+        }
 
 
-      photo.style.transform =
-        'translate3d(0,0,0) scale(1)';
+        if(
+          token !==
+          renderToken ||
+          !lightbox.open
+        ){
+          return;
+        }
 
 
-      photo.style.opacity =
-        '1';
+        active =
+          target;
 
 
-      resetOverlay();
-    }
-
-
-    function showLoadError() {
-      lightbox.classList.add(
-        'has-load-error'
-      );
-
-
-      caption.textContent =
-        document
-          .documentElement
-          .lang ===
-          'sq'
-          ? 'Fotografia nuk u ngarkua. Provo përsëri.'
-          : 'The photograph could not be loaded. Try again.';
-    }
-
-
-    /*
-     * Replace the current photograph only after
-     * the next full-size image has decoded.
-     */
-    async function show(
-      index:
-        number,
-
-      direction:
-        'next' |
-        'prev' |
-        'direct' =
-        'direct'
-    ) {
-      const target =
-        normalizeIndex(
-          index
-        );
-
-
-      active =
-        target;
-
-
-      const metadata =
-        metadataFor(
+        updateMetadata(
           target
         );
 
 
-      if (
-        !metadata.link
-      ) {
-        return;
-      }
+        stopVideo();
 
 
-      const source =
-        metadata.link.href;
+        if(
+          metadata.isVideo &&
+          metadata.videoSource
+        ){
+          photo.hidden =
+            true;
 
 
-      const token =
-        ++renderToken;
+          video.hidden =
+            false;
 
 
-      lightbox.setAttribute(
-        'aria-busy',
-        'true'
-      );
+          video.poster =
+            metadata.poster;
 
 
-      try {
-        await prepareImage(
-          source
-        );
+          video.src =
+            metadata.videoSource;
 
-      } catch {
-        if (
-          token !==
-          renderToken
-        ) {
-          return;
+
+          video.currentTime =
+            0;
+
+
+          video.style.transition =
+            'none';
+
+
+          video.style.opacity =
+            '0';
+
+
+          video.style.transform =
+            direction ===
+              'prev'
+              ? 'translate3d(-20px,0,0) scale(.988)'
+              : 'translate3d(20px,0,0) scale(.988)';
+
+
+          video.load();
+
+
+          await nextFrame();
+
+
+          video.style.transition =
+            '';
+
+
+          await nextFrame();
+
+
+          video.style.opacity =
+            '1';
+
+
+          video.style.transform =
+            'translate3d(0,0,0) scale(1)';
+
+
+          void video
+            .play()
+            .catch(
+              ()=>{}
+            );
+
+        }else{
+          video.hidden =
+            true;
+
+
+          photo.hidden =
+            false;
+
+
+          photo.style.transition =
+            'none';
+
+
+          photo.style.opacity =
+            '0';
+
+
+          photo.style.transform =
+            direction ===
+              'prev'
+              ? 'translate3d(-20px,0,0) scale(.988)'
+              : 'translate3d(20px,0,0) scale(.988)';
+
+
+          photo.src =
+            metadata.fullSource ||
+            metadata.immediateSource;
+
+
+          await nextFrame();
+
+
+          photo.style.transition =
+            '';
+
+
+          await nextFrame();
+
+
+          photo.style.opacity =
+            '1';
+
+
+          photo.style.transform =
+            'translate3d(0,0,0) scale(1)';
         }
+
+
+        lightbox.classList.remove(
+          'is-switching'
+        );
 
 
         lightbox.removeAttribute(
@@ -1031,518 +1295,150 @@ const bookingHref =
         );
 
 
-        showLoadError();
-
-        return;
-      }
-
-
-      if (
-        token !==
-        renderToken ||
-        !lightbox.open
-      ) {
-        return;
-      }
-
-
-      const transitionTime =
-        reduceMotion.matches
-          ? 0
-          : 105;
-
-
-      lightbox.classList.add(
-        'is-switching'
-      );
-
-
-      if (
-        direction !==
-        'direct'
-      ) {
-        photo.style.transform =
-          direction ===
-          'next'
-            ? 'translate3d(-20px,0,0) scale(.992)'
-            : 'translate3d(20px,0,0) scale(.992)';
-
-
-        photo.style.opacity =
-          '0';
-
-
-        await wait(
-          transitionTime
+        preloadNeighbour(
+          target +
+          1
         );
 
 
-        if (
-          token !==
-          renderToken ||
-          !lightbox.open
-        ) {
-          return;
-        }
-      }
-
-
-      updateMetadata(
-        target
-      );
-
-
-      if (
-        direction ===
-        'next'
-      ) {
-        photo.style.transition =
-          'none';
-
-        photo.style.transform =
-          'translate3d(20px,0,0) scale(.992)';
-
-        photo.style.opacity =
-          '0';
-
-      } else if (
-        direction ===
-        'prev'
-      ) {
-        photo.style.transition =
-          'none';
-
-        photo.style.transform =
-          'translate3d(-20px,0,0) scale(.992)';
-
-        photo.style.opacity =
-          '0';
-
-      } else {
-        photo.style.transition =
-          'none';
-
-        photo.style.opacity =
-          '.86';
-      }
-
-
-      photo.src =
-        source;
-
-
-      await frame();
-
-
-      if (
-        token !==
-        renderToken ||
-        !lightbox.open
-      ) {
-        return;
-      }
-
-
-      photo.style.transition =
-        '';
-
-
-      await frame();
-
-
-      photo.style.transform =
-        'translate3d(0,0,0) scale(1)';
-
-
-      photo.style.opacity =
-        '1';
-
-
-      lightbox.classList.remove(
-        'is-switching'
-      );
-
-
-      lightbox.removeAttribute(
-        'aria-busy'
-      );
-
-
-      preload(
-        target + 1
-      );
-
-
-      preload(
-        target - 1
-      );
-    }
-
-
-    function openLightbox(
-      index:
-        number,
-
-      opener:
-        HTMLAnchorElement
-    ) {
-      const target =
-        normalizeIndex(
-          index
+        preloadNeighbour(
+          target -
+          1
         );
+      }
 
 
-      active =
-        target;
+      function openLightbox(
+        index:
+          number,
+
+        opener:
+          HTMLAnchorElement
+      ){
+        const target =
+          normalizeIndex(
+            index
+          );
 
 
-      lastOpener =
-        opener;
+        const metadata =
+          metadataFor(
+            target
+          );
 
 
-      renderToken +=
-        1;
+        active =
+          target;
 
 
-      resetPhoto();
+        lastOpener =
+          opener;
 
 
-      updateMetadata(
-        target
-      );
+        renderToken +=
+          1;
 
 
-      const metadata =
-        metadataFor(
+        resetMedia();
+
+
+        updateMetadata(
           target
         );
 
 
-      /*
-       * Use the already-visible thumbnail immediately,
-       * then replace it with the decoded full-size file.
-       */
-      const immediateSource =
-        metadata.sourceImage
-          ?.currentSrc ||
-        metadata.sourceImage
-          ?.src ||
-        metadata.link
-          ?.href;
+        /*
+         * Immediate thumbnail first,
+         * decoded large image second.
+         */
+        if(
+          !metadata.isVideo &&
+          metadata.immediateSource
+        ){
+          photo.hidden =
+            false;
 
 
-      if (
-        immediateSource
-      ) {
-        photo.src =
-          immediateSource;
-      }
+          video.hidden =
+            true;
 
 
-      if (
-        !lightbox.open
-      ) {
-        lightbox.showModal();
-      }
+          photo.src =
+            metadata.immediateSource;
+
+        }else if(
+          metadata.isVideo
+        ){
+          photo.hidden =
+            true;
 
 
-      document
-        .documentElement
-        .classList
-        .add(
-          'lightbox-open'
-        );
+          video.hidden =
+            false;
 
 
-      void show(
-        target,
-        'direct'
-      );
-
-
-      window.setTimeout(
-        () => {
-          closeButton
-            ?.focus({
-              preventScroll:
-                true
-            });
-        },
-        0
-      );
-    }
-
-
-    async function closeLightbox(
-      direction:
-        'up' |
-        'down' |
-        'fade' =
-        'fade'
-    ) {
-      if (
-        !lightbox.open ||
-        lightbox.classList.contains(
-          'is-closing'
-        )
-      ) {
-        return;
-      }
-
-
-      renderToken +=
-        1;
-
-
-      lightbox.removeAttribute(
-        'aria-busy'
-      );
-
-
-      lightbox.classList.remove(
-        'is-dragging',
-        'is-switching'
-      );
-
-
-      if (
-        direction ===
-        'up'
-      ) {
-        lightbox.classList.add(
-          'is-dismiss-up'
-        );
-      }
-
-
-      if (
-        direction ===
-        'down'
-      ) {
-        lightbox.classList.add(
-          'is-dismiss-down'
-        );
-      }
-
-
-      lightbox.classList.add(
-        'is-closing'
-      );
-
-
-      await wait(
-        reduceMotion.matches
-          ? 0
-          : 200
-      );
-
-
-      if (
-        lightbox.open
-      ) {
-        lightbox.close();
-      }
-    }
-
-
-    function snapBack() {
-      dragging =
-        false;
-
-
-      pointerId =
-        null;
-
-
-      gestureAxis =
-        null;
-
-
-      currentX =
-        0;
-
-
-      currentY =
-        0;
-
-
-      lightbox.classList.remove(
-        'is-dragging'
-      );
-
-
-      photo.style.transform =
-        'translate3d(0,0,0) scale(1)';
-
-
-      photo.style.opacity =
-        '1';
-
-
-      resetOverlay();
-    }
-
-
-    links.forEach(
-      (
-        link,
-        index
-      ) => {
-        link.addEventListener(
-          'click',
-          event => {
-
-            if (
-              event.ctrlKey ||
-              event.metaKey ||
-              event.shiftKey ||
-              event.altKey
-            ) {
-              return;
-            }
-
-
-            event.preventDefault();
-
-
-            openLightbox(
-              index,
-              link
-            );
+          if(
+            metadata.poster
+          ){
+            video.poster =
+              metadata.poster;
           }
-        );
-      }
-    );
-
-
-    previousButton
-      ?.addEventListener(
-        'click',
-        event => {
-
-          event.stopPropagation();
-
-
-          void show(
-            active - 1,
-            'prev'
-          );
-        }
-      );
-
-
-    nextButton
-      ?.addEventListener(
-        'click',
-        event => {
-
-          event.stopPropagation();
-
-
-          void show(
-            active + 1,
-            'next'
-          );
-        }
-      );
-
-
-    closeButton
-      ?.addEventListener(
-        'click',
-        event => {
-
-          event.stopPropagation();
-
-
-          void closeLightbox(
-            'fade'
-          );
-        }
-      );
-
-
-    /*
-     * Click on empty backdrop / stage closes the viewer.
-     */
-    lightbox.addEventListener(
-      'click',
-      event => {
-
-        if (
-          event.target ===
-          lightbox
-        ) {
-          void closeLightbox(
-            'fade'
-          );
-        }
-      }
-    );
-
-
-    /*
-     * Native dialog Escape would close immediately.
-     * Prevent that so our closing transition can finish.
-     */
-    lightbox.addEventListener(
-      'cancel',
-      event => {
-
-        event.preventDefault();
-
-
-        void closeLightbox(
-          'fade'
-        );
-      }
-    );
-
-
-    lightbox.addEventListener(
-      'keydown',
-      event => {
-
-        if (
-          event.key ===
-          'ArrowLeft'
-        ) {
-          event.preventDefault();
-
-
-          void show(
-            active - 1,
-            'prev'
-          );
         }
 
 
-        if (
-          event.key ===
-          'ArrowRight'
-        ) {
-          event.preventDefault();
-
-
-          void show(
-            active + 1,
-            'next'
-          );
+        if(
+          !lightbox.open
+        ){
+          lightbox.showModal();
         }
-      }
-    );
 
-
-    lightbox.addEventListener(
-      'close',
-      () => {
 
         document
           .documentElement
           .classList
-          .remove(
+          .add(
             'lightbox-open'
           );
+
+
+        void show(
+          target,
+          'direct'
+        );
+
+
+        window.setTimeout(
+          ()=>{
+            closeButton
+              ?.focus({
+                preventScroll:
+                  true
+              });
+          },
+          0
+        );
+      }
+
+
+      async function closeLightbox(
+        direction:
+          'up' |
+          'down' |
+          'fade' =
+          'fade'
+      ){
+        if(
+          !lightbox.open ||
+          lightbox.classList.contains(
+            'is-closing'
+          )
+        ){
+          return;
+        }
+
+
+        renderToken +=
+          1;
 
 
         lightbox.removeAttribute(
@@ -1551,84 +1447,62 @@ const bookingHref =
 
 
         lightbox.classList.remove(
-          'is-closing',
-          'is-dismiss-up',
-          'is-dismiss-down',
           'is-dragging',
-          'is-switching',
-          'has-load-error'
+          'is-switching'
         );
 
 
-        photo.removeAttribute(
-          'src'
-        );
-
-
-        photo.style.transition =
-          '';
-
-
-        resetPhoto();
-
-
-        const opener =
-          lastOpener;
-
-
-        lastOpener =
-          null;
-
-
-        if (
-          opener
-        ) {
-          requestAnimationFrame(
-            () => {
-              opener.focus({
-                preventScroll:
-                  true
-              });
-            }
+        if(
+          direction ===
+            'up'
+        ){
+          lightbox.classList.add(
+            'is-dismiss-up'
           );
         }
+
+
+        if(
+          direction ===
+            'down'
+        ){
+          lightbox.classList.add(
+            'is-dismiss-down'
+          );
+        }
+
+
+        lightbox.classList.add(
+          'is-closing'
+        );
+
+
+        await wait(
+          reduceMotion.matches
+            ? 0
+            : 200
+        );
+
+
+        if(
+          lightbox.open
+        ){
+          lightbox.close();
+        }
       }
-    );
 
 
-    photo.addEventListener(
-      'pointerdown',
-      event => {
-
-        if (
-          lightbox.classList.contains(
-            'is-switching'
-          )
-        ) {
-          return;
-        }
-
-
-        if (
-          event.pointerType ===
-            'mouse' &&
-          event.button !==
-            0
-        ) {
-          return;
-        }
+      function snapBack(){
+        dragging =
+          false;
 
 
         pointerId =
-          event.pointerId;
+          null;
 
 
-        startX =
-          event.clientX;
-
-
-        startY =
-          event.clientY;
+        gestureAxis =
+          null;
 
 
         currentX =
@@ -1639,361 +1513,606 @@ const bookingHref =
           0;
 
 
-        gestureAxis =
-          null;
-
-
-        gestureStartedAt =
-          performance.now();
-
-
-        dragging =
-          true;
-
-
-        lightbox.classList.add(
+        lightbox.classList.remove(
           'is-dragging'
         );
 
 
-        photo
-          .setPointerCapture?.(
-            event.pointerId
-          );
-      }
-    );
+        photo.style.transform =
+          'translate3d(0,0,0) scale(1)';
 
 
-    photo.addEventListener(
-      'pointermove',
-      event => {
-
-        if (
-          !dragging ||
-          pointerId !==
-            event.pointerId
-        ) {
-          return;
-        }
-
-
-        const rawX =
-          event.clientX -
-          startX;
-
-
-        const rawY =
-          event.clientY -
-          startY;
-
-
-        const absRawX =
-          Math.abs(
-            rawX
-          );
-
-
-        const absRawY =
-          Math.abs(
-            rawY
-          );
-
-
-        if (
-          !gestureAxis &&
-          Math.max(
-            absRawX,
-            absRawY
-          ) >
-            10
-        ) {
-          gestureAxis =
-            absRawX >
-            absRawY
-              ? 'x'
-              : 'y';
-        }
-
-
-        if (
-          gestureAxis ===
-          'x'
-        ) {
-          currentX =
-            rawX;
-
-
-          currentY =
-            0;
-
-
-          const distance =
-            Math.abs(
-              currentX
-            );
-
-
-          const scale =
-            Math.max(
-              .975,
-              1 -
-                distance /
-                  4200
-            );
-
-
-          const opacity =
-            Math.max(
-              .55,
-              1 -
-                distance /
-                  900
-            );
-
-
-          photo.style.transform =
-            `translate3d(${currentX}px,0,0) scale(${scale})`;
-
-
-          photo.style.opacity =
-            String(
-              opacity
-            );
-
-
-          return;
-        }
-
-
-        if (
-          gestureAxis ===
-          'y'
-        ) {
-          currentX =
-            0;
-
-
-          currentY =
-            rawY;
-
-
-          const distance =
-            Math.abs(
-              currentY
-            );
-
-
-          const scale =
-            Math.max(
-              .94,
-              1 -
-                distance /
-                  2300
-            );
-
-
-          const opacity =
-            Math.max(
-              .45,
-              1 -
-                distance /
-                  760
-            );
-
-
-          const overlayAlpha =
-            Math.max(
-              .36,
-              .985 -
-                distance /
-                  650
-            );
-
-
-          photo.style.transform =
-            `translate3d(0,${currentY}px,0) scale(${scale})`;
-
-
-          photo.style.opacity =
-            String(
-              opacity
-            );
-
-
-          lightbox.style
-            .setProperty(
-              '--lb-overlay-alpha',
-              String(
-                overlayAlpha
-              )
-            );
-        }
-      }
-    );
-
-
-    function finishGesture(
-      event:
-        PointerEvent
-    ) {
-      if (
-        !dragging ||
-        pointerId !==
-          event.pointerId
-      ) {
-        return;
-      }
-
-
-      const duration =
-        Math.max(
-          1,
-          performance.now() -
-            gestureStartedAt
-        );
-
-
-      const velocityX =
-        currentX /
-        duration;
-
-
-      const velocityY =
-        currentY /
-        duration;
-
-
-      const absX =
-        Math.abs(
-          currentX
-        );
-
-
-      const absY =
-        Math.abs(
-          currentY
-        );
-
-
-      dragging =
-        false;
-
-
-      pointerId =
-        null;
-
-
-      lightbox.classList.remove(
-        'is-dragging'
-      );
-
-
-      /*
-       * Vertical dismiss:
-       * distance OR velocity can complete the gesture.
-       */
-      if (
-        gestureAxis ===
-          'y' &&
-        (
-          absY >
-            88 ||
-          Math.abs(
-            velocityY
-          ) >
-            .72
-        )
-      ) {
-        void closeLightbox(
-          currentY <
-            0
-            ? 'up'
-            : 'down'
-        );
-
-        return;
-      }
-
-
-      /*
-       * Horizontal navigation:
-       * also velocity-aware for quick flicks.
-       */
-      if (
-        gestureAxis ===
-          'x' &&
-        links.length >
-          1 &&
-        (
-          absX >
-            64 ||
-          Math.abs(
-            velocityX
-          ) >
-            .62
-        )
-      ) {
-        const goingNext =
-          currentX <
-          0;
-
-
-        currentX =
-          0;
-
-
-        currentY =
-          0;
-
-
-        gestureAxis =
-          null;
+        photo.style.opacity =
+          '1';
 
 
         resetOverlay();
-
-
-        void show(
-          active +
-            (
-              goingNext
-                ? 1
-                : -1
-            ),
-          goingNext
-            ? 'next'
-            : 'prev'
-        );
-
-        return;
       }
 
 
-      snapBack();
-    }
+      links
+        .forEach(
+          (
+            link,
+            index
+          )=>{
+            link.addEventListener(
+              'click',
+              event=>{
+                if(
+                  event.ctrlKey ||
+                  event.metaKey ||
+                  event.shiftKey ||
+                  event.altKey
+                ){
+                  return;
+                }
 
 
-    photo.addEventListener(
-      'pointerup',
-      finishGesture
-    );
+                event.preventDefault();
 
 
-    photo.addEventListener(
-      'pointercancel',
-      event => {
+                openLightbox(
+                  index,
+                  link
+                );
+              }
+            );
+          }
+        );
 
-        if (
+
+      previousButton
+        ?.addEventListener(
+          'click',
+          event=>{
+            event.stopPropagation();
+
+
+            void show(
+              active -
+                1,
+              'prev'
+            );
+          }
+        );
+
+
+      nextButton
+        ?.addEventListener(
+          'click',
+          event=>{
+            event.stopPropagation();
+
+
+            void show(
+              active +
+                1,
+              'next'
+            );
+          }
+        );
+
+
+      closeButton
+        ?.addEventListener(
+          'click',
+          event=>{
+            event.stopPropagation();
+
+
+            void closeLightbox(
+              'fade'
+            );
+          }
+        );
+
+
+      lightbox.addEventListener(
+        'click',
+        event=>{
+          if(
+            event.target ===
+            lightbox
+          ){
+            void closeLightbox(
+              'fade'
+            );
+          }
+        }
+      );
+
+
+      lightbox.addEventListener(
+        'cancel',
+        event=>{
+          event.preventDefault();
+
+
+          void closeLightbox(
+            'fade'
+          );
+        }
+      );
+
+
+      lightbox.addEventListener(
+        'keydown',
+        event=>{
+          if(
+            event.key ===
+            'ArrowLeft'
+          ){
+            event.preventDefault();
+
+
+            void show(
+              active -
+                1,
+              'prev'
+            );
+          }
+
+
+          if(
+            event.key ===
+            'ArrowRight'
+          ){
+            event.preventDefault();
+
+
+            void show(
+              active +
+                1,
+              'next'
+            );
+          }
+        }
+      );
+
+
+      lightbox.addEventListener(
+        'close',
+        ()=>{
+          document
+            .documentElement
+            .classList
+            .remove(
+              'lightbox-open'
+            );
+
+
+          lightbox.removeAttribute(
+            'aria-busy'
+          );
+
+
+          stopVideo();
+
+
+          lightbox.classList.remove(
+            'is-closing',
+            'is-dismiss-up',
+            'is-dismiss-down',
+            'is-dragging',
+            'is-switching'
+          );
+
+
+          photo.removeAttribute(
+            'src'
+          );
+
+
+          resetMedia();
+
+
+          const opener =
+            lastOpener;
+
+
+          lastOpener =
+            null;
+
+
+          if(
+            opener
+          ){
+            requestAnimationFrame(
+              ()=>{
+                opener.focus({
+                  preventScroll:
+                    true
+                });
+              }
+            );
+          }
+        }
+      );
+
+
+      photo.addEventListener(
+        'pointerdown',
+        event=>{
+          if(
+            lightbox.classList.contains(
+              'is-switching'
+            )
+          ){
+            return;
+          }
+
+
+          if(
+            event.pointerType ===
+              'mouse' &&
+            event.button !==
+              0
+          ){
+            return;
+          }
+
+
+          pointerId =
+            event.pointerId;
+
+
+          startX =
+            event.clientX;
+
+
+          startY =
+            event.clientY;
+
+
+          currentX =
+            0;
+
+
+          currentY =
+            0;
+
+
+          gestureAxis =
+            null;
+
+
+          gestureStartedAt =
+            performance.now();
+
+
+          dragging =
+            true;
+
+
+          lightbox.classList.add(
+            'is-dragging'
+          );
+
+
+          photo
+            .setPointerCapture?.(
+              event.pointerId
+            );
+        }
+      );
+
+
+      photo.addEventListener(
+        'pointermove',
+        event=>{
+          if(
+            !dragging ||
+            pointerId !==
+              event.pointerId
+          ){
+            return;
+          }
+
+
+          const rawX =
+            event.clientX -
+            startX;
+
+
+          const rawY =
+            event.clientY -
+            startY;
+
+
+          const absX =
+            Math.abs(
+              rawX
+            );
+
+
+          const absY =
+            Math.abs(
+              rawY
+            );
+
+
+          if(
+            !gestureAxis &&
+            Math.max(
+              absX,
+              absY
+            ) >
+              10
+          ){
+            gestureAxis =
+              absX >
+              absY
+                ? 'x'
+                : 'y';
+          }
+
+
+          if(
+            gestureAxis ===
+              'x'
+          ){
+            currentX =
+              rawX;
+
+
+            currentY =
+              0;
+
+
+            const distance =
+              Math.abs(
+                currentX
+              );
+
+
+            const scale =
+              Math.max(
+                .975,
+                1 -
+                distance /
+                4200
+              );
+
+
+            photo.style.transform =
+              `translate3d(${currentX}px,0,0) scale(${scale})`;
+
+
+            photo.style.opacity =
+              String(
+                Math.max(
+                  .58,
+                  1 -
+                  distance /
+                  900
+                )
+              );
+
+
+            return;
+          }
+
+
+          if(
+            gestureAxis ===
+              'y'
+          ){
+            currentX =
+              0;
+
+
+            currentY =
+              rawY;
+
+
+            const distance =
+              Math.abs(
+                currentY
+              );
+
+
+            const scale =
+              Math.max(
+                .94,
+                1 -
+                distance /
+                2300
+              );
+
+
+            const overlayAlpha =
+              Math.max(
+                .34,
+                .985 -
+                distance /
+                650
+              );
+
+
+            photo.style.transform =
+              `translate3d(0,${currentY}px,0) scale(${scale})`;
+
+
+            photo.style.opacity =
+              String(
+                Math.max(
+                  .45,
+                  1 -
+                  distance /
+                  760
+                )
+              );
+
+
+            lightbox.style
+              .setProperty(
+                '--lb-overlay-alpha',
+                String(
+                  overlayAlpha
+                )
+              );
+          }
+        }
+      );
+
+
+      function finishGesture(
+        event:
+          PointerEvent
+      ){
+        if(
           !dragging ||
           pointerId !==
             event.pointerId
-        ) {
+        ){
+          return;
+        }
+
+
+        const duration =
+          Math.max(
+            1,
+            performance.now() -
+            gestureStartedAt
+          );
+
+
+        const velocityX =
+          currentX /
+          duration;
+
+
+        const velocityY =
+          currentY /
+          duration;
+
+
+        const absX =
+          Math.abs(
+            currentX
+          );
+
+
+        const absY =
+          Math.abs(
+            currentY
+          );
+
+
+        dragging =
+          false;
+
+
+        pointerId =
+          null;
+
+
+        lightbox.classList.remove(
+          'is-dragging'
+        );
+
+
+        if(
+          gestureAxis ===
+            'y' &&
+          (
+            absY >
+              88 ||
+            Math.abs(
+              velocityY
+            ) >
+              .72
+          )
+        ){
+          void closeLightbox(
+            currentY <
+              0
+              ? 'up'
+              : 'down'
+          );
+
+
+          return;
+        }
+
+
+        if(
+          gestureAxis ===
+            'x' &&
+          links.length >
+            1 &&
+          (
+            absX >
+              64 ||
+            Math.abs(
+              velocityX
+            ) >
+              .62
+          )
+        ){
+          const goingNext =
+            currentX <
+            0;
+
+
+          currentX =
+            0;
+
+
+          currentY =
+            0;
+
+
+          gestureAxis =
+            null;
+
+
+          resetOverlay();
+
+
+          void show(
+            active +
+              (
+                goingNext
+                  ? 1
+                  : -1
+              ),
+            goingNext
+              ? 'next'
+              : 'prev'
+          );
+
+
           return;
         }
 
 
         snapBack();
       }
-    );
+
+
+      photo.addEventListener(
+        'pointerup',
+        finishGesture
+      );
+
+
+      photo.addEventListener(
+        'pointercancel',
+        event=>{
+          if(
+            !dragging ||
+            pointerId !==
+              event.pointerId
+          ){
+            return;
+          }
+
+
+          snapBack();
+        }
+      );
+    }
   }
 </script>
