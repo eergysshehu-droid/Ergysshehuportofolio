@@ -31,7 +31,10 @@ export async function getStaticPaths() {
   } = await content();
 
   return albums.map(
-    album => ({
+    (
+      album,
+      index
+    ) => ({
       params: {
         slug:
           album.slug
@@ -39,7 +42,19 @@ export async function getStaticPaths() {
 
       props: {
         album,
-        settings
+        settings,
+
+        nextAlbum:
+          albums.length >
+            1
+            ? albums[
+                (
+                  index +
+                  1
+                ) %
+                albums.length
+              ]
+            : undefined
       }
     })
   );
@@ -48,11 +63,13 @@ export async function getStaticPaths() {
 interface Props {
   album: Album;
   settings: Settings;
+  nextAlbum?: Album;
 }
 
 const {
   album,
-  settings
+  settings,
+  nextAlbum
 } = Astro.props;
 
 const lang =
@@ -102,6 +119,30 @@ const credits =
         album.credits
       )
     : album.credits;
+
+const nextTitle =
+  nextAlbum
+    ? (
+        isSq
+          ? (
+              nextAlbum.titleSq ||
+              nextAlbum.title
+            )
+          : nextAlbum.title
+      )
+    : '';
+
+const nextCategory =
+  nextAlbum
+    ? (
+        isSq
+          ? (
+              nextAlbum.categorySq ||
+              nextAlbum.category
+            )
+          : nextAlbum.category
+      )
+    : '';
 
 const seoDescription =
   description ||
@@ -179,8 +220,24 @@ const homeUrl =
 const coverUrl =
   photoUrl(
     album.cover,
-    1800
+    2000
   );
+
+const nextCoverUrl =
+  nextAlbum
+    ? photoUrl(
+        nextAlbum.cover,
+        2200
+      )
+    : '';
+
+const nextHref =
+  nextAlbum
+    ? localizedPath(
+        `/portfolio/${nextAlbum.slug}/`,
+        lang
+      )
+    : '';
 
 const projectImages = [
   coverUrl,
@@ -192,7 +249,7 @@ const projectImages = [
     photo =>
       photoUrl(
         photo,
-        1800
+        2200
       )
   )
 ]
@@ -401,7 +458,10 @@ const breadcrumbLd = {
     }
   />
 
-  <section class="collection-intro">
+  <section
+    class="collection-intro"
+    data-project-intro
+  >
     <a
       class="back-link"
       data-reveal
@@ -546,6 +606,14 @@ const breadcrumbLd = {
                         )
                       : photo.caption;
 
+                  const fullWidth =
+                    row.type ===
+                    'full';
+
+                  const pair =
+                    row.type ===
+                    'pair';
+
                   return (
                     <figure data-reveal>
                       <a
@@ -566,8 +634,7 @@ const breadcrumbLd = {
                         <div
                           data-image-reveal
                           style={
-                            row.type ===
-                            'full'
+                            fullWidth
                               ? `--focal-point:${photoPosition(photo)}`
                               : undefined
                           }
@@ -576,9 +643,8 @@ const breadcrumbLd = {
                             src={
                               photoUrl(
                                 photo,
-                                row.type ===
-                                  'full'
-                                  ? 2400
+                                fullWidth
+                                  ? 2200
                                   : 1800
                               )
                             }
@@ -588,13 +654,11 @@ const breadcrumbLd = {
                               )
                             }
                             sizes={
-                              row.type ===
-                                'full'
+                              fullWidth
                                 ? '100vw'
-                                : row.type ===
-                                    'pair'
-                                  ? '(max-width:700px) 90vw, 44vw'
-                                  : '(max-width:700px) 90vw, 60vw'
+                                : pair
+                                  ? '(max-width: 700px) 100vw, (max-width: 1200px) 48vw, 700px'
+                                  : '(max-width: 700px) 100vw, (max-width: 1200px) 78vw, 1100px'
                             }
                             width={
                               photo.width
@@ -613,11 +677,7 @@ const breadcrumbLd = {
                                 ? 'high'
                                 : undefined
                             }
-                            decoding={
-                              isFirst
-                                ? 'sync'
-                                : 'async'
-                            }
+                            decoding="async"
                           />
                         </div>
                       </a>
@@ -663,10 +723,81 @@ const breadcrumbLd = {
   >
     {
       isSq
-        ? 'Rezervo ↗'
-        : 'Book now ↗'
+        ? 'Rezervo një sesion ↗'
+        : 'Book a session ↗'
     }
   </a>
 
+  {
+    nextAlbum &&
+    nextHref &&
+    nextCoverUrl && (
+      <section
+        class="next-project"
+        aria-label={
+          isSq
+            ? 'Projekti tjetër'
+            : 'Next project'
+        }
+      >
+        <a
+          href={nextHref}
+          data-next-project
+        >
+          <div
+            class="next-project-media"
+            aria-hidden="true"
+          >
+            <img
+              src={nextCoverUrl}
+              srcset={
+                photoSet(
+                  nextAlbum.cover
+                )
+              }
+              sizes="100vw"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width={
+                nextAlbum.cover?.width ||
+                1800
+              }
+              height={
+                nextAlbum.cover?.height ||
+                1200
+              }
+            />
+          </div>
+
+          <div class="next-project-copy">
+            <span class="next-project-eyebrow">
+              {
+                isSq
+                  ? 'PROJEKTI TJETËR'
+                  : 'NEXT PROJECT'
+              }
+              {
+                nextCategory
+                  ? ` / ${nextCategory}`
+                  : ''
+              }
+            </span>
+
+            <h2 class="next-project-title">
+              {nextTitle}
+            </h2>
+
+            <span
+              class="next-project-arrow"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </div>
+        </a>
+      </section>
+    )
+  }
+
   <Lightbox/>
-</Layout>
