@@ -1,0 +1,1644 @@
+/* ==========================================================================
+   ERGYS SHEHU — PORTFOLIO V3
+   Editorial / cinematic interface layer
+   --------------------------------------------------------------------------
+   IMPORTANT:
+   This file deliberately does NOT change:
+   - .project-card position
+   - .project-card top
+   - .work-section overflow
+   - .project-grid overflow
+   - --stack-blur
+   - --stack-darkness
+
+   The existing homepage stacking system remains untouched.
+   ========================================================================== */
+
+
+:root{
+  --v3-page-pad:
+    clamp(
+      20px,
+      3.25vw,
+      56px
+    );
+
+  --v3-radius-sm:
+    10px;
+
+  --v3-radius:
+    18px;
+
+  --v3-radius-lg:
+    28px;
+
+  --v3-glass:
+    rgba(
+      248,
+      246,
+      240,
+      .72
+    );
+
+  --v3-glass-dark:
+    rgba(
+      12,
+      13,
+      11,
+      .72
+    );
+
+  --v3-shadow:
+    0
+    28px
+    80px
+    rgba(
+      0,
+      0,
+      0,
+      .09
+    );
+
+  --v3-ease:
+    cubic-bezier(
+      .2,
+      .75,
+      .2,
+      1
+    );
+
+  --v3-fast:
+    220ms;
+
+  --v3-medium:
+    520ms;
+}
+
+
+/* ==========================================================================
+   GLOBAL
+   ========================================================================== */
+
+html{
+  scroll-padding-top:
+    96px;
+
+  text-rendering:
+    optimizeLegibility;
+}
+
+body{
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+}
+
+::selection{
+  background:
+    var(
+      --accent
+    );
+
+  color:
+    #151515;
+}
+
+a,
+button,
+summary{
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+/* ==========================================================================
+   HEADER — DESKTOP
+   ========================================================================== */
+
+.site-header{
+  margin:
+    12px
+    var(
+      --v3-page-pad
+    )
+    0;
+
+  width:
+    calc(
+      100% -
+      (
+        var(
+          --v3-page-pad
+        ) *
+        2
+      )
+    );
+
+  border-radius:
+    999px;
+
+  padding:
+    10px
+    12px
+    10px
+    18px;
+
+  transition:
+    background
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    ),
+    color
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    ),
+    border-color
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    ),
+    box-shadow
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    ),
+    backdrop-filter
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.site-header.is-scrolled{
+  backdrop-filter:
+    blur(
+      20px
+    )
+    saturate(
+      130%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      20px
+    )
+    saturate(
+      130%
+    );
+
+  box-shadow:
+    0
+    12px
+    45px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    );
+}
+
+.ergys-wordmark{
+  letter-spacing:
+    -.035em;
+
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.ergys-wordmark:hover{
+  opacity:
+    .66;
+}
+
+.desktop-nav{
+  gap:
+    clamp(
+      5px,
+      .55vw,
+      12px
+    );
+}
+
+.desktop-nav>a{
+  position:
+    relative;
+
+  padding:
+    9px
+    8px;
+
+  border-radius:
+    999px;
+
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease,
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    transform
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.desktop-nav>a:not(.nav-book):hover{
+  background:
+    rgba(
+      127,
+      127,
+      127,
+      .08
+    );
+
+  transform:
+    translateY(
+      -1px
+    );
+}
+
+.nav-book{
+  padding:
+    10px
+    16px!important;
+
+  border:
+    1px solid
+    currentColor;
+
+  transition:
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    color
+    var(
+      --v3-fast
+    )
+    ease,
+    transform
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    )!important;
+}
+
+.nav-book:hover{
+  background:
+    var(
+      --accent
+    )!important;
+
+  color:
+    #171714!important;
+
+  border-color:
+    var(
+      --accent
+    )!important;
+
+  transform:
+    translateY(
+      -2px
+    )!important;
+}
+
+
+/* ==========================================================================
+   LANGUAGE SWITCH
+   ========================================================================== */
+
+.language-switch{
+  min-height:
+    34px;
+
+  border:
+    1px solid
+    rgba(
+      127,
+      127,
+      127,
+      .18
+    );
+
+  border-radius:
+    999px;
+
+  overflow:
+    hidden;
+}
+
+.language-switch button{
+  min-width:
+    42px;
+
+  min-height:
+    32px;
+
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease,
+    transform
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.language-switch button:hover{
+  transform:
+    translateY(
+      -1px
+    );
+}
+
+
+/* ==========================================================================
+   MOBILE MENU
+   ========================================================================== */
+
+.mobile-menu-screen{
+  padding:
+    22px
+    20px
+    max(
+      24px,
+      env(
+        safe-area-inset-bottom
+      )
+    );
+
+  backdrop-filter:
+    blur(
+      26px
+    )
+    saturate(
+      115%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      26px
+    )
+    saturate(
+      115%
+    );
+}
+
+.mobile-menu-head{
+  padding-bottom:
+    20px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      127,
+      127,
+      127,
+      .16
+    );
+}
+
+.mobile-menu nav{
+  display:
+    grid;
+
+  gap:
+    0;
+
+  margin-top:
+    24px;
+}
+
+.mobile-menu nav a{
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  min-height:
+    58px;
+
+  padding:
+    4px
+    0;
+
+  border-bottom:
+    1px solid
+    rgba(
+      127,
+      127,
+      127,
+      .13
+    );
+
+  font-size:
+    clamp(
+      28px,
+      8.2vw,
+      44px
+    );
+
+  line-height:
+    1;
+
+  letter-spacing:
+    -.045em;
+
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease,
+    padding
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.mobile-menu nav a:hover{
+  opacity:
+    .58;
+
+  padding-left:
+    7px;
+}
+
+.mobile-menu-footer{
+  margin-top:
+    auto;
+
+  padding-top:
+    28px;
+}
+
+
+/* ==========================================================================
+   HOMEPAGE HERO
+   Keeps original hero mechanics untouched.
+   ========================================================================== */
+
+.hero-scroll-scene{
+  background:
+    #070807;
+}
+
+.hero-light-sweep{
+  opacity:
+    .78;
+
+  mix-blend-mode:
+    screen;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================================
+   SELECTED WORK
+   DO NOT TOUCH STICKY / OVERFLOW / STACKING
+   ========================================================================== */
+
+body.is-home .work-toolbar{
+  padding-top:
+    clamp(
+      26px,
+      3vw,
+      44px
+    );
+
+  padding-bottom:
+    clamp(
+      20px,
+      2.4vw,
+      34px
+    );
+}
+
+body.is-home .filters{
+  gap:
+    8px;
+}
+
+body.is-home .filters button{
+  padding:
+    8px
+    12px;
+
+  border:
+    1px solid
+    rgba(
+      127,
+      127,
+      127,
+      .17
+    );
+
+  border-radius:
+    999px;
+
+  transition:
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    color
+    var(
+      --v3-fast
+    )
+    ease,
+    border-color
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+body.is-home .filters button:hover{
+  border-color:
+    rgba(
+      127,
+      127,
+      127,
+      .4
+    );
+}
+
+body.is-home .filters button[aria-pressed="true"]{
+  background:
+    var(
+      --accent
+    );
+
+  border-color:
+    var(
+      --accent
+    );
+
+  color:
+    #171714!important;
+}
+
+/*
+  Only image treatment.
+  No transform on .project-card itself.
+*/
+body.is-home .project-image{
+  border-radius:
+    clamp(
+      0px,
+      .7vw,
+      12px
+    );
+
+  isolation:
+    isolate;
+}
+
+body.is-home .project-image img{
+  transition:
+    transform
+    900ms
+    var(
+      --v3-ease
+    ),
+    filter
+    700ms
+    var(
+      --v3-ease
+    );
+}
+
+@media(hover:hover) and (pointer:fine){
+
+  body.is-home .project-card:hover .project-image img{
+    transform:
+      scale(
+        1.018
+      );
+  }
+}
+
+
+/* ==========================================================================
+   COLLECTION / INNER PAGE HERO
+   ========================================================================== */
+
+.collection-intro{
+  position:
+    relative;
+
+  padding-left:
+    var(
+      --v3-page-pad
+    )!important;
+
+  padding-right:
+    var(
+      --v3-page-pad
+    )!important;
+}
+
+.collection-intro::after{
+  content:
+    "";
+
+  position:
+    absolute;
+
+  left:
+    var(
+      --v3-page-pad
+    );
+
+  right:
+    var(
+      --v3-page-pad
+    );
+
+  bottom:
+    0;
+
+  height:
+    1px;
+
+  background:
+    currentColor;
+
+  opacity:
+    .09;
+}
+
+.collection-intro .kicker{
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .12em;
+}
+
+.collection-intro .kicker::before{
+  content:
+    "";
+
+  width:
+    22px;
+
+  height:
+    1px;
+
+  background:
+    currentColor;
+
+  opacity:
+    .45;
+}
+
+.collection-intro h1{
+  text-wrap:
+    balance;
+}
+
+.collection-intro>p:not(.kicker){
+  font-size:
+    clamp(
+      15px,
+      1.1vw,
+      18px
+    );
+
+  line-height:
+    1.7;
+}
+
+.back-link{
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+
+  padding:
+    8px
+    12px;
+
+  margin-left:
+    -12px;
+
+  border-radius:
+    999px;
+
+  transition:
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    transform
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.back-link:hover{
+  background:
+    rgba(
+      127,
+      127,
+      127,
+      .08
+    );
+
+  transform:
+    translateX(
+      -3px
+    );
+}
+
+
+/* ==========================================================================
+   INNER PAGE BODY
+   ========================================================================== */
+
+.collection-body,
+.biography-layout,
+.journal-post-body{
+  padding-left:
+    var(
+      --v3-page-pad
+    );
+
+  padding-right:
+    var(
+      --v3-page-pad
+    );
+}
+
+.collection-body img,
+.biography-layout img,
+.journal-post img{
+  border-radius:
+    clamp(
+      0px,
+      .8vw,
+      14px
+    );
+}
+
+
+/* ==========================================================================
+   JOURNAL
+   ========================================================================== */
+
+.journal-list{
+  padding-left:
+    var(
+      --v3-page-pad
+    );
+
+  padding-right:
+    var(
+      --v3-page-pad
+    );
+}
+
+.journal-card{
+  border-radius:
+    var(
+      --v3-radius
+    );
+
+  transition:
+    transform
+    var(
+      --v3-medium
+    )
+    var(
+      --v3-ease
+    );
+}
+
+.journal-card-image{
+  border-radius:
+    var(
+      --v3-radius
+    );
+}
+
+.journal-card-image img{
+  transition:
+    transform
+    900ms
+    var(
+      --v3-ease
+    );
+}
+
+@media(hover:hover) and (pointer:fine){
+
+  .journal-card:hover{
+    transform:
+      translateY(
+        -5px
+      );
+  }
+
+  .journal-card:hover .journal-card-image img{
+    transform:
+      scale(
+        1.025
+      );
+  }
+}
+
+.journal-read{
+  padding-bottom:
+    3px;
+
+  border-bottom:
+    1px solid
+    currentColor;
+
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.journal-read:hover{
+  opacity:
+    .55;
+}
+
+.journal-post-body{
+  max-width:
+    1500px;
+
+  margin-inline:
+    auto;
+}
+
+.journal-post-body p{
+  font-size:
+    clamp(
+      16px,
+      1.12vw,
+      19px
+    );
+
+  line-height:
+    1.8;
+}
+
+.journal-post-body blockquote{
+  margin:
+    clamp(
+      42px,
+      6vw,
+      90px
+    )
+    auto;
+
+  max-width:
+    900px;
+
+  padding-left:
+    clamp(
+      20px,
+      3vw,
+      44px
+    );
+
+  font-size:
+    clamp(
+      26px,
+      3.3vw,
+      54px
+    );
+
+  line-height:
+    1.12;
+
+  letter-spacing:
+    -.035em;
+}
+
+
+/* ==========================================================================
+   ABOUT / BIO
+   ========================================================================== */
+
+.biography-layout{
+  gap:
+    clamp(
+      36px,
+      6vw,
+      100px
+    );
+}
+
+.bio-language{
+  border-radius:
+    var(
+      --v3-radius
+    );
+
+  transition:
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    border-color
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.bio-language summary{
+  min-height:
+    52px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+}
+
+.bio-language:hover{
+  background:
+    rgba(
+      127,
+      127,
+      127,
+      .035
+    );
+}
+
+
+/* ==========================================================================
+   AWARDS
+   ========================================================================== */
+
+.recognition-heading,
+.recognition-list{
+  padding-left:
+    var(
+      --v3-page-pad
+    );
+
+  padding-right:
+    var(
+      --v3-page-pad
+    );
+}
+
+.recognition-row{
+  transition:
+    padding-left
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    ),
+    background
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+@media(hover:hover) and (pointer:fine){
+
+  .recognition-row:hover{
+    padding-left:
+      12px!important;
+
+    background:
+      rgba(
+        127,
+        127,
+        127,
+        .035
+      );
+  }
+}
+
+
+/* ==========================================================================
+   LATEST / INSTAGRAM
+   ========================================================================== */
+
+.latest-section{
+  padding-left:
+    var(
+      --v3-page-pad
+    );
+
+  padding-right:
+    var(
+      --v3-page-pad
+    );
+}
+
+.latest-card{
+  border-radius:
+    clamp(
+      6px,
+      .65vw,
+      12px
+    );
+}
+
+.latest-card img{
+  transition:
+    transform
+    700ms
+    var(
+      --v3-ease
+    );
+}
+
+@media(hover:hover) and (pointer:fine){
+
+  .latest-card:hover img{
+    transform:
+      scale(
+        1.035
+      );
+  }
+}
+
+
+/* ==========================================================================
+   CONTACT
+   ========================================================================== */
+
+.contact-section{
+  position:
+    relative;
+
+  padding-left:
+    var(
+      --v3-page-pad
+    )!important;
+
+  padding-right:
+    var(
+      --v3-page-pad
+    )!important;
+}
+
+.contact-details .email{
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.contact-details .email:hover{
+  opacity:
+    .62;
+}
+
+
+/* ==========================================================================
+   BOOK PAGE
+   ========================================================================== */
+
+.booking-page input,
+.booking-page textarea,
+.booking-page select{
+  border-radius:
+    0!important;
+
+  transition:
+    border-color
+    var(
+      --v3-fast
+    )
+    ease,
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    box-shadow
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.booking-page input:focus,
+.booking-page textarea:focus,
+.booking-page select:focus{
+  box-shadow:
+    0
+    1px
+    0
+    var(
+      --accent
+    );
+
+  outline:
+    none;
+}
+
+.booking-page button[type="submit"]{
+  min-height:
+    52px;
+
+  border-radius:
+    999px!important;
+
+  transition:
+    transform
+    var(
+      --v3-fast
+    )
+    var(
+      --v3-ease
+    ),
+    background
+    var(
+      --v3-fast
+    )
+    ease,
+    color
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.booking-page button[type="submit"]:hover{
+  transform:
+    translateY(
+      -2px
+    );
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+footer{
+  padding-left:
+    var(
+      --v3-page-pad
+    )!important;
+
+  padding-right:
+    var(
+      --v3-page-pad
+    )!important;
+}
+
+.footer-name{
+  letter-spacing:
+    -.04em;
+}
+
+.footer-contact{
+  transition:
+    opacity
+    var(
+      --v3-fast
+    )
+    ease;
+}
+
+.footer-contact:hover{
+  opacity:
+    .56;
+}
+
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+@media(prefers-color-scheme:dark){
+
+  .site-header.is-scrolled{
+    background:
+      rgba(
+        10,
+        11,
+        9,
+        .78
+      )!important;
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        .08
+      )!important;
+  }
+
+  .desktop-nav>a:not(.nav-book):hover{
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .07
+      );
+  }
+
+  .mobile-menu-screen{
+    background:
+      rgba(
+        9,
+        10,
+        8,
+        .96
+      );
+  }
+
+  .collection-intro::after{
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .28
+      );
+  }
+
+  .bio-language:hover,
+  .recognition-row:hover{
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .028
+      );
+  }
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media(max-width:1000px){
+
+  .site-header{
+    margin:
+      8px
+      14px
+      0;
+
+    width:
+      calc(
+        100% -
+        28px
+      );
+  }
+
+  .desktop-nav{
+    gap:
+      1px;
+  }
+
+  .desktop-nav>a{
+    padding-left:
+      6px;
+
+    padding-right:
+      6px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media(max-width:700px){
+
+  :root{
+    --v3-page-pad:
+      18px;
+  }
+
+  html{
+    scroll-padding-top:
+      74px;
+  }
+
+  .site-header{
+    margin:
+      8px
+      10px
+      0;
+
+    width:
+      calc(
+        100% -
+        20px
+      );
+
+    padding:
+      9px
+      10px
+      9px
+      14px;
+
+    border-radius:
+      999px;
+  }
+
+  .site-header.is-scrolled{
+    backdrop-filter:
+      blur(
+        18px
+      );
+
+    -webkit-backdrop-filter:
+      blur(
+        18px
+      );
+  }
+
+  .collection-intro{
+    padding-left:
+      18px!important;
+
+    padding-right:
+      18px!important;
+  }
+
+  .collection-intro::after{
+    left:
+      18px;
+
+    right:
+      18px;
+  }
+
+  .collection-intro h1{
+    text-wrap:
+      pretty;
+  }
+
+  .collection-body,
+  .biography-layout,
+  .journal-post-body,
+  .journal-list,
+  .recognition-heading,
+  .recognition-list,
+  .latest-section{
+    padding-left:
+      18px!important;
+
+    padding-right:
+      18px!important;
+  }
+
+  body.is-home .work-toolbar{
+    padding-left:
+      18px;
+
+    padding-right:
+      18px;
+  }
+
+  body.is-home .filters{
+    display:
+      flex;
+
+    overflow-x:
+      auto;
+
+    overscroll-behavior-x:
+      contain;
+
+    scrollbar-width:
+      none;
+
+    padding-bottom:
+      3px;
+  }
+
+  body.is-home .filters::-webkit-scrollbar{
+    display:
+      none;
+  }
+
+  body.is-home .filters button{
+    flex:
+      0
+      0
+      auto;
+
+    min-height:
+      38px;
+  }
+
+  /*
+    Do not apply border-radius to stacked cards themselves.
+    The original stack geometry stays exactly intact.
+  */
+  body.is-home .project-image{
+    border-radius:
+      0;
+  }
+
+  .journal-card{
+    border-radius:
+      0;
+  }
+
+  .journal-card-image{
+    border-radius:
+      10px;
+  }
+
+  .journal-post-body p{
+    font-size:
+      16px;
+
+    line-height:
+      1.76;
+  }
+
+  .recognition-row{
+    padding-left:
+      0!important;
+  }
+
+  .latest-card{
+    border-radius:
+      8px;
+  }
+
+  .booking-page button[type="submit"]{
+    width:
+      100%;
+  }
+
+  footer{
+    padding-left:
+      18px!important;
+
+    padding-right:
+      18px!important;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media(max-width:420px){
+
+  :root{
+    --v3-page-pad:
+      15px;
+  }
+
+  .mobile-menu-screen{
+    padding-left:
+      16px;
+
+    padding-right:
+      16px;
+  }
+
+  .mobile-menu nav a{
+    min-height:
+      54px;
+
+    font-size:
+      clamp(
+        27px,
+        9vw,
+        38px
+      );
+  }
+
+  .collection-intro,
+  .collection-body,
+  .biography-layout,
+  .journal-post-body,
+  .journal-list,
+  .recognition-heading,
+  .recognition-list,
+  .latest-section{
+    padding-left:
+      15px!important;
+
+    padding-right:
+      15px!important;
+  }
+
+  body.is-home .work-toolbar{
+    padding-left:
+      15px;
+
+    padding-right:
+      15px;
+  }
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+  .site-header,
+  .desktop-nav>a,
+  .nav-book,
+  .journal-card,
+  .journal-card-image img,
+  .latest-card img,
+  body.is-home .project-image img{
+    transition:
+      none!important;
+  }
+
+  .journal-card:hover,
+  .nav-book:hover,
+  body.is-home .project-card:hover .project-image img,
+  .latest-card:hover img{
+    transform:
+      none!important;
+  }
+}
