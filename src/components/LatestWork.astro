@@ -1,147 +1,309 @@
 ---
-import {
-  languageFromPath,
-  localizedHref
-} from '../lib/i18n';
+import { instagramMedia } from '../lib/instagram';
+import { instagramSelection } from '../data/editorial-selection';
+import { languageFromPath } from '../lib/i18n';
 
-const lang =
-  languageFromPath(
-    Astro.url.pathname
+const lang = languageFromPath(Astro.url.pathname);
+const isSq = lang === 'sq';
+
+const availableItems = await instagramMedia(24);
+
+const normalized = (url: string) =>
+  url.replace(/\/$/, '');
+
+const pinnedItems =
+  instagramSelection.permalinks.flatMap(url => {
+    const item =
+      availableItems.find(
+        item =>
+          normalized(item.permalink) ===
+          normalized(url)
+      );
+
+    return item ? [item] : [];
+  });
+
+const fallbackItems =
+  availableItems.filter(
+    item => item.media_type !== 'VIDEO'
   );
 
-const isSq =
-  lang === 'sq';
-
-const bookingHref =
-  localizedHref(
-    '/book/#contact',
-    lang
+const usableItems =
+  (
+    pinnedItems.length
+      ? pinnedItems
+      : fallbackItems
+  ).slice(
+    0,
+    instagramSelection.limit
   );
 ---
 
-<dialog
-  class="lightbox"
-  aria-label={
-    isSq
-      ? 'Shikuesi i fotografive'
-      : 'Photograph viewer'
-  }
->
-  <div class="lightbox-toolbar">
-    <span
-      class="lightbox-counter"
-      aria-live="polite"
-    ></span>
-
-    <button
-      type="button"
-      data-close
-      aria-label={
-        isSq
-          ? 'Mbyll shikuesin e fotografive'
-          : 'Close photograph viewer'
-      }
+{
+  usableItems.length > 0 && (
+    <section
+      class="latest-section"
+      id="latest"
     >
-      {
-        isSq
-          ? 'MBYLL ×'
-          : 'CLOSE ×'
-      }
-    </button>
-  </div>
+      <div
+        class="work-heading"
+        data-reveal
+      >
+        <div>
+          <p
+            class="kicker"
+            data-en="FROM THE STUDIO"
+            data-sq="NGA STUDIOJA"
+          >
+            {
+              isSq
+                ? 'NGA STUDIOJA'
+                : 'FROM THE STUDIO'
+            }
+          </p>
 
-  <button
-    type="button"
-    class="lightbox-nav lightbox-prev"
-    data-prev
-    aria-label={
-      isSq
-        ? 'Fotografia e mëparshme'
-        : 'Previous photograph'
-    }
-  >
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.6"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M15 4L7 12l8 8"/>
-    </svg>
-  </button>
+          <h2
+            data-en="Selected moments."
+            data-sq="Momente të zgjedhura."
+          >
+            {
+              isSq
+                ? 'Momente të zgjedhura.'
+                : 'Selected moments.'
+            }
+          </h2>
+        </div>
+      </div>
 
-  <button
-    type="button"
-    class="lightbox-nav lightbox-next"
-    data-next
-    aria-label={
-      isSq
-        ? 'Fotografia tjetër'
-        : 'Next photograph'
-    }
-  >
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.6"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M9 4l8 8-8 8"/>
-    </svg>
-  </button>
+      <p
+        class="latest-intro"
+        data-en="Photographs, details and moments from recent commissions, personal work and life behind the camera."
+        data-sq="Fotografi, detaje dhe momente nga punët e fundit, projektet personale dhe jeta pas kamerës."
+      >
+        {
+          isSq
+            ? 'Fotografi, detaje dhe momente nga punët e fundit, projektet personale dhe jeta pas kamerës.'
+            : 'Photographs, details and moments from recent commissions, personal work and life behind the camera.'
+        }
+      </p>
 
-  <img
-    class="lightbox-photo"
-    alt=""
-    decoding="async"
-    draggable="false"
-  />
+      <div class="latest-grid">
+        {
+          usableItems.map(item => {
+            const alt =
+              item.caption?.trim()
+                ? item.caption
+                    .trim()
+                    .slice(0, 160)
+                : (
+                    isSq
+                      ? 'Punë e fundit nga Ergys Shehu'
+                      : 'Recent work by Ergys Shehu'
+                  );
 
-  <p class="lightbox-caption"></p>
+            return (
+              <a
+                class="latest-card"
+                data-image-reveal
+                href={item.permalink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={alt}
+                data-media-type={item.media_type}
+                data-media-url={
+                  item.media_type === 'VIDEO'
+                    ? item.media_url
+                    : undefined
+                }
+                data-poster={
+                  item.media_type === 'VIDEO'
+                    ? (
+                        item.thumbnail_url ||
+                        item.cover
+                      )
+                    : undefined
+                }
+              >
+                <img
+                  src={item.cover}
+                  alt={alt}
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="800"
+                />
 
-  <a
-    class="lightbox-book"
-    href={bookingHref}
-    data-en="Book now ↗"
-    data-sq="Rezervo ↗"
-  >
-    {
-      isSq
-        ? 'Rezervo ↗'
-        : 'Book now ↗'
-    }
-  </a>
-</dialog>
+                {
+                  item.media_type === 'VIDEO' && (
+                    <span
+                      class="icon-badge latest-icon"
+                      aria-hidden="true"
+                    >
+                      ▶
+                    </span>
+                  )
+                }
+
+                {
+                  item.media_type ===
+                    'CAROUSEL_ALBUM' && (
+                    <span
+                      class="icon-badge latest-icon-carousel"
+                      aria-hidden="true"
+                    >
+                      ⧉
+                    </span>
+                  )
+                }
+              </a>
+            );
+          })
+        }
+      </div>
+
+      <a
+        class="editorial-social-link"
+        href="https://www.instagram.com/ergys.shehu/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={
+          isSq
+            ? 'Hap Instagramin e Ergys Shehut'
+            : 'Open Ergys Shehu on Instagram'
+        }
+      >
+        @ergys.shehu ↗
+      </a>
+
+      <dialog
+        class="lightbox latest-lightbox"
+        aria-label={
+          isSq
+            ? 'Shikuesi i postimeve në Instagram'
+            : 'Instagram post viewer'
+        }
+      >
+        <div class="lightbox-toolbar">
+          <span
+            class="lightbox-counter"
+            aria-live="polite"
+          ></span>
+
+          <button
+            type="button"
+            data-close
+            aria-label={
+              isSq
+                ? 'Mbyll postimin'
+                : 'Close post viewer'
+            }
+          >
+            {
+              isSq
+                ? 'MBYLL ×'
+                : 'CLOSE ×'
+            }
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="lightbox-nav lightbox-prev"
+          data-prev
+          aria-label={
+            isSq
+              ? 'Postimi i mëparshëm'
+              : 'Previous post'
+          }
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 4L7 12l8 8"/>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="lightbox-nav lightbox-next"
+          data-next
+          aria-label={
+            isSq
+              ? 'Postimi tjetër'
+              : 'Next post'
+          }
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 4l8 8-8 8"/>
+          </svg>
+        </button>
+
+        <img
+          class="lightbox-photo"
+          alt=""
+          decoding="async"
+          draggable="false"
+        />
+
+        <video
+          class="lightbox-video"
+          controls
+          playsinline
+          preload="metadata"
+          hidden
+        ></video>
+
+        <a
+          class="lightbox-book"
+          data-ig-link
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-en="View on Instagram ↗"
+          data-sq="Shiko në Instagram ↗"
+        >
+          {
+            isSq
+              ? 'Shiko në Instagram ↗'
+              : 'View on Instagram ↗'
+          }
+        </a>
+      </dialog>
+    </section>
+  )
+}
 
 <script>
 const dialog =
   document.querySelector<HTMLDialogElement>(
-    '.lightbox'
+    '.latest-lightbox'
   );
 
-const links =
+const cards =
   Array.from(
     document.querySelectorAll<HTMLAnchorElement>(
-      '.gallery figure > a'
+      '.latest-card'
     )
   );
 
 if (
   dialog &&
-  links.length
+  cards.length
 ) {
-  /*
-    IMPORTANT:
-    Keep a non-null local reference.
-    TypeScript then knows this value can never become null
-    inside nested callbacks/functions.
-  */
   const lightbox =
     dialog;
 
@@ -150,33 +312,30 @@ if (
       '.lightbox-photo'
     )!;
 
+  const video =
+    lightbox.querySelector<HTMLVideoElement>(
+      '.lightbox-video'
+    )!;
+
   const counter =
     lightbox.querySelector<HTMLElement>(
       '.lightbox-counter'
     )!;
 
-  const caption =
-    lightbox.querySelector<HTMLElement>(
-      '.lightbox-caption'
+  const igLink =
+    lightbox.querySelector<HTMLAnchorElement>(
+      '[data-ig-link]'
     )!;
 
-  let active =
-    0;
+  let active = 0;
 
-  let startX =
-    0;
+  let startX = 0;
+  let startY = 0;
 
-  let startY =
-    0;
+  let currentX = 0;
+  let currentY = 0;
 
-  let currentX =
-    0;
-
-  let currentY =
-    0;
-
-  let dragging =
-    false;
+  let dragging = false;
 
   let pointerId:
     number |
@@ -184,52 +343,40 @@ if (
     null;
 
 
-  function preload(
-    index: number
-  ) {
-    const normalized =
-      (
-        index +
-        links.length
-      ) %
-      links.length;
+  function stopVideo() {
+    video.pause();
 
-    const href =
-      links[
-        normalized
-      ]?.href;
+    video.removeAttribute(
+      'src'
+    );
 
-    if (
-      !href
-    ) {
-      return;
-    }
+    video.load();
 
-    const image =
-      new Image();
-
-    image.decoding =
-      'async';
-
-    image.src =
-      href;
+    video.hidden =
+      true;
   }
 
 
-  function resetPhotoTransform() {
-    lightbox
-      .classList
-      .remove(
-        'is-dragging',
-        'is-dismiss-up',
-        'is-dismiss-down'
-      );
+  function activeMedia():
+    HTMLElement {
+    return video.hidden
+      ? photo
+      : video;
+  }
 
-    photo.style.transform =
-      '';
 
-    photo.style.opacity =
-      '';
+  function resetMedia() {
+    lightbox.classList.remove(
+      'is-dragging',
+      'is-dismiss-up',
+      'is-dismiss-down'
+    );
+
+    photo.style.transform = '';
+    photo.style.opacity = '';
+
+    video.style.transform = '';
+    video.style.opacity = '';
   }
 
 
@@ -244,79 +391,102 @@ if (
     active =
       (
         index +
-        links.length
+        cards.length
       ) %
-      links.length;
+      cards.length;
 
-    const link =
-      links[
-        active
-      ];
+    const card =
+      cards[active];
 
-    if (
-      !link
-    ) {
+    if (!card) {
       return;
     }
 
-    const sourceImage =
-      link.querySelector<HTMLImageElement>(
-        'img'
-      );
+    const mediaUrl =
+      card.dataset.mediaUrl;
+
+    resetMedia();
 
     if (
       direction !==
       'direct'
     ) {
-      photo.style.opacity =
-        '0';
+      const offset =
+        direction === 'next'
+          ? 32
+          : -32;
 
+      photo.style.opacity = '0';
       photo.style.transform =
-        direction ===
-        'next'
-          ? 'translateX(28px) scale(.985)'
-          : 'translateX(-28px) scale(.985)';
+        `translateX(${offset}px) scale(.985)`;
+
+      video.style.opacity = '0';
+      video.style.transform =
+        `translateX(${offset}px) scale(.985)`;
     }
 
-    photo.src =
-      link.href;
+    if (
+      card.dataset.mediaType ===
+        'VIDEO' &&
+      mediaUrl
+    ) {
+      photo.hidden =
+        true;
 
-    photo.alt =
-      sourceImage?.alt ||
-      '';
+      video.hidden =
+        false;
+
+      video.poster =
+        card.dataset.poster ||
+        '';
+
+      video.src =
+        mediaUrl;
+
+      video.currentTime =
+        0;
+
+      video
+        .play()
+        .catch(() => {});
+    } else {
+      stopVideo();
+
+      photo.hidden =
+        false;
+
+      photo.src =
+        card
+          .querySelector(
+            'img'
+          )
+          ?.src ||
+        '';
+
+      photo.alt =
+        card.getAttribute(
+          'aria-label'
+        ) ||
+        '';
+    }
+
+    igLink.href =
+      card.href;
 
     counter.textContent =
-      `${active + 1} / ${links.length}`;
-
-    caption.textContent =
-      link
-        .closest(
-          'figure'
-        )
-        ?.querySelector(
-          'figcaption'
-        )
-        ?.textContent ||
-      '';
+      `${active + 1} / ${cards.length}`;
 
     requestAnimationFrame(
       () => {
-        photo.style.opacity =
+        const media =
+          activeMedia();
+
+        media.style.opacity =
           '1';
 
-        photo.style.transform =
+        media.style.transform =
           'translate3d(0,0,0) scale(1)';
       }
-    );
-
-    preload(
-      active +
-      1
-    );
-
-    preload(
-      active -
-      1
     );
   }
 
@@ -335,65 +505,51 @@ if (
     }
 
     if (
-      direction ===
-      'up'
+      direction === 'up'
     ) {
-      lightbox
-        .classList
-        .add(
-          'is-dismiss-up'
-        );
+      lightbox.classList.add(
+        'is-dismiss-up'
+      );
     }
 
     if (
-      direction ===
-      'down'
+      direction === 'down'
     ) {
-      lightbox
-        .classList
-        .add(
-          'is-dismiss-down'
-        );
+      lightbox.classList.add(
+        'is-dismiss-down'
+      );
     }
 
-    lightbox
-      .classList
-      .add(
-        'is-closing'
-      );
+    lightbox.classList.add(
+      'is-closing'
+    );
 
     window.setTimeout(
       () => {
         lightbox.close();
 
-        lightbox
-          .classList
-          .remove(
-            'is-closing',
-            'is-dismiss-up',
-            'is-dismiss-down',
-            'is-dragging'
-          );
+        lightbox.classList.remove(
+          'is-closing',
+          'is-dismiss-up',
+          'is-dismiss-down',
+          'is-dragging'
+        );
 
-        photo.style.transform =
-          '';
-
-        photo.style.opacity =
-          '';
+        stopVideo();
+        resetMedia();
       },
       260
     );
   }
 
 
-  links.forEach(
+  cards.forEach(
     (
-      link,
+      card,
       i
-    ) =>
-      link.addEventListener(
+    ) => {
+      card.addEventListener(
         'click',
-
         event => {
           if (
             event.ctrlKey ||
@@ -406,11 +562,9 @@ if (
 
           event.preventDefault();
 
-          resetPhotoTransform();
+          resetMedia();
 
-          show(
-            i
-          );
+          show(i);
 
           lightbox.showModal();
 
@@ -420,18 +574,9 @@ if (
             .add(
               'lightbox-open'
             );
-
-          requestAnimationFrame(
-            () => {
-              lightbox
-                .classList
-                .add(
-                  'is-opened'
-                );
-            }
-          );
         }
-      )
+      );
+    }
   );
 
 
@@ -441,7 +586,6 @@ if (
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
@@ -459,7 +603,6 @@ if (
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
@@ -477,7 +620,6 @@ if (
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
@@ -490,7 +632,6 @@ if (
 
   lightbox.addEventListener(
     'click',
-
     event => {
       if (
         event.target ===
@@ -506,7 +647,6 @@ if (
 
   lightbox.addEventListener(
     'close',
-
     () => {
       document
         .documentElement
@@ -515,32 +655,14 @@ if (
           'lightbox-open'
         );
 
-      lightbox
-        .classList
-        .remove(
-          'is-opened',
-          'is-closing',
-          'is-dismiss-up',
-          'is-dismiss-down',
-          'is-dragging'
-        );
-
-      photo.removeAttribute(
-        'src'
-      );
-
-      photo.style.transform =
-        '';
-
-      photo.style.opacity =
-        '';
+      stopVideo();
+      resetMedia();
     }
   );
 
 
   lightbox.addEventListener(
     'keydown',
-
     event => {
       if (
         event.key ===
@@ -580,104 +702,100 @@ if (
   );
 
 
-  photo.addEventListener(
-    'pointerdown',
-
-    event => {
-      if (
-        event.pointerType ===
-          'mouse' &&
-        event.button !==
-          0
-      ) {
-        return;
-      }
-
-      pointerId =
-        event.pointerId;
-
-      startX =
-        event.clientX;
-
-      startY =
-        event.clientY;
-
-      currentX =
-        0;
-
-      currentY =
-        0;
-
-      dragging =
-        true;
-
-      lightbox
-        .classList
-        .add(
-          'is-dragging'
-        );
-
-      photo
-        .setPointerCapture?.(
-          event.pointerId
-        );
+  function beginGesture(
+    event:
+      PointerEvent
+  ) {
+    if (
+      event.pointerType ===
+        'mouse' &&
+      event.button !==
+        0
+    ) {
+      return;
     }
-  );
+
+    pointerId =
+      event.pointerId;
+
+    startX =
+      event.clientX;
+
+    startY =
+      event.clientY;
+
+    currentX = 0;
+    currentY = 0;
+
+    dragging =
+      true;
+
+    lightbox.classList.add(
+      'is-dragging'
+    );
+
+    (
+      event.currentTarget as
+      HTMLElement
+    ).setPointerCapture?.(
+      event.pointerId
+    );
+  }
 
 
-  photo.addEventListener(
-    'pointermove',
-
-    event => {
-      if (
-        !dragging ||
-        pointerId !==
-          event.pointerId
-      ) {
-        return;
-      }
-
-      currentX =
-        event.clientX -
-        startX;
-
-      currentY =
-        event.clientY -
-        startY;
-
-      const distance =
-        Math.sqrt(
-          currentX *
-            currentX +
-          currentY *
-            currentY
-        );
-
-      const scale =
-        Math.max(
-          .94,
-          1 -
-            distance /
-              2400
-        );
-
-      const opacity =
-        Math.max(
-          .38,
-          1 -
-            distance /
-              620
-        );
-
-      photo.style.transform =
-        `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
-
-      photo.style.opacity =
-        String(
-          opacity
-        );
+  function moveGesture(
+    event:
+      PointerEvent
+  ) {
+    if (
+      !dragging ||
+      pointerId !==
+        event.pointerId
+    ) {
+      return;
     }
-  );
+
+    currentX =
+      event.clientX -
+      startX;
+
+    currentY =
+      event.clientY -
+      startY;
+
+    const media =
+      activeMedia();
+
+    const distance =
+      Math.sqrt(
+        currentX *
+          currentX +
+        currentY *
+          currentY
+      );
+
+    const scale =
+      Math.max(
+        .94,
+        1 -
+          distance /
+            2400
+      );
+
+    const opacity =
+      Math.max(
+        .38,
+        1 -
+          distance /
+            620
+      );
+
+    media.style.transform =
+      `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
+
+    media.style.opacity =
+      String(opacity);
+  }
 
 
   function finishGesture(
@@ -698,11 +816,9 @@ if (
     pointerId =
       null;
 
-    lightbox
-      .classList
-      .remove(
-        'is-dragging'
-      );
+    lightbox.classList.remove(
+      'is-dragging'
+    );
 
     const absX =
       Math.abs(
@@ -715,15 +831,13 @@ if (
       );
 
     if (
-      absY >
-        90 &&
+      absY > 90 &&
       absY >
         absX *
           1.15
     ) {
       closeLightbox(
-        currentY <
-          0
+        currentY < 0
           ? 'up'
           : 'down'
       );
@@ -732,74 +846,109 @@ if (
     }
 
     if (
-      absX >
-        70 &&
+      absX > 70 &&
       absX >
         absY *
           1.15
     ) {
-      const nextDirection =
-        currentX <
-          0
-          ? 'next'
-          : 'prev';
-
       show(
         active +
           (
-            currentX <
-              0
+            currentX < 0
               ? 1
               : -1
           ),
-        nextDirection
+        currentX < 0
+          ? 'next'
+          : 'prev'
       );
 
       return;
     }
 
-    photo.style.transform =
+    const media =
+      activeMedia();
+
+    media.style.transform =
       'translate3d(0,0,0) scale(1)';
 
-    photo.style.opacity =
+    media.style.opacity =
       '1';
   }
 
+
+  function cancelGesture(
+    event:
+      PointerEvent
+  ) {
+    if (
+      !dragging ||
+      pointerId !==
+        event.pointerId
+    ) {
+      return;
+    }
+
+    dragging =
+      false;
+
+    pointerId =
+      null;
+
+    lightbox.classList.remove(
+      'is-dragging'
+    );
+
+    const media =
+      activeMedia();
+
+    media.style.transform =
+      'translate3d(0,0,0) scale(1)';
+
+    media.style.opacity =
+      '1';
+  }
+
+
+  photo.addEventListener(
+    'pointerdown',
+    beginGesture
+  );
+
+  photo.addEventListener(
+    'pointermove',
+    moveGesture
+  );
 
   photo.addEventListener(
     'pointerup',
     finishGesture
   );
 
-
   photo.addEventListener(
     'pointercancel',
+    cancelGesture
+  );
 
-    event => {
-      if (
-        dragging &&
-        pointerId ===
-          event.pointerId
-      ) {
-        dragging =
-          false;
 
-        pointerId =
-          null;
+  video.addEventListener(
+    'pointerdown',
+    beginGesture
+  );
 
-        lightbox
-          .classList
-          .remove(
-            'is-dragging'
-          );
+  video.addEventListener(
+    'pointermove',
+    moveGesture
+  );
 
-        photo.style.transform =
-          'translate3d(0,0,0) scale(1)';
+  video.addEventListener(
+    'pointerup',
+    finishGesture
+  );
 
-        photo.style.opacity =
-          '1';
-      }
-    }
+  video.addEventListener(
+    'pointercancel',
+    cancelGesture
   );
 }
 </script>
