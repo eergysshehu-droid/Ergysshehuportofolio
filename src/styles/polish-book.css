@@ -365,3 +365,74 @@
       border-box;
   }
 }
+/* ==========================================================================
+   BOOK PAGE — CONSISTENT EDITORIAL RHYTHM
+   ========================================================================== */
+
+.booking-page .book-hero {
+  min-height: clamp(560px, 70svh, 760px) !important;
+}
+
+.booking-page .services-section,
+.booking-page .contact-booking {
+  padding-top: clamp(58px, 5vw, 78px) !important;
+  padding-bottom: clamp(58px, 5vw, 78px) !important;
+}
+
+.booking-page .services-section {
+  border-top: 1px solid rgba(127, 127, 127, .12);
+  border-bottom: 1px solid rgba(127, 127, 127, .12);
+}
+
+.booking-page .section-heading {
+  margin-bottom: 32px !important;
+}
+
+.booking-page .service-card {
+  min-height: clamp(230px, 20vw, 315px) !important;
+}
+
+.booking-page .contact-booking {
+  gap: clamp(38px, 4vw, 70px) !important;
+}
+
+.booking-page .contact-intro {
+  max-width: 31ch;
+}
+
+.booking-page .inquiry-form {
+  max-width: 680px !important;
+}
+
+.booking-page .collab-section {
+  border-top: 1px solid rgba(127, 127, 127, .12);
+}
+
+.booking-page .collab-visual {
+  min-height: clamp(330px, 32vw, 500px) !important;
+}
+
+.booking-page .collab-copy {
+  padding: clamp(44px, 4vw, 68px) !important;
+}
+
+@media (max-width: 700px) {
+
+  .booking-page .book-hero {
+    min-height: 72svh !important;
+  }
+
+  .booking-page .services-section,
+  .booking-page .contact-booking {
+    padding-top: 46px !important;
+    padding-bottom: 46px !important;
+  }
+
+  .booking-page .service-card {
+    min-height: 205px !important;
+  }
+
+  .booking-page .collab-visual {
+    min-height: 270px !important;
+  }
+}
