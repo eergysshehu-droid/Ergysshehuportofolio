@@ -1,1 +1,89 @@
+/* ============================================================
+   ERGYS SHEHU — FOOTER
+   ============================================================ */
 
+.footer-copyright {
+  font-size:
+    10px;
+
+  line-height:
+    1.5;
+
+  letter-spacing:
+    .08em;
+
+  text-transform:
+    none;
+
+  opacity:
+    .46;
+}
+
+
+@media (max-width: 700px) {
+
+  html body footer {
+    padding:
+      42px
+      18px
+      max(
+        30px,
+        env(safe-area-inset-bottom)
+      ) !important;
+
+    gap:
+      24px !important;
+  }
+
+
+  html body
+  footer .footer-row {
+    gap:
+      18px !important;
+  }
+
+
+  html body
+  .footer-name {
+    font-size:
+      20px;
+
+    letter-spacing:
+      .12em;
+  }
+
+
+  html body
+  .footer-copyright {
+    width:
+      100%;
+
+    margin-top:
+      12px;
+
+    padding-top:
+      22px;
+
+    border-top:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .07
+      );
+
+    font-size:
+      10px;
+
+    line-height:
+      1.55;
+
+    letter-spacing:
+      .05em;
+
+    opacity:
+      .48;
+  }
+
+}
