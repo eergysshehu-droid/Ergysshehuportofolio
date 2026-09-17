@@ -2479,197 +2479,197 @@ const homeDescription =
         '[data-filter]'
       );
 
-
     const filterButtons =
-  Array.from(
-    document.querySelectorAll<HTMLButtonElement>(
-      '[data-filter]'
-    )
-  );
+      Array.from(
+        document.querySelectorAll<HTMLButtonElement>(
+          '[data-filter]'
+        )
+      );
 
 
-const projectCards =
-  Array.from(
-    document.querySelectorAll<HTMLElement>(
-      '.work-section .project-card[data-kind]'
-    )
-  );
+    const projectCards =
+      Array.from(
+        document.querySelectorAll<HTMLElement>(
+          '.work-section .project-card[data-kind]'
+        )
+      );
 
 
-const workEmpty =
-  document.querySelector<HTMLElement>(
-    '.work-empty'
-  );
+    const workEmpty =
+      document.querySelector<HTMLElement>(
+        '.work-empty'
+      );
 
 
-function applyProjectFilter(
-  selectedButton:
-    HTMLButtonElement
-){
-  const selectedFilter =
-    selectedButton
-      .dataset
-      .filter ||
-    'all';
+    function applyProjectFilter(
+      selectedButton:
+        HTMLButtonElement
+    ){
+      const selectedFilter =
+        selectedButton
+          .dataset
+          .filter ||
+        'all';
 
 
-  filterButtons
-    .forEach(
-      button=>{
-        const active =
-          button ===
-          selectedButton;
+      filterButtons
+        .forEach(
+          button=>{
+            const active =
+              button ===
+              selectedButton;
 
 
-        button
-          .setAttribute(
-            'aria-pressed',
-            String(
-              active
-            )
-          );
-
-
-        button
-          .classList
-          .toggle(
-            'is-active',
-            active
-          );
-      }
-    );
-
-
-  let visibleCount =
-    0;
-
-
-  projectCards
-    .forEach(
-      card=>{
-        const visible =
-          selectedFilter ===
-            'all' ||
-          card.dataset.kind ===
-            selectedFilter;
-
-
-        card.hidden =
-          !visible;
-
-
-        card
-          .setAttribute(
-            'aria-hidden',
-            String(
-              !visible
-            )
-          );
-
-
-        if(
-          visible
-        ){
-          visibleCount++;
-        }else{
-          /*
-           * A hidden card must never retain
-           * old mobile stack visual state.
-           */
-          const image =
-            card
-              .querySelector<HTMLElement>(
-                '.project-image'
+            button
+              .setAttribute(
+                'aria-pressed',
+                String(
+                  active
+                )
               );
 
 
-          image
-            ?.style
-            .setProperty(
-              '--stack-blur',
-              '0px'
-            );
-
-
-          image
-            ?.style
-            .setProperty(
-              '--stack-darkness',
-              '0'
-            );
-        }
-      }
-    );
-
-
-  if(
-    workEmpty
-  ){
-    workEmpty.hidden =
-      visibleCount >
-      0;
-  }
-
-
-  /*
-   * Tell the mobile stacking controller
-   * to rebuild its visible-card measurements.
-   */
-  document
-    .dispatchEvent(
-      new CustomEvent(
-        'portfolio:filter-change',
-        {
-          detail: {
-            filter:
-              selectedFilter,
-
-            visibleCount
-          }
-        }
-      )
-    );
-}
-
-
-filterButtons
-  .forEach(
-    button=>{
-      button
-        .addEventListener(
-          'click',
-          ()=>{
-            applyProjectFilter(
-              button
-            );
+            button
+              .classList
+              .toggle(
+                'is-active',
+                active
+              );
           }
         );
+
+
+      let visibleCount =
+        0;
+
+
+      projectCards
+        .forEach(
+          card=>{
+            const visible =
+              selectedFilter ===
+                'all' ||
+              card.dataset.kind ===
+                selectedFilter;
+
+
+            card.hidden =
+              !visible;
+
+
+            card
+              .setAttribute(
+                'aria-hidden',
+                String(
+                  !visible
+                )
+              );
+
+
+            if(
+              visible
+            ){
+              visibleCount++;
+
+            }else{
+              /*
+               * Hidden cards must never retain stale
+               * mobile stacking visual variables.
+               */
+              const image =
+                card
+                  .querySelector<HTMLElement>(
+                    '.project-image'
+                  );
+
+
+              image
+                ?.style
+                .setProperty(
+                  '--stack-blur',
+                  '0px'
+                );
+
+
+              image
+                ?.style
+                .setProperty(
+                  '--stack-darkness',
+                  '0'
+                );
+            }
+          }
+        );
+
+
+      if(
+        workEmpty
+      ){
+        workEmpty.hidden =
+          visibleCount >
+          0;
+      }
+
+
+      /*
+       * Tell the mobile stacking controller that
+       * the visible project set has changed.
+       */
+      document
+        .dispatchEvent(
+          new CustomEvent(
+            'portfolio:filter-change',
+            {
+              detail: {
+                filter:
+                  selectedFilter,
+
+                visibleCount
+              }
+            }
+          )
+        );
     }
-  );
 
 
-/*
- * Synchronise the initial state too.
- */
-const initiallyActive =
-  filterButtons
-    .find(
-      button=>
-        button
-          .getAttribute(
-            'aria-pressed'
-          ) ===
-        'true'
-    ) ||
-  filterButtons[0];
+    filterButtons
+      .forEach(
+        button=>{
+          button
+            .addEventListener(
+              'click',
+              ()=>{
+                applyProjectFilter(
+                  button
+                );
+              }
+            );
+        }
+      );
 
 
-if(
-  initiallyActive
-){
-  applyProjectFilter(
-    initiallyActive
-  );
-}
+    /*
+     * Synchronise the initial filter state on page load.
+     */
+    const initiallyActive =
+      filterButtons
+        .find(
+          button=>
+            button
+              .getAttribute(
+                'aria-pressed'
+              ) ===
+            'true'
+        ) ||
+      filterButtons[0];
+
+
+    if(
+      initiallyActive
+    ){
+      applyProjectFilter(
+        initiallyActive
+      );
+    }
   </script>
 </Layout>
