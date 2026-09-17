@@ -122,7 +122,7 @@ const bookingHref =
 <script>
 const dialog =
   document.querySelector<HTMLDialogElement>(
-    '.lightbox'
+    '.lightbox:not(.latest-lightbox)'
   );
 
 const links =
@@ -136,38 +136,33 @@ if (
   dialog &&
   links.length
 ) {
+  const lightbox =
+    dialog;
+
   const photo =
-    dialog.querySelector<HTMLImageElement>(
+    lightbox.querySelector<HTMLImageElement>(
       '.lightbox-photo'
     )!;
 
   const counter =
-    dialog.querySelector<HTMLElement>(
+    lightbox.querySelector<HTMLElement>(
       '.lightbox-counter'
     )!;
 
   const caption =
-    dialog.querySelector<HTMLElement>(
+    lightbox.querySelector<HTMLElement>(
       '.lightbox-caption'
     )!;
 
-  let active =
-    0;
+  let active = 0;
 
-  let startX =
-    0;
+  let startX = 0;
+  let startY = 0;
 
-  let startY =
-    0;
+  let currentX = 0;
+  let currentY = 0;
 
-  let currentX =
-    0;
-
-  let currentY =
-    0;
-
-  let dragging =
-    false;
+  let dragging = false;
 
   let pointerId:
     number |
@@ -190,9 +185,7 @@ if (
         normalized
       ]?.href;
 
-    if (
-      !href
-    ) {
+    if (!href) {
       return;
     }
 
@@ -207,14 +200,12 @@ if (
   }
 
 
-  function resetPhotoTransform() {
-    dialog
-      .classList
-      .remove(
-        'is-dragging',
-        'is-dismiss-up',
-        'is-dismiss-down'
-      );
+  function resetPhoto() {
+    lightbox.classList.remove(
+      'is-dragging',
+      'is-dismiss-up',
+      'is-dismiss-down'
+    );
 
     photo.style.transform =
       '';
@@ -240,13 +231,9 @@ if (
       links.length;
 
     const link =
-      links[
-        active
-      ];
+      links[active];
 
-    if (
-      !link
-    ) {
+    if (!link) {
       return;
     }
 
@@ -263,8 +250,7 @@ if (
         '0';
 
       photo.style.transform =
-        direction ===
-        'next'
+        direction === 'next'
           ? 'translateX(28px) scale(.985)'
           : 'translateX(-28px) scale(.985)';
     }
@@ -281,12 +267,8 @@ if (
 
     caption.textContent =
       link
-        .closest(
-          'figure'
-        )
-        ?.querySelector(
-          'figcaption'
-        )
+        .closest('figure')
+        ?.querySelector('figcaption')
         ?.textContent ||
       '';
 
@@ -301,13 +283,11 @@ if (
     );
 
     preload(
-      active +
-      1
+      active + 1
     );
 
     preload(
-      active -
-      1
+      active - 1
     );
   }
 
@@ -320,57 +300,43 @@ if (
       'fade'
   ) {
     if (
-      !dialog.open
+      !lightbox.open
     ) {
       return;
     }
 
     if (
-      direction ===
-      'up'
+      direction === 'up'
     ) {
-      dialog
-        .classList
-        .add(
-          'is-dismiss-up'
-        );
+      lightbox.classList.add(
+        'is-dismiss-up'
+      );
     }
 
     if (
-      direction ===
-      'down'
+      direction === 'down'
     ) {
-      dialog
-        .classList
-        .add(
-          'is-dismiss-down'
-        );
+      lightbox.classList.add(
+        'is-dismiss-down'
+      );
     }
 
-    dialog
-      .classList
-      .add(
-        'is-closing'
-      );
+    lightbox.classList.add(
+      'is-closing'
+    );
 
     window.setTimeout(
       () => {
-        dialog.close();
+        lightbox.close();
 
-        dialog
-          .classList
-          .remove(
-            'is-closing',
-            'is-dismiss-up',
-            'is-dismiss-down',
-            'is-dragging'
-          );
+        lightbox.classList.remove(
+          'is-closing',
+          'is-dismiss-up',
+          'is-dismiss-down',
+          'is-dragging'
+        );
 
-        photo.style.transform =
-          '';
-
-        photo.style.opacity =
-          '';
+        resetPhoto();
       },
       260
     );
@@ -381,10 +347,9 @@ if (
     (
       link,
       i
-    ) =>
+    ) => {
       link.addEventListener(
         'click',
-
         event => {
           if (
             event.ctrlKey ||
@@ -397,13 +362,11 @@ if (
 
           event.preventDefault();
 
-          resetPhotoTransform();
+          resetPhoto();
 
-          show(
-            i
-          );
+          show(i);
 
-          dialog.showModal();
+          lightbox.showModal();
 
           document
             .documentElement
@@ -411,66 +374,52 @@ if (
             .add(
               'lightbox-open'
             );
-
-          requestAnimationFrame(
-            () => {
-              dialog
-                .classList
-                .add(
-                  'is-opened'
-                );
-            }
-          );
         }
-      )
+      );
+    }
   );
 
 
-  dialog
+  lightbox
     .querySelector(
       '[data-prev]'
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
         show(
-          active -
-          1,
+          active - 1,
           'prev'
         );
       }
     );
 
 
-  dialog
+  lightbox
     .querySelector(
       '[data-next]'
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
         show(
-          active +
-          1,
+          active + 1,
           'next'
         );
       }
     );
 
 
-  dialog
+  lightbox
     .querySelector(
       '[data-close]'
     )
     ?.addEventListener(
       'click',
-
       event => {
         event.stopPropagation();
 
@@ -481,13 +430,12 @@ if (
     );
 
 
-  dialog.addEventListener(
+  lightbox.addEventListener(
     'click',
-
     event => {
       if (
         event.target ===
-        dialog
+        lightbox
       ) {
         closeLightbox(
           'fade'
@@ -497,9 +445,8 @@ if (
   );
 
 
-  dialog.addEventListener(
+  lightbox.addEventListener(
     'close',
-
     () => {
       document
         .documentElement
@@ -508,32 +455,17 @@ if (
           'lightbox-open'
         );
 
-      dialog
-        .classList
-        .remove(
-          'is-opened',
-          'is-closing',
-          'is-dismiss-up',
-          'is-dismiss-down',
-          'is-dragging'
-        );
-
       photo.removeAttribute(
         'src'
       );
 
-      photo.style.transform =
-        '';
-
-      photo.style.opacity =
-        '';
+      resetPhoto();
     }
   );
 
 
-  dialog.addEventListener(
+  lightbox.addEventListener(
     'keydown',
-
     event => {
       if (
         event.key ===
@@ -542,8 +474,7 @@ if (
         event.preventDefault();
 
         show(
-          active -
-          1,
+          active - 1,
           'prev'
         );
       }
@@ -555,8 +486,7 @@ if (
         event.preventDefault();
 
         show(
-          active +
-          1,
+          active + 1,
           'next'
         );
       }
@@ -577,11 +507,10 @@ if (
 
   photo.addEventListener(
     'pointerdown',
-
     event => {
       if (
         event.pointerType ===
-        'mouse' &&
+          'mouse' &&
         event.button !==
           0
       ) {
@@ -597,20 +526,15 @@ if (
       startY =
         event.clientY;
 
-      currentX =
-        0;
-
-      currentY =
-        0;
+      currentX = 0;
+      currentY = 0;
 
       dragging =
         true;
 
-      dialog
-        .classList
-        .add(
-          'is-dragging'
-        );
+      lightbox.classList.add(
+        'is-dragging'
+      );
 
       photo
         .setPointerCapture?.(
@@ -622,7 +546,6 @@ if (
 
   photo.addEventListener(
     'pointermove',
-
     event => {
       if (
         !dragging ||
@@ -668,9 +591,7 @@ if (
         `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
 
       photo.style.opacity =
-        String(
-          opacity
-        );
+        String(opacity);
     }
   );
 
@@ -693,11 +614,9 @@ if (
     pointerId =
       null;
 
-    dialog
-      .classList
-      .remove(
-        'is-dragging'
-      );
+    lightbox.classList.remove(
+      'is-dragging'
+    );
 
     const absX =
       Math.abs(
@@ -710,15 +629,13 @@ if (
       );
 
     if (
-      absY >
-        90 &&
+      absY > 90 &&
       absY >
         absX *
           1.15
     ) {
       closeLightbox(
-        currentY <
-          0
+        currentY < 0
           ? 'up'
           : 'down'
       );
@@ -727,27 +644,21 @@ if (
     }
 
     if (
-      absX >
-        70 &&
+      absX > 70 &&
       absX >
         absY *
           1.15
     ) {
-      const nextDirection =
-        currentX <
-          0
-          ? 'next'
-          : 'prev';
-
       show(
         active +
           (
-            currentX <
-              0
+            currentX < 0
               ? 1
               : -1
           ),
-        nextDirection
+        currentX < 0
+          ? 'next'
+          : 'prev'
       );
 
       return;
@@ -769,31 +680,30 @@ if (
 
   photo.addEventListener(
     'pointercancel',
-
     event => {
       if (
-        dragging &&
-        pointerId ===
+        !dragging ||
+        pointerId !==
           event.pointerId
       ) {
-        dragging =
-          false;
-
-        pointerId =
-          null;
-
-        dialog
-          .classList
-          .remove(
-            'is-dragging'
-          );
-
-        photo.style.transform =
-          'translate3d(0,0,0) scale(1)';
-
-        photo.style.opacity =
-          '1';
+        return;
       }
+
+      dragging =
+        false;
+
+      pointerId =
+        null;
+
+      lightbox.classList.remove(
+        'is-dragging'
+      );
+
+      photo.style.transform =
+        'translate3d(0,0,0) scale(1)';
+
+      photo.style.opacity =
+        '1';
     }
   );
 }
