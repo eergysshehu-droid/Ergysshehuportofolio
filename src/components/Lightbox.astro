@@ -100,6 +100,7 @@ const bookingHref =
     class="lightbox-photo"
     alt=""
     decoding="async"
+    draggable="false"
   />
 
   <p class="lightbox-caption"></p>
@@ -153,6 +154,27 @@ if (
   let active =
     0;
 
+  let startX =
+    0;
+
+  let startY =
+    0;
+
+  let currentX =
+    0;
+
+  let currentY =
+    0;
+
+  let dragging =
+    false;
+
+  let pointerId:
+    number |
+    null =
+    null;
+
+
   function preload(
     index: number
   ) {
@@ -184,8 +206,31 @@ if (
       href;
   }
 
+
+  function resetPhotoTransform() {
+    dialog
+      .classList
+      .remove(
+        'is-dragging',
+        'is-dismiss-up',
+        'is-dismiss-down'
+      );
+
+    photo.style.transform =
+      '';
+
+    photo.style.opacity =
+      '';
+  }
+
+
   function show(
-    index: number
+    index: number,
+    direction:
+      'next' |
+      'prev' |
+      'direct' =
+      'direct'
   ) {
     active =
       (
@@ -210,6 +255,20 @@ if (
         'img'
       );
 
+    if (
+      direction !==
+      'direct'
+    ) {
+      photo.style.opacity =
+        '0';
+
+      photo.style.transform =
+        direction ===
+        'next'
+          ? 'translateX(28px) scale(.985)'
+          : 'translateX(-28px) scale(.985)';
+    }
+
     photo.src =
       link.href;
 
@@ -231,14 +290,92 @@ if (
         ?.textContent ||
       '';
 
-    preload(
-      active + 1
+    requestAnimationFrame(
+      () => {
+        photo.style.opacity =
+          '1';
+
+        photo.style.transform =
+          'translate3d(0,0,0) scale(1)';
+      }
     );
 
     preload(
-      active - 1
+      active +
+      1
+    );
+
+    preload(
+      active -
+      1
     );
   }
+
+
+  function closeLightbox(
+    direction:
+      'up' |
+      'down' |
+      'fade' =
+      'fade'
+  ) {
+    if (
+      !dialog.open
+    ) {
+      return;
+    }
+
+    if (
+      direction ===
+      'up'
+    ) {
+      dialog
+        .classList
+        .add(
+          'is-dismiss-up'
+        );
+    }
+
+    if (
+      direction ===
+      'down'
+    ) {
+      dialog
+        .classList
+        .add(
+          'is-dismiss-down'
+        );
+    }
+
+    dialog
+      .classList
+      .add(
+        'is-closing'
+      );
+
+    window.setTimeout(
+      () => {
+        dialog.close();
+
+        dialog
+          .classList
+          .remove(
+            'is-closing',
+            'is-dismiss-up',
+            'is-dismiss-down',
+            'is-dragging'
+          );
+
+        photo.style.transform =
+          '';
+
+        photo.style.opacity =
+          '';
+      },
+      260
+    );
+  }
+
 
   links.forEach(
     (
@@ -260,19 +397,34 @@ if (
 
           event.preventDefault();
 
+          resetPhotoTransform();
+
           show(
             i
           );
 
           dialog.showModal();
 
-          document.documentElement
-            .classList.add(
+          document
+            .documentElement
+            .classList
+            .add(
               'lightbox-open'
             );
+
+          requestAnimationFrame(
+            () => {
+              dialog
+                .classList
+                .add(
+                  'is-opened'
+                );
+            }
+          );
         }
       )
   );
+
 
   dialog
     .querySelector(
@@ -281,11 +433,17 @@ if (
     ?.addEventListener(
       'click',
 
-      () =>
+      event => {
+        event.stopPropagation();
+
         show(
-          active - 1
-        )
+          active -
+          1,
+          'prev'
+        );
+      }
     );
+
 
   dialog
     .querySelector(
@@ -294,11 +452,17 @@ if (
     ?.addEventListener(
       'click',
 
-      () =>
+      event => {
+        event.stopPropagation();
+
         show(
-          active + 1
-        )
+          active +
+          1,
+          'next'
+        );
+      }
     );
+
 
   dialog
     .querySelector(
@@ -307,24 +471,65 @@ if (
     ?.addEventListener(
       'click',
 
-      () =>
-        dialog.close()
+      event => {
+        event.stopPropagation();
+
+        closeLightbox(
+          'fade'
+        );
+      }
     );
+
+
+  dialog.addEventListener(
+    'click',
+
+    event => {
+      if (
+        event.target ===
+        dialog
+      ) {
+        closeLightbox(
+          'fade'
+        );
+      }
+    }
+  );
+
 
   dialog.addEventListener(
     'close',
 
     () => {
-      document.documentElement
-        .classList.remove(
+      document
+        .documentElement
+        .classList
+        .remove(
           'lightbox-open'
+        );
+
+      dialog
+        .classList
+        .remove(
+          'is-opened',
+          'is-closing',
+          'is-dismiss-up',
+          'is-dismiss-down',
+          'is-dragging'
         );
 
       photo.removeAttribute(
         'src'
       );
+
+      photo.style.transform =
+        '';
+
+      photo.style.opacity =
+        '';
     }
   );
+
 
   dialog.addEventListener(
     'keydown',
@@ -337,7 +542,9 @@ if (
         event.preventDefault();
 
         show(
-          active - 1
+          active -
+          1,
+          'prev'
         );
       }
 
@@ -348,91 +555,244 @@ if (
         event.preventDefault();
 
         show(
-          active + 1
+          active +
+          1,
+          'next'
+        );
+      }
+
+      if (
+        event.key ===
+        'Escape'
+      ) {
+        event.preventDefault();
+
+        closeLightbox(
+          'fade'
         );
       }
     }
   );
 
-  let startX =
-    0;
-
-  let startY =
-    0;
-
-  let dragging =
-    false;
 
   photo.addEventListener(
     'pointerdown',
 
     event => {
+      if (
+        event.pointerType ===
+        'mouse' &&
+        event.button !==
+          0
+      ) {
+        return;
+      }
+
+      pointerId =
+        event.pointerId;
+
       startX =
         event.clientX;
 
       startY =
         event.clientY;
 
+      currentX =
+        0;
+
+      currentY =
+        0;
+
       dragging =
         true;
 
-      photo.setPointerCapture?.(
-        event.pointerId
-      );
+      dialog
+        .classList
+        .add(
+          'is-dragging'
+        );
+
+      photo
+        .setPointerCapture?.(
+          event.pointerId
+        );
     }
   );
 
-  photo.addEventListener(
-    'pointercancel',
-
-    () => {
-      dragging =
-        false;
-    }
-  );
 
   photo.addEventListener(
-    'pointerup',
+    'pointermove',
 
     event => {
       if (
-        !dragging
+        !dragging ||
+        pointerId !==
+          event.pointerId
       ) {
         return;
       }
 
-      dragging =
-        false;
-
-      const dx =
+      currentX =
         event.clientX -
         startX;
 
-      const dy =
+      currentY =
         event.clientY -
         startY;
 
-      if (
-        Math.abs(
-          dx
-        ) >
-          50 &&
-        Math.abs(
-          dx
-        ) >
-          Math.abs(
-            dy
-          ) *
-          1.2
-      ) {
-        show(
-          active +
+      const distance =
+        Math.sqrt(
+          currentX *
+            currentX +
+          currentY *
+            currentY
+        );
+
+      const scale =
+        Math.max(
+          .94,
+          1 -
+            distance /
+              2400
+        );
+
+      const opacity =
+        Math.max(
+          .38,
+          1 -
+            distance /
+              620
+        );
+
+      photo.style.transform =
+        `translate3d(${currentX}px, ${currentY}px, 0) scale(${scale})`;
+
+      photo.style.opacity =
+        String(
+          opacity
+        );
+    }
+  );
+
+
+  function finishGesture(
+    event:
+      PointerEvent
+  ) {
+    if (
+      !dragging ||
+      pointerId !==
+        event.pointerId
+    ) {
+      return;
+    }
+
+    dragging =
+      false;
+
+    pointerId =
+      null;
+
+    dialog
+      .classList
+      .remove(
+        'is-dragging'
+      );
+
+    const absX =
+      Math.abs(
+        currentX
+      );
+
+    const absY =
+      Math.abs(
+        currentY
+      );
+
+    if (
+      absY >
+        90 &&
+      absY >
+        absX *
+          1.15
+    ) {
+      closeLightbox(
+        currentY <
+          0
+          ? 'up'
+          : 'down'
+      );
+
+      return;
+    }
+
+    if (
+      absX >
+        70 &&
+      absX >
+        absY *
+          1.15
+    ) {
+      const nextDirection =
+        currentX <
+          0
+          ? 'next'
+          : 'prev';
+
+      show(
+        active +
           (
-            dx < 0
+            currentX <
+              0
               ? 1
               : -1
-          )
-        );
+          ),
+        nextDirection
+      );
+
+      return;
+    }
+
+    photo.style.transform =
+      'translate3d(0,0,0) scale(1)';
+
+    photo.style.opacity =
+      '1';
+  }
+
+
+  photo.addEventListener(
+    'pointerup',
+    finishGesture
+  );
+
+
+  photo.addEventListener(
+    'pointercancel',
+
+    event => {
+      if (
+        dragging &&
+        pointerId ===
+          event.pointerId
+      ) {
+        dragging =
+          false;
+
+        pointerId =
+          null;
+
+        dialog
+          .classList
+          .remove(
+            'is-dragging'
+          );
+
+        photo.style.transform =
+          'translate3d(0,0,0) scale(1)';
+
+        photo.style.opacity =
+          '1';
       }
     }
   );
