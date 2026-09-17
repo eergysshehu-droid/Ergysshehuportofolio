@@ -1,177 +1,1146 @@
 /* ==========================================================================
-   MOBILE GLASS MENU + HERO SCROLL + CURVE RESTORE
+   ERGYS SHEHU — MOBILE UI / CURVE / HERO POLISH
+   SINGLE DENSE LIQUID GLASS SURFACE
+   --------------------------------------------------------------------------
+   IMPORTANT:
+   Does NOT touch homepage sticky photo stacking.
    ========================================================================== */
 
 
-/* --------------------------------------------------------------------------
-   MOBILE CLOSED HEADER — dark green glass
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   MOBILE HEADER + MENU
+   ========================================================================== */
 
 @media(max-width:1000px){
 
-  .site-header::before{
-    background:
-      linear-gradient(
-        180deg,
-        rgba(18,25,19,.78) 0%,
-        rgba(10,15,11,.68) 100%
-      ) !important;
+  /* ------------------------------------------------------------------------
+     CLOSED HEADER
+     One single straight full-width bar.
+     No floating pill.
+     No second background layer.
+     ------------------------------------------------------------------------ */
+
+  html body .site-header{
+    left:
+      0!important;
+
+    right:
+      0!important;
+
+    top:
+      0!important;
+
+    width:
+      100%!important;
+
+    max-width:
+      none!important;
+
+    margin:
+      0!important;
+
+    padding-left:
+      max(
+        18px,
+        env(
+          safe-area-inset-left
+        )
+      )!important;
+
+    padding-right:
+      max(
+        18px,
+        env(
+          safe-area-inset-right
+        )
+      )!important;
+
+    border:
+      0!important;
 
     border-bottom:
       1px solid
-      rgba(255,255,255,.075) !important;
+      rgba(
+        255,
+        255,
+        255,
+        .055
+      )!important;
 
-    backdrop-filter:
-      blur(24px)
-      saturate(145%) !important;
+    border-radius:
+      0!important;
 
-    -webkit-backdrop-filter:
-      blur(24px)
-      saturate(145%) !important;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(
+          20,
+          29,
+          21,
+          .965
+        )
+        0%,
+        rgba(
+          8,
+          13,
+          9,
+          .985
+        )
+        100%
+      )!important;
 
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.045),
-      0 8px 28px rgba(0,0,0,.10) !important;
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .045
+      ),
+      0
+      7px
+      24px
+      rgba(
+        0,
+        0,
+        0,
+        .18
+      )!important;
+
+    backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        118%
+      )!important;
+
+    -webkit-backdrop-filter:
+      blur(
+        38px
+      )
+      saturate(
+        118%
+      )!important;
+  }
+
+
+  /*
+    portfolio.css paints a second full-width background through ::before.
+    Disable it completely on mobile so there is only ONE glass surface.
+  */
+
+  html body .site-header::before{
+    display:
+      none!important;
+
+    content:
+      none!important;
+
+    background:
+      transparent!important;
+
+    border:
+      0!important;
+
+    box-shadow:
+      none!important;
+
+    backdrop-filter:
+      none!important;
+
+    -webkit-backdrop-filter:
+      none!important;
+  }
+
+
+  /*
+    Keep scrolled state identical.
+    No transformation into a rounded pill.
+  */
+
+  html body .site-header.is-scrolled,
+  html body.is-home .site-header.is-scrolled{
+    border:
+      0!important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .055
+      )!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(
+          20,
+          29,
+          21,
+          .975
+        )
+        0%,
+        rgba(
+          7,
+          12,
+          8,
+          .99
+        )
+        100%
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .045
+      ),
+      0
+      7px
+      24px
+      rgba(
+        0,
+        0,
+        0,
+        .18
+      )!important;
+
+    backdrop-filter:
+      blur(
+        40px
+      )
+      saturate(
+        118%
+      )!important;
+
+    -webkit-backdrop-filter:
+      blur(
+        40px
+      )
+      saturate(
+        118%
+      )!important;
   }
 
 
   /* ------------------------------------------------------------------------
-     MOBILE OPEN MENU — iPhone-like dark glass
+     BURGER
+     No circle.
+     No box.
+     Just the icon itself.
      ------------------------------------------------------------------------ */
 
-  .mobile-menu-screen{
-    background:
-      linear-gradient(
-        145deg,
-        rgba(20,29,21,.88) 0%,
-        rgba(9,14,10,.90) 58%,
-        rgba(7,11,8,.94) 100%
-      ) !important;
+  html body .mobile-menu summary{
+    width:
+      44px!important;
+
+    min-width:
+      44px!important;
+
+    height:
+      44px!important;
+
+    min-height:
+      44px!important;
+
+    margin:
+      0!important;
+
+    padding:
+      10px!important;
 
     border:
-      0 !important;
+      0!important;
 
-    backdrop-filter:
-      blur(30px)
-      saturate(150%) !important;
+    border-radius:
+      0!important;
 
-    -webkit-backdrop-filter:
-      blur(30px)
-      saturate(150%) !important;
+    background:
+      transparent!important;
 
     box-shadow:
-      inset 0 1px 0
-      rgba(255,255,255,.055) !important;
+      none!important;
+
+    backdrop-filter:
+      none!important;
+
+    -webkit-backdrop-filter:
+      none!important;
+
+    filter:
+      none!important;
   }
 
 
-  /* subtle glass glow */
+  html body .mobile-menu summary::before{
+    display:
+      none!important;
 
-  .mobile-menu-screen::before{
-    content:"";
+    content:
+      none!important;
+  }
 
-    position:absolute;
 
-    inset:0;
+  html body .hamburger{
+    width:
+      23px!important;
 
-    pointer-events:none;
+    height:
+      15px!important;
+  }
+
+
+  html body .hamburger i{
+    height:
+      1px!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      rgba(
+        246,
+        245,
+        239,
+        .94
+      )!important;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     OPEN MENU
+     ONE SINGLE 100% SCREEN MATERIAL
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-menu-screen{
+    position:
+      fixed!important;
+
+    inset:
+      0!important;
+
+    top:
+      0!important;
+
+    left:
+      0!important;
+
+    right:
+      0!important;
+
+    bottom:
+      0!important;
+
+    width:
+      100vw!important;
+
+    max-width:
+      none!important;
+
+    height:
+      100dvh!important;
+
+    min-height:
+      100dvh!important;
+
+    max-height:
+      100dvh!important;
+
+    margin:
+      0!important;
+
+    padding-top:
+      max(
+        20px,
+        env(
+          safe-area-inset-top
+        )
+      )!important;
+
+    padding-right:
+      max(
+        20px,
+        env(
+          safe-area-inset-right
+        )
+      )!important;
+
+    padding-bottom:
+      max(
+        24px,
+        env(
+          safe-area-inset-bottom
+        )
+      )!important;
+
+    padding-left:
+      max(
+        20px,
+        env(
+          safe-area-inset-left
+        )
+      )!important;
+
+    overflow-x:
+      hidden!important;
+
+    overflow-y:
+      auto!important;
+
+    overscroll-behavior:
+      none;
+
+    border:
+      0!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      linear-gradient(
+        155deg,
+        rgba(
+          23,
+          34,
+          24,
+          .975
+        )
+        0%,
+        rgba(
+          10,
+          16,
+          11,
+          .985
+        )
+        43%,
+        rgba(
+          4,
+          8,
+          5,
+          .995
+        )
+        100%
+      )!important;
+
+    color:
+      #f4f3ed!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .045
+      )!important;
+
+    backdrop-filter:
+      blur(
+        52px
+      )
+      saturate(
+        112%
+      )!important;
+
+    -webkit-backdrop-filter:
+      blur(
+        52px
+      )
+      saturate(
+        112%
+      )!important;
+  }
+
+
+  /*
+    Very subtle material variation only.
+    No bright green glow.
+  */
+
+  html body .mobile-menu-screen::before{
+    content:
+      "";
+
+    display:
+      block!important;
+
+    position:
+      absolute;
+
+    inset:
+      0;
+
+    pointer-events:
+      none;
+
+    z-index:
+      0;
 
     background:
       radial-gradient(
-        circle at 20% 0%,
-        rgba(119,145,119,.10),
-        transparent 38%
+        ellipse
+        at
+        15%
+        0%,
+        rgba(
+          97,
+          120,
+          99,
+          .055
+        ),
+        transparent
+        34%
       ),
-      radial-gradient(
-        circle at 100% 80%,
-        rgba(242,165,44,.035),
-        transparent 30%
-      );
-
-    z-index:-1;
+      linear-gradient(
+        115deg,
+        rgba(
+          255,
+          255,
+          255,
+          .018
+        ),
+        transparent
+        28%
+      )!important;
   }
 
 
-  /* menu links less rigid */
+  html body .mobile-menu-head,
+  html body .mobile-menu-screen nav,
+  html body .mobile-menu-footer{
+    position:
+      relative;
 
-  .mobile-menu-screen nav a{
+    z-index:
+      2;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     MENU HEAD
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-menu-head{
+    width:
+      100%;
+
+    min-height:
+      52px;
+
+    padding:
+      0
+      0
+      17px!important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .075
+      )!important;
+  }
+
+
+  html body .mobile-menu-brand{
     color:
-      rgba(247,245,239,.88) !important;
+      rgba(
+        247,
+        246,
+        240,
+        .96
+      )!important;
+  }
+
+
+  html body .mobile-menu-close{
+    width:
+      44px!important;
+
+    height:
+      44px!important;
+
+    padding:
+      0!important;
+
+    border:
+      0!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
+    box-shadow:
+      none!important;
+
+    color:
+      rgba(
+        247,
+        246,
+        240,
+        .92
+      )!important;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     NAVIGATION
+     No inner card.
+     No rounded rectangle.
+     No box inside the screen.
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-menu-screen nav{
+    width:
+      100%!important;
+
+    margin:
+      clamp(
+        34px,
+        7vh,
+        72px
+      )
+      0
+      0!important;
+
+    padding:
+      0!important;
+
+    display:
+      flex!important;
+
+    flex-direction:
+      column!important;
+
+    align-items:
+      stretch!important;
+
+    gap:
+      0!important;
+
+    border:
+      0!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
+    box-shadow:
+      none!important;
+
+    backdrop-filter:
+      none!important;
+
+    -webkit-backdrop-filter:
+      none!important;
+  }
+
+
+  html body .mobile-menu-screen nav>a{
+    width:
+      100%!important;
+
+    min-height:
+      auto!important;
+
+    margin:
+      0!important;
+
+    padding:
+      clamp(
+        12px,
+        2.2vh,
+        18px
+      )
+      0!important;
+
+    display:
+      block!important;
+
+    border:
+      0!important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .07
+      )!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
+    box-shadow:
+      none!important;
+
+    color:
+      rgba(
+        247,
+        246,
+        240,
+        .91
+      )!important;
+
+    opacity:
+      1!important;
 
     font-weight:
-      300 !important;
+      300!important;
+
+    line-height:
+      1.02!important;
 
     letter-spacing:
-      -.018em !important;
-
-    transition:
-      opacity .22s ease,
-      transform .28s var(--ease-editorial),
-      color .22s ease !important;
-  }
-
-  .mobile-menu-screen nav a:active{
-    color:
-      #fff !important;
+      -.028em!important;
 
     transform:
-      translateX(5px);
+      none!important;
+
+    transition:
+      opacity
+      .2s
+      ease,
+      padding-left
+      .24s
+      var(
+        --ease-editorial
+      )!important;
   }
 
 
-  /* menu button itself gets a soft glass circle */
+  html body .mobile-menu-screen nav>a:hover,
+  html body .mobile-menu-screen nav>a:active{
+    padding-left:
+      6px!important;
 
-  .mobile-menu summary{
+    color:
+      #fff!important;
+
     background:
-      rgba(255,255,255,.045) !important;
+      transparent!important;
+
+    opacity:
+      .72!important;
+
+    transform:
+      none!important;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     CATEGORY SUBLINKS
+     Keep them part of same flow, not another box.
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-categories{
+    display:
+      grid!important;
+
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(
+          0,
+          1fr
+        )
+      )!important;
+
+    gap:
+      0!important;
+
+    width:
+      100%!important;
+
+    margin:
+      0!important;
+
+    padding:
+      0!important;
+
+    border:
+      0!important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .07
+      )!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
+    box-shadow:
+      none!important;
+  }
+
+
+  html body .mobile-categories a{
+    padding:
+      12px
+      0!important;
+
+    border:
+      0!important;
+
+    border-right:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .055
+      )!important;
+
+    border-radius:
+      0!important;
+
+    background:
+      transparent!important;
+
+    color:
+      rgba(
+        247,
+        246,
+        240,
+        .48
+      )!important;
+
+    font-size:
+      10px!important;
+
+    font-weight:
+      500!important;
+
+    line-height:
+      1.2!important;
+
+    letter-spacing:
+      .12em!important;
+
+    text-align:
+      center;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  html body .mobile-categories a:last-child{
+    border-right:
+      0!important;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     FOOTER
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-menu-footer{
+    width:
+      100%;
+
+    margin-top:
+      auto!important;
+
+    padding-top:
+      25px!important;
+
+    border-top:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        .065
+      );
+  }
+
+
+  html body .mobile-footer-row{
+    width:
+      100%;
+  }
+
+
+  html body .mobile-book{
+    color:
+      rgba(
+        247,
+        246,
+        240,
+        .9
+      )!important;
+  }
+
+
+  html body .mobile-location{
+    color:
+      rgba(
+        247,
+        246,
+        240,
+        .45
+      )!important;
+  }
+
+
+  /* ------------------------------------------------------------------------
+     LANGUAGE SWITCH
+     Small control is allowed to be lightly rounded,
+     but no huge pill bar.
+     ------------------------------------------------------------------------ */
+
+  html body .mobile-menu-footer .language-switch{
+    width:
+      fit-content!important;
+
+    margin:
+      0!important;
+
+    padding:
+      2px!important;
 
     border:
       1px solid
-      rgba(255,255,255,.08);
+      rgba(
+        255,
+        255,
+        255,
+        .13
+      )!important;
 
-    backdrop-filter:
-      blur(14px);
+    border-radius:
+      5px!important;
 
-    -webkit-backdrop-filter:
-      blur(14px);
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .025
+      )!important;
+
+    box-shadow:
+      none!important;
+  }
+
+
+  html body .mobile-menu-footer .language-switch::before{
+    border-radius:
+      3px!important;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .105
+      )!important;
+  }
+
+
+  html body .mobile-menu-footer .language-switch button{
+    border-radius:
+      3px!important;
   }
 }
 
 
-/* --------------------------------------------------------------------------
-   RESTORE HERO SCROLL INDICATOR
-   Keep it ABOVE the curve, never hidden.
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   SMALL / SHORT PHONES
+   ========================================================================== */
+
+@media(
+  max-width:420px
+){
+
+  html body .mobile-menu-screen{
+    padding-top:
+      max(
+        14px,
+        env(
+          safe-area-inset-top
+        )
+      )!important;
+
+    padding-left:
+      max(
+        16px,
+        env(
+          safe-area-inset-left
+        )
+      )!important;
+
+    padding-right:
+      max(
+        16px,
+        env(
+          safe-area-inset-right
+        )
+      )!important;
+
+    padding-bottom:
+      max(
+        18px,
+        env(
+          safe-area-inset-bottom
+        )
+      )!important;
+  }
+
+
+  html body .mobile-menu-screen nav{
+    margin-top:
+      24px!important;
+  }
+
+
+  html body .mobile-menu-screen nav>a{
+    padding:
+      11px
+      0!important;
+
+    font-size:
+      clamp(
+        26px,
+        8.5vw,
+        34px
+      )!important;
+  }
+
+
+  html body .mobile-menu-footer{
+    gap:
+      14px!important;
+
+    padding-top:
+      17px!important;
+  }
+}
+
+
+/*
+  Phones with little vertical space, including landscape.
+*/
+
+@media(
+  max-width:1000px
+) and (
+  max-height:690px
+){
+
+  html body .mobile-menu-screen nav{
+    margin-top:
+      17px!important;
+  }
+
+
+  html body .mobile-menu-screen nav>a{
+    padding:
+      8px
+      0!important;
+
+    font-size:
+      clamp(
+        23px,
+        5.5vh,
+        31px
+      )!important;
+  }
+
+
+  html body .mobile-menu-footer{
+    gap:
+      10px!important;
+
+    padding-top:
+      13px!important;
+  }
+
+
+  html body .mobile-location{
+    display:
+      none!important;
+  }
+}
+
+
+/* ==========================================================================
+   HERO SCROLL INDICATOR
+   ========================================================================== */
 
 body.is-home .scroll-indicator{
   display:
-    grid !important;
+    grid!important;
 
   visibility:
-    visible !important;
+    visible!important;
 
   opacity:
-    1 !important;
+    1!important;
 
   z-index:
-    30 !important;
+    30!important;
 
   right:
-    var(--gutter) !important;
+    var(
+      --gutter
+    )!important;
 
   bottom:
     clamp(
       32px,
       4.2vh,
       54px
-    ) !important;
+    )!important;
 
   color:
-    #fff !important;
+    #fff!important;
 
   filter:
     drop-shadow(
-      0 2px 8px rgba(0,0,0,.55)
+      0
+      2px
+      8px
+      rgba(
+        0,
+        0,
+        0,
+        .55
+      )
     );
 }
 
@@ -196,7 +1165,9 @@ body.is-home .scroll-indicator svg{
   0%,
   100%{
     transform:
-      translateY(0);
+      translateY(
+        0
+      );
 
     opacity:
       .55;
@@ -204,7 +1175,9 @@ body.is-home .scroll-indicator svg{
 
   50%{
     transform:
-      translateY(7px);
+      translateY(
+        7px
+      );
 
     opacity:
       1;
@@ -212,87 +1185,121 @@ body.is-home .scroll-indicator svg{
 }
 
 
-/* --------------------------------------------------------------------------
-   CURVE — restore presence and clean edge
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   HOMEPAGE CURVE
+   Keep the original section curve.
+   ========================================================================== */
 
-body.is-home .filmstrip-curve{
+html body.is-home .filmstrip-curve{
+  display:
+    block!important;
+
   opacity:
-    1 !important;
+    1!important;
 
   height:
     clamp(
-      70px,
-      7vw,
-      112px
-    ) !important;
+      66px,
+      6.5vw,
+      104px
+    )!important;
 
   bottom:
     calc(
       100% -
-      2px
-    ) !important;
+      1px
+    )!important;
 
   z-index:
-    6 !important;
+    6!important;
 
   overflow:
-    visible !important;
+    visible!important;
 }
 
 
-body.is-home .filmstrip-curve path{
+html body.is-home .filmstrip-curve path{
   fill:
-    #151b15 !important;
+    #111711!important;
 
   stroke:
-    none !important;
+    none!important;
 }
 
 
-/* filmstrip itself continues exactly into the curve */
+/*
+  Filmstrip and curve must look like one continuous surface.
+*/
 
-body.is-home .filmstrip-section{
+html body.is-home .filmstrip-section{
   background:
-    #151b15 !important;
+    linear-gradient(
+      180deg,
+      #111711
+      0%,
+      #0c110c
+      100%
+    )!important;
 }
 
 
-/* --------------------------------------------------------------------------
-   MOBILE CURVE
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   MOBILE CURVE + SCROLL INDICATOR
+   ========================================================================== */
 
 @media(max-width:700px){
 
-  body.is-home .filmstrip-curve{
+  html body.is-home .filmstrip-curve{
+    display:
+      block!important;
+
     height:
-      56px !important;
+      48px!important;
 
     bottom:
       calc(
         100% -
-        2px
-      ) !important;
+        1px
+      )!important;
   }
 
 
   body.is-home .scroll-indicator{
     right:
-      18px !important;
+      18px!important;
 
     bottom:
-      28px !important;
+      27px!important;
 
     gap:
-      5px !important;
+      5px!important;
   }
 
 
   body.is-home .scroll-indicator span{
     font-size:
-      9px !important;
+      9px!important;
 
     letter-spacing:
-      .18em !important;
+      .18em!important;
+  }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+  body.is-home .scroll-indicator svg{
+    animation:
+      none!important;
+  }
+
+
+  html body .mobile-menu-screen nav>a{
+    transition:
+      none!important;
   }
 }
