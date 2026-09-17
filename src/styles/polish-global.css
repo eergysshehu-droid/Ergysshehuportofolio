@@ -795,3 +795,598 @@
     font-size: clamp(1.65rem, 6vw, 2.2rem);
   }
 }
+/* ==========================================================================
+   FINAL GLASS SYSTEM
+   One continuous header/footer surface + dark green glass panels.
+   ========================================================================== */
+
+:root{
+  --glass-green:
+    rgba(
+      14,
+      20,
+      15,
+      .72
+    );
+
+  --glass-green-strong:
+    rgba(
+      12,
+      18,
+      13,
+      .86
+    );
+
+  --glass-line:
+    rgba(
+      226,
+      236,
+      224,
+      .10
+    );
+
+  --glass-highlight:
+    rgba(
+      255,
+      255,
+      255,
+      .055
+    );
+
+  --glass-shadow:
+    rgba(
+      0,
+      0,
+      0,
+      .26
+    );
+}
+
+
+/* ==========================================================================
+   HEADER — ONE CONTINUOUS GLASS BAR
+   ========================================================================== */
+
+.site-header{
+  background:
+    transparent!important;
+
+  border:
+    0!important;
+
+  box-shadow:
+    none!important;
+}
+
+
+/* Existing full-width pseudo element becomes the ONLY header surface */
+
+.site-header::before{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        18,
+        25,
+        19,
+        .82
+      )
+      0%,
+      rgba(
+        11,
+        16,
+        12,
+        .72
+      )
+      100%
+    )!important;
+
+  border-bottom:
+    1px solid
+    var(
+      --glass-line
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    var(
+      --glass-highlight
+    ),
+    0
+    10px
+    32px
+    rgba(
+      0,
+      0,
+      0,
+      .08
+    )!important;
+
+  backdrop-filter:
+    blur(
+      22px
+    )
+    saturate(
+      135%
+    )!important;
+
+  -webkit-backdrop-filter:
+    blur(
+      22px
+    )
+    saturate(
+      135%
+    )!important;
+}
+
+
+/* Do not switch home header back to a separate solid strip */
+
+.is-home .site-header,
+.is-home .site-header.is-scrolled{
+  --header-bg:
+    transparent!important;
+
+  --header-line:
+    transparent!important;
+}
+
+
+/* ==========================================================================
+   FOOTER — FULL WIDTH / SAME MATERIAL AS HEADER
+   ========================================================================== */
+
+footer{
+  width:
+    100%!important;
+
+  max-width:
+    none!important;
+
+  margin:
+    0!important;
+
+  box-sizing:
+    border-box;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        12,
+        18,
+        13,
+        .78
+      ),
+      rgba(
+        9,
+        14,
+        10,
+        .88
+      )
+    )!important;
+
+  border-top:
+    1px solid
+    var(
+      --glass-line
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    var(
+      --glass-highlight
+    )!important;
+
+  backdrop-filter:
+    blur(
+      22px
+    )
+    saturate(
+      130%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      22px
+    )
+    saturate(
+      130%
+    );
+}
+
+
+/* Keep footer content aligned with the rest of the site */
+
+footer{
+  padding-left:
+    max(
+      var(
+        --page-pad
+      ),
+      calc(
+        (
+          100vw -
+          var(
+            --content-max
+          )
+        ) /
+        2 +
+        var(
+          --page-pad
+        )
+      )
+    )!important;
+
+  padding-right:
+    max(
+      var(
+        --page-pad
+      ),
+      calc(
+        (
+          100vw -
+          var(
+            --content-max
+          )
+        ) /
+        2 +
+        var(
+          --page-pad
+        )
+      )
+    )!important;
+}
+
+
+/* ==========================================================================
+   GREEN GLASS PANELS
+   ========================================================================== */
+
+.collection-intro,
+body.is-home .artist-section,
+.recognition-section,
+.inquiry-form{
+  position:
+    relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(
+        23,
+        32,
+        24,
+        .74
+      )
+      0%,
+      rgba(
+        13,
+        20,
+        15,
+        .64
+      )
+      52%,
+      rgba(
+        11,
+        17,
+        13,
+        .76
+      )
+      100%
+    )!important;
+
+  border:
+    1px solid
+    rgba(
+      220,
+      235,
+      220,
+      .075
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .045
+    ),
+    0
+    18px
+    50px
+    rgba(
+      0,
+      0,
+      0,
+      .12
+    )!important;
+
+  backdrop-filter:
+    blur(
+      24px
+    )
+    saturate(
+      125%
+    )!important;
+
+  -webkit-backdrop-filter:
+    blur(
+      24px
+    )
+    saturate(
+      125%
+    )!important;
+}
+
+
+/* Collection headers: softer modern corners */
+
+.collection-intro{
+  border-radius:
+    28px!important;
+
+  overflow:
+    hidden;
+}
+
+
+/* Behind the Lens: keep larger editorial radius */
+
+body.is-home .artist-section{
+  border-radius:
+    32px
+    32px
+    0
+    0!important;
+}
+
+
+/* ==========================================================================
+   SMALLER CARDS — GLASS GREEN
+   ========================================================================== */
+
+.service-card,
+.recognition-row,
+.journal-card,
+.latest-card{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        24,
+        34,
+        25,
+        .56
+      ),
+      rgba(
+        10,
+        16,
+        12,
+        .50
+      )
+    )!important;
+
+  border:
+    1px solid
+    rgba(
+      225,
+      238,
+      225,
+      .075
+    )!important;
+
+  box-shadow:
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      .04
+    ),
+    0
+    12px
+    32px
+    rgba(
+      0,
+      0,
+      0,
+      .10
+    );
+
+  backdrop-filter:
+    blur(
+      18px
+    )
+    saturate(
+      120%
+    );
+
+  -webkit-backdrop-filter:
+    blur(
+      18px
+    )
+    saturate(
+      120%
+    );
+}
+
+
+/* ==========================================================================
+   DESKTOP — restrained glass, no floating-box feeling
+   ========================================================================== */
+
+@media(min-width:701px){
+
+  .collection-intro{
+    border-radius:
+      24px!important;
+  }
+
+  .service-card,
+  .recognition-row{
+    transition:
+      background
+      260ms
+      ease,
+      border-color
+      260ms
+      ease,
+      transform
+      260ms
+      ease;
+  }
+
+  .service-card:hover,
+  .recognition-row:hover{
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          30,
+          43,
+          31,
+          .68
+        ),
+        rgba(
+          13,
+          20,
+          15,
+          .60
+        )
+      )!important;
+
+    border-color:
+      rgba(
+        242,
+        165,
+        44,
+        .18
+      )!important;
+
+    transform:
+      translateY(
+        -2px
+      );
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE — IPHONE-LIKE DARK GLASS
+   ========================================================================== */
+
+@media(max-width:700px){
+
+  .site-header::before{
+    background:
+      rgba(
+        13,
+        18,
+        14,
+        .72
+      )!important;
+
+    backdrop-filter:
+      blur(
+        28px
+      )
+      saturate(
+        145%
+      )!important;
+
+    -webkit-backdrop-filter:
+      blur(
+        28px
+      )
+      saturate(
+        145%
+      )!important;
+  }
+
+
+  .collection-intro,
+  body.is-home .artist-section,
+  .inquiry-form{
+    border-radius:
+      22px!important;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(
+          25,
+          35,
+          26,
+          .66
+        ),
+        rgba(
+          10,
+          16,
+          12,
+          .72
+        )
+      )!important;
+
+    backdrop-filter:
+      blur(
+        26px
+      )
+      saturate(
+        140%
+      )!important;
+
+    -webkit-backdrop-filter:
+      blur(
+        26px
+      )
+      saturate(
+        140%
+      )!important;
+
+    box-shadow:
+      inset
+      0
+      1px
+      0
+      rgba(
+        255,
+        255,
+        255,
+        .055
+      ),
+      0
+      16px
+      42px
+      rgba(
+        0,
+        0,
+        0,
+        .16
+      )!important;
+  }
+
+
+  footer{
+    background:
+      rgba(
+        11,
+        16,
+        12,
+        .86
+      )!important;
+  }
+}
