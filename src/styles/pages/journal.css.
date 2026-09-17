@@ -1,0 +1,527 @@
+/* ============================================================
+   ERGYS SHEHU — JOURNAL
+   ============================================================ */
+
+
+/* INDEX INTRO */
+
+.journal-index-intro h1 {
+  max-width: 12ch;
+
+  font-size:
+    clamp(
+      58px,
+      5vw,
+      96px
+    ) !important;
+
+  line-height:
+    .96 !important;
+
+  letter-spacing:
+    -.045em !important;
+
+  overflow-wrap:
+    normal !important;
+
+  text-wrap:
+    balance;
+}
+
+
+.journal-index-intro >
+p:not(.kicker) {
+  max-width:
+    58ch !important;
+
+  font-size:
+    clamp(
+      14px,
+      .78vw,
+      16px
+    ) !important;
+
+  line-height:
+    1.72 !important;
+}
+
+
+/* INDEX GRID */
+
+.journal-list.journal-index-list {
+  width:
+    100%;
+
+  max-width:
+    1540px;
+
+  margin-inline:
+    auto;
+
+  padding:
+    0
+    clamp(
+      22px,
+      4vw,
+      64px
+    )
+    clamp(
+      90px,
+      8vw,
+      140px
+    );
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  column-gap:
+    clamp(
+      28px,
+      3vw,
+      48px
+    );
+
+  row-gap:
+    clamp(
+      48px,
+      5vw,
+      78px
+    );
+}
+
+
+/* CARD */
+
+.journal-index-list
+.journal-card {
+  min-width:
+    0;
+}
+
+
+.journal-index-list
+.journal-card-image {
+  width:
+    100%;
+
+  aspect-ratio:
+    3 / 2;
+
+  margin-bottom:
+    clamp(
+      16px,
+      1.5vw,
+      22px
+    );
+
+  overflow:
+    hidden;
+
+  border-radius:
+    4px;
+
+  background:
+    transparent;
+}
+
+
+.journal-index-list
+.journal-card-image img {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  aspect-ratio:
+    auto;
+
+  object-fit:
+    cover;
+
+  object-position:
+    var(
+      --focal-point,
+      50% 32%
+    );
+}
+
+
+/* TYPOGRAPHY */
+
+.journal-index-list
+.journal-date {
+  margin-bottom:
+    9px;
+
+  font-size:
+    clamp(
+      10px,
+      .55vw,
+      12px
+    );
+
+  letter-spacing:
+    .11em;
+}
+
+
+.journal-index-list
+.journal-card-copy h2 {
+  max-width:
+    22ch;
+
+  margin:
+    0
+    0
+    12px;
+
+  font-family:
+    var(--serif);
+
+  font-size:
+    clamp(
+      24px,
+      1.55vw,
+      30px
+    ) !important;
+
+  font-weight:
+    400;
+
+  line-height:
+    1.08;
+
+  letter-spacing:
+    -.025em;
+
+  text-wrap:
+    balance;
+}
+
+
+.journal-index-list
+.journal-card-copy p {
+  max-width:
+    58ch;
+
+  margin:
+    0
+    0
+    15px;
+
+  font-size:
+    clamp(
+      14px,
+      .72vw,
+      15.5px
+    );
+
+  line-height:
+    1.68;
+
+  display:
+    -webkit-box;
+
+  -webkit-box-orient:
+    vertical;
+
+  -webkit-line-clamp:
+    3;
+
+  overflow:
+    hidden;
+}
+
+
+/* LARGE DESKTOP */
+
+@media (min-width: 1600px) {
+
+  .journal-list.journal-index-list {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
+  }
+
+}
+
+
+@media (min-width: 2200px) {
+
+  .journal-list.journal-index-list {
+    max-width:
+      1620px;
+  }
+
+}
+
+
+/* ARTICLE */
+
+.journal-post
+.journal-article-intro h1 {
+  max-width:
+    16ch;
+
+  font-size:
+    clamp(
+      44px,
+      4vw,
+      82px
+    ) !important;
+
+  line-height:
+    .98 !important;
+
+  letter-spacing:
+    -.042em !important;
+
+  overflow-wrap:
+    normal !important;
+
+  text-wrap:
+    balance;
+}
+
+
+.journal-post
+.journal-article-intro >
+p:not(.kicker) {
+  max-width:
+    62ch !important;
+
+  font-size:
+    clamp(
+      14px,
+      .78vw,
+      16px
+    ) !important;
+
+  line-height:
+    1.72 !important;
+}
+
+
+.journal-post
+.journal-post-cover {
+  width:
+    min(
+      1600px,
+      calc(100% - 64px)
+    );
+
+  margin:
+    0
+    auto
+    clamp(
+      52px,
+      5vw,
+      80px
+    );
+
+  border-radius:
+    4px;
+
+  background:
+    transparent;
+}
+
+
+.journal-post
+.journal-post-cover img {
+  width:
+    100%;
+
+  height:
+    auto;
+
+  max-height:
+    min(
+      72vh,
+      820px
+    );
+
+  object-fit:
+    cover;
+
+  object-position:
+    var(
+      --focal-point,
+      50% 32%
+    );
+}
+
+
+.journal-post
+.journal-post-body {
+  width:
+    min(
+      calc(100% - 48px),
+      760px
+    );
+
+  max-width:
+    none;
+
+  margin-inline:
+    auto;
+
+  padding:
+    0
+    0
+    clamp(
+      90px,
+      8vw,
+      140px
+    );
+
+  font-size:
+    clamp(
+      16px,
+      .9vw,
+      18px
+    );
+
+  line-height:
+    1.82;
+}
+
+
+.journal-post
+.journal-post-body h2 {
+  margin:
+    56px
+    0
+    20px;
+
+  font-size:
+    clamp(
+      28px,
+      2vw,
+      36px
+    );
+
+  line-height:
+    1.16;
+}
+
+
+.journal-post
+.journal-post-body h3 {
+  margin:
+    42px
+    0
+    16px;
+
+  font-size:
+    clamp(
+      22px,
+      1.5vw,
+      27px
+    );
+
+  line-height:
+    1.2;
+}
+
+
+@media (min-width: 2400px) {
+
+  .journal-post
+  .journal-post-body {
+    width:
+      800px;
+
+    font-size:
+      19px;
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+
+  .journal-index-intro h1 {
+    font-size:
+      clamp(
+        48px,
+        15vw,
+        68px
+      ) !important;
+  }
+
+
+  .journal-list.journal-index-list {
+    grid-template-columns:
+      1fr;
+
+    padding-inline:
+      18px;
+
+    row-gap:
+      48px;
+  }
+
+
+  .journal-index-list
+  .journal-card-copy h2 {
+    max-width:
+      none;
+
+    font-size:
+      clamp(
+        25px,
+        7.5vw,
+        31px
+      ) !important;
+  }
+
+
+  .journal-post
+  .journal-article-intro h1 {
+    max-width:
+      none;
+
+    font-size:
+      clamp(
+        40px,
+        11vw,
+        58px
+      ) !important;
+  }
+
+
+  .journal-post
+  .journal-post-cover {
+    width:
+      calc(100% - 18px);
+
+    margin-bottom:
+      46px;
+  }
+
+
+  .journal-post
+  .journal-post-body {
+    width:
+      calc(100% - 36px);
+
+    font-size:
+      16px;
+
+    line-height:
+      1.78;
+  }
+
+}
