@@ -8,13 +8,10 @@
     width: calc(100% - 18px) !important;
     margin-inline: auto !important;
 
-    padding:
-      max(
-        82px,
-        calc(env(safe-area-inset-top) + 68px)
-      )
-      22px
-      30px !important;
+   padding:
+  28px
+  22px
+  30px !important;
 
     min-height: 0 !important;
 
@@ -54,18 +51,20 @@
 
 
   html body
-  .collection-intro .back-link {
-    min-height: 38px;
+.collection-intro .back-link {
+  min-height: 34px;
 
-    font-size: 13px;
+  margin-bottom: 18px;
 
-    opacity: .78;
-  }
+  font-size: 13px;
+
+  opacity: .78;
+}
 
 
-  html body
-  .collection-intro .kicker {
-    margin-top: 18px !important;
+ html body
+.collection-intro .kicker {
+  margin-top: 8px !important;
     margin-bottom: 0;
 
     font-size:
@@ -90,12 +89,12 @@
       0
       20px !important;
 
-    font-size:
-      clamp(
-        2.5rem,
-        11.5vw,
-        3.55rem
-      ) !important;
+   font-size:
+  clamp(
+    2.65rem,
+    11vw,
+    3.45rem
+  ) !important;
 
     line-height:
       .92 !important;
