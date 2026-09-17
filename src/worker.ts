@@ -2,15 +2,19 @@ interface EmailBinding {
   send(
     message: {
       to: string;
+
       from:
         | string
         | {
             email: string;
             name?: string;
           };
+
       subject: string;
+
       html?: string;
       text?: string;
+
       replyTo?:
         | string
         | {
@@ -23,16 +27,22 @@ interface EmailBinding {
   }>;
 }
 
+
 interface AssetsBinding {
   fetch(
     request: Request
   ): Promise<Response>;
 }
 
+
 interface Env {
-  CONTACT_EMAIL: EmailBinding;
-  ASSETS: AssetsBinding;
+  CONTACT_EMAIL:
+    EmailBinding;
+
+  ASSETS:
+    AssetsBinding;
 }
+
 
 interface ContactPayload {
   name?: unknown;
@@ -46,19 +56,20 @@ interface ContactPayload {
   page?: unknown;
 }
 
+
 const DESTINATION_EMAIL =
   'e.ergysshehu@gmail.com';
+
 
 const SENDER_EMAIL =
   'website@ergysshehu.com';
 
-const PROJECTS: Record<
-  string,
-  {
-    en: string;
-    sq: string;
-  }
-> = {
+
+const MAX_BODY_BYTES =
+  20000;
+
+
+const PROJECTS = {
   fashion: {
     en:
       'Fashion Photography',
@@ -114,7 +125,17 @@ const PROJECTS: Record<
     sq:
       'Tjetër'
   }
-};
+} as const;
+
+
+type ProjectKey =
+  keyof typeof PROJECTS;
+
+
+type SiteLanguage =
+  | 'en'
+  | 'sq';
+
 
 function json(
   body: Record<
@@ -141,6 +162,7 @@ function json(
   );
 }
 
+
 function clean(
   value: unknown,
   maxLength: number
@@ -163,6 +185,7 @@ function clean(
       maxLength
     );
 }
+
 
 function escapeHtml(
   value: string
@@ -190,6 +213,7 @@ function escapeHtml(
     );
 }
 
+
 function validEmail(
   value: string
 ) {
@@ -202,6 +226,7 @@ function validEmail(
       )
   );
 }
+
 
 function validPhone(
   value: string
@@ -217,6 +242,56 @@ function validPhone(
       value
     );
 }
+
+
+/*
+ * JSON.parse() can legally return:
+ *
+ * null
+ * number
+ * string
+ * array
+ *
+ * None of those are valid form payloads.
+ */
+function isContactPayload(
+  value: unknown
+): value is ContactPayload {
+
+  return (
+    typeof value ===
+      'object' &&
+    value !==
+      null &&
+    !Array.isArray(
+      value
+    )
+  );
+}
+
+
+/*
+ * Do not use:
+ *
+ * PROJECTS[value]
+ *
+ * as the only validator because inherited Object keys
+ * such as "constructor" must never be accepted as
+ * legitimate project values.
+ */
+function isProjectKey(
+  value: string
+): value is ProjectKey {
+
+  return Object
+    .prototype
+    .hasOwnProperty
+    .call(
+      PROJECTS,
+      value
+    );
+}
+
 
 async function handleContact(
   request: Request,
@@ -238,15 +313,18 @@ async function handleContact(
     );
   }
 
+
   const url =
     new URL(
       request.url
     );
 
+
   const origin =
     request.headers.get(
       'origin'
     );
+
 
   if (
     origin
@@ -276,11 +354,15 @@ async function handleContact(
     }
   }
 
+
   const contentType =
-    request.headers.get(
-      'content-type'
-    ) ||
-    '';
+    (
+      request.headers.get(
+        'content-type'
+      ) ||
+      ''
+    ).toLowerCase();
+
 
   if (
     !contentType.includes(
@@ -299,6 +381,7 @@ async function handleContact(
     );
   }
 
+
   const contentLength =
     Number(
       request.headers.get(
@@ -307,9 +390,13 @@ async function handleContact(
       '0'
     );
 
+
   if (
+    Number.isFinite(
+      contentLength
+    ) &&
     contentLength >
-    20000
+      MAX_BODY_BYTES
   ) {
     return json(
       {
@@ -323,8 +410,10 @@ async function handleContact(
     );
   }
 
-  let payload:
-    ContactPayload;
+
+  let parsed:
+    unknown;
+
 
   try {
     const raw =
@@ -332,7 +421,7 @@ async function handleContact(
 
     if (
       raw.length >
-      20000
+      MAX_BODY_BYTES
     ) {
       return json(
         {
@@ -346,10 +435,11 @@ async function handleContact(
       );
     }
 
-    payload =
+    parsed =
       JSON.parse(
         raw
       );
+
   } catch {
     return json(
       {
@@ -363,11 +453,44 @@ async function handleContact(
     );
   }
 
+
+  /*
+   * Protect against valid JSON that is not an object.
+   *
+   * Examples:
+   * null
+   * []
+   * "hello"
+   * 123
+   */
+  if (
+    !isContactPayload(
+      parsed
+    )
+  ) {
+    return json(
+      {
+        ok:
+          false,
+
+        error:
+          'Invalid form data.'
+      },
+      400
+    );
+  }
+
+
+  const payload =
+    parsed;
+
+
   const honeypot =
     clean(
       payload.website,
       200
     );
+
 
   /*
    * Bots commonly fill every available field.
@@ -382,11 +505,13 @@ async function handleContact(
     });
   }
 
+
   const name =
     clean(
       payload.name,
       80
     );
+
 
   const email =
     clean(
@@ -395,11 +520,13 @@ async function handleContact(
     )
       .toLowerCase();
 
+
   const phone =
     clean(
       payload.phone,
       40
     );
+
 
   const project =
     clean(
@@ -407,23 +534,28 @@ async function handleContact(
       40
     );
 
+
   const message =
     clean(
       payload.message,
       4000
     );
 
-  const lang =
-    payload.lang ===
-      'sq'
-      ? 'sq'
-      : 'en';
+
+  const lang:
+    SiteLanguage =
+      payload.lang ===
+        'sq'
+        ? 'sq'
+        : 'en';
+
 
   const page =
     clean(
       payload.page,
       300
     );
+
 
   if (
     name.length <
@@ -443,6 +575,7 @@ async function handleContact(
       400
     );
   }
+
 
   if (
     !validEmail(
@@ -464,6 +597,7 @@ async function handleContact(
     );
   }
 
+
   if (
     !validPhone(
       phone
@@ -484,10 +618,11 @@ async function handleContact(
     );
   }
 
+
   if (
-    !PROJECTS[
+    !isProjectKey(
       project
-    ]
+    )
   ) {
     return json(
       {
@@ -503,6 +638,7 @@ async function handleContact(
       400
     );
   }
+
 
   if (
     message.length <
@@ -523,15 +659,23 @@ async function handleContact(
     );
   }
 
+
   const startedAt =
     Number(
       payload.startedAt
     );
 
+
+  /*
+   * Very fast submissions are normally automated.
+   * Preserve the existing silent-success behaviour.
+   */
   if (
     Number.isFinite(
       startedAt
     ) &&
+    startedAt >
+      0 &&
     Date.now() -
       startedAt <
       700
@@ -542,17 +686,21 @@ async function handleContact(
     });
   }
 
+
   const projectLabel =
     PROJECTS[
       project
     ][lang];
 
+
   const timestamp =
     new Date()
       .toISOString();
 
+
   const subject =
     `Website inquiry — ${projectLabel} — ${name}`;
+
 
   const text = [
     'NEW WEBSITE INQUIRY',
@@ -572,12 +720,14 @@ async function handleContact(
     '\n'
   );
 
+
   const html =
     `
 <!doctype html>
 <html>
 <body style="margin:0;padding:0;background:#f4f2ed;color:#171714;font-family:Arial,sans-serif;">
   <div style="max-width:680px;margin:0 auto;padding:40px 24px;">
+
     <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#77776e;margin-bottom:12px;">
       ERGYS SHEHU · WEBSITE INQUIRY
     </div>
@@ -589,44 +739,85 @@ async function handleContact(
     </h1>
 
     <table style="width:100%;border-collapse:collapse;font-size:15px;line-height:1.6;">
+
       <tr>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;width:130px;color:#77776e;">Name</td>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">${escapeHtml(
-          name
-        )}</td>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;width:130px;color:#77776e;">
+          Name
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            name
+          )}
+        </td>
       </tr>
 
       <tr>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">Email</td>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">${escapeHtml(
-          email
-        )}</td>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">
+          Email
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            email
+          )}
+        </td>
       </tr>
 
       <tr>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">Phone</td>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">${escapeHtml(
-          phone ||
-          'Not provided'
-        )}</td>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">
+          Phone
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            phone ||
+            'Not provided'
+          )}
+        </td>
       </tr>
 
       <tr>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">Project</td>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">${escapeHtml(
-          projectLabel
-        )}</td>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">
+          Project
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            projectLabel
+          )}
+        </td>
       </tr>
 
       <tr>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">Language</td>
-        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">${escapeHtml(
-          lang.toUpperCase()
-        )}</td>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">
+          Language
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            lang.toUpperCase()
+          )}
+        </td>
       </tr>
+
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;color:#77776e;">
+          Page
+        </td>
+
+        <td style="padding:10px 0;border-top:1px solid #d3d1c9;">
+          ${escapeHtml(
+            page ||
+            '/book/'
+          )}
+        </td>
+      </tr>
+
     </table>
 
     <div style="margin-top:34px;padding-top:24px;border-top:1px solid #d3d1c9;">
+
       <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#77776e;margin-bottom:12px;">
         Message
       </div>
@@ -636,6 +827,7 @@ async function handleContact(
           message
         )}
       </div>
+
     </div>
 
     <div style="margin-top:40px;font-size:12px;color:#77776e;">
@@ -643,10 +835,12 @@ async function handleContact(
         name
       )}.
     </div>
+
   </div>
 </body>
 </html>
 `;
+
 
   try {
     const result =
@@ -677,6 +871,7 @@ async function handleContact(
           text
         });
 
+
     return json({
       ok:
         true,
@@ -686,6 +881,7 @@ async function handleContact(
           ?.messageId ||
         null
     });
+
   } catch (
     error
   ) {
@@ -693,6 +889,7 @@ async function handleContact(
       'Contact email failed',
       error
     );
+
 
     return json(
       {
@@ -709,6 +906,7 @@ async function handleContact(
     );
   }
 }
+
 
 class ContactScriptInjector {
   element(
@@ -731,15 +929,18 @@ class ContactScriptInjector {
   }
 }
 
+
 export default {
   async fetch(
     request: Request,
     env: Env
   ): Promise<Response> {
+
     const url =
       new URL(
         request.url
       );
+
 
     if (
       url.pathname ===
@@ -751,6 +952,7 @@ export default {
       );
     }
 
+
     const isBookPage =
       url.pathname ===
         '/book/' ||
@@ -760,6 +962,7 @@ export default {
         '/sq/book/' ||
       url.pathname ===
         '/sq/book';
+
 
     if (
       isBookPage &&
@@ -773,11 +976,13 @@ export default {
             request
           );
 
+
       const contentType =
         response.headers.get(
           'content-type'
         ) ||
         '';
+
 
       if (
         contentType.includes(
@@ -794,8 +999,10 @@ export default {
           );
       }
 
+
       return response;
     }
+
 
     return env
       .ASSETS
