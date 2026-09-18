@@ -31,28 +31,6 @@ import {
 import SocialIcons from '../components/SocialIcons.astro';
 
 interface Props {
-
-</body>
-</html>
-</script>
-import {
-  defaults,
-  PERSON_ID,
-  WEBSITE_ID,
-  KULT360_ID
-} from '../lib/editorial';
-
-import {
-  languageFromPath,
-  localizedHref,
-  localizedPath,
-  languageUrls,
-  type SiteLang
-} from '../lib/i18n';
-
-import SocialIcons from '../components/SocialIcons.astro';
-
-interface Props {
   title?: string;
   description?: string;
   name?: string;
@@ -60,6 +38,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
   lang?: SiteLang;
+}
 }
 
 const {
