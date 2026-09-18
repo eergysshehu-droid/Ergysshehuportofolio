@@ -13,6 +13,7 @@ import '../styles/components/footer.css';
 import '../styles/pages/mobile-collection.css';
 import '../styles/pages/desktop-collection.css';
 import '../styles/components/mobile-nav.css';
+import '../styles/final-v14.css';
 
 import {
   defaults,
@@ -30,6 +31,7 @@ import {
 } from '../lib/i18n';
 
 import SocialIcons from '../components/SocialIcons.astro';
+import BrandMark from '../components/BrandMark.astro';
 
 interface Props {
   title?: string;
@@ -49,7 +51,7 @@ const {
   description = defaults.seoDescription,
   name = defaults.name,
   home = false,
-  image = '/images/ergys-shehu-logo.png',
+  image = '/brand/ergys-social-default.png',
   noindex = false,
   ogType = 'website',
   publishedTime,
@@ -70,6 +72,10 @@ const pageUrl = Astro.site
 const imageUrl = Astro.site
   ? new URL(image, Astro.site)
   : undefined;
+
+const isDefaultSocialImage =
+  image ===
+    '/brand/ergys-social-default.png';
 
 const alternateUrls =
   languageUrls(
@@ -137,14 +143,7 @@ const personLd = {
   worksFor: {
     '@id':
       KULT360_ID
-  },
-
-  ...(imageUrl
-    ? {
-        image:
-          imageUrl.href
-      }
-    : {})
+  }
 };
 
 const kult360Ld = {
@@ -224,7 +223,18 @@ const webPageLd = {
   about: {
     '@id':
       PERSON_ID
-  }
+  },
+
+  ...(imageUrl
+    ? {
+        primaryImageOfPage: {
+          '@type':
+            'ImageObject',
+          url:
+            imageUrl.href
+        }
+      }
+    : {})
 };
 ---
 
@@ -270,6 +280,11 @@ const webPageLd = {
   <meta
     name="description"
     content={description}
+  />
+
+  <meta
+    name="author"
+    content="Ergys Shehu"
   />
 
   <meta
@@ -322,6 +337,12 @@ const webPageLd = {
   <link
     rel="manifest"
     href="/site.webmanifest"
+  />
+
+  <link
+    rel="sitemap"
+    type="application/xml"
+    href="/sitemap-index.xml"
   />
 
   <link
@@ -452,6 +473,35 @@ const webPageLd = {
         property="og:image"
         content={imageUrl}
       />
+    )
+  }
+
+  {
+    imageUrl && (
+      <meta
+        property="og:image:secure_url"
+        content={imageUrl}
+      />
+    )
+  }
+
+  {
+    imageUrl &&
+    isDefaultSocialImage && (
+      <>
+        <meta
+          property="og:image:type"
+          content="image/png"
+        />
+        <meta
+          property="og:image:width"
+          content="1200"
+        />
+        <meta
+          property="og:image:height"
+          content="630"
+        />
+      </>
     )
   }
 
@@ -882,6 +932,20 @@ const webPageLd = {
 
       <i aria-hidden="true"></i>
     </div>
+
+    <div class="mobile-menu-social-zone">
+      <span
+        class="mobile-menu-social-label"
+        data-en="FOLLOW / CONNECT"
+        data-sq="NDIQ / LIDHU"
+      >
+        FOLLOW / CONNECT
+      </span>
+
+      <SocialIcons
+        class="mobile-social"
+      />
+    </div>
   </div>
 
   <div class="mobile-menu-footer">
@@ -927,13 +991,7 @@ const webPageLd = {
       </button>
     </div>
 
-    <div class="mobile-footer-row">
-      <SocialIcons
-        class="mobile-social"
-      />
-    </div>
-
-    <a
+<a
       class="mobile-book"
       href={href('/book/#contact')}
     >
@@ -957,13 +1015,11 @@ const webPageLd = {
 
   <footer>
     <div class="footer-row">
-      <a
+      <BrandMark
         href={href('/')}
-        class="footer-name"
-        data-reveal
-      >
-        {name}
-      </a>
+        class="footer-brand"
+        name={name}
+      />
 
       <SocialIcons
         class="footer-social"

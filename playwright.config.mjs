@@ -101,6 +101,17 @@ export default defineConfig({
           'Pixel 7'
         ]
       }
+    },
+
+    {
+      name:
+        'mobile-webkit',
+
+      use: {
+        ...devices[
+          'iPhone 12 Pro Max'
+        ]
+      }
     }
   ]
 });

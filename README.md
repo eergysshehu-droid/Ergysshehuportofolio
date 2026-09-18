@@ -1,61 +1,109 @@
 # Ergys Shehu Portfolio
 
-Astro photography portfolio, Sanity CMS structure and a local preview. No domain was purchased or paid service enabled.
+Production portfolio for **ergysshehu.com**.
 
-## Current design and content
+## Stack
 
-The current design puts the supplied photography first: full-screen dance image, the supplied logo, a large serif name, a masonry project grid with category filters, an artist section, and contact details. The supplied references informed the project-index structure; the exact Wix font could not be verified.
+- Astro static website
+- Sanity CMS
+- Cloudflare Workers + Static Assets
+- GitHub Actions quality gate
+- Playwright E2E tests
+- English + Albanian routes
 
-Imported from the user's Website photos folder: 159 image files, 142 distinct file hashes, 130 selected photographs in 16 collections, plus the logo. Original files were not modified. Identical copies and obvious alternative exports/logo mockups were omitted. WebP derivatives at 480, 1000 and 1800 pixels total approximately 52 MB; responsive loading selects a suitable size instead of downloading all variants.
+## Production
 
-Named collections use supplied folder names. Other collection titles and grouping are editorial selections to review, not verified client or campaign names. Biographical claims and contact information were supplied by the user. English and Albanian full biographies appear at /about/.
+- Domain: `https://ergysshehu.com`
+- Build: `npm run build`
+- Check: `npm run check`
+- Verify: `npm run verify`
+- Output: `dist/`
+- Worker config: `wrangler.jsonc`
 
-The film page is ready for video projects, but no video files or showreel links were supplied.
+The contact form is handled by `src/worker.ts` and delivered through the
+Cloudflare Email binding. Public portfolio content is built from the local
+baseline plus published Sanity content.
 
-## Run locally
+## Current UI architecture
 
-Use Node 22.12 or later and npm ci.
+Homepage sections live in `src/components/home/`.
 
-- node scripts/build-design.mjs: local content preview in design-preview.
-- node scripts/preview-design.mjs: preview at http://127.0.0.1:4322.
-- npm run check: Astro and TypeScript checks.
-- npm run dev: website with live Sanity access.
-- npm run studio: Sanity Studio on localhost:3333.
-- npm run build: production build in dist, requiring Sanity access.
-- npm run studio:build: standalone editor in studio-dist.
+Important mobile behavior:
 
-DESIGN_PREVIEW=1 uses the imported local catalog and is rejected on Cloudflare Pages. It does not read live CMS content. The local and production output directories are separate.
+- The Selected Work project cards use a sticky photo stack on the homepage.
+- Do not casually change `.project-card` sticky geometry, `.work-section`
+  overflow or `.project-grid` overflow.
+- `src/scripts/home-stack.ts` handles stack visual state.
+- `src/styles/final-v14.css` contains the consolidated UI overrides for the moving
+  editorial strip, filter rail, Instagram mosaic, mobile menu fit, light
+  mobile inner-page header, stack scroll stability and brand motion system.
 
-## Content and CMS
 
-Existing project: 46mghxoy / production. Configuration is in .env.example. No credentials are committed.
+## Brand system
 
-src/data/local-portfolio.json is the imported baseline. Normal production builds merge published Sanity content into this baseline by slug; Sanity values override the matching local project. API failures fail the production build. The local photos have not yet been uploaded to Sanity.
+- The main header stays text-only: `ERGYS SHEHU`.
+- The authentic geometric monogram is traced into SVG and used in footer/contact, favicon/app icons and the homepage intro.
+- The homepage intro draws the monogram with the gold accent, reveals `SHEHU` with the gold line, then resolves to white.
+- `prefers-reduced-motion` skips the animated reveal.
+- Static brand assets live in `public/brand/`.
 
-The CMS supports: category, project section, cover, ordered photos, alt text, captions, credits, featured status, HTTPS video URL, hero/category covers, showreel URL, short bio, full English/Albanian biographies, and artist quote. Existing document types and singleton IDs are preserved.
+## Social previews
 
-To migrate the local collection after Sanity login:
+`Layout.astro` emits canonical Open Graph and Twitter metadata. Portfolio and journal pages keep their page-specific cover image, while pages without a specific cover fall back to `/brand/ergys-social-default.png`.
 
-    npx sanity exec scripts/import-sanity.mjs --with-user-token
+The page image is also represented as `primaryImageOfPage` in WebPage JSON-LD; it is no longer incorrectly reused as the Person image.
 
-This uploads optimized images and creates missing draft projects/settings. It preserves existing documents with the same deterministic IDs and does not publish. Review titles, grouping, descriptions and credits in Studio before publishing. After the complete migration, remove the local baseline merge so deletions in Sanity also remove projects from the site. Until then the baseline intentionally keeps the locally imported projects visible.
+## Languages
 
-## Cloudflare
+English routes use the normal path.
+Albanian routes are under `/sq/`.
 
-GitHub repository: eergysshehu-droid/Ergysshehuportofolio.
-Create a Free Cloudflare Pages project connected to that repository. Root: repository root. Build: npm run build. Output: dist. Node: 22. Project/dataset default to the verified Sanity project; environment variables can override them.
+The language switch preserves the matching route where possible. Display text
+uses EN/SQ data attributes where appropriate, while canonical and hreflang
+metadata are generated by the main layout.
 
-For a private dataset use SANITY_API_READ_TOKEN as a secret, never PUBLIC_ or SANITY_STUDIO_. Set the required values separately for Preview and Production. Do not deploy design-preview as the CMS-connected production website.
+## SEO
 
-Cloudflare gives a pages.dev address and branch preview URLs after successful deployment. No live Cloudflare URL has been verified yet. A Sanity publish webhook can trigger a Cloudflare deploy hook to rebuild static pages. Keep hook URLs secret.
+Production includes:
 
-Preview indexing is disabled with robots.txt, a meta tag and a response header. Remove all three controls and set SITE_URL only when the site is ready for indexing.
+- canonical URLs
+- EN / SQ / x-default hreflang
+- sitemap
+- index/follow robots metadata
+- Open Graph and Twitter metadata
+- Person / WebSite structured data
+- Article schema for journal articles
+- CreativeWork schema for portfolio projects
+- CollectionPage and BreadcrumbList schema where appropriate
 
-## Checks and remaining work
+## Tests
 
-The local preview builds 24 pages and passes Astro checks. Review the visual composition and category assignments with the photographer. Live Sanity upload, Cloudflare authentication/deployment and custom domain setup remain outstanding. Instagram and Google Drive are not live feeds.
+Run:
 
-Official references:
-- https://docs.astro.build/en/guides/cms/sanity/
-- https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/
-- https://www.sanity.io/docs/studio/environment-variables
+```powershell
+npm ci
+npm run check
+npm run build
+npm install --no-save --no-package-lock @playwright/test
+npx playwright install chromium webkit
+npx playwright test
+```
+
+CI runs Astro/build verification, Chromium tests and WebKit mobile coverage
+before the GitHub Actions production deploy.
+
+## Important deployment note
+
+The repository currently has a GitHub Actions production deploy. If Cloudflare
+Workers Git Integration is also enabled for direct deploys from `main`, disable
+that direct production auto-deploy in Cloudflare so only the tested GitHub
+Actions path deploys production. Otherwise the same commit can deploy twice
+and the Cloudflare direct build may deploy before E2E tests finish.
+
+## Security / maintenance
+
+Do not use `npm audit fix --force` blindly. Review `npm audit` dependency paths
+before upgrading major packages.
+
+The contact endpoint has validation and anti-spam checks. Cloudflare-side rate
+limiting / Turnstile can be added later if public form abuse increases.

@@ -1,0 +1,91 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  compact?: boolean;
+  name?: string;
+  subtitle?: string;
+}
+
+const {
+  href,
+  class: className = '',
+  compact = false,
+  name = 'Ergys Shehu',
+  subtitle = 'Photographer · Director · Visual Artist'
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'brand-lockup',
+    className,
+    {
+      'is-compact': compact
+    }
+  ]}
+>
+  {
+    href ? (
+      <a
+        class="brand-lockup-link"
+        href={href}
+        aria-label={`${name} home`}
+      >
+        <svg
+          class="brand-mark-svg"
+          viewBox="0 0 1037 866"
+          aria-hidden="true"
+        >
+          <path d="M 505 401 L 293 401 L 0 863 L 200 863 Z"/>
+          <path d="M 380 647 L 241 865 L 499 864 Z"/>
+          <path d="M 541 0 L 312 372 L 540 373 L 667 591 L 785 415 Z"/>
+          <path d="M 451 714 L 532 863 L 1036 863 L 953 714 Z"/>
+          <path d="M 940 687 L 804 445 L 641 688 Z"/>
+        </svg>
+
+        <span class="brand-lockup-copy">
+          <span class="brand-lockup-name">
+            {name}
+          </span>
+
+          {
+            !compact && (
+              <span class="brand-lockup-subtitle">
+                {subtitle}
+              </span>
+            )
+          }
+        </span>
+      </a>
+    ) : (
+      <div class="brand-lockup-link">
+        <svg
+          class="brand-mark-svg"
+          viewBox="0 0 1037 866"
+          aria-hidden="true"
+        >
+          <path d="M 505 401 L 293 401 L 0 863 L 200 863 Z"/>
+          <path d="M 380 647 L 241 865 L 499 864 Z"/>
+          <path d="M 541 0 L 312 372 L 540 373 L 667 591 L 785 415 Z"/>
+          <path d="M 451 714 L 532 863 L 1036 863 L 953 714 Z"/>
+          <path d="M 940 687 L 804 445 L 641 688 Z"/>
+        </svg>
+
+        <span class="brand-lockup-copy">
+          <span class="brand-lockup-name">
+            {name}
+          </span>
+
+          {
+            !compact && (
+              <span class="brand-lockup-subtitle">
+                {subtitle}
+              </span>
+            )
+          }
+        </span>
+      </div>
+    )
+  }
+</div>

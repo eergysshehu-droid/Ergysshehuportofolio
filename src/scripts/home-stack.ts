@@ -5,191 +5,622 @@ type StackItem = {
   absoluteTop: number;
 };
 
-const DEAD_ZONE = 0.12;
+const DEAD_ZONE = 0.10;
+const MAX_DARKNESS = 0.56;
 
-function documentTop(element: HTMLElement){
-  let top = 0;
-  let node: HTMLElement | null = element;
+function documentTop(
+  element:
+    HTMLElement
+){
+  let top =
+    0;
 
-  while(node){
-    top += node.offsetTop;
-    node = node.offsetParent as HTMLElement | null;
+  let node:
+    HTMLElement |
+    null =
+    element;
+
+  while(
+    node
+  ){
+    top +=
+      node.offsetTop;
+
+    node =
+      node
+        .offsetParent as
+          HTMLElement |
+          null;
   }
 
   return top;
 }
 
-function easedProgress(nextTopInViewport:number, currentHeight:number){
-  const raw = (currentHeight - nextTopInViewport) / currentHeight;
-  const clamped = Math.max(0, Math.min(1, raw));
+function easedProgress(
+  nextTopInViewport:
+    number,
 
-  if(clamped <= DEAD_ZONE){
+  currentHeight:
+    number
+){
+  const raw =
+    (
+      currentHeight -
+      nextTopInViewport
+    ) /
+    currentHeight;
+
+  const clamped =
+    Math.max(
+      0,
+      Math.min(
+        1,
+        raw
+      )
+    );
+
+  if(
+    clamped <=
+    DEAD_ZONE
+  ){
     return 0;
   }
 
-  const normalized = (clamped - DEAD_ZONE) / (1 - DEAD_ZONE);
-  return normalized * normalized * (3 - 2 * normalized);
+  const normalized =
+    (
+      clamped -
+      DEAD_ZONE
+    ) /
+    (
+      1 -
+      DEAD_ZONE
+    );
+
+  return (
+    normalized *
+    normalized *
+    (
+      3 -
+      2 *
+      normalized
+    )
+  );
 }
 
 export function initHomeStack(){
-  if(!document.body.classList.contains('is-home')){
+  if(
+    !document
+      .body
+      .classList
+      .contains(
+        'is-home'
+      )
+  ){
     return;
   }
 
-  const media = window.matchMedia('(max-width: 700px)');
-  const section = document.querySelector<HTMLElement>('.work-section');
-  const grid = section?.querySelector<HTMLElement>('.project-grid') ?? null;
+  const media =
+    window
+      .matchMedia(
+        '(max-width: 700px)'
+      );
 
-  if(!media.matches || !section || !grid){
+  const section =
+    document
+      .querySelector<HTMLElement>(
+        '.work-section'
+      );
+
+  const grid =
+    section
+      ?.querySelector<HTMLElement>(
+        '.project-grid'
+      ) ??
+    null;
+
+  if(
+    !section ||
+    !grid
+  ){
     return;
   }
 
-  // Stable non-null aliases for callbacks/closures.
-  const sectionEl = section;
-  const gridEl = grid;
+  const sectionEl =
+    section;
 
-  let items: StackItem[] = [];
-  let active = false;
-  let raf:number | null = null;
-  let resizeRaf:number | null = null;
-  let lastWidth = window.innerWidth;
+  const gridEl =
+    grid;
+
+  let items:
+    StackItem[] =
+    [];
+
+  let active =
+    false;
+
+  let raf:
+    number |
+    null =
+    null;
+
+  let rebuildRaf:
+    number |
+    null =
+    null;
+
+  let lastWidth =
+    window.innerWidth;
+
+  let lastGridWidth =
+    0;
+
+  let lastGridHeight =
+    0;
 
   function visibleCards(){
-    return Array.from(gridEl.querySelectorAll<HTMLElement>('.project-card'))
-      .filter(card => !card.hidden && getComputedStyle(card).display !== 'none');
+    return Array
+      .from(
+        gridEl
+          .querySelectorAll<HTMLElement>(
+            '.project-card'
+          )
+      )
+      .filter(
+        card =>
+          !card.hidden &&
+          getComputedStyle(
+            card
+          ).display !==
+            'none'
+      );
   }
 
-  function clearCard(card:HTMLElement){
-    card.style.removeProperty('z-index');
+  function clearCard(
+    card:
+      HTMLElement
+  ){
+    card
+      .style
+      .removeProperty(
+        'z-index'
+      );
 
-    const image = card.querySelector<HTMLElement>('.project-image');
-    if(!image) return;
+    const image =
+      card
+        .querySelector<HTMLElement>(
+          '.project-image'
+        );
 
-    image.style.setProperty('--stack-blur','0px');
-    image.style.setProperty('--stack-darkness','0');
-    image.style.removeProperty('will-change');
+    if(
+      !image
+    ){
+      return;
+    }
+
+    image
+      .style
+      .setProperty(
+        '--stack-darkness',
+        '0'
+      );
+
+    image
+      .style
+      .removeProperty(
+        '--stack-blur'
+      );
+
+    image
+      .style
+      .removeProperty(
+        'will-change'
+      );
+  }
+
+  function resetAll(){
+    gridEl
+      .querySelectorAll<HTMLElement>(
+        '.project-card'
+      )
+      .forEach(
+        clearCard
+      );
+
+    items =
+      [];
+
+    document
+      .body
+      .classList
+      .remove(
+        'in-stack-grid'
+      );
   }
 
   function rebuild(){
-    gridEl.querySelectorAll<HTMLElement>('.project-card').forEach(clearCard);
+    rebuildRaf =
+      null;
 
-    items = visibleCards().map((card,index) => {
-      card.style.setProperty('z-index', String(index + 1));
+    if(
+      !media.matches
+    ){
+      resetAll();
+      return;
+    }
 
-      return {
-        card,
-        image: card.querySelector<HTMLElement>('.project-image'),
-        height: Math.max(1, card.offsetHeight),
-        absoluteTop: documentTop(card)
-      };
-    });
+    gridEl
+      .querySelectorAll<HTMLElement>(
+        '.project-card'
+      )
+      .forEach(
+        clearCard
+      );
+
+    items =
+      visibleCards()
+        .map(
+          (
+            card,
+            index
+          )=>{
+            card
+              .style
+              .setProperty(
+                'z-index',
+                String(
+                  index +
+                  1
+                )
+              );
+
+            return {
+              card,
+
+              image:
+                card
+                  .querySelector<HTMLElement>(
+                    '.project-image'
+                  ),
+
+              height:
+                Math.max(
+                  1,
+                  card.offsetHeight
+                ),
+
+              absoluteTop:
+                documentTop(
+                  card
+                )
+            };
+          }
+        );
 
     schedule();
   }
 
-  function update(){
-    raf = null;
-
-    if(!active || !items.length){
+  function scheduleRebuild(){
+    if(
+      rebuildRaf !==
+      null
+    ){
       return;
     }
 
-    const scrollY = window.scrollY;
+    rebuildRaf =
+      requestAnimationFrame(
+        rebuild
+      );
+  }
 
-    for(let index=0; index<items.length; index++){
-      const item = items[index];
-      const next = items[index + 1];
+  function update(){
+    raf =
+      null;
 
-      if(!item.image){
+    if(
+      !media.matches ||
+      !active ||
+      !items.length
+    ){
+      return;
+    }
+
+    const scrollY =
+      window.scrollY;
+
+    for(
+      let index =
+        0;
+
+      index <
+      items.length;
+
+      index++
+    ){
+      const item =
+        items[
+          index
+        ];
+
+      const next =
+        items[
+          index +
+          1
+        ];
+
+      if(
+        !item.image
+      ){
         continue;
       }
 
-      const progress = next
-        ? easedProgress(next.absoluteTop - scrollY, item.height)
-        : 0;
+      const progress =
+        next
+          ? easedProgress(
+              next.absoluteTop -
+                scrollY,
 
-      const darkness = progress <= 0
-        ? 0
-        : Math.min(.70, Math.pow(progress,1.08) * .70);
+              item.height
+            )
+          : 0;
 
-      const blur = progress <= 0
-        ? 0
-        : Math.min(1.8, Math.pow(progress,1.15) * 1.8);
+      const darkness =
+        progress <=
+          0
+          ? 0
+          : Math.min(
+              MAX_DARKNESS,
 
-      const nextDarkness = darkness.toFixed(3);
-      const nextBlur = `${Math.round(blur * 10) / 10}px`;
+              Math.pow(
+                progress,
+                1.06
+              ) *
+              MAX_DARKNESS
+            );
 
-      if(progress > 0 && progress < 1){
-        item.image.style.setProperty('will-change','filter');
-      }else{
-        item.image.style.removeProperty('will-change');
-      }
+      const nextDarkness =
+        darkness
+          .toFixed(
+            3
+          );
 
-      if(item.image.style.getPropertyValue('--stack-darkness') !== nextDarkness){
-        item.image.style.setProperty('--stack-darkness', nextDarkness);
-      }
-
-      if(item.image.style.getPropertyValue('--stack-blur') !== nextBlur){
-        item.image.style.setProperty('--stack-blur', nextBlur);
+      if(
+        item
+          .image
+          .style
+          .getPropertyValue(
+            '--stack-darkness'
+          ) !==
+        nextDarkness
+      ){
+        item
+          .image
+          .style
+          .setProperty(
+            '--stack-darkness',
+            nextDarkness
+          );
       }
     }
   }
 
   function schedule(){
-    if(raf !== null){
+    if(
+      raf !==
+      null
+    ){
       return;
     }
 
-    raf = requestAnimationFrame(update);
+    raf =
+      requestAnimationFrame(
+        update
+      );
   }
 
-  const observer = new IntersectionObserver(entries => {
-    active = entries.some(entry => entry.isIntersecting);
-    document.body.classList.toggle('in-stack-grid', active);
+  const observer =
+    new IntersectionObserver(
+      entries=>{
+        active =
+          media.matches &&
+          entries.some(
+            entry =>
+              entry
+                .isIntersecting
+          );
 
-    if(active){
-      schedule();
-    }
-  },{
-    rootMargin: '20% 0px 20% 0px'
-  });
+        document
+          .body
+          .classList
+          .toggle(
+            'in-stack-grid',
+            active
+          );
 
-  observer.observe(sectionEl);
+        if(
+          active
+        ){
+          schedule();
+        }
+      },
+      {
+        rootMargin:
+          '15% 0px 15% 0px'
+      }
+    );
 
-  window.addEventListener('scroll', schedule, {passive:true});
-  document.addEventListener('portfolio:filter-change', rebuild);
+  observer
+    .observe(
+      sectionEl
+    );
 
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth;
+  window
+    .addEventListener(
+      'scroll',
+      schedule,
+      {
+        passive:
+          true
+      }
+    );
 
-    if(width === lastWidth){
-      return;
-    }
+  document
+    .addEventListener(
+      'portfolio:filter-change',
+      scheduleRebuild
+    );
 
-    lastWidth = width;
+  window
+    .addEventListener(
+      'resize',
+      ()=>{
+        const width =
+          window.innerWidth;
 
-    if(resizeRaf !== null){
-      cancelAnimationFrame(resizeRaf);
-    }
+        /*
+         * Mobile browser chrome changes viewport HEIGHT while the user
+         * scrolls. Rebuilding the stack for those height-only changes adds
+         * needless work and can feel like scroll jank.
+         */
+        if(
+          width ===
+          lastWidth
+        ){
+          return;
+        }
 
-    resizeRaf = requestAnimationFrame(() => {
-      resizeRaf = null;
-      rebuild();
-    });
-  },{passive:true});
+        lastWidth =
+          width;
 
-  window.addEventListener('orientationchange', () => {
-    window.setTimeout(() => {
-      lastWidth = window.innerWidth;
-      rebuild();
-    },160);
-  });
+        scheduleRebuild();
+      },
+      {
+        passive:
+          true
+      }
+    );
 
-  gridEl.querySelectorAll<HTMLImageElement>('img').forEach(image => {
-    if(!image.complete){
-      image.addEventListener('load', rebuild, {once:true});
-    }
-  });
+  window
+    .addEventListener(
+      'orientationchange',
+      ()=>{
+        window
+          .setTimeout(
+            ()=>{
+              lastWidth =
+                window.innerWidth;
+
+              scheduleRebuild();
+            },
+            160
+          );
+      }
+    );
+
+  window
+    .addEventListener(
+      'pageshow',
+      scheduleRebuild
+    );
+
+  media
+    .addEventListener(
+      'change',
+      ()=>{
+        active =
+          false;
+
+        scheduleRebuild();
+      }
+    );
+
+  if(
+    'ResizeObserver'
+    in window
+  ){
+    const gridObserver =
+      new ResizeObserver(
+        entries=>{
+          const entry =
+            entries[
+              0
+            ];
+
+          if(
+            !entry
+          ){
+            return;
+          }
+
+          const width =
+            Math.round(
+              entry
+                .contentRect
+                .width
+            );
+
+          const height =
+            Math.round(
+              entry
+                .contentRect
+                .height
+            );
+
+          if(
+            width ===
+              lastGridWidth &&
+            height ===
+              lastGridHeight
+          ){
+            return;
+          }
+
+          lastGridWidth =
+            width;
+
+          lastGridHeight =
+            height;
+
+          scheduleRebuild();
+        }
+      );
+
+    gridObserver
+      .observe(
+        gridEl
+      );
+  }
+
+  gridEl
+    .querySelectorAll<HTMLImageElement>(
+      'img'
+    )
+    .forEach(
+      image=>{
+        if(
+          !image.complete
+        ){
+          image
+            .addEventListener(
+              'load',
+              scheduleRebuild,
+              {
+                once:
+                  true
+              }
+            );
+        }
+      }
+    );
+
+  try{
+    document
+      .fonts
+      ?.ready
+      .then(
+        scheduleRebuild
+      );
+  }catch{}
 
   rebuild();
 }

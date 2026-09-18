@@ -1,0 +1,2879 @@
+/* ==========================================================================
+   ERGYS SHEHU — FINAL V14 UI / MOBILE / SCROLL
+   --------------------------------------------------------------------------
+   Loaded LAST. It intentionally overrides older visual layers without
+   rebuilding the site's design system or changing sticky geometry.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. MOVING EDITORIAL STRIP
+   ========================================================================== */
+
+body.is-home .home-marquee{
+  width:
+    100vw;
+
+  margin:
+    0
+    0
+    clamp(
+      38px,
+      5.2vw,
+      76px
+    )
+    calc(
+      50% -
+      50vw
+    );
+
+  overflow:
+    hidden;
+
+  border-top:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      .08
+    );
+
+  border-bottom:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      .08
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .012
+    );
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .50
+    );
+
+  contain:
+    paint;
+
+  touch-action:
+    pan-y;
+}
+
+
+body.is-home .home-marquee-track{
+  display:
+    flex;
+
+  width:
+    max-content;
+
+  animation:
+    ergysEditorialMarquee
+    24s
+    linear
+    infinite;
+
+  will-change:
+    transform;
+}
+
+
+body.is-home .home-marquee-set{
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex:
+    none;
+
+  gap:
+    clamp(
+      26px,
+      4.4vw,
+      70px
+    );
+
+  min-width:
+    max-content;
+
+  padding:
+    11px
+    clamp(
+      18px,
+      3.6vw,
+      56px
+    );
+}
+
+
+body.is-home .home-marquee-item{
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  white-space:
+    nowrap;
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    clamp(
+      8px,
+      .66vw,
+      11px
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .19em;
+
+  text-transform:
+    uppercase;
+}
+
+
+body.is-home .home-marquee-no{
+  color:
+    var(
+      --accent
+    );
+
+  font-size:
+    .82em;
+
+  letter-spacing:
+    .1em;
+
+  opacity:
+    .9;
+}
+
+
+body.is-home .home-marquee-item i{
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .22
+    );
+
+  font-style:
+    normal;
+}
+
+
+body.is-home .home-marquee:hover .home-marquee-track,
+body.is-home .home-marquee:active .home-marquee-track{
+  animation-play-state:
+    paused;
+}
+
+
+@keyframes ergysEditorialMarquee{
+  from{
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      );
+  }
+
+  to{
+    transform:
+      translate3d(
+        -50%,
+        0,
+        0
+      );
+  }
+}
+
+
+/* ==========================================================================
+   2. EDITORIAL FILTER RAIL — KEEP THE PHOTO STACK
+   ========================================================================== */
+
+body.is-home .filters-shell{
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      0,
+      1fr
+    );
+
+  align-items:
+    center;
+
+  flex:
+    1;
+
+  min-width:
+    0;
+}
+
+
+body.is-home .filter-rail-arrow{
+  display:
+    none;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .78
+    );
+
+  cursor:
+    pointer;
+
+  font:
+    300
+    27px/1
+    var(
+      --sans
+    );
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+body.is-home .work-section .filters{
+  display:
+    flex!important;
+
+  flex-wrap:
+    nowrap!important;
+
+  align-items:
+    center;
+
+  gap:
+    clamp(
+      24px,
+      3.3vw,
+      54px
+    )!important;
+
+  min-width:
+    0;
+
+  overflow-x:
+    auto;
+
+  overflow-y:
+    hidden;
+
+  scrollbar-width:
+    none;
+
+  scroll-snap-type:
+    x
+    proximity;
+
+  overscroll-behavior-inline:
+    contain;
+
+  -webkit-overflow-scrolling:
+    touch;
+}
+
+
+body.is-home .work-section .filters::-webkit-scrollbar{
+  display:
+    none;
+}
+
+
+body.is-home .work-section .filters button{
+  position:
+    relative;
+
+  flex:
+    0
+    0
+    auto;
+
+  display:
+    inline-flex;
+
+  align-items:
+    baseline;
+
+  gap:
+    7px;
+
+  min-height:
+    42px!important;
+
+  padding:
+    10px
+    0
+    13px!important;
+
+  border:
+    0!important;
+
+  border-radius:
+    0!important;
+
+  background:
+    transparent!important;
+
+  box-shadow:
+    none!important;
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .46
+    )!important;
+
+  font-size:
+    clamp(
+      9px,
+      .72vw,
+      11px
+    )!important;
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .16em!important;
+
+  text-transform:
+    uppercase;
+
+  scroll-snap-align:
+    center;
+}
+
+
+body.is-home .work-section .filters button::after{
+  content:
+    '';
+
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  bottom:
+    4px;
+
+  width:
+    5px;
+
+  height:
+    5px;
+
+  border-radius:
+    50%;
+
+  background:
+    var(
+      --accent
+    );
+
+  opacity:
+    0;
+
+  transform:
+    translateX(
+      -50%
+    )
+    scale(
+      .4
+    );
+
+  transition:
+    opacity
+    180ms
+    ease,
+    transform
+    220ms
+    cubic-bezier(
+      .16,
+      1,
+      .3,
+      1
+    );
+}
+
+
+body.is-home
+.work-section
+.filters
+button[aria-pressed="true"],
+body.is-home
+.work-section
+.filters
+button.is-active{
+  color:
+    #f5f3ed!important;
+
+  background:
+    transparent!important;
+
+  border:
+    0!important;
+
+  box-shadow:
+    none!important;
+}
+
+
+body.is-home
+.work-section
+.filters
+button[aria-pressed="true"]::after,
+body.is-home
+.work-section
+.filters
+button.is-active::after{
+  opacity:
+    1;
+
+  transform:
+    translateX(
+      -50%
+    )
+    scale(
+      1
+    );
+}
+
+
+body.is-home .filter-count{
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .27
+    );
+
+  font-size:
+    .78em;
+
+  letter-spacing:
+    .10em;
+}
+
+
+@media(
+  hover:
+    hover
+) and (
+  pointer:
+    fine
+){
+  body.is-home .work-section .filters button:hover{
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        .88
+      )!important;
+
+    border:
+      0!important;
+  }
+}
+
+
+@media(max-width:900px){
+
+  body.is-home .filters-shell{
+    grid-template-columns:
+      28px
+      minmax(
+        0,
+        1fr
+      )
+      28px;
+
+    gap:
+      4px;
+  }
+
+
+  body.is-home .filter-rail-arrow{
+    display:
+      grid;
+
+    place-items:
+      center;
+
+    width:
+      28px;
+
+    min-width:
+      28px;
+
+    height:
+      44px;
+
+    padding:
+      0;
+  }
+
+
+  body.is-home .work-section .filters{
+    gap:
+      clamp(
+        25px,
+        8vw,
+        42px
+      )!important;
+
+    padding-inline:
+      6px;
+  }
+
+
+  body.is-home .work-section .filters button{
+    min-height:
+      44px!important;
+
+    font-size:
+      9px!important;
+
+    letter-spacing:
+      .14em!important;
+  }
+
+
+  body.is-home .index-link{
+    display:
+      none!important;
+  }
+}
+
+
+/* ==========================================================================
+   3. STACK SCROLL STABILITY — NO ANIMATED BLUR
+   --------------------------------------------------------------------------
+   Sticky / top / overflow geometry is deliberately unchanged.
+   ========================================================================== */
+
+@media(max-width:700px){
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-image
+  img{
+    filter:
+      none!important;
+
+    will-change:
+      auto!important;
+
+    transform:
+      translateZ(
+        0
+      )!important;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-image::after{
+    will-change:
+      opacity!important;
+  }
+}
+
+
+/* ==========================================================================
+   4. INSTAGRAM — EDITORIAL MOSAIC
+   ========================================================================== */
+
+body.is-home .latest-section{
+  background:
+    #090a08!important;
+
+  color:
+    #f3f1eb!important;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      .07
+    )!important;
+}
+
+
+body.is-home .latest-section .kicker,
+body.is-home .latest-section h2,
+body.is-home .editorial-social-link{
+  color:
+    #f3f1eb!important;
+}
+
+
+body.is-home .latest-intro{
+  color:
+    rgba(
+      243,
+      241,
+      235,
+      .52
+    )!important;
+}
+
+
+body.is-home .latest-grid{
+  display:
+    grid!important;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(
+        0,
+        1fr
+      )
+    )!important;
+
+  grid-auto-rows:
+    clamp(
+      155px,
+      16vw,
+      305px
+    );
+
+  gap:
+    clamp(
+      6px,
+      .65vw,
+      12px
+    )!important;
+
+  max-width:
+    var(
+      --content-max
+    );
+
+  margin-inline:
+    auto;
+}
+
+
+body.is-home .latest-card{
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  aspect-ratio:
+    auto!important;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    clamp(
+      4px,
+      .38vw,
+      7px
+    );
+
+  background:
+    #111;
+}
+
+
+body.is-home .latest-card:nth-child(1){
+  grid-row:
+    span
+    2;
+}
+
+
+body.is-home .latest-card:nth-child(6){
+  grid-column:
+    span
+    2;
+}
+
+
+body.is-home .latest-card img{
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+}
+
+
+@media(max-width:700px){
+
+  body.is-home .latest-section{
+    padding:
+      58px
+      4vw
+      54px!important;
+  }
+
+
+  body.is-home .latest-section .work-heading,
+  body.is-home .latest-intro,
+  body.is-home .editorial-social-link{
+    margin-left:
+      1vw;
+
+    margin-right:
+      1vw;
+  }
+
+
+  body.is-home .latest-grid{
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      )!important;
+
+    grid-auto-rows:
+      clamp(
+        132px,
+        41vw,
+        190px
+      );
+
+    gap:
+      6px!important;
+  }
+
+
+  body.is-home .latest-card:nth-child(1){
+    grid-row:
+      span
+      2;
+  }
+
+
+  body.is-home .latest-card:nth-child(6){
+    grid-column:
+      auto;
+  }
+}
+
+
+/* ==========================================================================
+   5. LIGHT MODE MOBILE INNER-PAGE HEADER
+   --------------------------------------------------------------------------
+   The menu overlay remains dark; the CLOSED header follows the page theme.
+   ========================================================================== */
+
+@media(max-width:1000px) and (prefers-color-scheme:light){
+
+  html body:not(.is-home) .site-header,
+  html body:not(.is-home) .site-header.is-scrolled{
+    --header-fg:
+      #171914!important;
+
+    color:
+      #171914!important;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(
+          247,
+          246,
+          240,
+          .97
+        ),
+        rgba(
+          233,
+          235,
+          227,
+          .96
+        )
+      )!important;
+
+    border-bottom:
+      1px
+      solid
+      rgba(
+        23,
+        25,
+        20,
+        .10
+      )!important;
+
+    box-shadow:
+      0
+      8px
+      26px
+      rgba(
+        34,
+        41,
+        31,
+        .07
+      )!important;
+  }
+
+
+  html body:not(.is-home)
+  .site-header
+  .ergys-wordmark{
+    color:
+      #171914!important;
+
+    text-shadow:
+      none!important;
+  }
+
+
+  html body:not(.is-home)
+  .site-header
+  .mobile-menu-trigger{
+    color:
+      #171914!important;
+
+    border-color:
+      rgba(
+        23,
+        25,
+        20,
+        .25
+      )!important;
+
+    background:
+      rgba(
+        23,
+        25,
+        20,
+        .025
+      )!important;
+  }
+
+
+  html body:not(.is-home)
+  .site-header
+  .hamburger
+  i{
+    background:
+      #171914!important;
+  }
+}
+
+
+@media(max-width:700px){
+
+  :root{
+    --header-h:
+      72px;
+  }
+}
+
+
+/* ==========================================================================
+   6. MOBILE MENU — COMPACT HEIGHT-AWARE FIT
+   ========================================================================== */
+
+@media(max-width:1000px){
+
+  html{
+    --menu-pad:
+      clamp(
+        17px,
+        4.5vw,
+        32px
+      )!important;
+  }
+
+
+  html body .mobile-menu-head{
+    min-height:
+      clamp(
+        76px,
+        10.5dvh,
+        94px
+      )!important;
+
+    padding:
+      max(
+        18px,
+        env(
+          safe-area-inset-top
+        )
+      )
+      var(
+        --menu-pad
+      )
+      11px!important;
+  }
+
+
+  html body .mobile-menu-brand-strong,
+  html body .mobile-menu-brand-light{
+    font-size:
+      clamp(
+        22px,
+        6vw,
+        30px
+      )!important;
+  }
+
+
+  html body .mobile-menu-tagline{
+    margin-top:
+      8px!important;
+
+    font-size:
+      clamp(
+        5.5px,
+        1.5vw,
+        7.5px
+      )!important;
+  }
+
+
+  html body .mobile-menu-close{
+    width:
+      42px!important;
+
+    height:
+      42px!important;
+
+    min-width:
+      42px!important;
+
+    min-height:
+      42px!important;
+  }
+
+
+  html body .mobile-menu-content{
+    padding:
+      clamp(
+        10px,
+        2.2dvh,
+        22px
+      )
+      var(
+        --menu-pad
+      )
+      clamp(
+        10px,
+        2dvh,
+        20px
+      )!important;
+  }
+
+
+  html body .mobile-menu-primary > a{
+    min-height:
+      clamp(
+        45px,
+        6.4dvh,
+        58px
+      )!important;
+
+    grid-template-columns:
+      25px
+      minmax(
+        0,
+        1fr
+      )
+      23px!important;
+
+    column-gap:
+      clamp(
+        8px,
+        2.5vw,
+        13px
+      )!important;
+  }
+
+
+  html body .mobile-menu-number{
+    font-size:
+      7px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        23px,
+        min(
+          7vw,
+          3.95dvh
+        ),
+        33px
+      )!important;
+
+    line-height:
+      .98!important;
+  }
+
+
+  html body .mobile-menu-label::before{
+    width:
+      clamp(
+        18px,
+        5vw,
+        30px
+      )!important;
+
+    margin-right:
+      clamp(
+        9px,
+        2.5vw,
+        15px
+      )!important;
+  }
+
+
+  html body .mobile-menu-secondary{
+    margin-top:
+      clamp(
+        12px,
+        2dvh,
+        20px
+      )!important;
+
+    padding-top:
+      10px!important;
+  }
+
+
+  html body .mobile-menu-statement{
+    margin-top:
+      clamp(
+        14px,
+        2.4dvh,
+        24px
+      )!important;
+
+    gap:
+      9px!important;
+  }
+
+
+  html body .mobile-menu-footer{
+    min-height:
+      60px!important;
+
+    padding:
+      7px
+      var(
+        --menu-pad
+      )
+      max(
+        9px,
+        env(
+          safe-area-inset-bottom
+        )
+      )!important;
+  }
+
+
+  html body .mobile-social .social-link{
+    width:
+      30px!important;
+
+    height:
+      30px!important;
+
+    min-width:
+      30px!important;
+
+    min-height:
+      30px!important;
+
+    flex-basis:
+      30px!important;
+  }
+
+
+  html body .mobile-book{
+    min-height:
+      35px!important;
+
+    padding:
+      0
+      11px!important;
+
+    font-size:
+      7.2px!important;
+  }
+}
+
+
+@media(max-width:1000px) and (max-height:840px){
+
+  html body .mobile-menu-tagline{
+    display:
+      none!important;
+  }
+
+
+  html body .mobile-menu-head{
+    min-height:
+      70px!important;
+
+    padding-top:
+      max(
+        13px,
+        env(
+          safe-area-inset-top
+        )
+      )!important;
+
+    padding-bottom:
+      8px!important;
+  }
+
+
+  html body .mobile-menu-content{
+    padding-top:
+      7px!important;
+
+    padding-bottom:
+      7px!important;
+  }
+
+
+  html body .mobile-menu-primary > a{
+    min-height:
+      42px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        21px,
+        6.5vw,
+        28px
+      )!important;
+  }
+
+
+  html body .mobile-menu-statement{
+    display:
+      none!important;
+  }
+
+
+  html body .mobile-menu-footer{
+    min-height:
+      54px!important;
+  }
+}
+
+
+@media(max-width:700px) and (max-height:700px){
+
+  html body .mobile-menu-primary > a{
+    min-height:
+      38px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        19px,
+        6vw,
+        25px
+      )!important;
+  }
+
+
+  html body .mobile-menu-secondary{
+    margin-top:
+      7px!important;
+
+    padding-top:
+      6px!important;
+  }
+
+
+  html body .mobile-social .social-link{
+    width:
+      27px!important;
+
+    height:
+      27px!important;
+
+    min-width:
+      27px!important;
+
+    min-height:
+      27px!important;
+
+    flex-basis:
+      27px!important;
+  }
+
+
+  html body .mobile-book{
+    min-height:
+      31px!important;
+
+    font-size:
+      6.5px!important;
+  }
+}
+
+
+/* ==========================================================================
+   7. TITLE PUNCTUATION VISUAL CONSISTENCY
+   ========================================================================== */
+
+body.is-home .latest-section h2{
+  text-wrap:
+    balance;
+}
+
+
+/* ==========================================================================
+   8. REDUCED MOTION
+   ========================================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+  body.is-home .home-marquee{
+    overflow-x:
+      auto;
+
+    scrollbar-width:
+      none;
+  }
+
+
+  body.is-home .home-marquee-track{
+    animation:
+      none!important;
+
+    transform:
+      none!important;
+  }
+
+
+  body.is-home .home-marquee-set:nth-child(2){
+    display:
+      none;
+  }
+
+
+  body.is-home .work-section .filters{
+    scroll-behavior:
+      auto;
+  }
+}
+/* ==========================================================================
+   FINAL V14 — MENU PROPORTION + SOCIAL PLACEMENT
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   MENU SOCIAL ZONE
+   Social actions now have their own centered visual zone instead of being
+   squeezed between language and BOOK NOW.
+   -------------------------------------------------------------------------- */
+
+@media(max-width:1000px){
+
+  html body .mobile-menu-social-zone{
+    width:
+      100%;
+
+    margin:
+      clamp(
+        14px,
+        2.2dvh,
+        24px
+      )
+      0
+      0;
+
+    padding:
+      clamp(
+        13px,
+        2dvh,
+        20px
+      )
+      0
+      0;
+
+    display:
+      grid;
+
+    justify-items:
+      center;
+
+    gap:
+      10px;
+
+    border-top:
+      1px
+      solid
+      rgba(
+        242,
+        240,
+        235,
+        .11
+      );
+  }
+
+
+  html body .mobile-menu-social-label{
+    color:
+      rgba(
+        242,
+        240,
+        235,
+        .34
+      );
+
+    font-family:
+      var(
+        --sans
+      );
+
+    font-size:
+      7px;
+
+    font-weight:
+      500;
+
+    line-height:
+      1;
+
+    letter-spacing:
+      .24em;
+
+    text-transform:
+      uppercase;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social{
+    display:
+      flex!important;
+
+    justify-content:
+      center!important;
+
+    align-items:
+      center!important;
+
+    gap:
+      clamp(
+        7px,
+        2vw,
+        11px
+      )!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-link{
+    width:
+      40px!important;
+
+    height:
+      40px!important;
+
+    min-width:
+      40px!important;
+
+    min-height:
+      40px!important;
+
+    flex:
+      0
+      0
+      40px!important;
+
+    opacity:
+      .82!important;
+
+    color:
+      rgba(
+        242,
+        240,
+        235,
+        .88
+      )!important;
+
+    border:
+      1px
+      solid
+      rgba(
+        242,
+        240,
+        235,
+        .14
+      )!important;
+
+    border-radius:
+      50%!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-link::before{
+    display:
+      none!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-icon{
+    width:
+      16px!important;
+
+    height:
+      16px!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-icon-facebook{
+    width:
+      17px!important;
+
+    height:
+      17px!important;
+  }
+
+
+  /* Footer is now intentionally simple and balanced. */
+  html body .mobile-menu-footer{
+    grid-template-columns:
+      auto
+      auto!important;
+
+    grid-template-areas:
+      "language book"!important;
+
+    justify-content:
+      space-between!important;
+
+    align-items:
+      center!important;
+
+    gap:
+      18px!important;
+
+    min-height:
+      58px!important;
+
+    padding-top:
+      8px!important;
+
+    padding-bottom:
+      max(
+        10px,
+        env(
+          safe-area-inset-bottom
+        )
+      )!important;
+  }
+
+
+  html body .mobile-menu-footer .language-switch{
+    justify-self:
+      start!important;
+  }
+
+
+  html body .mobile-menu-footer .mobile-book{
+    justify-self:
+      end!important;
+  }
+
+
+  /* Final menu proportions: calmer and smaller than V9/V11. */
+  html body .mobile-menu-primary > a{
+    min-height:
+      clamp(
+        42px,
+        5.8dvh,
+        52px
+      )!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        21px,
+        min(
+          5.9vw,
+          3.55dvh
+        ),
+        29px
+      )!important;
+
+    line-height:
+      1!important;
+
+    letter-spacing:
+      -.025em!important;
+  }
+
+
+  html body .mobile-menu-label::before{
+    width:
+      clamp(
+        16px,
+        4.5vw,
+        27px
+      )!important;
+
+    margin-right:
+      clamp(
+        9px,
+        2.2vw,
+        13px
+      )!important;
+  }
+
+
+  html body .mobile-menu-number{
+    font-size:
+      6.5px!important;
+  }
+
+
+  html body .mobile-menu-arrow{
+    font-size:
+      12px!important;
+  }
+
+
+  html body .mobile-menu-secondary{
+    margin-top:
+      clamp(
+        11px,
+        1.8dvh,
+        18px
+      )!important;
+
+    padding-top:
+      9px!important;
+  }
+
+
+  html body .mobile-menu-secondary > a{
+    font-size:
+      clamp(
+        7px,
+        1.7vw,
+        8.5px
+      )!important;
+
+    letter-spacing:
+      .17em!important;
+  }
+
+
+  html body .mobile-menu-statement{
+    margin-top:
+      clamp(
+        12px,
+        2dvh,
+        20px
+      )!important;
+
+    font-size:
+      clamp(
+        7.5px,
+        1.8vw,
+        9px
+      )!important;
+  }
+}
+
+
+/* Pro Max / S Ultra / tall phones:
+   social buttons can breathe and should not look undersized. */
+@media(max-width:1000px) and (min-height:850px){
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-link{
+    width:
+      42px!important;
+
+    height:
+      42px!important;
+
+    min-width:
+      42px!important;
+
+    min-height:
+      42px!important;
+
+    flex-basis:
+      42px!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-icon{
+    width:
+      17px!important;
+
+    height:
+      17px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        22px,
+        min(
+          5.8vw,
+          3.35dvh
+        ),
+        30px
+      )!important;
+  }
+}
+
+
+/* Standard and short screens. */
+@media(max-width:1000px) and (max-height:840px){
+
+  html body .mobile-menu-social-zone{
+    margin-top:
+      9px;
+
+    padding-top:
+      10px;
+
+    gap:
+      7px;
+  }
+
+
+  html body .mobile-menu-social-label{
+    font-size:
+      6.5px;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-link{
+    width:
+      35px!important;
+
+    height:
+      35px!important;
+
+    min-width:
+      35px!important;
+
+    min-height:
+      35px!important;
+
+    flex-basis:
+      35px!important;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-icon{
+    width:
+      14px!important;
+
+    height:
+      14px!important;
+  }
+
+
+  html body .mobile-menu-primary > a{
+    min-height:
+      39px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        19px,
+        5.8vw,
+        25px
+      )!important;
+  }
+
+
+  html body .mobile-menu-footer{
+    min-height:
+      52px!important;
+  }
+}
+
+
+/* Very short displays: retain socials but remove their label/extra decoration. */
+@media(max-width:700px) and (max-height:690px){
+
+  html body .mobile-menu-social-label{
+    display:
+      none;
+  }
+
+
+  html body .mobile-menu-social-zone{
+    margin-top:
+      6px;
+
+    padding-top:
+      7px;
+  }
+
+
+  html body
+  .mobile-menu-social-zone
+  .mobile-social
+  .social-link{
+    width:
+      32px!important;
+
+    height:
+      32px!important;
+
+    min-width:
+      32px!important;
+
+    min-height:
+      32px!important;
+
+    flex-basis:
+      32px!important;
+  }
+
+
+  html body .mobile-menu-primary > a{
+    min-height:
+      35px!important;
+  }
+
+
+  html body .mobile-menu-label{
+    font-size:
+      clamp(
+        18px,
+        5.5vw,
+        22px
+      )!important;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   CONTACT / LET'S TALK SOCIAL DISCOVERY
+   A second intentional access point outside the menu.
+   -------------------------------------------------------------------------- */
+
+body.is-home .contact-social-block{
+  margin-top:
+    clamp(
+      24px,
+      3vw,
+      38px
+    );
+
+  padding-top:
+    clamp(
+      18px,
+      2.2vw,
+      28px
+    );
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    clamp(
+      13px,
+      1.5vw,
+      22px
+    );
+
+  border-top:
+    1px
+    solid
+    rgba(
+      244,
+      242,
+      237,
+      .14
+    );
+}
+
+
+body.is-home .contact-social-label{
+  flex:
+    0
+    0
+    auto;
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .48
+    );
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    8px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .20em;
+
+  text-transform:
+    uppercase;
+}
+
+
+body.is-home .contact-social-icons{
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+}
+
+
+body.is-home
+.contact-social-icons
+.social-link{
+  width:
+    42px;
+
+  height:
+    42px;
+
+  flex:
+    0
+    0
+    42px;
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .88
+    );
+
+  opacity:
+    .9;
+
+  border:
+    1px
+    solid
+    rgba(
+      244,
+      242,
+      237,
+      .12
+    );
+
+  border-radius:
+    50%;
+}
+
+
+body.is-home
+.contact-social-icons
+.social-link::before{
+  display:
+    none;
+}
+
+
+body.is-home
+.contact-social-icons
+.social-icon{
+  width:
+    17px;
+
+  height:
+    17px;
+}
+
+
+@media(max-width:700px){
+
+  body.is-home .contact-social-block{
+    width:
+      100%;
+
+    margin-top:
+      22px;
+
+    padding-top:
+      18px;
+
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+
+    gap:
+      12px;
+  }
+
+
+  body.is-home .contact-social-icons{
+    gap:
+      9px;
+  }
+
+
+  body.is-home
+  .contact-social-icons
+  .social-link{
+    width:
+      40px;
+
+    height:
+      40px;
+
+    flex-basis:
+      40px;
+  }
+}
+
+/* ==========================================================================
+   FINAL V14 — AUTHENTIC BRAND SYSTEM / MOTION REVEAL
+   ========================================================================== */
+
+:root{
+  --brand-gold:
+    #c99138;
+
+  --brand-white:
+    #f4f1e9;
+}
+
+
+/* --------------------------------------------------------------------------
+   STATIC BRAND LOCKUP
+   -------------------------------------------------------------------------- */
+
+.brand-lockup{
+  color:
+    var(
+      --brand-white
+    );
+}
+
+
+.brand-lockup-link{
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    clamp(
+      12px,
+      1.6vw,
+      20px
+    );
+
+  color:
+    inherit;
+
+  text-decoration:
+    none;
+}
+
+
+.brand-mark-svg{
+  width:
+    clamp(
+      42px,
+      4.3vw,
+      66px
+    );
+
+  height:
+    auto;
+
+  flex:
+    0
+    0
+    auto;
+
+  overflow:
+    visible;
+
+  filter:
+    drop-shadow(
+      0
+      0
+      7px
+      rgba(
+        244,
+        241,
+        233,
+        .08
+      )
+    );
+}
+
+
+.brand-mark-svg path{
+  fill:
+    currentColor;
+}
+
+
+.brand-lockup-copy{
+  display:
+    grid;
+
+  gap:
+    7px;
+}
+
+
+.brand-lockup-name{
+  font-family:
+    var(
+      --wordmark-font
+    );
+
+  font-size:
+    clamp(
+      15px,
+      1.2vw,
+      20px
+    );
+
+  font-weight:
+    400;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .23em;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+}
+
+
+.brand-lockup-subtitle{
+  color:
+    rgba(
+      244,
+      241,
+      233,
+      .46
+    );
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    clamp(
+      6px,
+      .52vw,
+      8px
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    1.2;
+
+  letter-spacing:
+    .24em;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+}
+
+
+.brand-lockup.is-compact .brand-mark-svg{
+  width:
+    34px;
+}
+
+
+.brand-lockup.is-compact .brand-lockup-name{
+  font-size:
+    11px;
+
+  letter-spacing:
+    .20em;
+}
+
+
+/* Footer: complete identity lives here, header remains text-only. */
+footer .footer-brand{
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .96
+    );
+}
+
+
+footer .footer-brand .brand-mark-svg{
+  width:
+    clamp(
+      48px,
+      4.4vw,
+      68px
+    );
+}
+
+
+footer .footer-brand .brand-lockup-name{
+  font-size:
+    clamp(
+      14px,
+      1.05vw,
+      18px
+    );
+}
+
+
+@media(max-width:700px){
+  footer .footer-brand .brand-lockup-link{
+    align-items:
+      center;
+  }
+
+  footer .footer-brand .brand-mark-svg{
+    width:
+      46px;
+  }
+
+  footer .footer-brand .brand-lockup-subtitle{
+    max-width:
+      190px;
+
+    white-space:
+      normal;
+
+    line-height:
+      1.45;
+  }
+}
+
+
+/* Contact / Let's Talk: repeat brand subtly for discovery and continuity. */
+body.is-home .contact-brand-lockup{
+  margin-top:
+    clamp(
+      22px,
+      3vw,
+      34px
+    );
+
+  color:
+    rgba(
+      244,
+      242,
+      237,
+      .78
+    );
+}
+
+
+body.is-home .contact-brand-lockup .brand-lockup-link{
+  gap:
+    11px;
+}
+
+
+body.is-home .contact-brand-lockup .brand-mark-svg{
+  width:
+    34px;
+}
+
+
+/* --------------------------------------------------------------------------
+   HOME INTRO / MOTION REVEAL
+   Gold line draws the authentic monogram. SHEHU is revealed by the same
+   gold accent and resolves to white. The main header stays text-only.
+   -------------------------------------------------------------------------- */
+
+.brand-reveal-intro{
+  background:
+    #050706!important;
+}
+
+
+.brand-reveal-stage{
+  position:
+    relative;
+
+  z-index:
+    4;
+
+  width:
+    min(
+      82vw,
+      560px
+    );
+
+  display:
+    grid;
+
+  justify-items:
+    center;
+
+  gap:
+    clamp(
+      17px,
+      2.3vw,
+      26px
+    );
+
+  opacity:
+    1;
+}
+
+
+.brand-reveal-mark{
+  width:
+    clamp(
+      72px,
+      10vw,
+      120px
+    );
+
+  height:
+    auto;
+
+  overflow:
+    visible;
+}
+
+
+.brand-reveal-shape{
+  fill:
+    var(
+      --brand-white
+    );
+
+  fill-opacity:
+    0;
+
+  stroke:
+    var(
+      --brand-gold
+    );
+
+  stroke-width:
+    7;
+
+  stroke-linejoin:
+    round;
+
+  stroke-linecap:
+    round;
+
+  stroke-dasharray:
+    1;
+
+  stroke-dashoffset:
+    1;
+
+  filter:
+    drop-shadow(
+      0
+      0
+      7px
+      rgba(
+        201,
+        145,
+        56,
+        .22
+      )
+    );
+}
+
+
+.brand-reveal-wordmark{
+  display:
+    flex;
+
+  align-items:
+    baseline;
+
+  justify-content:
+    center;
+
+  gap:
+    .56em;
+
+  color:
+    var(
+      --brand-white
+    );
+
+  font-family:
+    var(
+      --wordmark-font
+    );
+
+  font-size:
+    clamp(
+      23px,
+      4.1vw,
+      46px
+    );
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .22em;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+}
+
+
+.brand-reveal-ergys{
+  font-weight:
+    600;
+
+  opacity:
+    0;
+
+  transform:
+    translateY(
+      6px
+    );
+}
+
+
+.brand-reveal-shehu-wrap{
+  position:
+    relative;
+
+  display:
+    inline-block;
+
+  overflow:
+    hidden;
+}
+
+
+.brand-reveal-shehu{
+  display:
+    inline-block;
+
+  font-weight:
+    200;
+
+  clip-path:
+    inset(
+      0
+      100%
+      0
+      0
+    );
+}
+
+
+.brand-reveal-gold-bar{
+  position:
+    absolute;
+
+  top:
+    -12%;
+
+  bottom:
+    -12%;
+
+  left:
+    -2px;
+
+  width:
+    1px;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      var(
+        --brand-gold
+      )
+      18%,
+      #e2b76a
+      50%,
+      var(
+        --brand-gold
+      )
+      82%,
+      transparent
+    );
+
+  box-shadow:
+    0
+    0
+    12px
+    rgba(
+      201,
+      145,
+      56,
+      .65
+    );
+
+  opacity:
+    0;
+}
+
+
+.brand-reveal-role{
+  color:
+    rgba(
+      244,
+      241,
+      233,
+      .48
+    );
+
+  font-family:
+    var(
+      --sans
+    );
+
+  font-size:
+    clamp(
+      6px,
+      .65vw,
+      9px
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    1.2;
+
+  letter-spacing:
+    .30em;
+
+  text-align:
+    center;
+
+  text-transform:
+    uppercase;
+
+  opacity:
+    0;
+}
+
+
+.brand-reveal-meta{
+  z-index:
+    4!important;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shape{
+  animation:
+    brandShapeDraw
+    640ms
+    cubic-bezier(
+      .2,
+      .75,
+      .2,
+      1
+    )
+    forwards,
+    brandShapeFill
+    360ms
+    ease
+    520ms
+    forwards;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shape:nth-child(2){
+  animation-delay:
+    80ms,
+    580ms;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shape:nth-child(3){
+  animation-delay:
+    150ms,
+    640ms;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shape:nth-child(4){
+  animation-delay:
+    220ms,
+    700ms;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shape:nth-child(5){
+  animation-delay:
+    290ms,
+    760ms;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-ergys{
+  animation:
+    brandWordIn
+    420ms
+    cubic-bezier(
+      .16,
+      1,
+      .3,
+      1
+    )
+    510ms
+    forwards;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-shehu{
+  animation:
+    brandShehuReveal
+    620ms
+    cubic-bezier(
+      .2,
+      .72,
+      .2,
+      1
+    )
+    690ms
+    forwards;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-gold-bar{
+  animation:
+    brandGoldSweep
+    620ms
+    cubic-bezier(
+      .2,
+      .72,
+      .2,
+      1
+    )
+    690ms
+    forwards;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-role{
+  animation:
+    brandRoleIn
+    400ms
+    ease
+    1010ms
+    forwards;
+}
+
+
+.brand-reveal-intro.is-brand-revealing .brand-reveal-stage{
+  animation:
+    brandStageOut
+    360ms
+    ease
+    1370ms
+    forwards;
+}
+
+
+@keyframes brandShapeDraw{
+  to{
+    stroke-dashoffset:
+      0;
+  }
+}
+
+
+@keyframes brandShapeFill{
+  to{
+    fill-opacity:
+      1;
+
+    stroke:
+      rgba(
+        244,
+        241,
+        233,
+        .18
+      );
+  }
+}
+
+
+@keyframes brandWordIn{
+  to{
+    opacity:
+      1;
+
+    transform:
+      translateY(
+        0
+      );
+  }
+}
+
+
+@keyframes brandShehuReveal{
+  to{
+    clip-path:
+      inset(
+        0
+        0
+        0
+        0
+      );
+  }
+}
+
+
+@keyframes brandGoldSweep{
+  0%{
+    left:
+      -2px;
+
+    opacity:
+      0;
+  }
+
+  12%{
+    opacity:
+      1;
+  }
+
+  88%{
+    opacity:
+      1;
+  }
+
+  100%{
+    left:
+      calc(
+        100% +
+        2px
+      );
+
+    opacity:
+      0;
+  }
+}
+
+
+@keyframes brandRoleIn{
+  to{
+    opacity:
+      1;
+  }
+}
+
+
+@keyframes brandStageOut{
+  to{
+    opacity:
+      0;
+
+    transform:
+      scale(
+        .985
+      );
+  }
+}
+
+
+@media(max-width:700px){
+  .brand-reveal-stage{
+    width:
+      88vw;
+  }
+
+  .brand-reveal-mark{
+    width:
+      78px;
+  }
+
+  .brand-reveal-wordmark{
+    font-size:
+      clamp(
+        22px,
+        7.1vw,
+        31px
+      );
+
+    letter-spacing:
+      .17em;
+  }
+
+  .brand-reveal-role{
+    max-width:
+      280px;
+
+    font-size:
+      5.5px;
+
+    line-height:
+      1.55;
+
+    letter-spacing:
+      .24em;
+  }
+}
+
+
+@media(prefers-reduced-motion:reduce){
+  .brand-reveal-shape{
+    stroke-dashoffset:
+      0!important;
+
+    fill-opacity:
+      1!important;
+  }
+
+  .brand-reveal-ergys,
+  .brand-reveal-role{
+    opacity:
+      1!important;
+
+    transform:
+      none!important;
+  }
+
+  .brand-reveal-shehu{
+    clip-path:
+      none!important;
+  }
+
+  .brand-reveal-gold-bar{
+    display:
+      none!important;
+  }
+}

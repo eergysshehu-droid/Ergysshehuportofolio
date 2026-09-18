@@ -908,6 +908,40 @@ async function handleContact(
 }
 
 
+function withIndexingPolicy(
+  response: Response,
+  url: URL
+) {
+  const headers =
+    new Headers(
+      response.headers
+    );
+
+  if (
+    url.hostname
+      .endsWith(
+        '.workers.dev'
+      )
+  ) {
+    headers.set(
+      'X-Robots-Tag',
+      'noindex, nofollow'
+    );
+  }
+
+  return new Response(
+    response.body,
+    {
+      status:
+        response.status,
+      statusText:
+        response.statusText,
+      headers
+    }
+  );
+}
+
+
 class ContactScriptInjector {
   element(
     element: {
@@ -940,6 +974,17 @@ export default {
       new URL(
         request.url
       );
+
+
+    if (
+      url.hostname ===
+        'www.ergysshehu.com'
+    ) {
+      return Response.redirect(
+        `https://ergysshehu.com${url.pathname}${url.search}`,
+        301
+      );
+    }
 
 
     if (
@@ -989,25 +1034,38 @@ export default {
           'text/html'
         )
       ) {
-        return new HTMLRewriter()
-          .on(
-            'body',
-            new ContactScriptInjector()
-          )
-          .transform(
-            response
-          );
+        return withIndexingPolicy(
+          new HTMLRewriter()
+            .on(
+              'body',
+              new ContactScriptInjector()
+            )
+            .transform(
+              response
+            ),
+          url
+        );
       }
 
 
-      return response;
+      return withIndexingPolicy(
+        response,
+        url
+      );
     }
 
 
-    return env
-      .ASSETS
-      .fetch(
-        request
-      );
+    const response =
+      await env
+        .ASSETS
+        .fetch(
+          request
+        );
+
+
+    return withIndexingPolicy(
+      response,
+      url
+    );
   }
 };

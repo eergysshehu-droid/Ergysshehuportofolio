@@ -1,4 +1,4 @@
-﻿---
+---
 import Layout from '../layouts/Layout.astro';
 import LatestWork from '../components/LatestWork.astro';
 import HomeHero from '../components/home/HomeHero.astro';
@@ -9,6 +9,7 @@ import MotionSection from '../components/home/MotionSection.astro';
 import JournalFeature from '../components/home/JournalFeature.astro';
 import ArtistSection from '../components/home/ArtistSection.astro';
 import HomeContact from '../components/home/HomeContact.astro';
+import BrandReveal from '../components/BrandReveal.astro';
 
 import {
   content,
@@ -307,36 +308,7 @@ const homeDescription =
     )
   }
 >
-  <div
-    class="cinematic-intro"
-    data-intro
-    aria-hidden="true"
-  >
-    <div class="intro-brand">
-      <strong>
-        ERGYS
-      </strong>
-
-      <span>
-        SHEHU
-      </span>
-    </div>
-
-    <span class="intro-line"></span>
-
-    <div class="intro-meta">
-      <span>
-        A VISUAL STORY AWAITS
-      </span>
-
-      <span>
-        01 / 04
-      </span>
-    </div>
-
-    <div class="intro-curtain intro-curtain-left"></div>
-    <div class="intro-curtain intro-curtain-right"></div>
-  </div>
+  <BrandReveal isSq={isSq} />
 
 
   <div class="hero-scroll-scene">
@@ -435,26 +407,41 @@ const homeDescription =
   <script is:inline>
     /*
      * HOME TOP RESTORE GUARD
-     * A clean visit or refresh of / starts at the hero.
-     * Explicit hashes such as /#selected remain respected.
+     * Fresh navigation / reload starts at the hero.
+     * Back/forward navigation keeps browser-restored position.
+     * Hash links remain respected.
      */
     if (!window.location.hash) {
-      try {
-        history.scrollRestoration = 'manual';
-      } catch {}
+      const navigationEntry =
+        performance.getEntriesByType('navigation')[0];
 
-      const resetHomeScroll = () => {
-        window.scrollTo(0, 0);
-      };
+      const isBackForward =
+        navigationEntry &&
+        'type' in navigationEntry &&
+        navigationEntry.type === 'back_forward';
 
-      resetHomeScroll();
-      requestAnimationFrame(resetHomeScroll);
+      if (!isBackForward) {
+        try {
+          history.scrollRestoration = 'manual';
+        } catch {}
 
-      window.addEventListener(
-        'pageshow',
-        resetHomeScroll,
-        { once: true }
-      );
+        const resetHomeScroll = () => {
+          window.scrollTo(0, 0);
+        };
+
+        resetHomeScroll();
+        requestAnimationFrame(resetHomeScroll);
+
+        window.addEventListener(
+          'pageshow',
+          event => {
+            if (!event.persisted) {
+              resetHomeScroll();
+            }
+          },
+          { once: true }
+        );
+      }
     }
   </script>
 </Layout>

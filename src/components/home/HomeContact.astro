@@ -1,7 +1,9 @@
 ---
-import {
-  safeUrl
-} from '../../lib/content';
+import SocialIcons
+  from '../SocialIcons.astro';
+
+import BrandMark
+  from '../BrandMark.astro';
 
 interface Props {
   settings: any;
@@ -12,11 +14,6 @@ const {
   settings,
   isSq
 } = Astro.props;
-
-const instagram =
-  safeUrl(
-    settings.instagram
-  );
 ---
 
 <section
@@ -41,16 +38,24 @@ const instagram =
         data-en="Let’s make"
         data-sq="Le të krijojmë"
       >
-        {isSq ? 'Le të krijojmë' : 'Let’s make'}
+        {
+          isSq
+            ? 'Le të krijojmë'
+            : 'Let’s make'
+        }
       </span>
 
       <br/>
 
       <em
-        data-en="something matter."
-        data-sq="diçka që ka kuptim."
+        data-en="something that matters"
+        data-sq="diçka me kuptim"
       >
-        {isSq ? 'diçka që ka kuptim.' : 'something matter.'}
+        {
+          isSq
+            ? 'diçka me kuptim'
+            : 'something that matters'
+        }
       </em>
     </h2>
   </div>
@@ -75,7 +80,11 @@ const instagram =
         data-en="Based in Albania."
         data-sq="Punoj nga Shqipëria."
       >
-        {isSq ? 'Punoj nga Shqipëria.' : 'Based in Albania.'}
+        {
+          isSq
+            ? 'Punoj nga Shqipëria.'
+            : 'Based in Albania.'
+        }
       </span>
 
       <br/>
@@ -84,20 +93,35 @@ const instagram =
         data-en="Available worldwide."
         data-sq="I hapur për projekte kudo në botë."
       >
-        {isSq ? 'I hapur për projekte kudo në botë.' : 'Available worldwide.'}
+        {
+          isSq
+            ? 'I hapur për projekte kudo në botë.'
+            : 'Available worldwide.'
+        }
       </span>
     </p>
 
-    {
-      instagram && (
-        <a
-          href={instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          INSTAGRAM ↗
-        </a>
-      )
-    }
+    <BrandMark
+      class="contact-brand-lockup"
+      compact
+    />
+
+    <div class="contact-social-block">
+      <span
+        class="contact-social-label"
+        data-en="FOLLOW / CONNECT"
+        data-sq="NDIQ / LIDHU"
+      >
+        {
+          isSq
+            ? 'NDIQ / LIDHU'
+            : 'FOLLOW / CONNECT'
+        }
+      </span>
+
+      <SocialIcons
+        class="contact-social-icons"
+      />
+    </div>
   </div>
 </section>

@@ -1,0 +1,79 @@
+---
+interface Props {
+  isSq?: boolean;
+}
+
+const {
+  isSq = false
+} = Astro.props;
+---
+
+<div
+  class="cinematic-intro brand-reveal-intro"
+  data-intro
+  data-brand-reveal
+  aria-hidden="true"
+>
+  <div class="brand-reveal-stage">
+    <svg
+      class="brand-reveal-mark"
+      viewBox="0 0 1037 866"
+      aria-hidden="true"
+    >
+      <path class="brand-reveal-shape" pathLength="1" d="M 505 401 L 293 401 L 0 863 L 200 863 Z"/>
+      <path class="brand-reveal-shape" pathLength="1" d="M 380 647 L 241 865 L 499 864 Z"/>
+      <path class="brand-reveal-shape" pathLength="1" d="M 541 0 L 312 372 L 540 373 L 667 591 L 785 415 Z"/>
+      <path class="brand-reveal-shape" pathLength="1" d="M 451 714 L 532 863 L 1036 863 L 953 714 Z"/>
+      <path class="brand-reveal-shape" pathLength="1" d="M 940 687 L 804 445 L 641 688 Z"/>
+    </svg>
+
+    <div class="brand-reveal-wordmark">
+      <span class="brand-reveal-ergys">
+        ERGYS
+      </span>
+
+      <span class="brand-reveal-shehu-wrap">
+        <span class="brand-reveal-shehu">
+          SHEHU
+        </span>
+
+        <i
+          class="brand-reveal-gold-bar"
+          aria-hidden="true"
+        ></i>
+      </span>
+    </div>
+
+    <span
+      class="brand-reveal-role"
+      data-en="PHOTOGRAPHER · DIRECTOR · VISUAL ARTIST"
+      data-sq="FOTOGRAF · REGJISOR · ARTIST VIZUAL"
+    >
+      {
+        isSq
+          ? 'FOTOGRAF · REGJISOR · ARTIST VIZUAL'
+          : 'PHOTOGRAPHER · DIRECTOR · VISUAL ARTIST'
+      }
+    </span>
+  </div>
+
+  <div class="intro-meta brand-reveal-meta">
+    <span
+      data-en="A VISUAL STORY AWAITS"
+      data-sq="NJË HISTORI VIZUALE TË PRET"
+    >
+      {
+        isSq
+          ? 'NJË HISTORI VIZUALE TË PRET'
+          : 'A VISUAL STORY AWAITS'
+      }
+    </span>
+
+    <span>
+      01 / 04
+    </span>
+  </div>
+
+  <div class="intro-curtain intro-curtain-left"></div>
+  <div class="intro-curtain intro-curtain-right"></div>
+</div>

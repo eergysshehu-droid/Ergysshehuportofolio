@@ -2,6 +2,10 @@
 import ProjectGrid from '../ProjectGrid.astro';
 
 import {
+  albumKind
+} from '../../lib/content';
+
+import {
   localizedPath,
   type SiteLang
 } from '../../lib/i18n';
@@ -19,12 +23,122 @@ const {
   isSq,
   lang
 } = Astro.props;
+
+const filterItems = [
+  {
+    key: 'all',
+    en: 'All work',
+    sq: 'TÃƒÂ« gjitha',
+    count: albums.length
+  },
+  {
+    key: 'fashion',
+    en: 'Fashion',
+    sq: 'ModÃƒÂ«',
+    count: albums.filter(album => albumKind(album) === 'fashion').length
+  },
+  {
+    key: 'portraits',
+    en: 'Portraits',
+    sq: 'Portrete',
+    count: albums.filter(album => albumKind(album) === 'portraits').length
+  },
+  {
+    key: 'weddings',
+    en: 'Weddings',
+    sq: 'Dasma',
+    count: albums.filter(album => albumKind(album) === 'weddings').length
+  },
+  {
+    key: 'projects',
+    en: 'Personal',
+    sq: 'Personale',
+    count: albums.filter(album => albumKind(album) === 'projects').length
+  }
+];
+
+const marqueeItems = [
+  {
+    no: '01',
+    en: 'PHOTOGRAPHY',
+    sq: 'FOTOGRAFI'
+  },
+  {
+    no: '02',
+    en: 'FILM',
+    sq: 'FILM'
+  },
+  {
+    no: '03',
+    en: 'ART DIRECTION',
+    sq: 'DREJTIM ARTISTIK'
+  },
+  {
+    no: '04',
+    en: 'ALBANIA',
+    sq: 'SHQIPÃƒâ€¹RI'
+  },
+  {
+    no: '05',
+    en: 'WORLDWIDE',
+    sq: 'NDÃƒâ€¹RKOMBÃƒâ€¹TARISHT'
+  }
+];
 ---
 
 <section
   class="work-section"
   id="selected"
 >
+  <div
+    class="home-marquee"
+    aria-label={
+      isSq
+        ? 'Fotografi, film, drejtim artistik, ShqipÃƒÂ«ri, ndÃƒÂ«rkombÃƒÂ«tarisht'
+        : 'Photography, film, art direction, Albania, worldwide'
+    }
+  >
+    <div class="home-marquee-track">
+      {
+        [0, 1].map(
+          () => (
+            <div
+              class="home-marquee-set"
+              aria-hidden="true"
+            >
+              {
+                marqueeItems.map(
+                  item => (
+                    <span class="home-marquee-item">
+                      <span class="home-marquee-no">
+                        {item.no}
+                      </span>
+
+                      <span
+                        data-en={item.en}
+                        data-sq={item.sq}
+                      >
+                        {
+                          isSq
+                            ? item.sq
+                            : item.en
+                        }
+                      </span>
+
+                      <i aria-hidden="true">
+                        Ã¢â‚¬â€
+                      </i>
+                    </span>
+                  )
+                )
+              }
+            </div>
+          )
+        )
+      }
+    </div>
+  </div>
+
   <div
     class="work-heading"
     data-reveal
@@ -33,26 +147,26 @@ const {
       <p
         class="kicker"
         data-en="A SELECTED PERSPECTIVE"
-        data-sq="PËRZGJEDHJE AUTORIALE"
+        data-sq="PÃƒâ€¹RZGJEDHJE AUTORIALE"
       >
-        {isSq ? 'PËRZGJEDHJE AUTORIALE' : 'A SELECTED PERSPECTIVE'}
+        {isSq ? 'PÃƒâ€¹RZGJEDHJE AUTORIALE' : 'A SELECTED PERSPECTIVE'}
       </p>
 
       <h2>
         <span
-          data-en="Still."
-          data-sq="Statike."
+          data-en="Still"
+          data-sq="Statike"
         >
-          {isSq ? 'Statike.' : 'Still.'}
+          {isSq ? 'Statike' : 'Still'}
         </span>
 
         {' '}
 
         <em
-          data-en="Never silent."
-          data-sq="Kurrë e heshtur."
+          data-en="Never silent"
+          data-sq="KurrÃƒÂ« e heshtur"
         >
-          {isSq ? 'Kurrë e heshtur.' : 'Never silent.'}
+          {isSq ? 'KurrÃƒÂ« e heshtur' : 'Never silent'}
         </em>
       </h2>
     </div>
@@ -72,64 +186,94 @@ const {
     class="work-toolbar"
     data-reveal
   >
-    <div
-      class="filters"
-      role="group"
-      aria-label="Filter projects"
-    >
+    <div class="filters-shell">
       <button
-        data-filter="all"
-        aria-pressed="true"
-        data-en="All work"
-        data-sq="Të gjitha"
+        type="button"
+        class="filter-rail-arrow filter-rail-arrow-prev"
+        data-filter-prev
+        aria-label={
+          isSq
+            ? 'LÃƒÂ«viz kategoritÃƒÂ« majtas'
+            : 'Scroll categories left'
+        }
       >
-        {isSq ? 'Të gjitha' : 'All work'}
+        Ã¢â‚¬Â¹
       </button>
 
-      <button
-        data-filter="fashion"
-        aria-pressed="false"
-        data-en="Fashion"
-        data-sq="Modë"
+      <div
+        class="filters"
+        data-filter-rail
+        role="group"
+        aria-label={
+          isSq
+            ? 'Filtro projektet'
+            : 'Filter projects'
+        }
       >
-        {isSq ? 'Modë' : 'Fashion'}
-      </button>
+        {
+          filterItems.map(
+            (
+              item,
+              index
+            ) => (
+              <button
+                type="button"
+                data-filter={item.key}
+                aria-pressed={
+                  index === 0
+                    ? 'true'
+                    : 'false'
+                }
+                data-en={item.en}
+                data-sq={item.sq}
+              >
+                <span
+                  class="filter-label"
+                  data-en={item.en}
+                  data-sq={item.sq}
+                >
+                  {
+                    isSq
+                      ? item.sq
+                      : item.en
+                  }
+                </span>
+
+                <span
+                  class="filter-count"
+                  aria-hidden="true"
+                >
+                  /
+                  {' '}
+                  {String(item.count).padStart(2, '0')}
+                </span>
+              </button>
+            )
+          )
+        }
+      </div>
 
       <button
-        data-filter="portraits"
-        aria-pressed="false"
-        data-en="Portraits"
-        data-sq="Portrete"
+        type="button"
+        class="filter-rail-arrow filter-rail-arrow-next"
+        data-filter-next
+        aria-label={
+          isSq
+            ? 'LÃƒÂ«viz kategoritÃƒÂ« djathtas'
+            : 'Scroll categories right'
+        }
       >
-        {isSq ? 'Portrete' : 'Portraits'}
-      </button>
-
-      <button
-        data-filter="weddings"
-        aria-pressed="false"
-        data-en="Weddings"
-        data-sq="Dasma"
-      >
-        {isSq ? 'Dasma' : 'Weddings'}
-      </button>
-
-      <button
-        data-filter="projects"
-        aria-pressed="false"
-        data-en="Personal"
-        data-sq="Personale"
-      >
-        {isSq ? 'Personale' : 'Personal'}
+        Ã¢â‚¬Âº
       </button>
     </div>
 
     <a
       class="index-link"
       href={localizedPath('/projects/', lang)}
-      data-en="PROJECT INDEX ↗"
-      data-sq="TË GJITHA PROJEKTET ↗"
+      data-en="PROJECT INDEX Ã¢â€ â€”"
+      data-sq="TÃƒâ€¹ GJITHA PROJEKTET Ã¢â€ â€”"
     >
-      {isSq ? 'TË GJITHA PROJEKTET ↗' : 'PROJECT INDEX ↗'}
+      {isSq ? 'TÃƒâ€¹ GJITHA PROJEKTET Ã¢â€ â€”' : 'PROJECT INDEX Ã¢â€ â€”'}
     </a>
   </div>
 
@@ -139,8 +283,12 @@ const {
     class="work-empty"
     hidden
     data-en="No projects in this selection yet."
-    data-sq="Nuk ka ende projekte në këtë përzgjedhje."
+    data-sq="Nuk ka ende projekte nÃƒÂ« kÃƒÂ«tÃƒÂ« pÃƒÂ«rzgjedhje."
   >
-    {isSq ? "Nuk ka ende projekte në këtë përzgjedhje." : 'No projects in this selection yet.'}
+    {
+      isSq
+        ? 'Nuk ka ende projekte nÃƒÂ« kÃƒÂ«tÃƒÂ« pÃƒÂ«rzgjedhje.'
+        : 'No projects in this selection yet.'
+    }
   </p>
 </section>

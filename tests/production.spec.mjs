@@ -10,7 +10,13 @@ const seoRoutes = [
   '/about/',
   '/sq/about/',
   '/journal/',
-  '/sq/journal/'
+  '/sq/journal/',
+  '/privacy/',
+  '/terms/',
+  '/cookies/',
+  '/sq/privacy/',
+  '/sq/terms/',
+  '/sq/cookies/'
 ];
 
 
