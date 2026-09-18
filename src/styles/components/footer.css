@@ -344,3 +344,35 @@ a:last-child:hover {
   }
 
 }
+/* ============================================================
+   FOOTER VISIBILITY FIX
+   Footer should never wait for reveal animation.
+   ============================================================ */
+
+html body
+footer [data-reveal] {
+  opacity:
+    1 !important;
+
+  transform:
+    none !important;
+
+  transition:
+    none !important;
+}
+
+
+@media (min-width: 701px) {
+
+  html body footer {
+    padding-top:
+      30px !important;
+
+    padding-bottom:
+      24px !important;
+
+    row-gap:
+      20px !important;
+  }
+
+}
