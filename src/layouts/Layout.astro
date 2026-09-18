@@ -1600,17 +1600,23 @@ if(
           );
 
 
-      if(
-        image
-      ){
-        image
-          .style
-          .setProperty(
-            '--stack-darkness',
-            '0'
-          );
-      }
-    }
+   if(
+  image
+){
+  image
+    .style
+    .setProperty(
+      '--stack-blur',
+      '0px'
+    );
+
+  image
+    .style
+    .setProperty(
+      '--stack-darkness',
+      '0'
+    );
+}
 
 
     function overlapProgress(
@@ -1786,28 +1792,47 @@ if(
                 : 0;
 
 
-            if(
-              item.image
-            ){
-              /*
-               * Scroll position -> visual state directly.
-               *
-               * No .18 / .42 interpolation.
-               * No trailing animation after fast scroll.
-               */
-              item.image
-                .style
-                .setProperty(
-                  '--stack-darkness',
-                  progress
-                    .toFixed(
-                      3
-                    )
-                );
-            }
-          }
-        );
-    }
+       if(
+  item.image
+){
+  const blur =
+    progress < .16
+      ? 0
+      : progress < .55
+        ? 1.2
+        : 2.2;
+
+  const nextBlur =
+    `${blur}px`;
+
+  if(
+    item.image
+      .style
+      .getPropertyValue(
+        '--stack-blur'
+      ) !==
+    nextBlur
+  ){
+    item.image
+      .style
+      .setProperty(
+        '--stack-blur',
+        nextBlur
+      );
+  }
+
+  item.image
+    .style
+    .setProperty(
+      '--stack-darkness',
+      (
+        progress *
+        .72
+      ).toFixed(
+        3
+      )
+    );
+}
 
 
     function scheduleStack(){
@@ -2528,7 +2553,6 @@ if(
 
 <script>
   import '../scripts/mobile-rollup';
-  import '../scripts/scroll-shutter';
 </script>
 
 </body>
