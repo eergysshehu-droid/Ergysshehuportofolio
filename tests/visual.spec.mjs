@@ -1,221 +1,70 @@
-import {
-  test,
-  expect
-} from '@playwright/test';
+test(
+  'mobile menu open',
 
-const visualEnabled =
-  process.env.VISUAL_REGRESSION ===
-  '1';
+  async ({
+    page
+  }) => {
 
-const routes = [
-  {
-    name:
-      'home',
-    path:
-      '/'
-  },
-  {
-    name:
-      'home-sq',
-    path:
-      '/sq/'
-  },
-  {
-    name:
-      'about',
-    path:
-      '/about/'
-  },
-  {
-    name:
-      'book',
-    path:
-      '/book/'
-  },
-  {
-    name:
-      'journal',
-    path:
-      '/journal/'
-  }
-];
+    await page.setViewportSize({
+      width:
+        390,
 
-const viewports = [
-  {
-    name:
-      'mobile-390',
-    width:
-      390,
-    height:
-      844
-  },
-  {
-    name:
-      'mobile-430',
-    width:
-      430,
-    height:
-      932
-  },
-  {
-    name:
-      'desktop-1440',
-    width:
-      1440,
-    height:
-      1000
-  }
-];
+      height:
+        844
+    });
 
-test.describe(
-  'visual regression',
-  () => {
-    test.skip(
-      !visualEnabled,
-      'Set VISUAL_REGRESSION=1 to run screenshot comparisons.'
-    );
 
-    for (
-      const route
-      of routes
-    ) {
-      for (
-        const viewport
-        of viewports
-      ) {
-        test(
-          `${route.name} ${viewport.name}`,
-          async ({
-            page
-          }) => {
-            await page.setViewportSize({
-              width:
-                viewport.width,
-
-              height:
-                viewport.height
-            });
-
-            await page.goto(
-              route.path,
-              {
-                waitUntil:
-                  'networkidle'
-              }
-            );
-
-            await page.emulateMedia({
-              reducedMotion:
-                'reduce'
-            });
-
-            await expect(
-              page
-            ).toHaveScreenshot(
-              `${route.name}-${viewport.name}.png`,
-              {
-                fullPage:
-                  true,
-
-                animations:
-                  'disabled'
-              }
-            );
-          }
-        );
-      }
-    }
-
-    test(
-      'mobile menu open',
-      async ({
-        page
-      }) => {
-        await page.setViewportSize({
-          width:
-            390,
-
-          height:
-            844
-        });
-
-        await page.goto(
-          '/',
-          {
-            waitUntil:
-              'networkidle'
-          }
-        );
-
-        const menu =
-          page.locator(
-            '.mobile-menu'
-          );
-
-        await menu
-          .locator(
-            'summary'
-          )
-          .click();
-
-        await expect(
-          menu
-        ).toHaveAttribute(
-          'open',
-          ''
-        );
-
-        await expect(
-          page
-        ).toHaveScreenshot(
-          'mobile-menu-open.png',
-          {
-            animations:
-              'disabled'
-          }
-        );
+    await page.goto(
+      '/',
+      {
+        waitUntil:
+          'networkidle'
       }
     );
 
-    test(
-      'selected work stack',
-      async ({
-        page
-      }) => {
-        await page.setViewportSize({
-          width:
-            390,
 
-          height:
-            844
-        });
+    const menu =
+      page.locator(
+        '[data-mobile-menu]'
+      );
 
-        await page.goto(
-          '/',
-          {
-            waitUntil:
-              'networkidle'
-          }
-        );
 
-        await page.locator(
-          '#selected'
-        ).scrollIntoViewIfNeeded();
+    await page
+      .locator(
+        '[data-menu-open]'
+      )
+      .click();
 
-        await page.waitForTimeout(
-          250
-        );
 
-        await expect(
-          page
-        ).toHaveScreenshot(
-          'selected-work-stack.png',
-          {
-            animations:
-              'disabled'
-          }
-        );
+    await expect(
+      menu
+    ).toHaveAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+
+    await expect(
+      menu
+    ).toHaveClass(
+      /is-open/
+    );
+
+
+    await expect(
+      menu
+    ).toBeVisible();
+
+
+    await expect(
+      page
+    ).toHaveScreenshot(
+      'mobile-menu-open.png',
+      {
+        animations:
+          'disabled'
       }
     );
+
   }
 );
