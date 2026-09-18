@@ -1582,40 +1582,39 @@ if(
     }
 
 
-    function clearCardState(
-      card:
-        HTMLElement
-    ){
-      card
-        .style
-        .removeProperty(
-          'z-index'
-        );
-
-
-      const image =
-        card
-          .querySelector<HTMLElement>(
-            '.project-image'
-          );
-
-
-   if(
-  image
+function clearCardState(
+  card:
+    HTMLElement
 ){
-  image
+  card
     .style
-    .setProperty(
-      '--stack-blur',
-      '0px'
+    .removeProperty(
+      'z-index'
     );
 
-  image
-    .style
-    .setProperty(
-      '--stack-darkness',
-      '0'
-    );
+  const image =
+    card
+      .querySelector<HTMLElement>(
+        '.project-image'
+      );
+
+  if(
+    image
+  ){
+    image
+      .style
+      .setProperty(
+        '--stack-blur',
+        '0px'
+      );
+
+    image
+      .style
+      .setProperty(
+        '--stack-darkness',
+        '0'
+      );
+  }
 }
 
 
@@ -1758,79 +1757,78 @@ if(
 
 
     function updateStack(){
-      stackRaf =
-        undefined;
-
-
-      if(
-        !stackActive ||
-        !stackItems.length
-      ){
-        return;
-      }
-
-
-      stackItems
-        .forEach(
-          (
-            item,
-            index
-          )=>{
-            const nextItem =
-              stackItems[
-                index +
-                1
-              ];
-
-
-            const progress =
-              nextItem
-                ? overlapProgress(
-                    nextItem.card,
-                    item.height
-                  )
-                : 0;
-
-
-       if(
-  item.image
-){
-  const blur =
-    progress < .16
-      ? 0
-      : progress < .55
-        ? 1.2
-        : 2.2;
-
-  const nextBlur =
-    `${blur}px`;
+  stackRaf =
+    undefined;
 
   if(
-    item.image
-      .style
-      .getPropertyValue(
-        '--stack-blur'
-      ) !==
-    nextBlur
+    !stackActive ||
+    !stackItems.length
   ){
-    item.image
-      .style
-      .setProperty(
-        '--stack-blur',
-        nextBlur
-      );
+    return;
   }
 
-  item.image
-    .style
-    .setProperty(
-      '--stack-darkness',
+  stackItems
+    .forEach(
       (
-        progress *
-        .72
-      ).toFixed(
-        3
-      )
+        item,
+        index
+      )=>{
+        const nextItem =
+          stackItems[
+            index +
+            1
+          ];
+
+        const progress =
+          nextItem
+            ? overlapProgress(
+                nextItem.card,
+                item.height
+              )
+            : 0;
+
+        if(
+          item.image
+        ){
+          const blur =
+            progress < .16
+              ? 0
+              : progress < .55
+                ? 1.2
+                : 2.2;
+
+          const nextBlur =
+            `${blur}px`;
+
+          if(
+            item.image
+              .style
+              .getPropertyValue(
+                '--stack-blur'
+              ) !==
+            nextBlur
+          ){
+            item.image
+              .style
+              .setProperty(
+                '--stack-blur',
+                nextBlur
+              );
+          }
+
+          item.image
+            .style
+            .setProperty(
+              '--stack-darkness',
+              (
+                progress *
+                .72
+              ).toFixed(
+                3
+              )
+            );
+        }
+      }
     );
 }
 
