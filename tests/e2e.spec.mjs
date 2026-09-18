@@ -1,4 +1,7 @@
-import { test, expect } from '@playwright/test';
+import {
+  test,
+  expect
+} from '@playwright/test';
 
 const criticalRoutes = [
   '/',
@@ -23,16 +26,13 @@ const criticalRoutes = [
 
 test.describe('Critical public routes', () => {
   for (const route of criticalRoutes) {
-    test(`${route} loads without browser errors`, async ({ page }, testInfo) => {
+    test(`${route} loads without browser errors`, async ({page}, testInfo) => {
       test.skip(testInfo.project.name !== 'desktop-chromium');
 
       const pageErrors = [];
       page.on('pageerror', error => pageErrors.push(error.message));
 
-      const response = await page.goto(route, {
-        waitUntil: 'domcontentloaded'
-      });
-
+      const response = await page.goto(route, {waitUntil:'domcontentloaded'});
       expect(response).not.toBeNull();
       expect(response.status()).toBeLessThan(400);
       await expect(page.locator('body')).toBeVisible();
@@ -41,27 +41,20 @@ test.describe('Critical public routes', () => {
   }
 });
 
-test('EN / SQ language switch works', async ({ page }, testInfo) => {
+test('EN / SQ language switch works', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium');
 
   await page.goto('/');
-
-  await page
-    .locator('.desktop-nav .language-switch button[data-lang="sq"]')
-    .click();
-
+  await page.locator('.desktop-nav .language-switch button[data-lang="sq"]').click();
   await expect(page).toHaveURL(/\/sq\/$/);
-  await expect(page.locator('html')).toHaveAttribute('lang', 'sq');
+  await expect(page.locator('html')).toHaveAttribute('lang','sq');
 
-  await page
-    .locator('.desktop-nav .language-switch button[data-lang="en"]')
-    .click();
-
+  await page.locator('.desktop-nav .language-switch button[data-lang="en"]').click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('html')).toHaveAttribute('lang','en');
 });
 
-test('mobile navigation opens and closes', async ({ page }, testInfo) => {
+test('mobile navigation opens and closes', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium');
 
   await page.goto('/');
@@ -71,30 +64,34 @@ test('mobile navigation opens and closes', async ({ page }, testInfo) => {
   const closeButton = menu.locator('[data-menu-close]');
 
   await expect(openButton).toBeVisible();
-
   await openButton.click();
 
-  await expect(openButton).toHaveAttribute('aria-expanded', 'true');
-  await expect(menu).toHaveAttribute('aria-hidden', 'false');
+  await expect(openButton).toHaveAttribute('aria-expanded','true');
+  await expect(menu).toHaveAttribute('aria-hidden','false');
   await expect(menu).toHaveClass(/is-open/);
   await expect(menu).toBeVisible();
 
+  // Focus must stay inside the dialog while open.
+  await page.keyboard.press('Tab');
+  const focusInside = await page.evaluate(() => {
+    const menu = document.querySelector('[data-mobile-menu]');
+    return !!menu && !!document.activeElement && menu.contains(document.activeElement);
+  });
+  expect(focusInside).toBe(true);
+
   await closeButton.click();
 
-  await expect(openButton).toHaveAttribute('aria-expanded', 'false');
-  await expect(menu).toHaveAttribute('aria-hidden', 'true');
+  await expect(openButton).toHaveAttribute('aria-expanded','false');
+  await expect(menu).toHaveAttribute('aria-hidden','true');
   await expect(menu).not.toHaveClass(/is-open/);
 });
 
-test('homepage mobile photo stacking stays enabled', async ({ page }, testInfo) => {
+test('homepage mobile photo stacking stays enabled', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium');
 
   await page.goto('/');
 
-  const card = page
-    .locator('body.is-home .work-section .project-card')
-    .first();
-
+  const card = page.locator('body.is-home .work-section .project-card').first();
   await expect(card).toBeAttached();
 
   const state = await card.evaluate(element => {
@@ -115,40 +112,27 @@ test('homepage mobile photo stacking stays enabled', async ({ page }, testInfo) 
   expect(state.gridOverflow).not.toBe('hidden');
 });
 
-test('Book form submits through API enhancement', async ({ page }) => {
+test('Book form submits through API enhancement', async ({page}) => {
   await page.route('**/api/contact', async route => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify({ ok: true })
+      body: JSON.stringify({ok:true})
     });
   });
 
   await page.goto('/book/');
-
-  /*
-   * Production Cloudflare Worker injects this file.
-   * Astro preview is static, so E2E injects the same production script.
-   * The script itself has duplicate-load protection.
-   */
-  await page.addScriptTag({
-    url: 'http://127.0.0.1:4321/contact-form.js'
-  });
+  await page.addScriptTag({url:'http://127.0.0.1:4321/contact-form.js'});
 
   const form = page.locator('#inquiry');
-
   await form.locator('input[name="name"]').fill('E2E Test');
   await form.locator('input[name="email"]').fill('test@example.com');
   await form.locator('input[name="phone"]').fill('+355 69 000 0000');
   await form.locator('select[name="project"]').selectOption('fashion');
-  await form
-    .locator('textarea[name="message"]')
-    .fill('Automated Playwright test for the booking form.');
+  await form.locator('textarea[name="message"]').fill('Automated Playwright test for the booking form.');
 
-  const requestPromise = page.waitForRequest(
-    request =>
-      request.url().endsWith('/api/contact') &&
-      request.method() === 'POST'
+  const requestPromise = page.waitForRequest(request =>
+    request.url().endsWith('/api/contact') && request.method() === 'POST'
   );
 
   await form.locator('button[type="submit"]').click();
@@ -160,73 +144,56 @@ test('Book form submits through API enhancement', async ({ page }) => {
   expect(payload.email).toBe('test@example.com');
   expect(payload.project).toBe('fashion');
 
-  await expect(form.locator('[data-form-status]')).toHaveAttribute(
-    'data-state',
-    'success'
-  );
-
-  await expect(form.locator('[data-form-status]')).toContainText(
-    'Message sent'
-  );
+  await expect(form.locator('[data-form-status]')).toHaveAttribute('data-state','success');
+  await expect(form.locator('[data-form-status]')).toContainText('Message sent');
 });
 
-test('journal opens a real article', async ({ page }, testInfo) => {
+test('journal opens a real article', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium');
 
   await page.goto('/journal/');
-
   const article = page.locator('a.journal-card').first();
   await expect(article).toBeVisible();
-
   await article.click();
-
   await expect(page).toHaveURL(/\/journal\/[^/]+\/$/);
   await expect(page.locator('main h1')).toBeVisible();
 });
 
-test('portfolio opens a project detail', async ({ page }, testInfo) => {
+test('portfolio opens a project detail', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium');
 
   await page.goto('/projects/');
-
   const project = page.locator('.project-card a').first();
   await expect(project).toBeVisible();
-
   await project.click();
-
   await expect(page).toHaveURL(/\/portfolio\/[^/]+\/$/);
   await expect(page.locator('main h1')).toBeVisible();
 });
 
-test('custom 404 responds correctly', async ({ page }, testInfo) => {
+test('custom 404 responds correctly', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium');
 
-  const response = await page.goto(
-    '/__e2e-page-that-does-not-exist__/',
-    { waitUntil: 'domcontentloaded' }
-  );
-
+  const response = await page.goto('/__e2e-page-that-does-not-exist__/', {waitUntil:'domcontentloaded'});
   expect(response).not.toBeNull();
   expect(response.status()).toBe(404);
   await expect(page.locator('body')).toBeVisible();
 });
 
-test('dark mode follows system preference', async ({ page }) => {
-  await page.emulateMedia({
-    colorScheme: 'dark'
-  });
-
+test('dark mode follows system preference', async ({page}) => {
+  await page.emulateMedia({colorScheme:'dark'});
   await page.goto('/');
 
-  const theme = await page.locator('html').evaluate(
-    element => getComputedStyle(element).colorScheme
-  );
-
+  const theme = await page.locator('html').evaluate(element => getComputedStyle(element).colorScheme);
   expect(theme).toContain('dark');
 
-  const bodyBackground = await page.locator('body').evaluate(
-    element => getComputedStyle(element).backgroundColor
-  );
-
+  const bodyBackground = await page.locator('body').evaluate(element => getComputedStyle(element).backgroundColor);
   expect(bodyBackground).not.toBe('rgb(244, 242, 237)');
+});
+
+test('light mode follows system preference', async ({page}) => {
+  await page.emulateMedia({colorScheme:'light'});
+  await page.goto('/weddings/');
+
+  const theme = await page.locator('html').evaluate(element => getComputedStyle(element).colorScheme);
+  expect(theme).toContain('light');
 });
