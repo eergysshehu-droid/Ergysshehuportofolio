@@ -286,3 +286,122 @@
   }
 
 }
+/* ============================================================
+   DESKTOP COLLECTION INTRO — PREMIUM ROLL DOWN
+   Fashion / Portraits / Weddings / Films / Projects / Albums
+   ============================================================ */
+
+@media (min-width: 701px) {
+
+  html.motion-ready
+  body:not(.is-home)
+  .section-intro,
+
+  html.motion-ready
+  body:not(.is-home)
+  .project-intro {
+    transform-origin:
+      top center;
+
+    animation:
+      desktop-collection-roll-down
+      760ms
+      cubic-bezier(.16,1,.3,1)
+      both;
+
+    will-change:
+      transform,
+      opacity,
+      clip-path;
+  }
+
+
+  @keyframes desktop-collection-roll-down {
+
+    0% {
+      opacity:
+        0;
+
+      transform:
+        translate3d(
+          0,
+          -28px,
+          0
+        )
+        scaleY(.78);
+
+      clip-path:
+        inset(
+          0
+          0
+          86%
+          0
+          round
+          0
+          0
+          14px
+          14px
+        );
+    }
+
+
+    48% {
+      opacity:
+        1;
+    }
+
+
+    100% {
+      opacity:
+        1;
+
+      transform:
+        translate3d(
+          0,
+          0,
+          0
+        )
+        scaleY(1);
+
+      clip-path:
+        inset(
+          0
+          0
+          0
+          0
+          round
+          0
+          0
+          14px
+          14px
+        );
+    }
+
+  }
+
+}
+
+
+@media (min-width:701px) and (prefers-reduced-motion:reduce) {
+
+  html.motion-ready
+  body:not(.is-home)
+  .section-intro,
+
+  html.motion-ready
+  body:not(.is-home)
+  .project-intro {
+    animation:
+      none !important;
+
+    opacity:
+      1 !important;
+
+    transform:
+      none !important;
+
+    clip-path:
+      none !important;
+  }
+
+}
