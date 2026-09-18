@@ -227,62 +227,15 @@
         118%
       )!important;
 
-    -webkit-backdrop-filter:
+-webkit-backdrop-filter:
       blur(
         40px
       )
       saturate(
         118%
-      
-}
-
-
-/*
-  Phones with little vertical space, including landscape.
-*/
-
-@media(
-  max-width:1000px
-) and (
-  max-height:690px
-){
-
-  html body .mobile-menu-screen nav{
-    margin-top:
-      17px!important;
-  }
-
-
-  html body .mobile-menu-screen nav>a{
-    padding:
-      8px
-      0!important;
-
-    font-size:
-      clamp(
-        23px,
-        5.5vh,
-        31px
       )!important;
   }
-
-
-  html body .mobile-menu-footer{
-    gap:
-      10px!important;
-
-    padding-top:
-      13px!important;
-  }
-
-
-  html body .mobile-location{
-    display:
-      none!important;
-  }
 }
-
-
 /* ==========================================================================
    HERO SCROLL INDICATOR
    ========================================================================== */
