@@ -1,0 +1,212 @@
+/* ============================================================
+   ERGYS SHEHU — MOBILE HOME STACK
+   Stable sticky compositing
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+  .motion-ready
+  body.is-home
+  .project-card {
+    position:
+      sticky !important;
+
+    top:
+      0 !important;
+
+    overflow:
+      visible !important;
+
+    isolation:
+      isolate;
+
+    transform:
+      none !important;
+
+    transition:
+      none !important;
+
+    -webkit-backface-visibility:
+      hidden;
+
+    backface-visibility:
+      hidden;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card[data-reveal],
+
+  .motion-ready
+  body.is-home
+  .project-card[data-reveal].is-visible {
+    transform:
+      none !important;
+
+    transition:
+      none !important;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card > a {
+    display:
+      block;
+
+    width:
+      100%;
+
+    transform:
+      none !important;
+
+    transition:
+      none !important;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-image {
+    position:
+      relative;
+
+    width:
+      100%;
+
+    overflow:
+      hidden !important;
+
+    isolation:
+      isolate;
+
+    background:
+      #050505 !important;
+
+    transform:
+      translateZ(0);
+
+    -webkit-backface-visibility:
+      hidden;
+
+    backface-visibility:
+      hidden;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-image img {
+    display:
+      block;
+
+    width:
+      100%;
+
+    height:
+      auto;
+
+    max-height:
+      100svh;
+
+    object-fit:
+      contain;
+
+    filter:
+      blur(
+        var(
+          --stack-blur,
+          0px
+        )
+      ) !important;
+
+    transform:
+      translateZ(0) !important;
+
+    transition:
+      filter
+      110ms
+      linear !important;
+
+    -webkit-backface-visibility:
+      hidden;
+
+    backface-visibility:
+      hidden;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-image::after {
+    content:
+      "";
+
+    position:
+      absolute;
+
+    inset:
+      0;
+
+    z-index:
+      1;
+
+    pointer-events:
+      none;
+
+    background:
+      #000;
+
+    opacity:
+      var(
+        --stack-darkness,
+        0
+      );
+
+    transition:
+      none !important;
+
+    will-change:
+      opacity;
+
+    -webkit-backface-visibility:
+      hidden;
+
+    backface-visibility:
+      hidden;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .project-overlay {
+    z-index:
+      2;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card
+  .icon-badge {
+    z-index:
+      3;
+  }
+
+
+  .motion-ready
+  body.is-home
+  .project-card {
+    --stack-blur:
+      0px;
+
+    --stack-darkness:
+      0;
+  }
+
+}
