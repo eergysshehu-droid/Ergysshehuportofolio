@@ -1,0 +1,302 @@
+/* ============================================================
+   ERGYS SHEHU — BOOK / CONTACT
+   ============================================================ */
+
+.booking-page
+.direct-contact h2 {
+  max-width:
+    8ch;
+
+  margin:
+    8px
+    0
+    0 !important;
+
+  font-family:
+    var(--sans) !important;
+
+  font-size:
+    clamp(
+      50px,
+      5.3vw,
+      88px
+    ) !important;
+
+  font-weight:
+    300 !important;
+
+  line-height:
+    .9 !important;
+
+  letter-spacing:
+    -.065em !important;
+}
+
+
+.booking-page
+.direct-contact .eyebrow {
+  margin-bottom:
+    14px !important;
+
+  font-size:
+    9px !important;
+
+  letter-spacing:
+    .2em !important;
+
+  color:
+    rgba(
+      244,
+      240,
+      232,
+      .45
+    ) !important;
+}
+
+
+.booking-page
+.contact-intro {
+  max-width:
+    40ch !important;
+
+  margin:
+    26px
+    0
+    34px !important;
+
+  font-size:
+    clamp(
+      15px,
+      1vw,
+      17px
+    ) !important;
+
+  line-height:
+    1.72 !important;
+
+  color:
+    rgba(
+      244,
+      240,
+      232,
+      .68
+    ) !important;
+}
+
+
+/* CONTACT LINKS */
+
+.booking-page
+.contact-links {
+  gap:
+    0 !important;
+
+  border-top:
+    1px solid
+    rgba(
+      244,
+      240,
+      232,
+      .12
+    );
+}
+
+
+.booking-page
+.contact-links > a,
+.booking-page
+.contact-location {
+  min-height:
+    64px;
+
+  padding:
+    14px
+    0 !important;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    16px !important;
+
+  border-bottom:
+    1px solid
+    rgba(
+      244,
+      240,
+      232,
+      .12
+    );
+
+  background:
+    transparent !important;
+
+  transition:
+    padding
+    220ms
+    cubic-bezier(
+      .16,
+      1,
+      .3,
+      1
+    ),
+    background
+    180ms
+    ease;
+}
+
+
+.booking-page
+.contact-links > a:hover {
+  padding-left:
+    8px !important;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .025
+    ) !important;
+}
+
+
+.booking-page
+.contact-links small,
+.booking-page
+.contact-location small {
+  margin-bottom:
+    4px !important;
+
+  font-size:
+    8px !important;
+
+  letter-spacing:
+    .16em !important;
+
+  color:
+    rgba(
+      244,
+      240,
+      232,
+      .42
+    ) !important;
+}
+
+
+.booking-page
+.contact-links strong,
+.booking-page
+.contact-location strong {
+  font-family:
+    var(--sans) !important;
+
+  font-size:
+    clamp(
+      14px,
+      .9vw,
+      16px
+    ) !important;
+
+  font-weight:
+    400 !important;
+
+  letter-spacing:
+    -.01em;
+}
+
+
+.booking-page
+.contact-icon {
+  width:
+    20px !important;
+
+  height:
+    20px !important;
+
+  color:
+    rgba(
+      244,
+      240,
+      232,
+      .6
+    ) !important;
+}
+
+
+/* WHATSAPP */
+
+.booking-page
+.contact-fast {
+  margin:
+    0 !important;
+
+  padding:
+    14px
+    0 !important;
+
+  border-radius:
+    0 !important;
+
+  background:
+    transparent !important;
+}
+
+
+.booking-page
+.contact-fast .contact-icon {
+  color:
+    var(--accent) !important;
+}
+
+
+.booking-page
+.contact-fast small {
+  color:
+    var(--accent) !important;
+
+  font-weight:
+    500 !important;
+}
+
+
+@media (max-width: 700px) {
+
+  .booking-page
+  .direct-contact h2 {
+    max-width:
+      none;
+
+    font-size:
+      clamp(
+        46px,
+        13vw,
+        62px
+      ) !important;
+
+    line-height:
+      .92 !important;
+  }
+
+
+  .booking-page
+  .contact-intro {
+    margin:
+      22px
+      0
+      28px !important;
+  }
+
+
+  .booking-page
+  .contact-links > a,
+  .booking-page
+  .contact-location {
+    min-height:
+      60px;
+  }
+
+}
