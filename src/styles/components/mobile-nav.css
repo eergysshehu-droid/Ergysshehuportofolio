@@ -1,6 +1,6 @@
 /* ============================================================
    ERGYS SHEHU — MOBILE NAV FINAL
-   FULLSCREEN / EDITORIAL / 2026
+   TRUE FULLSCREEN / AUTO-FIT / EDITORIAL
    ============================================================ */
 
 .mobile-menu-trigger,
@@ -8,11 +8,15 @@
   display: none;
 }
 
+
+/* ============================================================
+   MOBILE + TABLET
+   ============================================================ */
+
 @media (max-width: 1000px) {
 
   html {
     --mobile-nav-pad: var(--page-pad);
-    --menu-accent: var(--accent, #f2a52c);
   }
 
   html.mobile-menu-open,
@@ -23,10 +27,13 @@
 
 
   /* ==========================================================
-     CLOSED TRIGGER
+     CLOSED HEADER BUTTON
      ========================================================== */
 
   html body .mobile-menu-trigger {
+    display: grid !important;
+    place-items: center !important;
+
     position: relative !important;
 
     width: 44px !important;
@@ -38,37 +45,22 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    display: grid !important;
-    place-items: center !important;
-
-    border:
-      1px solid rgba(255,255,255,.16) !important;
-
+    border: 1px solid rgba(255,255,255,.16) !important;
     border-radius: 50% !important;
 
-    background:
-      rgba(255,255,255,.025) !important;
+    background: rgba(255,255,255,.035) !important;
 
-    color:
-      var(--header-fg) !important;
+    color: var(--header-fg) !important;
 
     cursor: pointer !important;
 
-    backdrop-filter:
-      blur(8px) !important;
-
-    -webkit-backdrop-filter:
-      blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
 
     transition:
       transform 180ms ease,
-      border-color 180ms ease,
-      background 180ms ease !important;
-  }
-
-  html body .mobile-menu-trigger:active {
-    transform:
-      scale(.92) !important;
+      background 180ms ease,
+      border-color 180ms ease !important;
   }
 
 
@@ -79,10 +71,10 @@
   html body .hamburger {
     position: relative !important;
 
+    display: block !important;
+
     width: 18px !important;
     height: 12px !important;
-
-    display: block !important;
   }
 
   html body .hamburger i {
@@ -92,8 +84,9 @@
 
     height: 1px !important;
 
-    background:
-      currentColor !important;
+    margin: 0 !important;
+
+    background: currentColor !important;
 
     border-radius: 999px !important;
   }
@@ -122,6 +115,11 @@
 
     inset: 0 !important;
 
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+
     width: auto !important;
     max-width: none !important;
 
@@ -133,3 +131,803 @@
 
     margin: 0 !important;
     padding: 0 !important;
+
+    box-sizing: border-box !important;
+
+    display: grid !important;
+
+    grid-template-rows:
+      var(--header-h)
+      minmax(0,1fr)
+      auto !important;
+
+    overflow: hidden !important;
+
+    overscroll-behavior: none !important;
+
+    color: #f4f2ed !important;
+
+    background: #040805 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    opacity: 0 !important;
+    visibility: hidden !important;
+
+    pointer-events: none !important;
+
+    transform: translate3d(0,-5px,0) !important;
+
+    transition:
+      opacity 200ms ease,
+      transform 300ms cubic-bezier(.22,1,.36,1),
+      visibility 0s linear 300ms !important;
+
+    z-index: 999999 !important;
+
+    isolation: isolate !important;
+  }
+
+
+  /* background material */
+
+  html body .mobile-menu-screen::before {
+    content: "" !important;
+
+    display: block !important;
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    z-index: 0 !important;
+
+    pointer-events: none !important;
+
+    background:
+      radial-gradient(
+        circle at 84% 0%,
+        rgba(71,103,80,.08),
+        transparent 34%
+      ),
+      linear-gradient(
+        160deg,
+        #0a120d 0%,
+        #050906 48%,
+        #020403 100%
+      ) !important;
+  }
+
+
+  html body .mobile-menu-screen.is-open {
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+
+    transform: translate3d(0,0,0) !important;
+
+    transition:
+      opacity 200ms ease,
+      transform 300ms cubic-bezier(.22,1,.36,1),
+      visibility 0s !important;
+  }
+
+
+  /* ==========================================================
+     OPEN HEADER
+     EXACT ALIGNMENT WITH NORMAL HEADER
+     ========================================================== */
+
+  html body .mobile-menu-head {
+    position: relative !important;
+
+    z-index: 2 !important;
+
+    width: 100% !important;
+
+    height: var(--header-h) !important;
+    min-height: var(--header-h) !important;
+
+    margin: 0 !important;
+
+    padding:
+      0
+      var(--mobile-nav-pad) !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    border: 0 !important;
+
+    border-bottom:
+      1px solid rgba(244,242,237,.10) !important;
+  }
+
+
+  /* ==========================================================
+     WORDMARK
+     ========================================================== */
+
+  html body .mobile-menu-brand {
+    display: inline-flex !important;
+
+    align-items: baseline !important;
+
+    gap: .4em !important;
+
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #f4f2ed !important;
+
+    font-family: var(--wordmark-font) !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: .17em !important;
+
+    white-space: nowrap !important;
+  }
+
+  html body .mobile-menu-brand-strong,
+  html body .mobile-menu-brand-light {
+    font-size: clamp(24px,1.9vw,44px) !important;
+
+    line-height: 1 !important;
+  }
+
+  html body .mobile-menu-brand-strong {
+    font-weight: 600 !important;
+  }
+
+  html body .mobile-menu-brand-light {
+    font-weight: 200 !important;
+  }
+
+
+  /* ==========================================================
+     CLOSE BUTTON
+     SAME SIZE / SAME POSITION AS HAMBURGER
+     ========================================================== */
+
+  html body .mobile-menu-close {
+    position: relative !important;
+
+    display: grid !important;
+    place-items: center !important;
+
+    width: 44px !important;
+    height: 44px !important;
+
+    min-width: 44px !important;
+    min-height: 44px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 1px solid rgba(244,242,237,.16) !important;
+    border-radius: 50% !important;
+
+    background: rgba(255,255,255,.035) !important;
+
+    color: #f4f2ed !important;
+
+    font-size: 0 !important;
+
+    cursor: pointer !important;
+
+    opacity: 1 !important;
+  }
+
+  html body .mobile-menu-close::before,
+  html body .mobile-menu-close::after {
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    width: 18px !important;
+    height: 1px !important;
+
+    background: currentColor !important;
+
+    border-radius: 999px !important;
+  }
+
+  html body .mobile-menu-close::before {
+    transform:
+      translate(-50%,-50%)
+      rotate(45deg) !important;
+  }
+
+  html body .mobile-menu-close::after {
+    transform:
+      translate(-50%,-50%)
+      rotate(-45deg) !important;
+  }
+
+  html body .mobile-menu-trigger:active,
+  html body .mobile-menu-close:active {
+    transform: scale(.92) !important;
+  }
+
+
+  /* ==========================================================
+     NAV
+     IMPORTANT:
+     NOT vertically centered anymore.
+     Starts naturally below header.
+     ========================================================== */
+
+  html body .mobile-menu-screen nav {
+    position: relative !important;
+
+    z-index: 2 !important;
+
+    align-self: start !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+
+    padding:
+      clamp(34px,6.2dvh,64px)
+      var(--mobile-nav-pad)
+      18px !important;
+
+    box-sizing: border-box !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      repeat(3,minmax(0,1fr)) !important;
+
+    grid-template-rows: none !important;
+
+    grid-auto-rows: auto !important;
+
+    align-content: start !important;
+    align-items: center !important;
+
+    column-gap:
+      clamp(12px,4vw,24px) !important;
+
+    row-gap:
+      clamp(13px,1.8dvh,18px) !important;
+
+    overflow: visible !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+  }
+
+
+  /* ==========================================================
+     PRIMARY LINKS
+     ========================================================== */
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
+    grid-column: 1 / -1 !important;
+
+    width: fit-content !important;
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      clamp(25px,7vw,34px)
+      auto !important;
+
+    align-items: baseline !important;
+
+    column-gap:
+      clamp(8px,2.4vw,12px) !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+
+    color:
+      rgba(246,244,238,.95) !important;
+
+    font-family: var(--sans) !important;
+
+    font-size:
+      clamp(
+        25px,
+        min(7.6vw,4.15dvh),
+        36px
+      ) !important;
+
+    font-weight: 300 !important;
+
+    line-height: .94 !important;
+
+    letter-spacing: -.045em !important;
+
+    text-transform: uppercase !important;
+
+    opacity: 1 !important;
+
+    transform: translate3d(0,6px,0);
+
+    transition:
+      opacity 160ms ease,
+      transform 300ms cubic-bezier(.22,1,.36,1) !important;
+  }
+
+  html body
+  .mobile-menu-screen.is-open
+  nav > a:nth-child(-n+6) {
+    transform: translate3d(0,0,0) !important;
+  }
+
+
+  /* ==========================================================
+     NUMBERS
+     ========================================================== */
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6)::before {
+    display: block !important;
+
+    align-self: center !important;
+
+    color:
+      rgba(244,242,237,.27) !important;
+
+    font-size: 8px !important;
+
+    font-weight: 500 !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: .14em !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(1)::before {
+    content: "01" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(2)::before {
+    content: "02" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(3)::before {
+    content: "03" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(4)::before {
+    content: "04" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(5)::before {
+    content: "05" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(6)::before {
+    content: "06" !important;
+  }
+
+
+  /* ==========================================================
+     ABOUT / JOURNAL / CONTACT
+     ========================================================== */
+
+  html body .mobile-menu-screen nav > a:nth-child(7),
+  html body .mobile-menu-screen nav > a:nth-child(8),
+  html body .mobile-menu-screen nav > a:nth-child(9) {
+    width: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 30px !important;
+
+    height: auto !important;
+
+    margin:
+      clamp(5px,.8dvh,8px)
+      0
+      0 !important;
+
+    padding:
+      10px
+      0
+      0 !important;
+
+    display: flex !important;
+
+    align-items: flex-start !important;
+
+    border: 0 !important;
+
+    border-top:
+      1px solid rgba(244,242,237,.10) !important;
+
+    background: transparent !important;
+
+    color:
+      rgba(244,242,237,.54) !important;
+
+    font-size: 9px !important;
+
+    font-weight: 500 !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: .18em !important;
+
+    text-transform: uppercase !important;
+
+    opacity: 1 !important;
+
+    transform: none !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(7) {
+    grid-column: 1 !important;
+    grid-row: 7 !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(8) {
+    grid-column: 2 !important;
+    grid-row: 7 !important;
+
+    justify-content: center !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(9) {
+    grid-column: 3 !important;
+    grid-row: 7 !important;
+
+    justify-content: flex-end !important;
+  }
+
+
+  /* ==========================================================
+     FOOTER — ALWAYS AT BOTTOM
+     ========================================================== */
+
+  html body .mobile-menu-footer {
+    position: relative !important;
+
+    z-index: 2 !important;
+
+    width: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 54px !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding:
+      9px
+      var(--mobile-nav-pad)
+      max(10px,env(safe-area-inset-bottom)) !important;
+
+    box-sizing: border-box !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      auto
+      minmax(0,1fr)
+      auto !important;
+
+    grid-template-areas:
+      "language social book" !important;
+
+    align-items: center !important;
+
+    column-gap:
+      clamp(6px,2vw,12px) !important;
+
+    border: 0 !important;
+
+    border-top:
+      1px solid rgba(244,242,237,.10) !important;
+  }
+
+
+  /* LANGUAGE */
+
+  html body
+  .mobile-menu-footer
+  .language-switch {
+    grid-area: language !important;
+
+    width: auto !important;
+
+    min-width: 0 !important;
+    min-height: 30px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 10px !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+  }
+
+  html body
+  .mobile-menu-footer
+  .language-switch::before {
+    display: none !important;
+
+    content: none !important;
+  }
+
+  html body
+  .mobile-menu-footer
+  .language-switch button {
+    width: auto !important;
+
+    min-width: 0 !important;
+
+    height: 30px !important;
+    min-height: 30px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+
+    color:
+      rgba(244,242,237,.38) !important;
+
+    font-size: 9px !important;
+
+    font-weight: 600 !important;
+
+    line-height: 30px !important;
+
+    letter-spacing: .12em !important;
+
+    opacity: 1 !important;
+  }
+
+  html body
+  .mobile-menu-footer
+  .language-switch
+  button.is-active {
+    color: #f4f2ed !important;
+  }
+
+
+  /* SOCIAL */
+
+  html body .mobile-footer-row {
+    display: contents !important;
+  }
+
+  html body .mobile-social {
+    grid-area: social !important;
+
+    justify-self: center !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 2px !important;
+  }
+
+  html body .mobile-social .social-link {
+    width: 29px !important;
+    height: 29px !important;
+
+    min-width: 29px !important;
+    min-height: 29px !important;
+
+    flex: 0 0 29px !important;
+
+    opacity: .56 !important;
+  }
+
+  html body .mobile-social .social-icon {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+
+  /* BOOK */
+
+  html body .mobile-book {
+    grid-area: book !important;
+
+    justify-self: end !important;
+
+    width: auto !important;
+
+    min-width: 0 !important;
+
+    height: 30px !important;
+    min-height: 30px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    color: #f4f2ed !important;
+
+    font-size: 9px !important;
+
+    font-weight: 500 !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: .14em !important;
+
+    text-transform: uppercase !important;
+
+    white-space: nowrap !important;
+  }
+}
+
+
+/* ============================================================
+   PHONE ALIGNMENT
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+  html {
+    --mobile-nav-pad: 5vw;
+  }
+
+}
+
+
+/* ============================================================
+   SHORT PHONE
+   ============================================================ */
+
+@media (max-width: 700px) and (max-height: 720px) {
+
+  html body .mobile-menu-screen nav {
+    padding-top: 18px !important;
+
+    padding-bottom: 8px !important;
+
+    row-gap: 8px !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
+    font-size:
+      clamp(
+        21px,
+        min(7vw,4dvh),
+        29px
+      ) !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(7),
+  html body .mobile-menu-screen nav > a:nth-child(8),
+  html body .mobile-menu-screen nav > a:nth-child(9) {
+    min-height: 23px !important;
+
+    margin-top: 0 !important;
+
+    padding-top: 6px !important;
+
+    font-size: 8px !important;
+  }
+
+  html body .mobile-menu-footer {
+    min-height: 43px !important;
+
+    padding-top: 5px !important;
+  }
+}
+
+
+/* ============================================================
+   NARROW PHONE
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
+    grid-template-columns:
+      23px
+      auto !important;
+
+    column-gap: 7px !important;
+
+    font-size:
+      clamp(
+        21px,
+        min(7vw,4dvh),
+        28px
+      ) !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6)::before {
+    font-size: 7px !important;
+  }
+
+  html body .mobile-menu-footer {
+    column-gap: 3px !important;
+  }
+
+  html body .mobile-social .social-link {
+    width: 27px !important;
+    height: 27px !important;
+
+    min-width: 27px !important;
+    min-height: 27px !important;
+
+    flex-basis: 27px !important;
+  }
+
+  html body .mobile-book {
+    font-size: 8px !important;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html body .mobile-menu-screen,
+  html body .mobile-menu-screen nav > a,
+  html body .mobile-menu-trigger,
+  html body .mobile-menu-close {
+    transition: none !important;
+
+    transform: none !important;
+  }
+
+}
