@@ -756,11 +756,18 @@ const breadcrumbLd = {
          <div
   class="next-project-media"
   aria-hidden="true"
-  style={
-    nextProjectPhoto
-      ? `--next-focal-point:${photoPosition(nextProjectPhoto)}`
-      : undefined
-  }
+style={
+  nextProjectPhoto
+    ? `--next-focal-point:${
+        nextAlbum?.slug ===
+        'evening-silhouettes'
+          ? '50% 24%'
+          : photoPosition(
+              nextProjectPhoto
+            )
+      }`
+    : undefined
+}
 >
             <img
               src={nextCoverUrl}
