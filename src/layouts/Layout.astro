@@ -1460,22 +1460,21 @@ if(
     );
 
 
-  /*
+   /*
    * ================================================================
    * MOBILE HOMEPAGE STACK CONTROLLER
+   * Stable scroll-linked version.
+   *
+   * Keeps:
+   * - sticky card stacking
+   * - natural image heights
+   * - dark melt as the next card covers the previous one
+   *
+   * Removes:
+   * - animated blur on sticky layers
+   * - temporal smoothing that lags behind fast scroll
+   * - ambiguous layer ordering
    * ================================================================
-   *
-   * IMPORTANT:
-   * This preserves:
-   * - sticky cards
-   * - top: 0
-   * - current blur behaviour
-   * - current darkness behaviour
-   *
-   * It only fixes:
-   * - hidden filtered cards affecting the next card calculation
-   * - stale heights after resize/orientation
-   * - filters changing visible cards without recalculation
    */
 
   const stackSection =
@@ -1509,6 +1508,14 @@ if(
     stackSection &&
     stackMedia.matches
   ){
+    const activeStackGrid =
+      stackGrid;
+
+
+    const activeStackSection =
+      stackSection;
+
+
     type StackCard = {
       card:
         HTMLElement;
@@ -1519,12 +1526,13 @@ if(
 
       height:
         number;
-
-      progress:
-        number;
     };
 
 
+    /*
+     * Small dead zone prevents the previous
+     * card darkening too early.
+     */
     const DEAD_ZONE =
       .12;
 
@@ -1548,10 +1556,14 @@ if(
       undefined;
 
 
+    let lastStackWidth =
+      window.innerWidth;
+
+
     function getVisibleCards(){
       return Array
         .from(
-          stackGrid!
+          activeStackGrid
             .querySelectorAll<HTMLElement>(
               '.project-card'
             )
@@ -1571,6 +1583,13 @@ if(
       card:
         HTMLElement
     ){
+      card
+        .style
+        .removeProperty(
+          'z-index'
+        );
+
+
       const image =
         card
           .querySelector<HTMLElement>(
@@ -1584,14 +1603,6 @@ if(
         image
           .style
           .setProperty(
-            '--stack-blur',
-            '0px'
-          );
-
-
-        image
-          .style
-          .setProperty(
             '--stack-darkness',
             '0'
           );
@@ -1599,69 +1610,15 @@ if(
     }
 
 
-    function rebuildStack(){
-      const allCards =
-        Array.from(
-          stackGrid!
-            .querySelectorAll<HTMLElement>(
-              '.project-card'
-            )
-        );
-
-
-      /*
-       * Reset cards first so a previously-visible card
-       * never keeps old blur/darkness after filtering.
-       */
-      allCards
-        .forEach(
-          clearCardState
-        );
-
-
-      const visibleCards =
-        getVisibleCards();
-
-
-      stackItems =
-        visibleCards
-          .map(
-            card=>({
-              card,
-
-              image:
-                card
-                  .querySelector<HTMLElement>(
-                    '.project-image'
-                  ),
-
-              height:
-                Math.max(
-                  1,
-                  card
-                    .getBoundingClientRect()
-                    .height
-                ),
-
-              progress:
-                0
-            })
-          );
-
-
-      scheduleStack();
-    }
-
-
     function overlapProgress(
-      next:
+      nextCard:
         HTMLElement,
 
       currentHeight:
         number
     ){
       const nextTop =
-        next
+        nextCard
           .getBoundingClientRect()
           .top;
 
@@ -1692,14 +1649,102 @@ if(
       }
 
 
+      const normalized =
+        (
+          clamped -
+          DEAD_ZONE
+        ) /
+        (
+          1 -
+          DEAD_ZONE
+        );
+
+
+      /*
+       * Spatial easing only.
+       *
+       * This is NOT animation smoothing.
+       * It follows the real scroll position immediately.
+       */
       return (
-        clamped -
-        DEAD_ZONE
-      ) /
-      (
-        1 -
-        DEAD_ZONE
+        normalized *
+        normalized *
+        (
+          3 -
+          2 *
+          normalized
+        )
       );
+    }
+
+
+    function rebuildStack(){
+      const allCards =
+        Array.from(
+          activeStackGrid
+            .querySelectorAll<HTMLElement>(
+              '.project-card'
+            )
+        );
+
+
+      allCards
+        .forEach(
+          clearCardState
+        );
+
+
+      const visibleCards =
+        getVisibleCards();
+
+
+      stackItems =
+        visibleCards
+          .map(
+            (
+              card,
+              index
+            )=>{
+
+              /*
+               * Explicit layer order.
+               *
+               * Every next card is guaranteed to paint
+               * above the previous one.
+               */
+              card
+                .style
+                .setProperty(
+                  'z-index',
+                  String(
+                    index +
+                    1
+                  )
+                );
+
+
+              return {
+                card,
+
+                image:
+                  card
+                    .querySelector<HTMLElement>(
+                      '.project-image'
+                    ),
+
+                height:
+                  Math.max(
+                    1,
+                    card
+                      .getBoundingClientRect()
+                      .height
+                  )
+              };
+            }
+          );
+
+
+      scheduleStack();
     }
 
 
@@ -1716,10 +1761,6 @@ if(
       }
 
 
-      let settled =
-        true;
-
-
       stackItems
         .forEach(
           (
@@ -1733,7 +1774,7 @@ if(
               ];
 
 
-            const target =
+            const progress =
               nextItem
                 ? overlapProgress(
                     nextItem.card,
@@ -1742,60 +1783,20 @@ if(
                 : 0;
 
 
-            const speed =
-              target >
-              item.progress
-                ? .18
-                : .42;
-
-
-            const nextProgress =
-              item.progress +
-              (
-                target -
-                item.progress
-              ) *
-              speed;
-
-
-            item.progress =
-              nextProgress;
-
-
-            if(
-              Math.abs(
-                target -
-                nextProgress
-              ) >
-              .003
-            ){
-              settled =
-                false;
-            }
-
-
             if(
               item.image
             ){
-              item.image
-                .style
-                .setProperty(
-                  '--stack-blur',
-                  (
-                    nextProgress *
-                    3.5
-                  ).toFixed(
-                    2
-                  ) +
-                  'px'
-                );
-
-
+              /*
+               * Scroll position -> visual state directly.
+               *
+               * No .18 / .42 interpolation.
+               * No trailing animation after fast scroll.
+               */
               item.image
                 .style
                 .setProperty(
                   '--stack-darkness',
-                  nextProgress
+                  progress
                     .toFixed(
                       3
                     )
@@ -1803,16 +1804,6 @@ if(
             }
           }
         );
-
-
-      if(
-        !settled
-      ){
-        stackRaf =
-          requestAnimationFrame(
-            updateStack
-          );
-      }
     }
 
 
@@ -1831,8 +1822,7 @@ if(
         );
     }
 
-let lastStackWidth =
-  window.innerWidth;
+
     function scheduleRebuild(){
       if(
         resizeRaf !==
@@ -1885,16 +1875,17 @@ let lastStackWidth =
               }
             );
         },
+
         {
           rootMargin:
-            '100px 0px'
+            '120px 0px'
         }
       );
 
 
     stackObserver
       .observe(
-        stackSection
+        activeStackSection
       );
 
 
@@ -1908,6 +1899,7 @@ let lastStackWidth =
             scheduleStack();
           }
         },
+
         {
           passive:
             true
@@ -1916,8 +1908,8 @@ let lastStackWidth =
 
 
     /*
-     * A filter button will dispatch this after changing
-     * which cards are hidden.
+     * Project filters change which cards participate
+     * in the stack.
      */
     document
       .addEventListener(
@@ -1926,68 +1918,72 @@ let lastStackWidth =
       );
 
 
-  window
-  .addEventListener(
-    'resize',
-    ()=>{
-      const nextWidth =
-        window.innerWidth;
+    /*
+     * Mobile browser chrome often changes viewport HEIGHT
+     * while scrolling.
+     *
+     * That must NOT rebuild the sticky geometry.
+     *
+     * Rebuild only when WIDTH actually changes.
+     */
+    window
+      .addEventListener(
+        'resize',
+        ()=>{
+          const nextWidth =
+            window.innerWidth;
 
 
-      /*
-       * Mobile browsers frequently change viewport HEIGHT
-       * while the address bar appears/disappears during scroll.
-       *
-       * Rebuilding sticky card geometry for those height-only
-       * changes creates visible jumps in the stack.
-       *
-       * Only rebuild when the viewport WIDTH actually changes.
-       */
-      if(
-        Math.abs(
-          nextWidth -
-          lastStackWidth
-        ) <
-        2
-      ){
-        return;
-      }
+          if(
+            Math.abs(
+              nextWidth -
+              lastStackWidth
+            ) <
+            2
+          ){
+            return;
+          }
 
 
-      lastStackWidth =
-        nextWidth;
+          lastStackWidth =
+            nextWidth;
 
 
-      scheduleRebuild();
-    },
-    {
-      passive:
-        true
-    }
-  );
+          scheduleRebuild();
+        },
+
+        {
+          passive:
+            true
+        }
+      );
 
 
     window
       .addEventListener(
         'orientationchange',
         ()=>{
-          /*
-           * Orientation dimensions are not always final
-           * on the very first event frame.
-           */
           window
             .setTimeout(
-              scheduleRebuild,
-              120
+              ()=>{
+                lastStackWidth =
+                  window.innerWidth;
+
+
+                scheduleRebuild();
+              },
+
+              160
             );
         }
       );
 
 
     /*
-     * Image decoding can change the real card height.
+     * Image decoding may change the natural
+     * height of a card.
      */
-    stackGrid
+    activeStackGrid
       .querySelectorAll<HTMLImageElement>(
         '.project-card img'
       )
@@ -2004,6 +2000,7 @@ let lastStackWidth =
             .addEventListener(
               'load',
               scheduleRebuild,
+
               {
                 once:
                   true
