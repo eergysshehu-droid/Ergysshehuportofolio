@@ -719,20 +719,35 @@ const webPageLd = {
   aria-label="Navigation"
   aria-hidden="true"
 >
-  <div class="mobile-menu-head">
-    <a
-      class="mobile-menu-brand"
-      href={href('/')}
-      aria-label={name + ' home'}
-    >
-      <span class="mobile-menu-brand-strong">
-        ERGYS
-      </span>
+  <div
+    class="mobile-menu-atmosphere"
+    aria-hidden="true"
+  ></div>
 
-      <span class="mobile-menu-brand-light">
-        SHEHU
+  <div class="mobile-menu-head">
+    <div class="mobile-menu-head-copy">
+      <a
+        class="mobile-menu-brand"
+        href={href('/')}
+        aria-label={name + ' home'}
+      >
+        <span class="mobile-menu-brand-strong">
+          ERGYS
+        </span>
+
+        <span class="mobile-menu-brand-light">
+          SHEHU
+        </span>
+      </a>
+
+      <span
+        class="mobile-menu-tagline"
+        data-en="VISUAL STORIES FOR A TIMELESS WORLD"
+        data-sq="HISTORI VIZUALE PËRTEJ KOHËS"
+      >
+        VISUAL STORIES FOR A TIMELESS WORLD
       </span>
-    </a>
+    </div>
 
     <button
       type="button"
@@ -746,79 +761,128 @@ const webPageLd = {
     </button>
   </div>
 
-  <nav aria-label="Mobile navigation">
-    <a
-      href={href('/#selected')}
-      data-en="Photography"
-      data-sq="Fotografi"
+  <div class="mobile-menu-content">
+    <nav
+      class="mobile-menu-primary"
+      aria-label="Mobile navigation"
     >
-      Photography
-    </a>
+      <a href={href('/#selected')}>
+        <span class="mobile-menu-number">01</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Photography"
+          data-sq="Fotografi"
+        >
+          Photography
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <a
-      href={href('/fashion/')}
-      data-en="Fashion"
-      data-sq="Modë"
-    >
-      Fashion
-    </a>
+      <a href={href('/fashion/')}>
+        <span class="mobile-menu-number">02</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Fashion"
+          data-sq="Modë"
+        >
+          Fashion
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <a
-      href={href('/portraits/')}
-      data-en="Portraits"
-      data-sq="Portrete"
-    >
-      Portraits
-    </a>
+      <a href={href('/portraits/')}>
+        <span class="mobile-menu-number">03</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Portraits"
+          data-sq="Portrete"
+        >
+          Portraits
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <a
-      href={href('/weddings/')}
-      data-en="Weddings"
-      data-sq="Dasma"
-    >
-      Weddings
-    </a>
+      <a href={href('/weddings/')}>
+        <span class="mobile-menu-number">04</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Weddings"
+          data-sq="Dasma"
+        >
+          Weddings
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <a
-      href={href('/films/')}
-      data-en="Motion"
-      data-sq="Video"
-    >
-      Motion
-    </a>
+      <a href={href('/films/')}>
+        <span class="mobile-menu-number">05</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Motion"
+          data-sq="Video"
+        >
+          Motion
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
 
-    <a
-      href={href('/projects/')}
-      data-en="Index"
-      data-sq="Indeksi"
-    >
-      Index
-    </a>
+      <a href={href('/projects/')}>
+        <span class="mobile-menu-number">06</span>
+        <span
+          class="mobile-menu-label"
+          data-en="Index"
+          data-sq="Indeksi"
+        >
+          Index
+        </span>
+        <span class="mobile-menu-arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
 
-    <a
-      href={href('/about/')}
-      data-en="About"
-      data-sq="Rreth"
+    <nav
+      class="mobile-menu-secondary"
+      aria-label="Secondary navigation"
     >
-      About
-    </a>
+      <a
+        href={href('/about/')}
+        data-en="About"
+        data-sq="Rreth"
+      >
+        About
+      </a>
 
-    <a
-      href={href('/journal/')}
-      data-en="Journal"
-      data-sq="Ditari"
-    >
-      Journal
-    </a>
+      <span aria-hidden="true"></span>
 
-    <a
-      href={href('/book/#contact')}
-      data-en="Contact"
-      data-sq="Kontakt"
-    >
-      Contact
-    </a>
-  </nav>
+      <a
+        href={href('/journal/')}
+        data-en="Journal"
+        data-sq="Ditari"
+      >
+        Journal
+      </a>
+
+      <span aria-hidden="true"></span>
+
+      <a
+        href={href('/book/#contact')}
+        data-en="Contact"
+        data-sq="Kontakt"
+      >
+        Contact
+      </a>
+    </nav>
+
+    <div class="mobile-menu-statement">
+      <span
+        data-en="Stories made to stay."
+        data-sq="Histori që mbeten."
+      >
+        Stories made to stay.
+      </span>
+
+      <i aria-hidden="true"></i>
+    </div>
+  </div>
 
   <div class="mobile-menu-footer">
     <div
@@ -840,6 +904,13 @@ const webPageLd = {
       >
         EN
       </button>
+
+      <span
+        class="mobile-language-divider"
+        aria-hidden="true"
+      >
+        /
+      </span>
 
       <button
         type="button"
@@ -865,10 +936,17 @@ const webPageLd = {
     <a
       class="mobile-book"
       href={href('/book/#contact')}
-      data-en="Book now ↗"
-      data-sq="Rezervo ↗"
     >
-      Book now ↗
+      <span
+        data-en="Book now"
+        data-sq="Rezervo"
+      >
+        Book now
+      </span>
+
+      <span aria-hidden="true">
+        →
+      </span>
     </a>
   </div>
 </div>
@@ -2021,4 +2099,5 @@ if(
 
 </body>
 </html>
+
 
