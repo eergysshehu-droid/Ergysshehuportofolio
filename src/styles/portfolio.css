@@ -810,7 +810,23 @@ footer>a:last-child{justify-self:end}
      own GPU compositing layer without an actual transform value, so it
      survives the .motion-ready rule below that forces transform:none
      (needed to stop sticky getting stuck — see that rule's comment). */
-  body.is-home .project-card{position:sticky;top:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  body.is-home
+.project-card {
+  position:
+    sticky;
+
+  top:
+    0;
+
+  isolation:
+    isolate;
+
+  -webkit-backface-visibility:
+    hidden;
+
+  backface-visibility:
+    hidden;
+}
   .project-card a{display:block;width:100%}
   .project-feature .project-image{aspect-ratio:auto}
   .project-image{width:100%}
@@ -848,11 +864,32 @@ footer>a:last-child{justify-self:end}
      looking "lost" the moment the next card appears. */
   .motion-ready body.is-home .project-card{--stack-blur:0px;--stack-darkness:0}
   .motion-ready body.is-home .project-card .project-image{background:#050505}
-  .motion-ready body.is-home .project-card .project-image img{
-    filter:blur(var(--stack-blur,0px));
-    transition:none;
-    will-change:filter;
-  }
+  .motion-ready body.is-home
+.project-card
+.project-image img {
+  filter:
+    blur(
+      var(
+        --stack-blur,
+        0px
+      )
+    );
+
+  transition:
+    none;
+
+  will-change:
+    filter;
+
+  -webkit-backface-visibility:
+    hidden;
+
+  backface-visibility:
+    hidden;
+
+  transform:
+    translateZ(0);
+}
   .motion-ready body.is-home .project-card .project-image::after{
     content:'';
     position:absolute;
