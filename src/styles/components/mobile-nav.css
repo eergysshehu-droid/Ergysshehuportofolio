@@ -1,8 +1,9 @@
 /* ============================================================
-   ERGYS SHEHU — PREMIUM MOBILE NAV
+   ERGYS SHEHU — MOBILE NAV 2026
+   Full-screen / auto-fit / editorial / minimal
    ============================================================ */
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
 
   html.mobile-menu-open,
   html.mobile-menu-open body {
@@ -13,54 +14,66 @@
   html.mobile-menu-open body .site-header {
     transform: none !important;
     will-change: auto !important;
-    contain: none !important;
     overflow: visible !important;
+    contain: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
 
-  /* ------------------------------------------------------------
-     FULL SCREEN
-     ------------------------------------------------------------ */
+  /* ==========================================================
+     FULL VIEWPORT
+     ========================================================== */
 
   html body .mobile-menu-screen {
     position: fixed !important;
     inset: 0 !important;
 
     width: 100vw !important;
+    max-width: none !important;
+
     height: 100vh !important;
-    height: 100svh !important;
+    height: 100dvh !important;
 
-    min-height: 100svh !important;
-    max-height: 100svh !important;
-
-    box-sizing: border-box !important;
+    min-height: 0 !important;
+    max-height: 100dvh !important;
 
     margin: 0 !important;
 
     padding:
       max(16px, env(safe-area-inset-top))
-      20px
+      clamp(18px, 5vw, 36px)
       max(14px, env(safe-area-inset-bottom)) !important;
+
+    box-sizing: border-box !important;
 
     display: grid !important;
 
     grid-template-rows:
-      54px
+      auto
       minmax(0, 1fr)
-      52px !important;
-
-    background:
-      linear-gradient(
-        155deg,
-        rgba(13, 30, 20, .98) 0%,
-        rgba(5, 13, 9, .995) 48%,
-        rgba(3, 7, 5, 1) 100%
-      ) !important;
-
-    color: #f5f4ef !important;
+      auto !important;
 
     overflow: hidden !important;
+
+    color: #f4f2ed !important;
+
+    background:
+      radial-gradient(
+        circle at 88% 4%,
+        rgba(78, 105, 83, .10),
+        transparent 34%
+      ),
+      linear-gradient(
+        160deg,
+        #0b120d 0%,
+        #060a07 52%,
+        #020403 100%
+      ) !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
 
     opacity: 0;
     visibility: hidden;
@@ -89,39 +102,48 @@
       visibility 0s !important;
   }
 
-  /* ------------------------------------------------------------
-     HEADER
-     ------------------------------------------------------------ */
+  /* ==========================================================
+     TOP
+     ========================================================== */
 
   html body .mobile-menu-head {
     width: 100% !important;
-    height: 54px !important;
+
     min-height: 54px !important;
 
+    margin: 0 !important;
+
+    padding: 0 0 15px !important;
+
     display: flex !important;
-    align-items: flex-start !important;
+    align-items: center !important;
     justify-content: space-between !important;
 
-    padding: 2px 0 12px !important;
-
     border-bottom:
-      1px solid rgba(255, 255, 255, .11) !important;
+      1px solid rgba(244, 242, 237, .12) !important;
   }
 
   html body .mobile-menu-brand {
     display: inline-flex !important;
     align-items: baseline !important;
 
-    gap: .32em !important;
+    gap: .34em !important;
 
-    color: #f5f4ef !important;
+    color: #f4f2ed !important;
 
     line-height: 1 !important;
+
+    letter-spacing: .035em !important;
   }
 
   html body .mobile-menu-brand-strong,
   html body .mobile-menu-brand-light {
-    font-size: 20px !important;
+    font-size:
+      clamp(
+        19px,
+        5.3vw,
+        23px
+      ) !important;
 
     line-height: 1 !important;
 
@@ -137,13 +159,13 @@
   }
 
   html body .mobile-menu-close {
-    width: 38px !important;
-    height: 38px !important;
+    width: 42px !important;
+    height: 42px !important;
 
-    min-width: 38px !important;
-    min-height: 38px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
 
-    margin: -7px -7px 0 0 !important;
+    margin-right: -8px !important;
 
     padding: 0 !important;
 
@@ -151,31 +173,44 @@
     place-items: center !important;
 
     border: 0 !important;
+
     background: transparent !important;
 
-    color: rgba(255,255,255,.8) !important;
+    color: rgba(244, 242, 237, .78) !important;
 
     font-size: 22px !important;
     font-weight: 200 !important;
+
     line-height: 1 !important;
 
     opacity: 1 !important;
+
+    transition:
+      transform 220ms cubic-bezier(.22, 1, .36, 1),
+      opacity 180ms ease !important;
   }
 
-  /* ------------------------------------------------------------
-     NAVIGATION
-     ------------------------------------------------------------ */
+  html body .mobile-menu-close:active {
+    transform: rotate(8deg) scale(.9) !important;
+    opacity: .55 !important;
+  }
+
+  /* ==========================================================
+     NAV
+     ========================================================== */
 
   html body .mobile-menu-screen nav {
     width: 100% !important;
+    height: 100% !important;
+
     min-height: 0 !important;
 
     margin: 0 !important;
 
     padding:
-      clamp(22px, 4svh, 38px)
+      clamp(20px, 4dvh, 40px)
       0
-      10px !important;
+      clamp(12px, 2.5dvh, 24px) !important;
 
     display: grid !important;
 
@@ -189,10 +224,14 @@
     align-content: center !important;
     align-items: center !important;
 
-    row-gap:
-      clamp(14px, 2.4svh, 24px) !important;
-
     column-gap: 18px !important;
+
+    row-gap:
+      clamp(
+        10px,
+        1.9dvh,
+        19px
+      ) !important;
 
     overflow: hidden !important;
 
@@ -200,7 +239,9 @@
     background: transparent !important;
   }
 
-  /* Main links */
+  /* ==========================================================
+     PRIMARY LINKS 01–06
+     ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
     grid-column: 1 / -1 !important;
@@ -213,70 +254,167 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    display: block !important;
+    display: grid !important;
+
+    grid-template-columns:
+      34px
+      auto !important;
+
+    align-items: baseline !important;
+
+    column-gap: 10px !important;
 
     border: 0 !important;
 
-    color: rgba(247, 246, 240, .93) !important;
     background: transparent !important;
+
+    color: rgba(246, 244, 238, .95) !important;
+
+    font-family: var(--sans) !important;
 
     font-size:
       clamp(
-        29px,
-        8.8vw,
+        27px,
+        min(8.5vw, 4.7dvh),
         42px
       ) !important;
 
-    font-weight: 200 !important;
+    font-weight: 300 !important;
 
-    line-height: .93 !important;
+    line-height: .92 !important;
 
-    letter-spacing: -.045em !important;
+    letter-spacing: -.05em !important;
 
     text-transform: uppercase !important;
 
     opacity: 1 !important;
 
+    position: relative !important;
+
+    transform: translate3d(0, 9px, 0);
+
     transition:
       opacity 180ms ease,
-      transform 240ms cubic-bezier(.22, 1, .36, 1) !important;
+      transform 360ms cubic-bezier(.22, 1, .36, 1) !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(-n+6)::before {
+    display: block !important;
+
+    align-self: center !important;
+
+    margin-top: .3em !important;
+
+    color: rgba(244, 242, 237, .34) !important;
+
+    font-size: 8px !important;
+    font-weight: 500 !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: .15em !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(1)::before {
+    content: "01" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(2)::before {
+    content: "02" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(3)::before {
+    content: "03" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(4)::before {
+    content: "04" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(5)::before {
+    content: "05" !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(6)::before {
+    content: "06" !important;
+  }
+
+  html body
+  .mobile-menu[open]
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(1) {
+    transition-delay: 30ms !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(2) {
+    transition-delay: 55ms !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(3) {
+    transition-delay: 80ms !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(4) {
+    transition-delay: 105ms !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(5) {
+    transition-delay: 130ms !important;
+  }
+
+  html body .mobile-menu[open] nav > a:nth-child(6) {
+    transition-delay: 155ms !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6):active {
-    opacity: .58 !important;
-    transform: translateX(5px) !important;
+    opacity: .48 !important;
+
+    transform:
+      translate3d(
+        5px,
+        0,
+        0
+      ) !important;
   }
 
-  /* About / Journal / Contact */
+  /* ==========================================================
+     ABOUT / JOURNAL / CONTACT
+     ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(7),
   html body .mobile-menu-screen nav > a:nth-child(8),
   html body .mobile-menu-screen nav > a:nth-child(9) {
     width: 100% !important;
 
-    min-height: 32px !important;
-    height: 32px !important;
+    min-height: 34px !important;
+    height: 34px !important;
 
     margin:
-      clamp(4px, 1svh, 10px)
+      clamp(5px, 1dvh, 10px)
       0
       0 !important;
 
     padding: 12px 0 0 !important;
 
     display: flex !important;
+
     align-items: flex-start !important;
 
+    border: 0 !important;
+
     border-top:
-      1px solid rgba(255,255,255,.10) !important;
+      1px solid rgba(244, 242, 237, .12) !important;
 
-    border-bottom: 0 !important;
-
-    color: rgba(247, 246, 240, .68) !important;
     background: transparent !important;
 
+    color: rgba(244, 242, 237, .55) !important;
+
     font-size: 9px !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
 
     line-height: 1 !important;
 
@@ -285,6 +423,10 @@
     text-transform: uppercase !important;
 
     opacity: 1 !important;
+
+    position: static !important;
+
+    transform: none !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(7) {
@@ -299,25 +441,24 @@
     grid-column: 3 !important;
   }
 
-  /* ------------------------------------------------------------
-     FOOTER BAR
-     ------------------------------------------------------------ */
+  /* ==========================================================
+     BOTTOM
+     ========================================================== */
 
   html body .mobile-menu-footer {
     width: 100% !important;
 
-    height: 52px !important;
-    min-height: 52px !important;
+    min-height: 48px !important;
 
     margin: 0 !important;
 
-    padding: 9px 0 0 !important;
+    padding: 10px 0 0 !important;
 
     display: grid !important;
 
     grid-template-columns:
       auto
-      1fr
+      minmax(0, 1fr)
       auto !important;
 
     grid-template-areas:
@@ -325,61 +466,84 @@
 
     align-items: center !important;
 
-    column-gap: 12px !important;
+    column-gap: 10px !important;
+
+    row-gap: 0 !important;
+
+    border: 0 !important;
 
     border-top:
-      1px solid rgba(255,255,255,.10) !important;
+      1px solid rgba(244, 242, 237, .12) !important;
   }
 
-  /* Language */
+  /* LANGUAGE */
 
   html body .mobile-menu-footer .language-switch {
     grid-area: language !important;
 
     width: auto !important;
-    height: 32px !important;
 
-    min-height: 32px !important;
+    min-height: 30px !important;
 
     margin: 0 !important;
 
-    padding: 2px !important;
+    padding: 0 !important;
 
     display: flex !important;
 
-    border:
-      1px solid rgba(255,255,255,.16) !important;
+    align-items: center !important;
 
-    border-radius: 6px !important;
+    gap: 10px !important;
 
-    background:
-      rgba(255,255,255,.025) !important;
+    border: 0 !important;
+
+    background: transparent !important;
+  }
+
+  html body .mobile-menu-footer .language-switch::before {
+    display: none !important;
+    content: none !important;
   }
 
   html body .mobile-menu-footer .language-switch button {
-    width: 31px !important;
-    height: 26px !important;
+    width: auto !important;
+    min-width: 0 !important;
 
-    min-width: 31px !important;
-    min-height: 26px !important;
+    height: 30px !important;
+    min-height: 30px !important;
 
     padding: 0 !important;
 
-    border-radius: 4px !important;
+    border: 0 !important;
+
+    background: transparent !important;
+
+    color: rgba(244, 242, 237, .42) !important;
 
     font-size: 9px !important;
-    line-height: 26px !important;
+    font-weight: 600 !important;
 
-    letter-spacing: .08em !important;
+    line-height: 30px !important;
+
+    letter-spacing: .12em !important;
+
+    opacity: 1 !important;
   }
 
-  /* Existing wrapper disappears into footer grid */
+  html body
+  .mobile-menu-footer
+  .language-switch
+  button.is-active {
+    color: #f4f2ed !important;
+  }
+
+  /* Existing wrapper becomes part of bottom grid */
 
   html body .mobile-footer-row {
     display: contents !important;
   }
 
-  /* Social */
+  /* SOCIAL */
 
   html body .mobile-social {
     grid-area: social !important;
@@ -387,9 +551,10 @@
     justify-self: center !important;
 
     display: flex !important;
+
     align-items: center !important;
 
-    gap: 5px !important;
+    gap: 3px !important;
   }
 
   html body .mobile-social .social-link {
@@ -400,6 +565,8 @@
     min-height: 30px !important;
 
     flex: 0 0 30px !important;
+
+    opacity: .62 !important;
   }
 
   html body .mobile-social .social-icon {
@@ -407,7 +574,7 @@
     height: 13px !important;
   }
 
-  /* Book */
+  /* BOOK */
 
   html body .mobile-book {
     grid-area: book !important;
@@ -417,25 +584,26 @@
     width: auto !important;
 
     min-width: 0 !important;
-    min-height: 30px !important;
 
-    height: 30px !important;
+    height: 32px !important;
+    min-height: 32px !important;
 
     margin: 0 !important;
 
-    padding: 0 2px !important;
+    padding: 0 !important;
 
-    display: flex !important;
+    display: inline-flex !important;
+
     align-items: center !important;
 
-    color: rgba(247,246,240,.9) !important;
+    color: #f4f2ed !important;
 
     font-size: 9px !important;
     font-weight: 500 !important;
 
     line-height: 1 !important;
 
-    letter-spacing: .14em !important;
+    letter-spacing: .15em !important;
 
     text-transform: uppercase !important;
 
@@ -449,21 +617,12 @@
 
 
 /* ============================================================
-   SHORT PHONE SAFETY
+   SHORT SCREENS
    ============================================================ */
 
-@media (
-  max-width: 700px
-) and (
-  max-height: 720px
-) {
+@media (max-width: 700px) and (max-height: 700px) {
 
   html body .mobile-menu-screen {
-    grid-template-rows:
-      48px
-      minmax(0, 1fr)
-      46px !important;
-
     padding-top:
       max(10px, env(safe-area-inset-top)) !important;
 
@@ -472,37 +631,108 @@
   }
 
   html body .mobile-menu-head {
-    height: 48px !important;
-    min-height: 48px !important;
+    min-height: 46px !important;
+
+    padding-bottom: 10px !important;
   }
 
   html body .mobile-menu-screen nav {
-    padding: 12px 0 6px !important;
+    padding: 10px 0 7px !important;
 
     row-gap:
-      clamp(8px, 1.65svh, 13px) !important;
+      clamp(
+        7px,
+        1.3dvh,
+        11px
+      ) !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
     font-size:
       clamp(
-        25px,
-        7.8vw,
-        34px
+        24px,
+        min(7.8vw, 4.5dvh),
+        31px
       ) !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(7),
   html body .mobile-menu-screen nav > a:nth-child(8),
   html body .mobile-menu-screen nav > a:nth-child(9) {
+    min-height: 27px !important;
+    height: 27px !important;
+
     margin-top: 2px !important;
+
     padding-top: 8px !important;
+
+    font-size: 8px !important;
   }
 
   html body .mobile-menu-footer {
-    height: 46px !important;
-    min-height: 46px !important;
+    min-height: 42px !important;
 
     padding-top: 6px !important;
+  }
+}
+
+
+/* ============================================================
+   VERY NARROW PHONES
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+  html body .mobile-menu-screen {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(-n+6) {
+    grid-template-columns:
+      28px
+      auto !important;
+
+    column-gap: 8px !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(-n+6)::before {
+    font-size: 7px !important;
+  }
+
+  html body .mobile-menu-footer {
+    column-gap: 5px !important;
+  }
+
+  html body .mobile-social {
+    gap: 0 !important;
+  }
+
+  html body .mobile-social .social-link {
+    width: 27px !important;
+    height: 27px !important;
+
+    min-width: 27px !important;
+    min-height: 27px !important;
+
+    flex-basis: 27px !important;
+  }
+
+  html body .mobile-book {
+    font-size: 8px !important;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html body .mobile-menu-screen,
+  html body .mobile-menu-screen nav > a {
+    transition: none !important;
+    transform: none !important;
   }
 }
