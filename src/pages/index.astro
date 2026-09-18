@@ -2322,50 +2322,72 @@ const homeDescription =
     }
 
 
-    function playHeroProgress(){
-      if(
-        !heroProgress ||
-        reducedMotion.matches ||
-        heroFrameEls.length <
-          2
-      ){
-        return;
+function playHeroProgress(){
+
+  if(
+    !heroProgress ||
+    heroFrameEls.length < 2
+  ){
+    return;
+  }
+
+
+  heroProgressAnim
+    ?.cancel();
+
+
+  heroProgress.style.transformOrigin =
+    'left center';
+
+
+  /*
+   * Reduced motion:
+   * keep the progress line visible,
+   * but do not animate it.
+   */
+  if(
+    reducedMotion.matches
+  ){
+    heroProgress.style.transform =
+      'scaleX(1)';
+
+    return;
+  }
+
+
+  /*
+   * Always reset before starting
+   * a fresh 7 second progress cycle.
+   */
+  heroProgress.style.transform =
+    'scaleX(0)';
+
+
+  heroProgressAnim =
+    heroProgress.animate(
+      [
+        {
+          transform:
+            'scaleX(0)'
+        },
+
+        {
+          transform:
+            'scaleX(1)'
+        }
+      ],
+      {
+        duration:
+          7000,
+
+        easing:
+          'linear',
+
+        fill:
+          'forwards'
       }
-
-
-      heroProgressAnim
-        ?.cancel();
-
-
-      heroProgressAnim =
-        heroProgress.animate(
-          [
-            {
-              transform:
-                'scaleX(0)',
-              transformOrigin:
-                'left center'
-            },
-
-            {
-              transform:
-                'scaleX(1)',
-              transformOrigin:
-                'left center'
-            }
-          ],
-          {
-            duration:
-              7000,
-
-            easing:
-              'linear',
-
-            fill:
-              'forwards'
-          }
-        );
-    }
+    );
+}
 
 
     function stopHeroTimer(){
