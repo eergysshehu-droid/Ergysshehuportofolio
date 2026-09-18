@@ -362,17 +362,4 @@ footer [data-reveal] {
 }
 
 
-@media (min-width: 701px) {
-
-  html body footer {
-    padding-top:
-      30px !important;
-
-    padding-bottom:
-      24px !important;
-
-    row-gap:
-      20px !important;
-  }
-
-}
+src/styles/components/footer.css
