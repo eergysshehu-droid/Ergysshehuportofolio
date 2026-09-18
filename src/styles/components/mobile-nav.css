@@ -1,9 +1,13 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE MENU
-   EDITORIAL INDEX
+   ERGYS SHEHU — MOBILE NAV
+   COMPACT EDITORIAL INDEX
    ============================================================ */
 
 @media (max-width: 700px) {
+
+  /* ==========================================================
+     SCREEN
+     ========================================================== */
 
   html body
   .mobile-menu-screen {
@@ -27,22 +31,31 @@
 
     padding:
       max(
-        14px,
+        18px,
         env(safe-area-inset-top)
       )
       20px
       max(
-        14px,
+        18px,
         env(safe-area-inset-bottom)
       ) !important;
 
     display:
       grid !important;
 
+    /*
+     * IMPORTANT:
+     * Footer no longer gets pushed
+     * to the bottom of the viewport.
+     */
     grid-template-rows:
       auto
-      minmax(0, 1fr)
-      auto !important;
+      auto
+      auto
+      1fr !important;
+
+    align-content:
+      start !important;
 
     overflow:
       hidden !important;
@@ -51,38 +64,15 @@
       none !important;
 
     color:
-      #f3f0e8 !important;
+      #f3f1e9 !important;
 
     background:
-      radial-gradient(
-        circle
-        at
-        84%
-        10%,
-        rgba(
-          82,
-          108,
-          84,
-          .10
-        ),
-        transparent
-        30%
-      ),
-      radial-gradient(
-        circle
-        at
-        6%
-        86%,
-        rgba(
-          50,
-          75,
-          52,
-          .07
-        ),
-        transparent
-        34%
-      ),
-      #050805 !important;
+      linear-gradient(
+        155deg,
+        #0a0f0b 0%,
+        #060906 48%,
+        #030503 100%
+      ) !important;
 
     border:
       0 !important;
@@ -94,12 +84,12 @@
       none !important;
 
     backdrop-filter:
-      blur(26px)
-      saturate(105%) !important;
+      blur(30px)
+      saturate(108%) !important;
 
     -webkit-backdrop-filter:
-      blur(26px)
-      saturate(105%) !important;
+      blur(30px)
+      saturate(108%) !important;
   }
 
 
@@ -117,26 +107,29 @@
     pointer-events:
       none;
 
-    opacity:
-      .35 !important;
-
     background:
-      linear-gradient(
-        120deg,
+      radial-gradient(
+        circle
+        at
+        88%
+        2%,
         rgba(
-          255,
-          255,
-          255,
-          .018
+          100,
+          125,
+          102,
+          .07
         ),
         transparent
-        28%
-      ) !important;
+        30%
+      );
+
+    opacity:
+      1 !important;
   }
 
 
   /* ==========================================================
-     TOP
+     HEADER
      ========================================================== */
 
   html body
@@ -151,10 +144,12 @@
       100% !important;
 
     min-height:
-      46px !important;
+      48px !important;
 
     padding:
-      0 !important;
+      0
+      0
+      16px !important;
 
     display:
       flex !important;
@@ -165,8 +160,14 @@
     justify-content:
       space-between !important;
 
-    border:
-      0 !important;
+    border-bottom:
+      1px solid
+      rgba(
+        243,
+        241,
+        233,
+        .11
+      ) !important;
   }
 
 
@@ -188,17 +189,13 @@
   html body
   .mobile-menu-brand-light {
     font-size:
-      clamp(
-        21px,
-        6vw,
-        25px
-      ) !important;
+      21px !important;
 
     line-height:
       1 !important;
 
     letter-spacing:
-      .055em !important;
+      .06em !important;
   }
 
 
@@ -219,16 +216,16 @@
   html body
   .mobile-menu-close {
     width:
-      36px !important;
+      34px !important;
 
     height:
-      36px !important;
+      34px !important;
 
     min-width:
-      36px !important;
+      34px !important;
 
     min-height:
-      36px !important;
+      34px !important;
 
     padding:
       0 !important;
@@ -248,13 +245,13 @@
     color:
       rgba(
         243,
-        240,
-        232,
-        .7
+        241,
+        233,
+        .62
       ) !important;
 
     font-size:
-      22px !important;
+      20px !important;
 
     font-weight:
       200;
@@ -267,40 +264,8 @@
   }
 
 
-  /* small editorial mark */
-
-  html body
-  .mobile-menu-head::after {
-    content:
-      "";
-
-    position:
-      absolute;
-
-    left:
-      0;
-
-    bottom:
-      -10px;
-
-    width:
-      42px;
-
-    height:
-      1px;
-
-    background:
-      rgba(
-        243,
-        240,
-        232,
-        .28
-      );
-  }
-
-
   /* ==========================================================
-     EDITORIAL INDEX
+     MAIN NAV
      ========================================================== */
 
   html body
@@ -324,11 +289,7 @@
       0 !important;
 
     padding:
-      clamp(
-        46px,
-        7dvh,
-        70px
-      )
+      28px
       0
       20px !important;
 
@@ -337,28 +298,24 @@
 
     grid-template-columns:
       repeat(
-        6,
+        2,
         minmax(
           0,
           1fr
         )
       ) !important;
 
+    column-gap:
+      26px !important;
+
+    row-gap:
+      0 !important;
+
     align-content:
       start !important;
 
-    column-gap:
-      16px !important;
-
-    row-gap:
-      clamp(
-        19px,
-        2.8dvh,
-        28px
-      ) !important;
-
     overflow:
-      hidden !important;
+      visible !important;
 
     border:
       0 !important;
@@ -368,45 +325,51 @@
   }
 
 
-  /*
-   * FIRST SIX:
-   * actual portfolio index
-   */
+  /* ==========================================================
+     PRIMARY — FIRST SIX
+     ========================================================== */
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(-n+6) {
+  nav >
+  a:nth-child(-n+6) {
     position:
       relative;
 
-    grid-column:
-      span 3;
-
     width:
-      auto !important;
+      100% !important;
 
     min-width:
-      0;
+      0 !important;
 
     min-height:
-      58px !important;
+      72px !important;
 
     margin:
       0 !important;
 
     padding:
-      15px
+      23px
       0
-      0 !important;
+      12px !important;
 
     display:
       flex !important;
 
     align-items:
-      flex-start !important;
+      center !important;
 
     border:
       0 !important;
+
+    border-bottom:
+      1px solid
+      rgba(
+        243,
+        241,
+        233,
+        .075
+      ) !important;
 
     background:
       transparent !important;
@@ -414,29 +377,33 @@
     color:
       rgba(
         247,
-        244,
-        236,
+        245,
+        238,
         .94
       ) !important;
 
+    /*
+     * THIS is the important change:
+     * no giant serif anymore.
+     */
     font-family:
-      var(--serif) !important;
+      var(--sans) !important;
 
     font-size:
       clamp(
-        29px,
-        8.6vw,
-        40px
+        21px,
+        6.2vw,
+        27px
       ) !important;
 
     font-weight:
-      400 !important;
+      300 !important;
 
     line-height:
-      .91 !important;
+      .98 !important;
 
     letter-spacing:
-      -.045em !important;
+      -.035em !important;
 
     text-transform:
       none !important;
@@ -449,21 +416,20 @@
   }
 
 
-  /*
-   * INDEX NUMBERS
-   */
+  /* INDEX NUMBERS */
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(-n+6)::before {
+  nav >
+  a:nth-child(-n+6)::before {
     position:
       absolute;
 
     top:
-      0;
+      10px;
 
     left:
-      1px;
+      0;
 
     font-family:
       var(--sans);
@@ -478,21 +444,22 @@
       1;
 
     letter-spacing:
-      .16em;
+      .18em;
 
     color:
       rgba(
         243,
-        240,
-        232,
-        .32
+        241,
+        233,
+        .28
       );
   }
 
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(1)::before {
+  nav >
+  a:nth-child(1)::before {
     content:
       "01";
   }
@@ -500,7 +467,8 @@
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(2)::before {
+  nav >
+  a:nth-child(2)::before {
     content:
       "02";
   }
@@ -508,7 +476,8 @@
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(3)::before {
+  nav >
+  a:nth-child(3)::before {
     content:
       "03";
   }
@@ -516,7 +485,8 @@
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(4)::before {
+  nav >
+  a:nth-child(4)::before {
     content:
       "04";
   }
@@ -524,7 +494,8 @@
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(5)::before {
+  nav >
+  a:nth-child(5)::before {
     content:
       "05";
   }
@@ -532,31 +503,30 @@
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(6)::before {
+  nav >
+  a:nth-child(6)::before {
     content:
       "06";
   }
 
 
-  /*
-   * About / Journal / Contact
-   * quiet secondary navigation
-   */
+  /* ==========================================================
+     SECONDARY
+     ABOUT / JOURNAL / CONTACT
+     ========================================================== */
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(n+7) {
-    grid-column:
-      span 2;
-
+  nav >
+  a:nth-child(n+7) {
     width:
       auto !important;
 
     min-height:
-      38px !important;
+      42px !important;
 
     margin:
-      8px
+      20px
       0
       0 !important;
 
@@ -578,9 +548,9 @@
       1px solid
       rgba(
         243,
-        240,
-        232,
-        .12
+        241,
+        233,
+        .1
       ) !important;
 
     background:
@@ -589,16 +559,16 @@
     color:
       rgba(
         243,
-        240,
-        232,
-        .58
+        241,
+        233,
+        .52
       ) !important;
 
     font-family:
       var(--sans) !important;
 
     font-size:
-      10px !important;
+      9px !important;
 
     font-weight:
       500 !important;
@@ -607,36 +577,95 @@
       1 !important;
 
     letter-spacing:
-      .13em !important;
+      .17em !important;
 
     text-transform:
       uppercase !important;
 
     opacity:
       1 !important;
+
+    transform:
+      none !important;
+  }
+
+
+  /*
+   * Put three secondary items
+   * evenly across the full width.
+   */
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(7) {
+    grid-column:
+      1;
+
+    width:
+      calc(
+        50% -
+        13px
+      ) !important;
   }
 
 
   html body
   .mobile-menu-screen
-  nav > a:active {
-    color:
-      #fff !important;
+  nav >
+  a:nth-child(8) {
+    grid-column:
+      1;
 
-    opacity:
-      .55 !important;
+    position:
+      absolute;
 
-    transform:
-      translate3d(
-        3px,
-        0,
-        0
+    left:
+      33.333%;
+
+    bottom:
+      0;
+
+    width:
+      33.333% !important;
+  }
+
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(9) {
+    grid-column:
+      2;
+
+    justify-self:
+      end;
+
+    width:
+      calc(
+        50% -
+        13px
       ) !important;
+
+    text-align:
+      right;
+
+    justify-content:
+      flex-end;
+  }
+
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:active {
+    opacity:
+      .5 !important;
   }
 
 
   /* ==========================================================
-     FOOTER
+     FOOTER / UTILITIES
      ========================================================== */
 
   html body
@@ -651,10 +680,12 @@
       100% !important;
 
     margin:
+      18px
+      0
       0 !important;
 
     padding:
-      15px
+      18px
       0
       0 !important;
 
@@ -676,7 +707,7 @@
       20px !important;
 
     row-gap:
-      11px !important;
+      12px !important;
 
     border:
       0 !important;
@@ -685,14 +716,14 @@
       1px solid
       rgba(
         243,
-        240,
-        232,
+        241,
+        233,
         .1
       ) !important;
   }
 
 
-  /* LANGUAGE — no box */
+  /* LANGUAGE */
 
   html body
   .mobile-menu-footer
@@ -702,9 +733,6 @@
 
     width:
       auto !important;
-
-    min-width:
-      0 !important;
 
     height:
       auto !important;
@@ -727,9 +755,6 @@
     border:
       0 !important;
 
-    border-radius:
-      0 !important;
-
     background:
       transparent !important;
   }
@@ -748,7 +773,10 @@
       0 !important;
 
     height:
-      30px !important;
+      28px !important;
+
+    min-height:
+      28px !important;
 
     padding:
       0 !important;
@@ -765,9 +793,9 @@
     color:
       rgba(
         243,
-        240,
-        232,
-        .35
+        241,
+        233,
+        .32
       ) !important;
 
     font-size:
@@ -777,7 +805,7 @@
       500 !important;
 
     line-height:
-      30px !important;
+      28px !important;
 
     letter-spacing:
       .16em !important;
@@ -786,15 +814,17 @@
 
   html body
   .mobile-menu-footer
-  .language-switch button.is-active {
+  .language-switch
+  button.is-active {
     color:
-      #f3f0e8 !important;
+      #f3f1e9 !important;
   }
 
 
   html body
   .mobile-menu-footer
-  .language-switch button.is-active::after {
+  .language-switch
+  button.is-active::after {
     content:
       "";
 
@@ -808,7 +838,7 @@
       0;
 
     bottom:
-      2px;
+      0;
 
     height:
       1px;
@@ -818,7 +848,7 @@
   }
 
 
-  /* BOOK */
+  /* BOOK NOW */
 
   html body
   .mobile-book {
@@ -832,7 +862,7 @@
       0 !important;
 
     min-height:
-      30px !important;
+      28px !important;
 
     padding:
       0 !important;
@@ -846,26 +876,31 @@
     color:
       rgba(
         243,
-        240,
-        232,
-        .82
+        241,
+        233,
+        .78
       ) !important;
 
     font-size:
       9px !important;
 
+    font-weight:
+      500;
+
     line-height:
       1;
 
     letter-spacing:
-      .19em !important;
+      .18em !important;
 
     text-transform:
       uppercase;
   }
 
 
-  /* SOCIAL + LOCATION */
+  /* ==========================================================
+     SOCIAL / LOCATION
+     ========================================================== */
 
   html body
   .mobile-footer-row {
@@ -874,6 +909,9 @@
 
     width:
       100% !important;
+
+    min-height:
+      32px;
 
     display:
       flex !important;
@@ -895,14 +933,9 @@
       0;
 
     gap:
-      10px !important;
+      9px !important;
   }
 
-
-  /*
-   * Remove circular UI treatment here.
-   * They should feel like quiet marks, not app buttons.
-   */
 
   html body
   .mobile-menu-footer
@@ -918,7 +951,7 @@
       24px !important;
 
     opacity:
-      .62 !important;
+      .58 !important;
 
     background:
       transparent !important;
@@ -942,10 +975,10 @@
   .social-icons
   .social-icon {
     width:
-      15px !important;
+      14px !important;
 
     height:
-      15px !important;
+      14px !important;
   }
 
 
@@ -957,21 +990,18 @@
     display:
       flex !important;
 
-    flex-direction:
-      row !important;
-
     align-items:
       center;
 
     gap:
-      8px !important;
+      7px !important;
 
     color:
       rgba(
         243,
-        240,
-        232,
-        .28
+        241,
+        233,
+        .25
       ) !important;
 
     font-size:
@@ -981,7 +1011,7 @@
       1.3 !important;
 
     letter-spacing:
-      .11em !important;
+      .1em !important;
 
     text-transform:
       uppercase;
@@ -998,74 +1028,95 @@
       "·";
 
     margin-right:
-      8px;
+      7px;
   }
 
 }
 
 
 /* ============================================================
-   SMALL / SHORT PHONES
+   SHORT PHONES
    ============================================================ */
 
 @media (
   max-width: 700px
 ) and (
-  max-height: 720px
+  max-height: 740px
 ) {
 
   html body
   .mobile-menu-screen {
     padding-top:
       max(
-        9px,
+        10px,
         env(safe-area-inset-top)
       ) !important;
 
     padding-bottom:
       max(
-        9px,
+        10px,
         env(safe-area-inset-bottom)
       ) !important;
   }
 
 
   html body
+  .mobile-menu-head {
+    padding-bottom:
+      10px !important;
+  }
+
+
+  html body
   .mobile-menu-screen nav {
     padding-top:
-      26px !important;
+      16px !important;
 
     padding-bottom:
       10px !important;
-
-    row-gap:
-      12px !important;
   }
 
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(-n+6) {
+  nav >
+  a:nth-child(-n+6) {
     min-height:
-      45px !important;
+      58px !important;
+
+    padding-top:
+      18px !important;
+
+    padding-bottom:
+      8px !important;
 
     font-size:
       clamp(
-        24px,
-        7vw,
-        32px
+        19px,
+        5.4vw,
+        23px
       ) !important;
   }
 
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(n+7) {
-    min-height:
-      30px !important;
+  nav >
+  a:nth-child(-n+6)::before {
+    top:
+      7px;
+  }
 
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(n+7) {
     margin-top:
-      2px !important;
+      10px !important;
+
+    min-height:
+      34px !important;
 
     padding-top:
       9px !important;
@@ -1074,11 +1125,14 @@
 
   html body
   .mobile-menu-footer {
+    margin-top:
+      10px !important;
+
     padding-top:
-      9px !important;
+      11px !important;
 
     row-gap:
-      5px !important;
+      6px !important;
   }
 
 
