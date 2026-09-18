@@ -450,7 +450,66 @@ p:not(.kicker) {
 
 /* MOBILE */
 
-@media (max-width: 760px) {
+@media (max-width: 760px) .journal-post
+.journal-article-intro {
+  padding-top:
+    26px !important;
+
+  padding-bottom:
+    30px !important;
+}
+
+
+.journal-post
+.journal-article-intro .back-link {
+  margin-bottom:
+    20px !important;
+}
+
+
+.journal-post
+.journal-article-intro .kicker {
+  margin:
+    8px
+    0
+    18px !important;
+}
+
+
+.journal-post
+.journal-article-intro h1 {
+  margin:
+    0
+    0
+    18px !important;
+
+  font-size:
+    clamp(
+      42px,
+      10.8vw,
+      56px
+    ) !important;
+
+  line-height:
+    .94 !important;
+}
+
+
+.journal-post
+.journal-article-intro >
+p:not(.kicker) {
+  margin:
+    0 !important;
+
+  max-width:
+    35ch !important;
+
+  font-size:
+    15px !important;
+
+  line-height:
+    1.65 !important;
+}{
 
   .journal-index-intro h1 {
     font-size:
