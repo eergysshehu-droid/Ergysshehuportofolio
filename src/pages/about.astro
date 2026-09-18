@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
+import '../styles/pages/about.css';
 import {
   content,
   photoUrl,
@@ -110,7 +110,7 @@ const profilePageLd = {
     }
   />
 
-  <section class="collection-intro">
+  <section class="collection-intro about-intro">
     <a
       class="back-link"
       data-reveal
@@ -160,8 +160,8 @@ const profilePageLd = {
     </p>
   </section>
 
-  <section class="biography-layout collection-body">
-    <aside data-reveal>
+  <section class="biography-layout collection-body about-biography">
+    <aside class="about-profile" data-reveal>
       {
         settings.portrait && (
           <div
@@ -253,7 +253,7 @@ const profilePageLd = {
       </a>
     </aside>
 
-    <div data-reveal>
+    <div class="about-story" data-reveal>
       <details
         class="bio-language"
         open={!isSq}
@@ -379,18 +379,58 @@ const profilePageLd = {
     </div>
   </section>
 
-  <style>
-    .about-portrait{
-      width:100%;
-      overflow:hidden;
+  <section
+  class="about-cta"
+  data-reveal
+>
+  <p class="about-cta-kicker">
+    {
+      isSq
+        ? 'PROJEKTE / KOMISIONE / BASHKËPUNIME'
+        : 'PROJECTS / COMMISSIONS / COLLABORATIONS'
     }
+  </p>
 
-    .about-portrait img{
-      display:block;
-      width:100%;
-      height:auto;
-      max-width:100%;
-      object-fit:contain;
-    }
-  </style>
+  <div class="about-cta-grid">
+    <h2>
+      {
+        isSq
+          ? 'Le të krijojmë diçka që mbahet mend.'
+          : 'Let’s make something worth remembering.'
+      }
+    </h2>
+
+    <div class="about-cta-copy">
+      <p>
+        {
+          isSq
+            ? 'I disponueshëm për projekte të përzgjedhura në fotografi, film, modë, portrete, fushata dhe bashkëpunime kreative në Shqipëri dhe ndërkombëtarisht.'
+            : 'Available for selected photography, film, fashion, portrait, campaign and creative collaborations in Albania and worldwide.'
+        }
+      </p>
+
+      <a
+        class="about-cta-link"
+        href={
+          localizedHref(
+            '/book/#contact',
+            lang
+          )
+        }
+      >
+        <span>
+          {
+            isSq
+              ? 'Le të flasim'
+              : 'Let’s talk'
+          }
+        </span>
+
+        <span aria-hidden="true">
+          ↗
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
 </Layout>
