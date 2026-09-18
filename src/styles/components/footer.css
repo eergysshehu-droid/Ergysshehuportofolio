@@ -2,67 +2,319 @@
    ERGYS SHEHU — FOOTER
    ============================================================ */
 
-.footer-copyright {
+html body footer {
+  max-width:
+    var(--content-max);
+
+  margin-inline:
+    auto;
+
+  padding:
+    clamp(
+      34px,
+      4vw,
+      54px
+    )
+    var(--page-pad)
+    28px !important;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      0,
+      1fr
+    )
+    auto !important;
+
+  align-items:
+    center;
+
+  column-gap:
+    32px;
+
+  row-gap:
+    28px !important;
+
+  background:
+    #080b08 !important;
+
+  color:
+    #f1efe8 !important;
+
+  border-top:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .07
+    ) !important;
+}
+
+
+html body
+footer .footer-row {
+  grid-column:
+    1 / -1;
+
+  width:
+    100%;
+
+  display:
+    grid !important;
+
+  grid-template-columns:
+    minmax(
+      0,
+      1fr
+    )
+    auto
+    minmax(
+      0,
+      1fr
+    );
+
+  align-items:
+    center;
+
+  gap:
+    24px !important;
+}
+
+
+html body
+.footer-name {
+  justify-self:
+    start;
+
+  color:
+    #f1efe8 !important;
+
+  font-family:
+    var(--wordmark-font);
+
   font-size:
-    10px;
+    clamp(
+      16px,
+      1.15vw,
+      20px
+    ) !important;
+
+  font-weight:
+    600;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .095em !important;
+
+  text-transform:
+    uppercase;
+}
+
+
+html body
+.footer-social {
+  justify-self:
+    center;
+}
+
+
+html body
+.footer-contact {
+  justify-self:
+    end;
+
+  color:
+    #f1efe8 !important;
+
+  font-size:
+    9px !important;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    .16em !important;
+
+  text-transform:
+    uppercase;
+
+  opacity:
+    .7;
+
+  transition:
+    opacity
+    180ms
+    ease;
+}
+
+
+html body
+.footer-contact:hover {
+  opacity:
+    1;
+}
+
+
+.footer-copyright {
+  grid-column:
+    1;
+
+  justify-self:
+    start !important;
+
+  text-align:
+    left !important;
+
+  color:
+    rgba(
+      241,
+      239,
+      232,
+      .4
+    );
+
+  font-size:
+    9px !important;
 
   line-height:
     1.5;
 
   letter-spacing:
-    .08em;
-
-  text-transform:
-    none;
-
-  opacity:
-    .46;
+    .06em !important;
 }
 
+
+html body
+footer >
+a:last-child {
+  grid-column:
+    2;
+
+  justify-self:
+    end;
+
+  color:
+    rgba(
+      241,
+      239,
+      232,
+      .5
+    ) !important;
+
+  font-size:
+    9px !important;
+
+  letter-spacing:
+    .12em !important;
+
+  transition:
+    color
+    180ms
+    ease;
+}
+
+
+html body
+footer >
+a:last-child:hover {
+  color:
+    #f1efe8 !important;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
 
 @media (max-width: 700px) {
 
   html body footer {
     padding:
-      42px
+      38px
       18px
       max(
-        30px,
+        28px,
         env(safe-area-inset-bottom)
       ) !important;
 
-    gap:
+    grid-template-columns:
+      1fr
+      auto !important;
+
+    column-gap:
+      18px;
+
+    row-gap:
       24px !important;
   }
 
 
   html body
   footer .footer-row {
-    gap:
+    grid-template-columns:
+      1fr
+      auto !important;
+
+    grid-template-areas:
+      "name contact"
+      "social social";
+
+    row-gap:
+      20px !important;
+
+    column-gap:
       18px !important;
   }
 
 
   html body
   .footer-name {
-    font-size:
-      20px;
+    grid-area:
+      name;
 
-    letter-spacing:
-      .12em;
+    font-size:
+      17px !important;
+  }
+
+
+  html body
+  .footer-contact {
+    grid-area:
+      contact;
+
+    justify-self:
+      end;
+  }
+
+
+  html body
+  .footer-social {
+    grid-area:
+      social;
+
+    justify-self:
+      start;
+
+    margin-left:
+      -2px;
   }
 
 
   html body
   .footer-copyright {
+    grid-column:
+      1 / -1;
+
     width:
       100%;
 
-    margin-top:
-      12px;
-
     padding-top:
-      22px;
+      20px;
 
     border-top:
       1px solid
@@ -70,20 +322,25 @@
         255,
         255,
         255,
-        .07
+        .065
       );
 
     font-size:
-      10px;
+      9px !important;
+  }
 
-    line-height:
-      1.55;
 
-    letter-spacing:
-      .05em;
+  html body
+  footer >
+  a:last-child {
+    grid-column:
+      1 / -1;
 
-    opacity:
-      .48;
+    justify-self:
+      start;
+
+    margin-top:
+      -10px;
   }
 
 }
