@@ -585,3 +585,85 @@ html body.is-home .filmstrip-curve{
       64px!important;
   }
 }
+/* ============================================================
+   MOBILE SYSTEM LIGHT MODE — FIX
+   ============================================================ */
+
+@media (max-width:1000px) and (prefers-color-scheme:light) {
+
+  html body .site-header,
+  html body .site-header.is-scrolled,
+  html body.is-home .site-header.is-scrolled {
+    --header-fg: #171914 !important;
+
+    color: #171914 !important;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(244,242,235,.94),
+        rgba(230,232,224,.96)
+      ) !important;
+
+    border-bottom:
+      1px solid rgba(23,25,20,.09) !important;
+
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.7),
+      0 8px 28px rgba(35,42,32,.08) !important;
+
+    backdrop-filter:
+      blur(30px)
+      saturate(120%) !important;
+
+    -webkit-backdrop-filter:
+      blur(30px)
+      saturate(120%) !important;
+  }
+
+
+  /* Home hero top stays transparent over photography */
+
+  html body.is-home
+  .site-header:not(.is-scrolled) {
+    --header-fg: #fff !important;
+
+    color: #fff !important;
+
+    background:
+      transparent !important;
+
+    border-bottom-color:
+      transparent !important;
+
+    box-shadow:
+      none !important;
+
+    backdrop-filter:
+      none !important;
+
+    -webkit-backdrop-filter:
+      none !important;
+  }
+
+
+  /* Light transition section after hero */
+
+  html body.is-home .filmstrip-curve path {
+    fill:
+      #e5e8df !important;
+  }
+
+  html body.is-home .filmstrip-section {
+    background:
+      linear-gradient(
+        180deg,
+        #e5e8df 0%,
+        #eef0e9 100%
+      ) !important;
+
+    color:
+      #171914 !important;
+  }
+
+}
