@@ -348,7 +348,15 @@ export function content():
         captionSq,
         credit
       },
-
+      
+    nextProjectCover {
+      ...,
+      alt,
+      altSq,
+      caption,
+      captionSq,
+      credit
+    },
       photos[] {
         ...,
         alt,
