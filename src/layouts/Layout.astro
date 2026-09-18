@@ -1044,71 +1044,140 @@ const webPageLd = {
         }
       );
 
-    const mobileMenu =
-      document.querySelector<HTMLDetailsElement>(
-        '.mobile-menu'
-      );
+ const mobileMenu =
+  document.querySelector<HTMLElement>(
+    '[data-mobile-menu]'
+  );
 
-    document
-      .querySelectorAll(
-        '.mobile-menu a'
+const mobileMenuOpenButton =
+  document.querySelector<HTMLButtonElement>(
+    '[data-menu-open]'
+  );
+
+const mobileMenuCloseButton =
+  document.querySelector<HTMLButtonElement>(
+    '[data-menu-close]'
+  );
+
+function setMobileMenu(
+  open:
+    boolean,
+  returnFocus =
+    false
+){
+  if(
+    !mobileMenu
+  ){
+    return;
+  }
+
+  mobileMenu
+    .classList
+    .toggle(
+      'is-open',
+      open
+    );
+
+  mobileMenu
+    .setAttribute(
+      'aria-hidden',
+      String(
+        !open
       )
-      .forEach(
-        a=>{
-          a.addEventListener(
-            'click',
-            ()=>{
-              if(
-                mobileMenu
-              ){
-                mobileMenu.open =
-                  false;
-              }
-            }
-          );
-        }
-      );
+    );
 
-    document
-      .querySelector(
-        '[data-menu-close]'
+  mobileMenuOpenButton
+    ?.setAttribute(
+      'aria-expanded',
+      String(
+        open
       )
-      ?.addEventListener(
-        'click',
-        ()=>{
-          if(
-            mobileMenu
-          ){
-            mobileMenu.open =
-              false;
-          }
-        }
+    );
+
+  document
+    .documentElement
+    .classList
+    .toggle(
+      'mobile-menu-open',
+      open
+    );
+
+  if(
+    open
+  ){
+    requestAnimationFrame(
+      ()=>{
+        mobileMenuCloseButton
+          ?.focus();
+      }
+    );
+  }else if(
+    returnFocus
+  ){
+    mobileMenuOpenButton
+      ?.focus();
+  }
+}
+
+mobileMenuOpenButton
+  ?.addEventListener(
+    'click',
+    ()=>{
+      setMobileMenu(
+        true
       );
+    }
+  );
 
-    document
-      .addEventListener(
-        'keydown',
-        e=>{
-          if(
-            e.key ===
-              'Escape' &&
-            mobileMenu?.open
-          ){
-            mobileMenu.open =
-              false;
-
-            mobileMenu
-              .querySelector(
-                'summary'
-              )
-              ?.focus();
-          }
-        }
+mobileMenuCloseButton
+  ?.addEventListener(
+    'click',
+    ()=>{
+      setMobileMenu(
+        false,
+        true
       );
+    }
+  );
 
-    mobileMenu
-      ?.addEventListener(
-        'toggle',
+mobileMenu
+  ?.querySelectorAll(
+    'a'
+  )
+  .forEach(
+    link=>{
+      link
+        .addEventListener(
+          'click',
+          ()=>{
+            setMobileMenu(
+              false
+            );
+          }
+        );
+    }
+  );
+
+document
+  .addEventListener(
+    'keydown',
+    event=>{
+      if(
+        event.key ===
+          'Escape' &&
+        mobileMenu
+          ?.classList
+          .contains(
+            'is-open'
+          )
+      ){
+        setMobileMenu(
+          false,
+          true
+        );
+      }
+    }
+  );
         ()=>{
           document
             .documentElement
