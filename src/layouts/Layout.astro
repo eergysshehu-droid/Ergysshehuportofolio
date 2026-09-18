@@ -1,4 +1,4 @@
----
+﻿---
 import '../styles/portfolio.css';
 import '../styles/polish-global.css';
 import '../styles/polish-home.css';
@@ -909,6 +909,26 @@ const webPageLd = {
 >
   © {new Date().getFullYear()} Ergys Shehu. All rights reserved.
 </span>
+    <nav
+      class="footer-legal"
+      aria-label={isSq ? 'Ligjore' : 'Legal'}
+    >
+      <a href={href('/privacy/')}>
+        {isSq ? 'Privatësia' : 'Privacy'}
+      </a>
+
+      <span aria-hidden="true">·</span>
+
+      <a href={href('/terms/')}>
+        {isSq ? 'Kushtet' : 'Terms'}
+      </a>
+
+      <span aria-hidden="true">·</span>
+
+      <a href={href('/cookies/')}>
+        {isSq ? 'Cookies' : 'Cookies'}
+      </a>
+    </nav>
 
     <a
       href="#main"
@@ -2001,3 +2021,4 @@ if(
 
 </body>
 </html>
+

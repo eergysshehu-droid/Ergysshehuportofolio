@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import LatestWork from '../components/LatestWork.astro';
 import HomeHero from '../components/home/HomeHero.astro';
@@ -431,4 +431,31 @@ const homeDescription =
     initFilmstrip();
     initWorkFilters();
   </script>
+
+  <script is:inline>
+    /*
+     * HOME TOP RESTORE GUARD
+     * A clean visit or refresh of / starts at the hero.
+     * Explicit hashes such as /#selected remain respected.
+     */
+    if (!window.location.hash) {
+      try {
+        history.scrollRestoration = 'manual';
+      } catch {}
+
+      const resetHomeScroll = () => {
+        window.scrollTo(0, 0);
+      };
+
+      resetHomeScroll();
+      requestAnimationFrame(resetHomeScroll);
+
+      window.addEventListener(
+        'pageshow',
+        resetHomeScroll,
+        { once: true }
+      );
+    }
+  </script>
 </Layout>
+

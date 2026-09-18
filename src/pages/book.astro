@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import '../styles/pages/book-contact.css';
 import {
@@ -1211,6 +1211,23 @@ const contactPageLd = {
           aria-live="polite"
           hidden
         ></p>
+        <p class="form-privacy-note">
+          {
+            isSq
+              ? 'Duke dërguar këtë formular, të dhënat e tua do të përdoren vetëm për t’iu përgjigjur kërkesës tënde. '
+              : 'By sending this form, your information will be used only to respond to your inquiry. '
+          }
+
+          <a
+            href={localizedPath('/privacy/', lang)}
+          >
+            {
+              isSq
+                ? 'Politika e Privatësisë ↗'
+                : 'Privacy Policy ↗'
+            }
+          </a>
+        </p>
 
         <p
           class="form-note"
@@ -1658,3 +1675,4 @@ const contactPageLd = {
     }
   </style>
 </Layout>
+

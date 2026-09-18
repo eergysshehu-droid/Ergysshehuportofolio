@@ -1,0 +1,662 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/pages/legal.css';
+
+import {
+  languageFromPath,
+  localizedPath
+} from '../lib/i18n';
+
+type LegalType = 'privacy' | 'terms' | 'cookies';
+
+type LegalSection = {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+};
+
+type LegalPageData = {
+  eyebrow: string;
+  title: string;
+  deck: string;
+  description: string;
+  sections: LegalSection[];
+};
+
+interface Props {
+  type: LegalType;
+}
+
+const { type } = Astro.props;
+
+const lang = languageFromPath(Astro.url.pathname);
+const isSq = lang === 'sq';
+
+const updatedEn = '18 September 2026';
+const updatedSq = '18 shtator 2026';
+const email = 'e.ergysshehu@gmail.com';
+
+const legal: Record<
+  LegalType,
+  {
+    en: LegalPageData;
+    sq: LegalPageData;
+  }
+> = {
+  privacy: {
+    en: {
+      eyebrow: 'LEGAL / PRIVACY',
+      title: 'Privacy Policy',
+      deck: 'How personal information is handled when you visit ergysshehu.com or send a project inquiry.',
+      description: 'Privacy Policy for ergysshehu.com, including contact inquiries, Cloudflare security, YouTube embeds and browser storage.',
+      sections: [
+        {
+          id: 'controller',
+          title: 'Who is responsible',
+          paragraphs: [
+            'Ergys Shehu is responsible for personal information submitted directly through ergysshehu.com. The website is operated from Albania and is used to present creative work and receive professional inquiries.',
+            'Questions about privacy or requests concerning your personal information can be sent to the contact email shown below.'
+          ]
+        },
+        {
+          id: 'data',
+          title: 'Information collected',
+          paragraphs: [
+            'When you use the inquiry form, the site may collect your name, email address, optional phone number, project type, message, selected language and the page from which the inquiry was sent.',
+            'Technical information may also be processed automatically when you access the site, such as IP address, browser or device information, request timestamps and security signals. This information is generally processed by the infrastructure needed to deliver and protect the website.'
+          ]
+        },
+        {
+          id: 'purpose',
+          title: 'Why the information is used',
+          paragraphs: [
+            'Inquiry information is used to respond to you, understand the requested project, prepare a quotation or proposal, communicate about a possible collaboration and manage an ongoing professional relationship.',
+            'Technical information is used to operate, secure, troubleshoot and protect the website, including preventing abuse, automated attacks and fraudulent submissions.'
+          ],
+          bullets: [
+            'Responding to project and collaboration inquiries.',
+            'Preparing estimates, availability information or project discussions.',
+            'Maintaining website security and reliability.',
+            'Complying with legal obligations or establishing, exercising or defending legal claims where necessary.'
+          ]
+        },
+        {
+          id: 'basis',
+          title: 'Legal basis',
+          paragraphs: [
+            'Depending on the context, processing may be based on taking steps at your request before entering into a contract, performance of a contract, legitimate interests in operating and protecting the website and business, compliance with legal obligations, or consent where consent is specifically requested.',
+            'Where European data-protection rules apply, the relevant GDPR lawful bases apply. Processing in Albania is also subject to Law No. 124/2024 “On the Protection of Personal Data”.'
+          ]
+        },
+        {
+          id: 'providers',
+          title: 'Service providers',
+          paragraphs: [
+            'The website uses third-party infrastructure where needed to publish, protect or operate the site and its media. These providers may process limited technical information according to their own roles and privacy terms.'
+          ],
+          bullets: [
+            'Cloudflare — website delivery, hosting infrastructure, security and abuse protection.',
+            'YouTube — embedded video using Privacy Enhanced Mode through youtube-nocookie.com.',
+            'Sanity — content-management infrastructure where applicable to website content or assets.',
+            'Email delivery infrastructure — used to deliver inquiry messages submitted through the contact form.'
+          ]
+        },
+        {
+          id: 'youtube',
+          title: 'Embedded video',
+          paragraphs: [
+            'YouTube videos are embedded using youtube-nocookie.com, YouTube’s Privacy Enhanced Mode. Loading or interacting with a YouTube player can still cause information to be transmitted to YouTube or Google according to their policies.',
+            'The site does not currently intentionally install Google Analytics, Meta Pixel or advertising tracking code.'
+          ]
+        },
+        {
+          id: 'retention',
+          title: 'How long information is kept',
+          paragraphs: [
+            'Personal information is kept only for as long as reasonably necessary for the purpose for which it was collected, including responding to an inquiry, managing a project or professional relationship, maintaining appropriate business records and meeting legal, accounting or dispute-related requirements.',
+            'Information that is no longer required is deleted, anonymized or allowed to expire in accordance with the systems through which it is processed.'
+          ]
+        },
+        {
+          id: 'rights',
+          title: 'Your rights',
+          paragraphs: [
+            'Subject to the law that applies to your situation, you may have rights to request access to your personal information, correction, deletion, restriction of processing, objection to certain processing, data portability and withdrawal of consent where processing is based on consent.',
+            'You may also have the right to lodge a complaint with a competent data-protection authority. In Albania, the supervisory authority is the Commissioner for the Right to Information and Protection of Personal Data.'
+          ]
+        },
+        {
+          id: 'transfers',
+          title: 'International processing',
+          paragraphs: [
+            'Some service providers may process information outside Albania or your country of residence. Where required, transfers are handled under safeguards or legal mechanisms applicable to the relevant provider and processing activity.'
+          ]
+        },
+        {
+          id: 'changes',
+          title: 'Changes to this policy',
+          paragraphs: [
+            'This policy may be updated when the website, its services or legal requirements change. The current version and its update date will be published on this page.'
+          ]
+        }
+      ]
+    },
+    sq: {
+      eyebrow: 'LIGJORE / PRIVATËSI',
+      title: 'Politika e Privatësisë',
+      deck: 'Si trajtohen të dhënat personale kur viziton ergysshehu.com ose dërgon një kërkesë për projekt.',
+      description: 'Politika e privatësisë për ergysshehu.com, përfshirë kërkesat e kontaktit, sigurinë Cloudflare, videot YouTube dhe ruajtjen në shfletues.',
+      sections: [
+        {
+          id: 'controller',
+          title: 'Kush është përgjegjës',
+          paragraphs: [
+            'Ergys Shehu është përgjegjës për të dhënat personale që dërgohen drejtpërdrejt përmes ergysshehu.com. Faqja operohet nga Shqipëria dhe përdoret për të prezantuar punën kreative dhe për të marrë kërkesa profesionale.',
+            'Pyetjet për privatësinë ose kërkesat lidhur me të dhënat e tua personale mund të dërgohen në adresën e kontaktit të paraqitur më poshtë.'
+          ]
+        },
+        {
+          id: 'data',
+          title: 'Të dhënat që mblidhen',
+          paragraphs: [
+            'Kur përdor formularin e kontaktit, faqja mund të mbledhë emrin, adresën e email-it, numrin opsional të telefonit, llojin e projektit, mesazhin, gjuhën e zgjedhur dhe faqen nga e cila është dërguar kërkesa.',
+            'Gjatë aksesit në faqe mund të përpunohen automatikisht edhe të dhëna teknike, si adresa IP, informacioni për shfletuesin ose pajisjen, koha e kërkesës dhe sinjale sigurie. Këto të dhëna përpunohen kryesisht nga infrastruktura e nevojshme për shpërndarjen dhe mbrojtjen e faqes.'
+          ]
+        },
+        {
+          id: 'purpose',
+          title: 'Pse përdoren të dhënat',
+          paragraphs: [
+            'Të dhënat e kërkesës përdoren për t’u përgjigjur, për të kuptuar projektin, për të përgatitur një ofertë ose propozim, për të komunikuar rreth një bashkëpunimi të mundshëm dhe për të menaxhuar marrëdhënien profesionale.',
+            'Të dhënat teknike përdoren për funksionimin, sigurinë, diagnostikimin dhe mbrojtjen e faqes, duke përfshirë parandalimin e abuzimit, sulmeve të automatizuara dhe dërgesave mashtruese.'
+          ],
+          bullets: [
+            'Përgjigje ndaj kërkesave për projekte dhe bashkëpunime.',
+            'Përgatitje ofertash, informacioni për disponueshmërinë ose diskutime projekti.',
+            'Ruajtje e sigurisë dhe qëndrueshmërisë së faqes.',
+            'Përmbushje e detyrimeve ligjore ose mbrojtje e të drejtave ligjore kur është e nevojshme.'
+          ]
+        },
+        {
+          id: 'basis',
+          title: 'Baza ligjore',
+          paragraphs: [
+            'Në varësi të rastit, përpunimi mund të mbështetet në hapa të ndërmarrë me kërkesën tënde përpara lidhjes së një kontrate, zbatimin e kontratës, interesin e ligjshëm për funksionimin dhe sigurinë e faqes dhe aktivitetit profesional, përmbushjen e detyrimeve ligjore ose pëlqimin kur ai kërkohet shprehimisht.',
+            'Kur zbatohen rregullat europiane për mbrojtjen e të dhënave, zbatohen bazat përkatëse ligjore të GDPR. Përpunimi në Shqipëri i nënshtrohet gjithashtu Ligjit nr. 124/2024 “Për mbrojtjen e të dhënave personale”.'
+          ]
+        },
+        {
+          id: 'providers',
+          title: 'Ofruesit e shërbimeve',
+          paragraphs: [
+            'Faqja përdor infrastrukturë të palëve të treta kur është e nevojshme për publikimin, mbrojtjen ose funksionimin e saj dhe të medias. Këta ofrues mund të përpunojnë të dhëna teknike të kufizuara sipas rolit dhe politikave të tyre.'
+          ],
+          bullets: [
+            'Cloudflare — shpërndarje e faqes, infrastrukturë hosting, siguri dhe mbrojtje nga abuzimi.',
+            'YouTube — video të integruara me Privacy Enhanced Mode përmes youtube-nocookie.com.',
+            'Sanity — infrastrukturë për menaxhimin e përmbajtjes kur përdoret për përmbajtje ose materiale të faqes.',
+            'Infrastrukturë email-i — përdoret për dërgimin e kërkesave të formularit të kontaktit.'
+          ]
+        },
+        {
+          id: 'youtube',
+          title: 'Video të integruara',
+          paragraphs: [
+            'Videot YouTube integrohen përmes youtube-nocookie.com, pra Privacy Enhanced Mode të YouTube. Ngarkimi ose përdorimi i player-it mund të transmetojë të dhëna te YouTube ose Google sipas politikave të tyre.',
+            'Faqja aktualisht nuk instalon qëllimisht Google Analytics, Meta Pixel ose kod reklamues për gjurmim.'
+          ]
+        },
+        {
+          id: 'retention',
+          title: 'Sa kohë ruhen të dhënat',
+          paragraphs: [
+            'Të dhënat personale ruhen vetëm për aq kohë sa është e arsyeshme dhe e nevojshme për qëllimin për të cilin janë mbledhur, duke përfshirë përgjigjen ndaj kërkesës, menaxhimin e një projekti ose marrëdhënieje profesionale, mbajtjen e dokumentacionit të përshtatshëm dhe përmbushjen e kërkesave ligjore, kontabël ose të mosmarrëveshjeve.',
+            'Të dhënat që nuk nevojiten më fshihen, anonimizohen ose lejohen të skadojnë sipas sistemeve ku janë përpunuar.'
+          ]
+        },
+        {
+          id: 'rights',
+          title: 'Të drejtat e tua',
+          paragraphs: [
+            'Në varësi të ligjit që zbatohet në rastin tënd, mund të kesh të drejtën të kërkosh akses, korrigjim, fshirje, kufizim të përpunimit, kundërshtim ndaj përpunimeve të caktuara, transferueshmëri të të dhënave dhe tërheqje të pëlqimit kur përpunimi bazohet në pëlqim.',
+            'Mund të kesh gjithashtu të drejtën të ankohesh pranë autoritetit kompetent. Në Shqipëri, autoriteti mbikëqyrës është Komisioneri për të Drejtën e Informimit dhe Mbrojtjen e të Dhënave Personale.'
+          ]
+        },
+        {
+          id: 'transfers',
+          title: 'Përpunimi ndërkombëtar',
+          paragraphs: [
+            'Disa ofrues shërbimesh mund të përpunojnë të dhëna jashtë Shqipërisë ose vendit ku banon. Kur kërkohet, transferimet trajtohen sipas garancive ose mekanizmave ligjorë të zbatueshëm për ofruesin dhe aktivitetin përkatës.'
+          ]
+        },
+        {
+          id: 'changes',
+          title: 'Ndryshimet e kësaj politike',
+          paragraphs: [
+            'Kjo politikë mund të përditësohet kur ndryshon faqja, shërbimet e saj ose kërkesat ligjore. Versioni aktual dhe data e përditësimit do të publikohen në këtë faqe.'
+          ]
+        }
+      ]
+    }
+  },
+
+  terms: {
+    en: {
+      eyebrow: 'LEGAL / TERMS',
+      title: 'Terms of Use',
+      deck: 'The terms that apply when you browse, use or contact ergysshehu.com.',
+      description: 'Terms of Use for ergysshehu.com, including portfolio copyright, inquiries, external services and permitted website use.',
+      sections: [
+        {
+          id: 'scope',
+          title: 'About these terms',
+          paragraphs: [
+            'These Terms of Use apply to ergysshehu.com and its portfolio, journal, contact and related pages. By using the site, you agree to use it lawfully and in a way that does not interfere with the site, its security or the rights of others.',
+            'If you do not agree with these terms, you should stop using the website.'
+          ]
+        },
+        {
+          id: 'portfolio',
+          title: 'Portfolio and intellectual property',
+          paragraphs: [
+            'Unless otherwise stated, the website design, written material, photographs, films, graphics, branding and other original content are owned by or licensed to Ergys Shehu and are protected by applicable intellectual-property laws.',
+            'Viewing the portfolio does not grant a licence to copy, download, reproduce, publish, modify, sell, train models on, scrape, redistribute or commercially use the content. Separate written permission or a licence is required for uses beyond normal personal viewing of the website.'
+          ]
+        },
+        {
+          id: 'third-party',
+          title: 'Third-party and client rights',
+          paragraphs: [
+            'Some portfolio work may include clients, models, artists, brands, venues, music, artworks or other material in which third parties hold rights. No rights belonging to those third parties are transferred by publication on this website.',
+            'Requests to license or reuse a specific image or film should identify the work and intended use so that the relevant rights can be checked.'
+          ]
+        },
+        {
+          id: 'booking',
+          title: 'Inquiries are not bookings',
+          paragraphs: [
+            'Sending a message through the website does not create a booking, contract, reservation or obligation to provide services. A project is confirmed only when the parties expressly agree the scope, price, timing and any other required terms.',
+            'Any signed agreement, approved quotation or project-specific written terms take priority over these general website terms for that project.'
+          ]
+        },
+        {
+          id: 'use',
+          title: 'Acceptable use',
+          paragraphs: [
+            'You may browse and share links to public pages of the website for lawful purposes. You must not misuse the site or attempt to compromise its operation or security.'
+          ],
+          bullets: [
+            'Do not copy or republish portfolio media without permission.',
+            'Do not bypass security measures, probe vulnerabilities or send malicious traffic.',
+            'Do not use automated scraping or extraction in a way that infringes rights or materially burdens the service.',
+            'Do not falsely imply endorsement, partnership or authorship.'
+          ]
+        },
+        {
+          id: 'external',
+          title: 'External platforms',
+          paragraphs: [
+            'The website may link to or embed services operated by third parties, including social networks and video platforms. Their services are governed by their own terms and privacy practices.',
+            'A link or embed does not mean that Ergys Shehu controls or guarantees the availability, content or security of the third-party service.'
+          ]
+        },
+        {
+          id: 'availability',
+          title: 'Website availability',
+          paragraphs: [
+            'Reasonable care is taken to keep the website accurate and available, but the site may be changed, suspended or unavailable without notice for maintenance, security, technical or other reasons.',
+            'Portfolio information, service descriptions, availability and examples of past work are provided for general information and may change.'
+          ]
+        },
+        {
+          id: 'liability',
+          title: 'Responsibility and liability',
+          paragraphs: [
+            'Nothing in these terms excludes or limits liability that cannot legally be excluded. To the extent permitted by law, Ergys Shehu is not responsible for indirect or consequential loss arising solely from use of, or inability to access, this public portfolio website.',
+            'You remain responsible for how you use information obtained from the website and for maintaining appropriate security on your own device and connection.'
+          ]
+        },
+        {
+          id: 'law',
+          title: 'Applicable law',
+          paragraphs: [
+            'These website terms are governed by the laws of the Republic of Albania, without overriding any mandatory consumer or data-protection rights that may apply under another law.',
+            'Disputes should first be raised in good faith using the contact details below so that an informal resolution can be attempted.'
+          ]
+        }
+      ]
+    },
+    sq: {
+      eyebrow: 'LIGJORE / KUSHTET',
+      title: 'Kushtet e Përdorimit',
+      deck: 'Kushtet që zbatohen kur shfleton, përdor ose kontakton përmes ergysshehu.com.',
+      description: 'Kushtet e përdorimit të ergysshehu.com, përfshirë të drejtat mbi portofolin, kërkesat, shërbimet e jashtme dhe përdorimin e lejuar të faqes.',
+      sections: [
+        {
+          id: 'scope',
+          title: 'Rreth këtyre kushteve',
+          paragraphs: [
+            'Këto Kushte Përdorimi zbatohen për ergysshehu.com dhe faqet e portofolit, ditarit, kontaktit dhe faqet e lidhura me to. Duke përdorur faqen, pranon ta përdorësh në mënyrë të ligjshme dhe pa cenuar funksionimin, sigurinë ose të drejtat e të tjerëve.',
+            'Nëse nuk je dakord me këto kushte, duhet të ndërpresësh përdorimin e faqes.'
+          ]
+        },
+        {
+          id: 'portfolio',
+          title: 'Portofoli dhe pronësia intelektuale',
+          paragraphs: [
+            'Përveç rasteve kur thuhet ndryshe, dizajni i faqes, tekstet, fotografitë, filmat, grafikat, identiteti vizual dhe përmbajtja tjetër origjinale janë pronë e Ergys Shehu ose përdoren me licencë dhe mbrohen nga legjislacioni i zbatueshëm për pronësinë intelektuale.',
+            'Shikimi i portofolit nuk jep licencë për të kopjuar, shkarkuar, riprodhuar, publikuar, modifikuar, shitur, përdorur për trajnimin e modeleve, mbledhur automatikisht, rishpërndarë ose përdorur komercialisht përmbajtjen. Përtej shikimit normal personal kërkohet leje ose licencë e veçantë me shkrim.'
+          ]
+        },
+        {
+          id: 'third-party',
+          title: 'Të drejtat e klientëve dhe palëve të treta',
+          paragraphs: [
+            'Disa punë në portofol mund të përfshijnë klientë, modele, artistë, brande, ambiente, muzikë, vepra arti ose materiale mbi të cilat të drejta kanë palë të treta. Publikimi në këtë faqe nuk transferon asnjë prej këtyre të drejtave.',
+            'Kërkesat për licencim ose ripërdorim të një fotografie apo filmi duhet të identifikojnë punën dhe përdorimin e synuar, në mënyrë që të kontrollohen të drejtat përkatëse.'
+          ]
+        },
+        {
+          id: 'booking',
+          title: 'Kërkesa nuk është rezervim',
+          paragraphs: [
+            'Dërgimi i një mesazhi përmes faqes nuk krijon rezervim, kontratë ose detyrim për ofrimin e shërbimeve. Një projekt konfirmohet vetëm kur palët bien shprehimisht dakord për objektin, çmimin, afatet dhe kushtet e tjera të nevojshme.',
+            'Çdo marrëveshje e nënshkruar, ofertë e miratuar ose kushte specifike me shkrim për një projekt kanë përparësi ndaj këtyre kushteve të përgjithshme të faqes.'
+          ]
+        },
+        {
+          id: 'use',
+          title: 'Përdorimi i lejuar',
+          paragraphs: [
+            'Mund të shfletosh dhe të ndash linket e faqeve publike për qëllime të ligjshme. Nuk lejohet keqpërdorimi i faqes ose tentativa për të cenuar funksionimin apo sigurinë e saj.'
+          ],
+          bullets: [
+            'Mos kopjo ose ripubliko materialet e portofolit pa leje.',
+            'Mos anashkalo masat e sigurisë, mos testo dobësi dhe mos dërgo trafik keqdashës.',
+            'Mos përdor scraping ose nxjerrje automatike në mënyrë që cenon të drejtat ose rëndon ndjeshëm shërbimin.',
+            'Mos krijo përshtypjen e rreme të miratimit, partneritetit ose autorësisë.'
+          ]
+        },
+        {
+          id: 'external',
+          title: 'Platformat e jashtme',
+          paragraphs: [
+            'Faqja mund të përmbajë linke ose materiale të integruara nga shërbime të palëve të treta, përfshirë rrjete sociale dhe platforma video. Këto shërbime rregullohen nga kushtet dhe politikat e tyre.',
+            'Një link ose embed nuk do të thotë se Ergys Shehu kontrollon apo garanton disponueshmërinë, përmbajtjen ose sigurinë e shërbimit të jashtëm.'
+          ]
+        },
+        {
+          id: 'availability',
+          title: 'Disponueshmëria e faqes',
+          paragraphs: [
+            'Tregohet kujdes i arsyeshëm që faqja të jetë e saktë dhe e aksesueshme, por ajo mund të ndryshohet, pezullohet ose të mos jetë e disponueshme pa njoftim për mirëmbajtje, siguri, arsye teknike ose arsye të tjera.',
+            'Informacioni i portofolit, përshkrimet e shërbimeve, disponueshmëria dhe shembujt e punëve të mëparshme janë informacion i përgjithshëm dhe mund të ndryshojnë.'
+          ]
+        },
+        {
+          id: 'liability',
+          title: 'Përgjegjësia',
+          paragraphs: [
+            'Asgjë në këto kushte nuk përjashton ose kufizon përgjegjësi që ligji nuk lejon të përjashtohet. Në masën e lejuar nga ligji, Ergys Shehu nuk mban përgjegjësi për humbje të tërthorta ose pasuese që lindin vetëm nga përdorimi ose pamundësia për të aksesuar këtë faqe publike portofoli.',
+            'Ti mbetesh përgjegjës për mënyrën se si përdor informacionin e marrë nga faqja dhe për sigurinë e pajisjes dhe lidhjes tënde.'
+          ]
+        },
+        {
+          id: 'law',
+          title: 'Ligji i zbatueshëm',
+          paragraphs: [
+            'Këto kushte të faqes rregullohen nga ligjet e Republikës së Shqipërisë, pa cenuar të drejtat e detyrueshme të konsumatorit ose të mbrojtjes së të dhënave që mund të zbatohen sipas një ligji tjetër.',
+            'Çdo mosmarrëveshje duhet fillimisht të ngrihet me mirëbesim përmes kontaktit të mëposhtëm, në mënyrë që të tentohet një zgjidhje informale.'
+          ]
+        }
+      ]
+    }
+  },
+
+  cookies: {
+    en: {
+      eyebrow: 'LEGAL / STORAGE',
+      title: 'Cookie & Storage Policy',
+      deck: 'A short, transparent explanation of cookies and browser storage used by ergysshehu.com.',
+      description: 'Cookie and browser storage policy for ergysshehu.com, covering Cloudflare security, language preferences, intro state and YouTube embeds.',
+      sections: [
+        {
+          id: 'summary',
+          title: 'Current setup',
+          paragraphs: [
+            'ergysshehu.com does not currently intentionally install Google Analytics, Meta Pixel or advertising cookies. There is no advertising-profile or cross-site marketing tracker intentionally installed in the website code.',
+            'The site does use limited browser storage for functionality and may receive strictly necessary security cookies from Cloudflare when its protection systems require them.'
+          ]
+        },
+        {
+          id: 'storage',
+          title: 'Browser storage',
+          paragraphs: [
+            'The site stores a small language preference in localStorage so that the EN/SQ interface can behave consistently. The homepage also uses sessionStorage to remember, for the current browser-tab session, whether the cinematic intro has already played.',
+            'localStorage and sessionStorage are browser storage technologies rather than HTTP cookies. They remain on your device according to the browser’s own storage rules and can be cleared through browser settings.'
+          ],
+          bullets: [
+            'site-lang — localStorage; remembers the selected website language.',
+            'ergys-intro-seen — sessionStorage; prevents the homepage intro from replaying repeatedly within the same tab session.'
+          ]
+        },
+        {
+          id: 'cloudflare',
+          title: 'Cloudflare security cookies',
+          paragraphs: [
+            'Cloudflare protects and delivers the website. Depending on enabled security features and whether a visitor is challenged, Cloudflare may set strictly necessary cookies such as __cf_bm or cf_clearance. These can be used for bot detection, challenge validation, traffic management or security rather than advertising.',
+            'Not every visitor will necessarily receive the same Cloudflare cookie; their use depends on the security configuration and the request.'
+          ]
+        },
+        {
+          id: 'youtube',
+          title: 'YouTube',
+          paragraphs: [
+            'Embedded video uses youtube-nocookie.com, YouTube’s Privacy Enhanced Mode. Loading or interacting with an embedded player can still allow YouTube or Google to process technical information and may involve storage controlled by those services.',
+            'If the website later adds analytics, advertising pixels or other non-essential tracking, this policy and any required consent controls should be updated before those technologies are intentionally activated.'
+          ]
+        },
+        {
+          id: 'controls',
+          title: 'Your controls',
+          paragraphs: [
+            'You can clear or block cookies, localStorage and sessionStorage using your browser settings. Blocking strictly necessary storage or third-party media may affect security checks, language preference or embedded video functionality.',
+            'For privacy questions, use the contact details below.'
+          ]
+        }
+      ]
+    },
+    sq: {
+      eyebrow: 'LIGJORE / RUAJTJE',
+      title: 'Politika e Cookies & Storage',
+      deck: 'Një shpjegim i shkurtër dhe transparent për cookies dhe ruajtjen në shfletues që përdor ergysshehu.com.',
+      description: 'Politika e cookies dhe browser storage për ergysshehu.com, përfshirë sigurinë Cloudflare, preferencën e gjuhës, intro-n dhe videot YouTube.',
+      sections: [
+        {
+          id: 'summary',
+          title: 'Gjendja aktuale',
+          paragraphs: [
+            'ergysshehu.com aktualisht nuk instalon qëllimisht Google Analytics, Meta Pixel ose cookies reklamimi. Në kodin e faqes nuk është instaluar qëllimisht tracking për profil reklamues ose marketing ndërmjet faqeve.',
+            'Faqja përdor një sasi të kufizuar ruajtjeje në shfletues për funksionalitet dhe mund të marrë cookies sigurie rreptësisht të nevojshme nga Cloudflare kur sistemet e mbrojtjes i kërkojnë.'
+          ]
+        },
+        {
+          id: 'storage',
+          title: 'Ruajtja në shfletues',
+          paragraphs: [
+            'Faqja ruan një preferencë të vogël të gjuhës në localStorage që ndërfaqja EN/SQ të funksionojë në mënyrë të qëndrueshme. Homepage përdor gjithashtu sessionStorage për të kujtuar, gjatë sesionit të tab-it aktual, nëse intro-ja kinematografike është shfaqur.',
+            'localStorage dhe sessionStorage janë teknologji ruajtjeje në shfletues dhe jo cookies HTTP. Ato qëndrojnë në pajisjen tënde sipas rregullave të shfletuesit dhe mund të pastrohen nga cilësimet e tij.'
+          ],
+          bullets: [
+            'site-lang — localStorage; kujton gjuhën e zgjedhur të faqes.',
+            'ergys-intro-seen — sessionStorage; parandalon rishfaqjen e përsëritur të intro-s brenda të njëjtit sesion të tab-it.'
+          ]
+        },
+        {
+          id: 'cloudflare',
+          title: 'Cookies sigurie nga Cloudflare',
+          paragraphs: [
+            'Cloudflare mbron dhe shpërndan faqen. Në varësi të veçorive të aktivizuara të sigurisë dhe nëse një vizitor kalon një kontroll, Cloudflare mund të vendosë cookies rreptësisht të nevojshme si __cf_bm ose cf_clearance. Ato mund të përdoren për zbulimin e bot-eve, validimin e kontrolleve, menaxhimin e trafikut ose sigurinë dhe jo për reklamim.',
+            'Jo çdo vizitor merr domosdoshmërisht të njëjtën cookie Cloudflare; përdorimi varet nga konfigurimi i sigurisë dhe kërkesa konkrete.'
+          ]
+        },
+        {
+          id: 'youtube',
+          title: 'YouTube',
+          paragraphs: [
+            'Videot e integruara përdorin youtube-nocookie.com, pra Privacy Enhanced Mode të YouTube. Ngarkimi ose ndërveprimi me player-in mund t’i lejojë YouTube ose Google të përpunojnë të dhëna teknike dhe mund të përfshijë ruajtje të kontrolluar nga këto shërbime.',
+            'Nëse në të ardhmen faqja shton analytics, pixels reklamimi ose tracking jo thelbësor, kjo politikë dhe çdo mekanizëm i nevojshëm pëlqimi duhet të përditësohen përpara aktivizimit të qëllimshëm të tyre.'
+          ]
+        },
+        {
+          id: 'controls',
+          title: 'Kontrollet e tua',
+          paragraphs: [
+            'Mund të pastrosh ose bllokosh cookies, localStorage dhe sessionStorage nga cilësimet e shfletuesit. Bllokimi i ruajtjes rreptësisht të nevojshme ose medias së palëve të treta mund të ndikojë te kontrollet e sigurisë, preferenca e gjuhës ose videot e integruara.',
+            'Për pyetje mbi privatësinë, përdor kontaktin e mëposhtëm.'
+          ]
+        }
+      ]
+    }
+  }
+};
+
+const page = legal[type][isSq ? 'sq' : 'en'];
+
+const updatedLabel = isSq ? 'PËRDITËSUAR' : 'UPDATED';
+const indexLabel = isSq ? 'NË KËTË FAQE' : 'ON THIS PAGE';
+const contactLabel = isSq ? 'KONTAKT PRIVATËSIE' : 'PRIVACY CONTACT';
+const backLabel = isSq ? '← Ballina' : '← Home';
+---
+
+<Layout
+  lang={lang}
+  title={`${page.title} | Ergys Shehu`}
+  description={page.description}
+>
+  <article class="legal-page">
+    <header class="legal-hero">
+      <a
+        class="legal-back"
+        href={localizedPath('/', lang)}
+      >
+        {backLabel}
+      </a>
+
+      <div class="legal-hero-grid">
+        <div>
+          <p class="legal-eyebrow">
+            {page.eyebrow}
+          </p>
+
+          <h1>
+            {page.title}
+          </h1>
+        </div>
+
+        <div class="legal-deck">
+          <p>
+            {page.deck}
+          </p>
+
+          <p class="legal-updated">
+            <span>{updatedLabel}</span>
+            {isSq ? updatedSq : updatedEn}
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="legal-shell">
+      <aside class="legal-index">
+        <p>{indexLabel}</p>
+
+        <nav aria-label={indexLabel}>
+          {
+            page.sections.map(
+              (section, index) => (
+                <a href={`#${section.id}`}>
+                  <span>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+
+                  {section.title}
+                </a>
+              )
+            )
+          }
+        </nav>
+      </aside>
+
+      <div class="legal-content">
+        {
+          page.sections.map(
+            (section, index) => (
+              <section
+                id={section.id}
+                class="legal-section"
+              >
+                <div class="legal-section-number">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+
+                <div>
+                  <h2>{section.title}</h2>
+
+                  {
+                    section.paragraphs.map(
+                      paragraph => (
+                        <p>{paragraph}</p>
+                      )
+                    )
+                  }
+
+                  {
+                    section.bullets && (
+                      <ul>
+                        {
+                          section.bullets.map(
+                            item => (
+                              <li>{item}</li>
+                            )
+                          )
+                        }
+                      </ul>
+                    )
+                  }
+                </div>
+              </section>
+            )
+          )
+        }
+
+        <section class="legal-contact-card">
+          <p>{contactLabel}</p>
+
+          <a href={`mailto:${email}`}>
+            {email}
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          {
+            type === 'privacy' && (
+              <a
+                class="legal-authority"
+                href="https://idp.al/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {
+                  isSq
+                    ? 'Komisioneri për të Drejtën e Informimit dhe Mbrojtjen e të Dhënave Personale ↗'
+                    : 'Albanian Information and Data Protection Commissioner ↗'
+                }
+              </a>
+            )
+          }
+        </section>
+      </div>
+    </div>
+  </article>
+</Layout>

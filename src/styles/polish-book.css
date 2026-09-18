@@ -436,3 +436,28 @@
     min-height: 270px !important;
   }
 }
+
+/* ============================================================
+   FORM PRIVACY NOTE
+   ============================================================ */
+
+html body .form-privacy-note{
+  margin:14px 0 0!important;
+  color:rgba(23,25,20,.48);
+  font-size:9px!important;
+  line-height:1.65;
+  letter-spacing:.035em;
+}
+
+html body .form-privacy-note a{
+  color:inherit!important;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+}
+
+@media(prefers-color-scheme:dark){
+  html body .form-privacy-note{
+    color:rgba(241,239,232,.44);
+  }
+}
