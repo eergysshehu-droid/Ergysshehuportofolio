@@ -398,3 +398,26 @@
   }
 
 }
+@media ( 
+  max-width: 700px 
+) and ( 
+  prefers-reduced-motion: reduce 
+) { 
+ 
+  html.motion-ready 
+  body:not(.is-home) 
+  .collection-intro { 
+    animation: 
+      none !important; 
+ 
+    transform: 
+      none !important; 
+ 
+    clip-path: 
+      none !important; 
+ 
+    opacity: 
+      1 !important; 
+  } 
+ 
+}
