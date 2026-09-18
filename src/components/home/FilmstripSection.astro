@@ -1,0 +1,157 @@
+---
+import {
+  photoUrl,
+  photoSet,
+  photoPosition
+} from '../../lib/content';
+
+import {
+  localizedPath,
+  type SiteLang
+} from '../../lib/i18n';
+
+interface Props {
+  albums: any[];
+  isSq: boolean;
+  lang: SiteLang;
+}
+
+const {
+  albums,
+  isSq,
+  lang
+} = Astro.props;
+---
+
+<section class="filmstrip-section">
+  <svg
+    class="filmstrip-curve"
+    viewBox="0 0 1000 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path d="M 0 100 C 20 88, 45 74, 75 66 C 105 59, 145 56, 195 56 L 805 56 C 855 56, 895 53, 925 46 C 955 38, 980 24, 1000 12 L 1000 100 Z"/>
+  </svg>
+
+  <div
+    class="filmstrip-heading"
+    data-reveal
+  >
+    <p
+      class="kicker"
+      data-en="FEATURED WORKS"
+      data-sq="PUNË TË VEÇANTA"
+    >
+      {isSq ? 'PUNË TË VEÇANTA' : 'FEATURED WORKS'}
+    </p>
+
+    <h2
+      data-en="Stories that feel real."
+      data-sq="Histori që ndihen të vërteta."
+    >
+      {isSq ? 'Histori që ndihen të vërteta.' : 'Stories that feel real.'}
+    </h2>
+
+    <p
+      class="filmstrip-copy"
+      data-en="Photography, film and creative direction for people, brands and meaningful moments."
+      data-sq="Fotografi, film dhe drejtim kreativ për njerëz, brande dhe momente që kanë kuptim."
+    >
+      {
+        isSq
+          ? 'Fotografi, film dhe drejtim kreativ për njerëz, brande dhe momente që kanë kuptim.'
+          : 'Photography, film and creative direction for people, brands and meaningful moments.'
+      }
+    </p>
+
+    <a
+      class="filmstrip-view-all"
+      href={localizedPath('/projects/', lang)}
+      data-en="VIEW ALL WORKS"
+      data-sq="SHIKO GJITHË PUNËN"
+    >
+      {isSq ? 'SHIKO GJITHË PUNËN' : 'VIEW ALL WORKS'} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="filmstrip-track-wrap">
+    <div
+      class="filmstrip-track"
+      data-filmstrip
+    >
+      {
+        albums.map((album, i) => {
+          const albumTitle =
+            isSq
+              ? (album.titleSq || album.title)
+              : album.title;
+
+          const albumAlt =
+            isSq
+              ? (
+                  album.cover?.altSq ||
+                  album.cover?.alt ||
+                  albumTitle
+                )
+              : (
+                  album.cover?.alt ||
+                  albumTitle
+                );
+
+          return (
+            <a
+              class="filmstrip-item"
+              href={localizedPath(`/portfolio/${album.slug}/`, lang)}
+            >
+              <div
+                class="filmstrip-image"
+                data-image-reveal
+                style={`--focal-point:${photoPosition(album.cover)}`}
+              >
+                <img
+                  src={photoUrl(album.cover, 1000)}
+                  srcset={photoSet(album.cover)}
+                  sizes="(max-width:700px) 78vw, 26vw"
+                  width={album.cover?.width}
+                  height={album.cover?.height}
+                  alt={albumAlt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <span class="filmstrip-counter">
+                {String(i + 1).padStart(2, '0')} / {String(albums.length).padStart(2, '0')}
+              </span>
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <button
+      type="button"
+      class="filmstrip-next"
+      data-filmstrip-next
+      aria-label="Next"
+    >
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 3l5 5-5 5"/>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    class="section-veil"
+    data-section-veil
+    aria-hidden="true"
+  ></div>
+</section>

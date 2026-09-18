@@ -1,0 +1,103 @@
+---
+import {
+  safeUrl
+} from '../../lib/content';
+
+interface Props {
+  settings: any;
+  isSq: boolean;
+}
+
+const {
+  settings,
+  isSq
+} = Astro.props;
+
+const instagram =
+  safeUrl(
+    settings.instagram
+  );
+---
+
+<section
+  class="contact-section"
+  id="contact"
+>
+  <div data-reveal>
+    <p
+      class="kicker"
+      data-en="FOR COMMISSIONS & COLLABORATIONS"
+      data-sq="PËR KOMISIONE & BASHKËPUNIME"
+    >
+      {
+        isSq
+          ? 'PËR KOMISIONE & BASHKËPUNIME'
+          : 'FOR COMMISSIONS & COLLABORATIONS'
+      }
+    </p>
+
+    <h2>
+      <span
+        data-en="Let’s make"
+        data-sq="Le të krijojmë"
+      >
+        {isSq ? 'Le të krijojmë' : 'Let’s make'}
+      </span>
+
+      <br/>
+
+      <em
+        data-en="something matter."
+        data-sq="diçka që ka kuptim."
+      >
+        {isSq ? 'diçka që ka kuptim.' : 'something matter.'}
+      </em>
+    </h2>
+  </div>
+
+  <div
+    class="contact-details"
+    data-reveal
+  >
+    {
+      settings.email && (
+        <a
+          class="email"
+          href={`mailto:${settings.email}`}
+        >
+          {settings.email} ↗
+        </a>
+      )
+    }
+
+    <p>
+      <span
+        data-en="Based in Albania."
+        data-sq="Me bazë në Shqipëri."
+      >
+        {isSq ? 'Me bazë në Shqipëri.' : 'Based in Albania.'}
+      </span>
+
+      <br/>
+
+      <span
+        data-en="Available worldwide."
+        data-sq="I disponueshëm në mbarë botën."
+      >
+        {isSq ? 'I disponueshëm në mbarë botën.' : 'Available worldwide.'}
+      </span>
+    </p>
+
+    {
+      instagram && (
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INSTAGRAM ↗
+        </a>
+      )
+    }
+  </div>
+</section>

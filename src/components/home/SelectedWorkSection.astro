@@ -1,0 +1,146 @@
+---
+import ProjectGrid from '../ProjectGrid.astro';
+
+import {
+  localizedPath,
+  type SiteLang
+} from '../../lib/i18n';
+
+interface Props {
+  albums: any[];
+  selected: any[];
+  isSq: boolean;
+  lang: SiteLang;
+}
+
+const {
+  albums,
+  selected,
+  isSq,
+  lang
+} = Astro.props;
+---
+
+<section
+  class="work-section"
+  id="selected"
+>
+  <div
+    class="work-heading"
+    data-reveal
+  >
+    <div>
+      <p
+        class="kicker"
+        data-en="A SELECTED PERSPECTIVE"
+        data-sq="NJË PERSPEKTIVË E PËRZGJEDHUR"
+      >
+        {isSq ? 'NJË PERSPEKTIVË E PËRZGJEDHUR' : 'A SELECTED PERSPECTIVE'}
+      </p>
+
+      <h2>
+        <span
+          data-en="Still."
+          data-sq="Statike."
+        >
+          {isSq ? 'Statike.' : 'Still.'}
+        </span>
+
+        {' '}
+
+        <em
+          data-en="Never silent."
+          data-sq="Kurrë e heshtur."
+        >
+          {isSq ? 'Kurrë e heshtur.' : 'Never silent.'}
+        </em>
+      </h2>
+    </div>
+
+    <span class="work-count">
+      {String(albums.length).padStart(2, '0')}{' '}
+      <span
+        data-en="COLLECTIONS"
+        data-sq="KOLEKSIONE"
+      >
+        {isSq ? 'KOLEKSIONE' : 'COLLECTIONS'}
+      </span>
+    </span>
+  </div>
+
+  <div
+    class="work-toolbar"
+    data-reveal
+  >
+    <div
+      class="filters"
+      role="group"
+      aria-label="Filter projects"
+    >
+      <button
+        data-filter="all"
+        aria-pressed="true"
+        data-en="All work"
+        data-sq="Gjithë puna"
+      >
+        {isSq ? 'Gjithë puna' : 'All work'}
+      </button>
+
+      <button
+        data-filter="fashion"
+        aria-pressed="false"
+        data-en="Fashion"
+        data-sq="Modë"
+      >
+        {isSq ? 'Modë' : 'Fashion'}
+      </button>
+
+      <button
+        data-filter="portraits"
+        aria-pressed="false"
+        data-en="Portraits"
+        data-sq="Portrete"
+      >
+        {isSq ? 'Portrete' : 'Portraits'}
+      </button>
+
+      <button
+        data-filter="weddings"
+        aria-pressed="false"
+        data-en="Weddings"
+        data-sq="Dasma"
+      >
+        {isSq ? 'Dasma' : 'Weddings'}
+      </button>
+
+      <button
+        data-filter="projects"
+        aria-pressed="false"
+        data-en="Personal"
+        data-sq="Personale"
+      >
+        {isSq ? 'Personale' : 'Personal'}
+      </button>
+    </div>
+
+    <a
+      class="index-link"
+      href={localizedPath('/projects/', lang)}
+      data-en="PROJECT INDEX ↗"
+      data-sq="INDEKSI I PROJEKTEVE ↗"
+    >
+      {isSq ? 'INDEKSI I PROJEKTEVE ↗' : 'PROJECT INDEX ↗'}
+    </a>
+  </div>
+
+  <ProjectGrid albums={selected}/>
+
+  <p
+    class="work-empty"
+    hidden
+    data-en="No projects in this selection yet."
+    data-sq="Ende s'ka projekte në këtë përzgjedhje."
+  >
+    {isSq ? "Ende s'ka projekte në këtë përzgjedhje." : 'No projects in this selection yet.'}
+  </p>
+</section>

@@ -1,0 +1,41 @@
+---
+interface Props {
+  reel: string;
+  isSq: boolean;
+}
+
+const {
+  reel,
+  isSq
+} = Astro.props;
+---
+
+<section class="motion-section">
+  <p
+    class="kicker"
+    data-reveal
+    data-en="MOVING IMAGE"
+    data-sq="IMAZH NË LËVIZJE"
+  >
+    {isSq ? 'IMAZH NË LËVIZJE' : 'MOVING IMAGE'}
+  </p>
+
+  <h2
+    data-reveal
+    data-en="Beyond the still."
+    data-sq="Përtej statikes."
+  >
+    {isSq ? 'Përtej statikes.' : 'Beyond the still.'}
+  </h2>
+
+  <a
+    data-reveal
+    href={reel}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-en="WATCH THE REEL ↗"
+    data-sq="SHIKO REEL-IN ↗"
+  >
+    {isSq ? 'SHIKO REEL-IN ↗' : 'WATCH THE REEL ↗'}
+  </a>
+</section>

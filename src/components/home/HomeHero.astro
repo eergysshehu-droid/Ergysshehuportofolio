@@ -1,0 +1,257 @@
+---
+import {
+  photoUrl,
+  photoSet
+} from '../../lib/content';
+
+interface Props {
+  settings: any;
+  heroSlides: any[];
+  isSq: boolean;
+}
+
+const {
+  settings,
+  heroSlides,
+  isSq
+} = Astro.props;
+
+const heroPosition = (
+  photo?: {
+    hotspot?: {
+      x?: number;
+      y?: number;
+    };
+  }
+) =>
+  photo?.hotspot?.x != null &&
+  photo?.hotspot?.y != null
+    ? `${(photo.hotspot.x * 100).toFixed(1)}% ${(photo.hotspot.y * 100).toFixed(1)}%`
+    : '50% 43%';
+---
+
+<section
+  class="opening cinematic-opening"
+  aria-label="Selected photography"
+  data-hero-rotator
+>
+  <div class="opening-image">
+    {
+      heroSlides.map((slide, i) => (
+        <picture
+          class:list={[
+            'opening-frame',
+            {
+              'is-active': i === 0
+            }
+          ]}
+          data-href={slide.href}
+          data-title={slide.title}
+          style={`--slide-pos:${heroPosition(slide.photo)}`}
+        >
+          {
+            i === 0 &&
+            slide.photo.localBase && (
+              <source
+                media="(max-width:700px)"
+                srcset="/images/dance-mobile.webp"
+              />
+            )
+          }
+
+          <img
+            src={photoUrl(slide.photo, 1800)}
+            srcset={photoSet(slide.photo)}
+            sizes="100vw"
+            alt={
+              isSq
+                ? (
+                    slide.photo.altSq ||
+                    slide.photo.alt ||
+                    slide.title
+                  )
+                : (
+                    slide.photo.alt ||
+                    slide.title
+                  )
+            }
+            loading={i === 0 ? undefined : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : undefined}
+            width={slide.photo.width}
+            height={slide.photo.height}
+          />
+        </picture>
+      ))
+    }
+  </div>
+
+  <div
+    class="hero-light-sweep"
+    data-hero-sweep
+    aria-hidden="true"
+  ></div>
+
+  <h1 class="sr-only">
+    {settings.name}
+  </h1>
+
+  <div class="hero-topline">
+    <span
+      data-en="Photographer / Director"
+      data-sq="Fotograf / Regjisor"
+    >
+      {isSq ? 'Fotograf / Regjisor' : 'Photographer / Director'}
+    </span>
+
+    <span
+      data-en="Albania · Available worldwide"
+      data-sq="Shqipëri · I disponueshëm në mbarë botën"
+    >
+      {
+        isSq
+          ? 'Shqipëri · I disponueshëm në mbarë botën'
+          : 'Albania · Available worldwide'
+      }
+    </span>
+  </div>
+
+  <div class="hero-feature">
+    <a
+      class="hero-project"
+      href={heroSlides[0]?.href || '#selected'}
+      data-slide-link
+      aria-label={`Selected work: ${heroSlides[0]?.title || ''}`}
+    >
+      <span
+        class="hero-project-label"
+        data-en="Selected work"
+        data-sq="Punë e përzgjedhur"
+      >
+        {isSq ? 'Punë e përzgjedhur' : 'Selected work'}
+      </span>
+
+      <span class="hero-project-title">
+        <span class="title-mask">
+          <span data-slide-title>
+            {heroSlides[0]?.title}
+          </span>
+        </span>
+
+        <span
+          class="hero-project-arrow"
+          aria-hidden="true"
+        >
+          ↗
+        </span>
+      </span>
+    </a>
+
+    {
+      heroSlides.length > 1 && (
+        <div
+          class="hero-meta"
+          aria-hidden="true"
+        >
+          <span data-slide-count>
+            01
+          </span>
+
+          {' / '}
+
+          {String(heroSlides.length).padStart(2, '0')}
+        </div>
+      )
+    }
+
+    {
+      heroSlides.length > 1 && (
+        <div
+          class="hero-progress"
+          aria-hidden="true"
+        >
+          <span data-hero-progress></span>
+        </div>
+      )
+    }
+
+    <div class="hero-controls">
+      <a
+        class="hero-explore"
+        href={heroSlides[0]?.href || '#selected'}
+        data-slide-link
+        data-en="Explore the story"
+        data-sq="Eksploro historinë"
+      >
+        {isSq ? 'Eksploro historinë' : 'Explore the story'}
+      </a>
+
+      {
+        heroSlides.length > 1 && (
+          <div class="hero-nav-arrows">
+            <button
+              type="button"
+              data-slide-prev
+              aria-label="Previous project"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M10 3L5 8l5 5"/>
+              </svg>
+            </button>
+
+            <span aria-hidden="true"></span>
+
+            <button
+              type="button"
+              data-slide-next
+              aria-label="Next project"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 3l5 5-5 5"/>
+              </svg>
+            </button>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <a
+    class="scroll-indicator"
+    href="#selected"
+  >
+    <span
+      data-en="Scroll"
+      data-sq="Zbrit"
+    >
+      {isSq ? 'Zbrit' : 'Scroll'}
+    </span>
+
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 6l5 5 5-5"/>
+    </svg>
+  </a>
+</section>

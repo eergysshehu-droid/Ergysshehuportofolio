@@ -1,0 +1,199 @@
+---
+import {
+  photoUrl,
+  photoSet,
+  photoPosition
+} from '../../lib/content';
+
+import {
+  localizedPath,
+  type SiteLang
+} from '../../lib/i18n';
+
+interface Props {
+  posts: any[];
+  isSq: boolean;
+  lang: SiteLang;
+}
+
+const {
+  posts,
+  isSq,
+  lang
+} = Astro.props;
+
+const journalDate = (
+  iso: string
+) =>
+  new Date(iso).toLocaleDateString(
+    'en-GB',
+    {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }
+  );
+
+const journalMonthsSq = [
+  'janar',
+  'shkurt',
+  'mars',
+  'prill',
+  'maj',
+  'qershor',
+  'korrik',
+  'gusht',
+  'shtator',
+  'tetor',
+  'nëntor',
+  'dhjetor'
+];
+
+const journalDateSq = (
+  iso: string
+) => {
+  const d = new Date(iso);
+  return `${d.getDate()} ${journalMonthsSq[d.getMonth()]} ${d.getFullYear()}`;
+};
+---
+
+<section class="journal-feature">
+  <div
+    class="journal-feature-heading"
+    data-reveal
+  >
+    <div>
+      <p
+        class="kicker"
+        data-en="THE JOURNAL"
+        data-sq="DITARI"
+      >
+        {isSq ? 'DITARI' : 'THE JOURNAL'}
+      </p>
+
+      <h2
+        data-en="Beyond the frame."
+        data-sq="Përtej kuadrit."
+      >
+        {isSq ? 'Përtej kuadrit.' : 'Beyond the frame.'}
+      </h2>
+    </div>
+
+    <a
+      class="index-link"
+      href={localizedPath('/journal/', lang)}
+      data-en="READ THE JOURNAL ↗"
+      data-sq="LEXO DITARIN ↗"
+    >
+      {isSq ? 'LEXO DITARIN ↗' : 'READ THE JOURNAL ↗'}
+    </a>
+  </div>
+
+  <div class="journal-feature-grid">
+    {
+      posts.map(post => {
+        const dateEn =
+          `${post.category ? post.category + ' / ' : ''}${journalDate(post.publishedAt)}`;
+
+        const dateSq =
+          `${(post.categorySq || post.category) ? (post.categorySq || post.category) + ' / ' : ''}${journalDateSq(post.publishedAt)}`;
+
+        const postTitle =
+          isSq
+            ? (post.titleSq || post.title)
+            : post.title;
+
+        const postExcerpt =
+          isSq
+            ? (post.excerptSq || post.excerpt)
+            : post.excerpt;
+
+        const postDate =
+          isSq
+            ? dateSq
+            : dateEn;
+
+        const coverAlt =
+          isSq
+            ? (
+                post.cover?.altSq ||
+                post.cover?.alt ||
+                postTitle
+              )
+            : (
+                post.cover?.alt ||
+                postTitle
+              );
+
+        return (
+          <a
+            class="journal-card"
+            data-reveal
+            href={localizedPath(`/journal/${post.slug}/`, lang)}
+          >
+            {
+              post.cover &&
+              photoUrl(post.cover) && (
+                <div
+                  class="journal-card-image"
+                  data-image-reveal
+                  style={`--focal-point:${photoPosition(post.cover)}`}
+                >
+                  <img
+                    src={photoUrl(post.cover, 700)}
+                    srcset={photoSet(post.cover)}
+                    sizes="(max-width:700px) 90vw, 30vw"
+                    width={post.cover.width}
+                    height={post.cover.height}
+                    alt={coverAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )
+            }
+
+            <div class="journal-card-copy">
+              <span
+                class="journal-date"
+                data-en={dateEn}
+                data-sq={dateSq}
+              >
+                {postDate}
+              </span>
+
+              <h2
+                data-en={post.title}
+                data-sq={post.titleSq || post.title}
+              >
+                {postTitle}
+              </h2>
+
+              <p
+                data-en={post.excerpt}
+                data-sq={post.excerptSq || post.excerpt}
+              >
+                {postExcerpt}
+              </p>
+
+              <span class="journal-read">
+                <span
+                  data-en="Read"
+                  data-sq="Lexo"
+                >
+                  {isSq ? 'Lexo' : 'Read'}
+                </span>
+
+                {' '}
+
+                <span aria-hidden="true">
+                  ↗
+                </span>
+              </span>
+            </div>
+          </a>
+        );
+      })
+    }
+  </div>
+</section>

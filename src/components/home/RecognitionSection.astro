@@ -1,0 +1,94 @@
+---
+import {
+  localizedPath,
+  type SiteLang
+} from '../../lib/i18n';
+
+interface Props {
+  items: any[];
+  isSq: boolean;
+  lang: SiteLang;
+}
+
+const {
+  items,
+  isSq,
+  lang
+} = Astro.props;
+---
+
+<section
+  class="recognition-section"
+  id="recognition"
+>
+  <div
+    class="recognition-heading"
+    data-reveal
+  >
+    <p
+      class="kicker"
+      data-en="SELECTED RECOGNITION"
+      data-sq="NJOHJE E PËRZGJEDHUR"
+    >
+      {isSq ? 'NJOHJE E PËRZGJEDHUR' : 'SELECTED RECOGNITION'}
+    </p>
+  </div>
+
+  <div class="recognition-list">
+    {
+      items.map(recognition => {
+        const secondary =
+          recognition.project ||
+          recognition.organization ||
+          recognition.note;
+
+        const Tag =
+          recognition.link
+            ? 'a'
+            : 'div';
+
+        const href =
+          recognition.link
+            ? localizedPath(recognition.link, lang)
+            : undefined;
+
+        return (
+          <Tag
+            class="recognition-row"
+            data-reveal
+            {...(href ? {href} : {})}
+          >
+            <span class="recognition-year">
+              {recognition.year}
+            </span>
+
+            <span class="recognition-body">
+              <span class="recognition-title">
+                {recognition.title}
+              </span>
+
+              {
+                secondary && (
+                  <span class="recognition-sub">
+                    {secondary}
+                  </span>
+                )
+              }
+            </span>
+
+            {
+              recognition.link && (
+                <span
+                  class="recognition-arrow"
+                  aria-hidden="true"
+                >
+                  ↗
+                </span>
+              )
+            }
+          </Tag>
+        );
+      })
+    }
+  </div>
+</section>

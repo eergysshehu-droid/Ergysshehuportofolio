@@ -1,0 +1,85 @@
+---
+import {
+  localizedPath,
+  type SiteLang
+} from '../../lib/i18n';
+
+interface Props {
+  settings: any;
+  isSq: boolean;
+  lang: SiteLang;
+}
+
+const {
+  settings,
+  isSq,
+  lang
+} = Astro.props;
+---
+
+<section
+  class="artist-section"
+  id="about"
+>
+  <div
+    class="artist-label"
+    data-reveal
+  >
+    <span
+      class="kicker"
+      data-en="BEHIND THE LENS"
+      data-sq="PAS OBJEKTIVIT"
+    >
+      {isSq ? 'PAS OBJEKTIVIT' : 'BEHIND THE LENS'}
+    </span>
+
+    <span class="artist-number">
+      ES / 01
+    </span>
+  </div>
+
+  <div class="artist-copy">
+    <h2 data-reveal>
+      <span
+        data-en="Purity."
+        data-sq="Pastërti."
+      >
+        {isSq ? 'Pastërti.' : 'Purity.'}
+      </span>
+
+      <br/>
+
+      <span
+        data-en="Simplicity."
+        data-sq="Thjeshtësi."
+      >
+        {isSq ? 'Thjeshtësi.' : 'Simplicity.'}
+      </span>
+
+      <br/>
+
+      <em
+        data-en="Honesty."
+        data-sq="Ndershmëri."
+      >
+        {isSq ? 'Ndershmëri.' : 'Honesty.'}
+      </em>
+    </h2>
+
+    <p data-reveal>
+      {
+        isSq
+          ? (settings.bioSq || settings.bio)
+          : settings.bio
+      }
+    </p>
+
+    <a
+      class="text-link"
+      data-reveal
+      href={localizedPath('/about/', lang)}
+    >
+      {isSq ? 'ARTISTI · SQ / EN' : 'THE ARTIST · EN / SQ'} <span>↗</span>
+    </a>
+  </div>
+</section>
