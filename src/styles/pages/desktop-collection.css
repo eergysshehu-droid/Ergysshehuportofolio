@@ -405,3 +405,38 @@
   }
 
 }
+/* ============================================================
+   COLLECTION FIRST IMAGE — EDITORIAL OVERLAP
+   ============================================================ */
+
+@media (min-width:701px) {
+
+  .section-intro,
+  .project-intro {
+    position:
+      relative;
+
+    z-index:
+      2;
+  }
+
+
+  .section-intro +
+  .collection-body,
+
+  .project-intro +
+  .gallery.collection-body {
+    position:
+      relative;
+
+    z-index:
+      1;
+
+    margin-top:
+      -26px !important;
+
+    padding-top:
+      0 !important;
+  }
+
+}
