@@ -223,10 +223,19 @@ const coverUrl =
     2000
   );
 
-const nextCoverUrl =
+const nextProjectPhoto =
   nextAlbum
+    ? (
+        nextAlbum.nextProjectCover ||
+        nextAlbum.cover
+      )
+    : undefined;
+
+
+const nextCoverUrl =
+  nextProjectPhoto
     ? photoUrl(
-        nextAlbum.cover,
+        nextProjectPhoto,
         2200
       )
     : '';
