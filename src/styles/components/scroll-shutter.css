@@ -1,0 +1,80 @@
+/* ============================================================
+   ERGYS SHEHU — CINEMATIC SCROLL SHUTTER
+   180° shutter-inspired motion response
+   ============================================================ */
+
+.scroll-shutter-media {
+  -webkit-backface-visibility:
+    hidden;
+
+  backface-visibility:
+    hidden;
+}
+
+
+/*
+ * Blur exists only while scrolling with enough velocity
+ * AND only on media currently close to the viewport.
+ */
+
+html.scroll-shutter-active
+.scroll-shutter-media.is-scroll-shutter-visible {
+  filter:
+    blur(
+      var(
+        --scroll-shutter-blur,
+        0px
+      )
+    );
+
+  will-change:
+    filter;
+}
+
+
+/*
+ * NEVER mix this effect with homepage
+ * mobile sticky stacking.
+ */
+
+@media (max-width: 700px) {
+
+  html.scroll-shutter-active
+  body.is-home
+  .project-card
+  .scroll-shutter-media,
+
+  html.scroll-shutter-active
+  body.is-home
+  .project-card
+  img {
+    filter:
+      blur(
+        var(
+          --stack-blur,
+          0px
+        )
+      ) !important;
+  }
+
+}
+
+
+/*
+ * Accessibility.
+ */
+
+@media (
+  prefers-reduced-motion:
+    reduce
+) {
+
+  .scroll-shutter-media {
+    filter:
+      none !important;
+
+    will-change:
+      auto !important;
+  }
+
+}
