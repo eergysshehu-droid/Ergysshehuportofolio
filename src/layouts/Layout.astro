@@ -5,11 +5,34 @@ import '../styles/polish-home.css';
 import '../styles/polish-book.css';
 import '../styles/theme.css';
 import '../styles/v6.css';
+
 import '../styles/components/mobile-nav.css';
+import '../styles/components/mobile-stack.css';
+import '../styles/components/footer.css';
+
 import '../styles/pages/mobile-collection.css';
 import '../styles/pages/desktop-collection.css';
-import '../styles/components/footer.css';
-import '../styles/components/mobile-stack.css';
+
+import {
+  defaults,
+  PERSON_ID,
+  WEBSITE_ID,
+  KULT360_ID
+} from '../lib/editorial';
+
+import {
+  languageFromPath,
+  localizedHref,
+  localizedPath,
+  languageUrls,
+  type SiteLang
+} from '../lib/i18n';
+
+import SocialIcons from '../components/SocialIcons.astro';
+
+</body>
+</html>
+</script>
 import {
   defaults,
   PERSON_ID,
