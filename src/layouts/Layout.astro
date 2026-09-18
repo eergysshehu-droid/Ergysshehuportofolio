@@ -30,6 +30,8 @@ import {
 
 import SocialIcons from '../components/SocialIcons.astro';
 
+interface Props {
+
 </body>
 </html>
 </script>
@@ -2542,12 +2544,15 @@ if(
    </script>
 
   <script
-    src="/v6-runtime.js"
-    is:inline
-    defer
-  ></script>
+  src="/v6-runtime.js"
+  is:inline
+  defer
+></script>
+
 <script>
   import '../scripts/mobile-rollup';
+  import '../scripts/scroll-shutter';
 </script>
+
 </body>
 </html>
