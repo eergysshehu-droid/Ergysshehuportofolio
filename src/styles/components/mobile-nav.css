@@ -1,6 +1,6 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE NAV FINAL
-   TRUE FULLSCREEN / AUTO-FIT / EDITORIAL
+   ERGYS SHEHU — MOBILE NAV
+   FINAL REFERENCE MATCH
    ============================================================ */
 
 .mobile-menu-trigger,
@@ -16,7 +16,9 @@
 @media (max-width: 1000px) {
 
   html {
+    --menu-accent: var(--accent, #f2a52c);
     --mobile-nav-pad: var(--page-pad);
+    --menu-col-gap: clamp(14px, 4vw, 24px);
   }
 
   html.mobile-menu-open,
@@ -27,13 +29,10 @@
 
 
   /* ==========================================================
-     CLOSED HEADER BUTTON
+     CLOSED MENU BUTTON
      ========================================================== */
 
   html body .mobile-menu-trigger {
-    display: grid !important;
-    place-items: center !important;
-
     position: relative !important;
 
     width: 44px !important;
@@ -45,17 +44,32 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    border: 1px solid rgba(255,255,255,.16) !important;
+    display: grid !important;
+    place-items: center !important;
+
+    border:
+      1px solid
+      color-mix(
+        in srgb,
+        var(--menu-accent) 55%,
+        transparent
+      ) !important;
+
     border-radius: 50% !important;
 
-    background: rgba(255,255,255,.035) !important;
+    background:
+      rgba(255,255,255,.025) !important;
 
-    color: var(--header-fg) !important;
+    color:
+      var(--menu-accent) !important;
 
     cursor: pointer !important;
 
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter:
+      blur(8px) !important;
+
+    -webkit-backdrop-filter:
+      blur(8px) !important;
 
     transition:
       transform 180ms ease,
@@ -86,9 +100,11 @@
 
     margin: 0 !important;
 
-    background: currentColor !important;
+    background:
+      currentColor !important;
 
-    border-radius: 999px !important;
+    border-radius:
+      999px !important;
   }
 
   html body .hamburger i:first-child {
@@ -107,7 +123,7 @@
 
 
   /* ==========================================================
-     TRUE FULLSCREEN OVERLAY
+     TRUE FULLSCREEN
      ========================================================== */
 
   html body .mobile-menu-screen {
@@ -120,7 +136,7 @@
     bottom: 0 !important;
     left: 0 !important;
 
-    width: auto !important;
+    width: 100% !important;
     max-width: none !important;
 
     height: 100vh !important;
@@ -143,64 +159,78 @@
 
     overflow: hidden !important;
 
-    overscroll-behavior: none !important;
+    overscroll-behavior:
+      none !important;
 
-    color: #f4f2ed !important;
+    isolation: isolate !important;
 
-    background: #040805 !important;
+    color:
+      #f4f2ed !important;
+
+    background:
+      #030705 !important;
 
     border: 0 !important;
     border-radius: 0 !important;
 
     box-shadow: none !important;
 
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-
     opacity: 0 !important;
     visibility: hidden !important;
 
     pointer-events: none !important;
 
-    transform: translate3d(0,-5px,0) !important;
+    transform:
+      translate3d(
+        0,
+        -5px,
+        0
+      ) !important;
 
     transition:
       opacity 200ms ease,
       transform 300ms cubic-bezier(.22,1,.36,1),
       visibility 0s linear 300ms !important;
 
-    z-index: 999999 !important;
-
-    isolation: isolate !important;
+    z-index:
+      999999 !important;
   }
 
 
-  /* background material */
+  /* ==========================================================
+     DARK GREEN MATERIAL
+     ========================================================== */
 
   html body .mobile-menu-screen::before {
     content: "" !important;
-
-    display: block !important;
 
     position: absolute !important;
 
     inset: 0 !important;
 
-    z-index: 0 !important;
+    display: block !important;
 
     pointer-events: none !important;
 
+    z-index: 0 !important;
+
     background:
       radial-gradient(
-        circle at 84% 0%,
-        rgba(71,103,80,.08),
-        transparent 34%
+        ellipse at 92% 0%,
+        rgba(59,99,72,.16) 0%,
+        rgba(25,61,39,.07) 29%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 0% 95%,
+        rgba(35,70,46,.09) 0%,
+        transparent 38%
       ),
       linear-gradient(
-        160deg,
-        #0a120d 0%,
-        #050906 48%,
-        #020403 100%
+        155deg,
+        #08130d 0%,
+        #030a06 46%,
+        #010403 100%
       ) !important;
   }
 
@@ -211,7 +241,12 @@
 
     pointer-events: auto !important;
 
-    transform: translate3d(0,0,0) !important;
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      ) !important;
 
     transition:
       opacity 200ms ease,
@@ -222,7 +257,7 @@
 
   /* ==========================================================
      OPEN HEADER
-     EXACT ALIGNMENT WITH NORMAL HEADER
+     SAME POSITION AS CLOSED HEADER
      ========================================================== */
 
   html body .mobile-menu-head {
@@ -232,8 +267,11 @@
 
     width: 100% !important;
 
-    height: var(--header-h) !important;
-    min-height: var(--header-h) !important;
+    height:
+      var(--header-h) !important;
+
+    min-height:
+      var(--header-h) !important;
 
     margin: 0 !important;
 
@@ -241,7 +279,8 @@
       0
       var(--mobile-nav-pad) !important;
 
-    box-sizing: border-box !important;
+    box-sizing:
+      border-box !important;
 
     display: flex !important;
 
@@ -251,7 +290,8 @@
     border: 0 !important;
 
     border-bottom:
-      1px solid rgba(244,242,237,.10) !important;
+      1px solid
+      rgba(244,242,237,.12) !important;
   }
 
 
@@ -271,43 +311,51 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    color: #f4f2ed !important;
+    color:
+      #f4f2ed !important;
 
-    font-family: var(--wordmark-font) !important;
+    font-family:
+      var(--wordmark-font) !important;
 
     line-height: 1 !important;
 
-    letter-spacing: .17em !important;
+    letter-spacing:
+      .17em !important;
 
-    white-space: nowrap !important;
+    white-space:
+      nowrap !important;
   }
 
   html body .mobile-menu-brand-strong,
   html body .mobile-menu-brand-light {
-    font-size: clamp(24px,1.9vw,44px) !important;
+    font-size:
+      clamp(
+        24px,
+        1.9vw,
+        44px
+      ) !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
   }
 
   html body .mobile-menu-brand-strong {
-    font-weight: 600 !important;
+    font-weight:
+      600 !important;
   }
 
   html body .mobile-menu-brand-light {
-    font-weight: 200 !important;
+    font-weight:
+      200 !important;
   }
 
 
   /* ==========================================================
-     CLOSE BUTTON
-     SAME SIZE / SAME POSITION AS HAMBURGER
+     YELLOW CLOSE BUTTON
      ========================================================== */
 
   html body .mobile-menu-close {
     position: relative !important;
-
-    display: grid !important;
-    place-items: center !important;
 
     width: 44px !important;
     height: 44px !important;
@@ -318,18 +366,30 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    border: 1px solid rgba(244,242,237,.16) !important;
-    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
 
-    background: rgba(255,255,255,.035) !important;
+    border:
+      1px solid
+      var(--menu-accent) !important;
 
-    color: #f4f2ed !important;
+    border-radius:
+      50% !important;
 
-    font-size: 0 !important;
+    background:
+      rgba(242,165,44,.025) !important;
 
-    cursor: pointer !important;
+    color:
+      var(--menu-accent) !important;
 
-    opacity: 1 !important;
+    font-size:
+      0 !important;
+
+    opacity:
+      1 !important;
+
+    cursor:
+      pointer !important;
   }
 
   html body .mobile-menu-close::before,
@@ -344,9 +404,11 @@
     width: 18px !important;
     height: 1px !important;
 
-    background: currentColor !important;
+    background:
+      currentColor !important;
 
-    border-radius: 999px !important;
+    border-radius:
+      999px !important;
   }
 
   html body .mobile-menu-close::before {
@@ -363,15 +425,14 @@
 
   html body .mobile-menu-trigger:active,
   html body .mobile-menu-close:active {
-    transform: scale(.92) !important;
+    transform:
+      scale(.92) !important;
   }
 
 
   /* ==========================================================
-     NAV
-     IMPORTANT:
-     NOT vertically centered anymore.
-     Starts naturally below header.
+     MAIN NAV
+     USES THE WHOLE AVAILABLE HEIGHT
      ========================================================== */
 
   html body .mobile-menu-screen nav {
@@ -379,10 +440,8 @@
 
     z-index: 2 !important;
 
-    align-self: start !important;
-
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
 
     min-width: 0 !important;
     min-height: 0 !important;
@@ -390,35 +449,53 @@
     margin: 0 !important;
 
     padding:
-      clamp(34px,6.2dvh,64px)
+      clamp(22px,3dvh,40px)
       var(--mobile-nav-pad)
-      18px !important;
+      0 !important;
 
-    box-sizing: border-box !important;
+    box-sizing:
+      border-box !important;
 
     display: grid !important;
 
     grid-template-columns:
-      repeat(3,minmax(0,1fr)) !important;
+      repeat(
+        3,
+        minmax(0,1fr)
+      ) !important;
 
-    grid-template-rows: none !important;
+    grid-template-rows:
+      repeat(
+        6,
+        minmax(0,1fr)
+      )
+      auto
+      clamp(
+        18px,
+        3.5dvh,
+        38px
+      ) !important;
 
-    grid-auto-rows: auto !important;
+    align-items:
+      center !important;
 
-    align-content: start !important;
-    align-items: center !important;
+    align-content:
+      stretch !important;
 
     column-gap:
-      clamp(12px,4vw,24px) !important;
+      var(--menu-col-gap) !important;
 
     row-gap:
-      clamp(13px,1.8dvh,18px) !important;
+      0 !important;
 
-    overflow: visible !important;
+    overflow:
+      hidden !important;
 
-    border: 0 !important;
+    border:
+      0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
   }
 
 
@@ -429,115 +506,178 @@
   html body
   .mobile-menu-screen
   nav > a:nth-child(-n+6) {
-    grid-column: 1 / -1 !important;
+    grid-column:
+      1 / -1 !important;
 
-    width: fit-content !important;
-    max-width: 100% !important;
+    width:
+      fit-content !important;
 
-    min-width: 0 !important;
-    min-height: 0 !important;
+    max-width:
+      100% !important;
 
-    height: auto !important;
+    min-width:
+      0 !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
+    min-height:
+      0 !important;
 
-    display: grid !important;
-
-    grid-template-columns:
-      clamp(25px,7vw,34px)
+    height:
       auto !important;
 
-    align-items: baseline !important;
+    margin:
+      0 !important;
+
+    padding:
+      0 !important;
+
+    display:
+      grid !important;
+
+    grid-template-columns:
+      clamp(
+        27px,
+        7vw,
+        36px
+      )
+      auto !important;
+
+    align-items:
+      baseline !important;
 
     column-gap:
-      clamp(8px,2.4vw,12px) !important;
+      clamp(
+        10px,
+        2.7vw,
+        14px
+      ) !important;
 
-    border: 0 !important;
+    border:
+      0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
 
     color:
-      rgba(246,244,238,.95) !important;
+      rgba(246,244,238,.96) !important;
 
-    font-family: var(--sans) !important;
+    font-family:
+      var(--sans) !important;
 
     font-size:
       clamp(
-        25px,
-        min(7.6vw,4.15dvh),
-        36px
+        27px,
+        min(7.6vw,4.2dvh),
+        38px
       ) !important;
 
-    font-weight: 300 !important;
+    font-weight:
+      300 !important;
 
-    line-height: .94 !important;
+    line-height:
+      .94 !important;
 
-    letter-spacing: -.045em !important;
+    letter-spacing:
+      -.045em !important;
 
-    text-transform: uppercase !important;
+    text-transform:
+      uppercase !important;
 
-    opacity: 1 !important;
+    opacity:
+      1 !important;
 
-    transform: translate3d(0,6px,0);
+    transform:
+      translate3d(
+        0,
+        6px,
+        0
+      );
 
     transition:
-      opacity 160ms ease,
+      opacity 150ms ease,
       transform 300ms cubic-bezier(.22,1,.36,1) !important;
   }
 
   html body
   .mobile-menu-screen.is-open
   nav > a:nth-child(-n+6) {
-    transform: translate3d(0,0,0) !important;
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      ) !important;
   }
 
 
   /* ==========================================================
-     NUMBERS
+     YELLOW NUMBERS
      ========================================================== */
 
   html body
   .mobile-menu-screen
   nav > a:nth-child(-n+6)::before {
-    display: block !important;
+    display:
+      block !important;
 
-    align-self: center !important;
+    align-self:
+      center !important;
 
     color:
-      rgba(244,242,237,.27) !important;
+      var(--menu-accent) !important;
 
-    font-size: 8px !important;
+    font-size:
+      9px !important;
 
-    font-weight: 500 !important;
+    font-weight:
+      500 !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
 
-    letter-spacing: .14em !important;
+    letter-spacing:
+      .10em !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(1)::before {
-    content: "01" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(1)::before {
+    content:
+      "01" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(2)::before {
-    content: "02" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(2)::before {
+    content:
+      "02" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(3)::before {
-    content: "03" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(3)::before {
+    content:
+      "03" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(4)::before {
-    content: "04" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(4)::before {
+    content:
+      "04" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(5)::before {
-    content: "05" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(5)::before {
+    content:
+      "05" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(6)::before {
-    content: "06" !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(6)::before {
+    content:
+      "06" !important;
   }
 
 
@@ -545,101 +685,190 @@
      ABOUT / JOURNAL / CONTACT
      ========================================================== */
 
-  html body .mobile-menu-screen nav > a:nth-child(7),
-  html body .mobile-menu-screen nav > a:nth-child(8),
-  html body .mobile-menu-screen nav > a:nth-child(9) {
-    width: 100% !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(7),
 
-    min-width: 0 !important;
-    min-height: 30px !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(8),
 
-    height: auto !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(9) {
+    width:
+      100% !important;
+
+    min-width:
+      0 !important;
+
+    min-height:
+      38px !important;
+
+    height:
+      auto !important;
 
     margin:
-      clamp(5px,.8dvh,8px)
-      0
       0 !important;
 
     padding:
-      10px
+      14px
       0
       0 !important;
 
-    display: flex !important;
+    display:
+      flex !important;
 
-    align-items: flex-start !important;
+    align-items:
+      flex-start !important;
 
-    border: 0 !important;
+    position:
+      relative !important;
 
-    border-top:
-      1px solid rgba(244,242,237,.10) !important;
+    border:
+      0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
 
     color:
-      rgba(244,242,237,.54) !important;
+      rgba(244,242,237,.73) !important;
 
-    font-size: 9px !important;
+    font-size:
+      9px !important;
 
-    font-weight: 500 !important;
+    font-weight:
+      500 !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
 
-    letter-spacing: .18em !important;
+    letter-spacing:
+      .18em !important;
 
-    text-transform: uppercase !important;
+    text-transform:
+      uppercase !important;
 
-    opacity: 1 !important;
+    opacity:
+      1 !important;
 
-    transform: none !important;
+    transform:
+      none !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(7) {
-    grid-column: 1 !important;
-    grid-row: 7 !important;
+
+  /* full line above secondary row */
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(7)::before {
+    content: "" !important;
+
+    position:
+      absolute !important;
+
+    top:
+      0 !important;
+
+    left:
+      0 !important;
+
+    width:
+      calc(
+        300% +
+        (
+          var(--menu-col-gap) *
+          2
+        )
+      ) !important;
+
+    height:
+      1px !important;
+
+    background:
+      rgba(244,242,237,.15) !important;
+
+    pointer-events:
+      none !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(8) {
-    grid-column: 2 !important;
-    grid-row: 7 !important;
 
-    justify-content: center !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(7) {
+    grid-column:
+      1 !important;
+
+    grid-row:
+      7 !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(9) {
-    grid-column: 3 !important;
-    grid-row: 7 !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(8) {
+    grid-column:
+      2 !important;
 
-    justify-content: flex-end !important;
+    grid-row:
+      7 !important;
+
+    justify-content:
+      center !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(9) {
+    grid-column:
+      3 !important;
+
+    grid-row:
+      7 !important;
+
+    justify-content:
+      flex-end !important;
   }
 
 
   /* ==========================================================
-     FOOTER — ALWAYS AT BOTTOM
+     FOOTER
      ========================================================== */
 
   html body .mobile-menu-footer {
-    position: relative !important;
+    position:
+      relative !important;
 
-    z-index: 2 !important;
+    z-index:
+      2 !important;
 
-    width: 100% !important;
+    width:
+      100% !important;
 
-    min-width: 0 !important;
-    min-height: 54px !important;
+    min-width:
+      0 !important;
 
-    height: auto !important;
+    min-height:
+      62px !important;
 
-    margin: 0 !important;
+    height:
+      auto !important;
+
+    margin:
+      0 !important;
 
     padding:
-      9px
+      10px
       var(--mobile-nav-pad)
-      max(10px,env(safe-area-inset-bottom)) !important;
+      max(
+        11px,
+        env(safe-area-inset-bottom)
+      ) !important;
 
-    box-sizing: border-box !important;
+    box-sizing:
+      border-box !important;
 
-    display: grid !important;
+    display:
+      grid !important;
 
     grid-template-columns:
       auto
@@ -649,167 +878,273 @@
     grid-template-areas:
       "language social book" !important;
 
-    align-items: center !important;
+    align-items:
+      center !important;
 
     column-gap:
-      clamp(6px,2vw,12px) !important;
+      clamp(
+        8px,
+        2vw,
+        14px
+      ) !important;
 
-    border: 0 !important;
+    border:
+      0 !important;
 
     border-top:
-      1px solid rgba(244,242,237,.10) !important;
+      1px solid
+      rgba(244,242,237,.14) !important;
   }
 
 
-  /* LANGUAGE */
+  /* ==========================================================
+     LANGUAGE
+     ========================================================== */
 
   html body
   .mobile-menu-footer
   .language-switch {
-    grid-area: language !important;
+    grid-area:
+      language !important;
 
-    width: auto !important;
+    width:
+      auto !important;
 
-    min-width: 0 !important;
-    min-height: 30px !important;
+    min-width:
+      0 !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
+    min-height:
+      32px !important;
 
-    display: flex !important;
+    margin:
+      0 !important;
 
-    align-items: center !important;
+    padding:
+      0 !important;
 
-    gap: 10px !important;
+    display:
+      flex !important;
 
-    border: 0 !important;
+    align-items:
+      center !important;
 
-    background: transparent !important;
+    gap:
+      9px !important;
+
+    border:
+      0 !important;
+
+    background:
+      transparent !important;
   }
 
   html body
   .mobile-menu-footer
   .language-switch::before {
-    display: none !important;
+    display:
+      none !important;
 
-    content: none !important;
+    content:
+      none !important;
   }
 
   html body
   .mobile-menu-footer
   .language-switch button {
-    width: auto !important;
+    width:
+      auto !important;
 
-    min-width: 0 !important;
+    min-width:
+      0 !important;
 
-    height: 30px !important;
-    min-height: 30px !important;
+    height:
+      32px !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
+    min-height:
+      32px !important;
 
-    border: 0 !important;
+    margin:
+      0 !important;
 
-    background: transparent !important;
+    padding:
+      0 !important;
+
+    border:
+      0 !important;
+
+    background:
+      transparent !important;
 
     color:
       rgba(244,242,237,.38) !important;
 
-    font-size: 9px !important;
+    font-size:
+      9px !important;
 
-    font-weight: 600 !important;
+    font-weight:
+      600 !important;
 
-    line-height: 30px !important;
+    line-height:
+      32px !important;
 
-    letter-spacing: .12em !important;
+    letter-spacing:
+      .11em !important;
 
-    opacity: 1 !important;
+    opacity:
+      1 !important;
   }
+
+
+  /* YELLOW ACTIVE LANGUAGE */
 
   html body
   .mobile-menu-footer
   .language-switch
   button.is-active {
-    color: #f4f2ed !important;
+    color:
+      var(--menu-accent) !important;
   }
 
 
-  /* SOCIAL */
+  /* ==========================================================
+     SOCIAL ICONS
+     ========================================================== */
 
   html body .mobile-footer-row {
-    display: contents !important;
+    display:
+      contents !important;
   }
 
   html body .mobile-social {
-    grid-area: social !important;
+    grid-area:
+      social !important;
 
-    justify-self: center !important;
+    justify-self:
+      center !important;
 
-    display: flex !important;
+    display:
+      flex !important;
 
-    align-items: center !important;
+    align-items:
+      center !important;
 
-    gap: 2px !important;
+    gap:
+      3px !important;
+
+    color:
+      rgba(244,242,237,.86) !important;
   }
 
-  html body .mobile-social .social-link {
-    width: 29px !important;
-    height: 29px !important;
+  html body
+  .mobile-social
+  .social-link {
+    width:
+      32px !important;
 
-    min-width: 29px !important;
-    min-height: 29px !important;
+    height:
+      32px !important;
 
-    flex: 0 0 29px !important;
+    min-width:
+      32px !important;
 
-    opacity: .56 !important;
+    min-height:
+      32px !important;
+
+    flex:
+      0 0 32px !important;
+
+    color:
+      rgba(244,242,237,.86) !important;
+
+    opacity:
+      .72 !important;
   }
 
-  html body .mobile-social .social-icon {
-    width: 12px !important;
-    height: 12px !important;
+  html body
+  .mobile-social
+  .social-link::before {
+    inset:
+      1px !important;
+
+    opacity:
+      .20 !important;
+
+    transform:
+      scale(1) !important;
+  }
+
+  html body
+  .mobile-social
+  .social-icon {
+    width:
+      13px !important;
+
+    height:
+      13px !important;
   }
 
 
-  /* BOOK */
+  /* ==========================================================
+     YELLOW BOOK NOW
+     ========================================================== */
 
   html body .mobile-book {
-    grid-area: book !important;
+    grid-area:
+      book !important;
 
-    justify-self: end !important;
+    justify-self:
+      end !important;
 
-    width: auto !important;
+    width:
+      auto !important;
 
-    min-width: 0 !important;
+    min-width:
+      0 !important;
 
-    height: 30px !important;
-    min-height: 30px !important;
+    min-height:
+      32px !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
+    height:
+      32px !important;
 
-    display: flex !important;
+    margin:
+      0 !important;
 
-    align-items: center !important;
+    padding:
+      0 !important;
 
-    color: #f4f2ed !important;
+    display:
+      flex !important;
 
-    font-size: 9px !important;
+    align-items:
+      center !important;
 
-    font-weight: 500 !important;
+    color:
+      var(--menu-accent) !important;
 
-    line-height: 1 !important;
+    font-size:
+      9px !important;
 
-    letter-spacing: .14em !important;
+    font-weight:
+      600 !important;
 
-    text-transform: uppercase !important;
+    line-height:
+      1 !important;
 
-    white-space: nowrap !important;
+    letter-spacing:
+      .14em !important;
+
+    text-transform:
+      uppercase !important;
+
+    white-space:
+      nowrap !important;
   }
 }
 
 
 /* ============================================================
-   PHONE ALIGNMENT
+   PHONE
    ============================================================ */
 
 @media (max-width: 700px) {
@@ -827,12 +1162,18 @@
 
 @media (max-width: 700px) and (max-height: 720px) {
 
-  html body .mobile-menu-screen nav {
-    padding-top: 18px !important;
+  html body
+  .mobile-menu-screen nav {
+    padding-top:
+      12px !important;
 
-    padding-bottom: 8px !important;
-
-    row-gap: 8px !important;
+    grid-template-rows:
+      repeat(
+        6,
+        minmax(0,1fr)
+      )
+      auto
+      14px !important;
   }
 
   html body
@@ -840,29 +1181,41 @@
   nav > a:nth-child(-n+6) {
     font-size:
       clamp(
-        21px,
-        min(7vw,4dvh),
-        29px
+        22px,
+        min(7vw,4.1dvh),
+        30px
       ) !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(7),
-  html body .mobile-menu-screen nav > a:nth-child(8),
-  html body .mobile-menu-screen nav > a:nth-child(9) {
-    min-height: 23px !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(7),
 
-    margin-top: 0 !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(8),
 
-    padding-top: 6px !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(9) {
+    min-height:
+      28px !important;
 
-    font-size: 8px !important;
+    padding-top:
+      8px !important;
+
+    font-size:
+      8px !important;
   }
 
   html body .mobile-menu-footer {
-    min-height: 43px !important;
+    min-height:
+      48px !important;
 
-    padding-top: 5px !important;
+    padding-top:
+      5px !important;
   }
+
 }
 
 
@@ -876,42 +1229,56 @@
   .mobile-menu-screen
   nav > a:nth-child(-n+6) {
     grid-template-columns:
-      23px
+      24px
       auto !important;
 
-    column-gap: 7px !important;
+    column-gap:
+      7px !important;
 
     font-size:
       clamp(
         21px,
         min(7vw,4dvh),
-        28px
+        29px
       ) !important;
   }
 
   html body
   .mobile-menu-screen
   nav > a:nth-child(-n+6)::before {
-    font-size: 7px !important;
+    font-size:
+      7px !important;
   }
 
   html body .mobile-menu-footer {
-    column-gap: 3px !important;
+    column-gap:
+      4px !important;
   }
 
-  html body .mobile-social .social-link {
-    width: 27px !important;
-    height: 27px !important;
+  html body
+  .mobile-social
+  .social-link {
+    width:
+      28px !important;
 
-    min-width: 27px !important;
-    min-height: 27px !important;
+    height:
+      28px !important;
 
-    flex-basis: 27px !important;
+    min-width:
+      28px !important;
+
+    min-height:
+      28px !important;
+
+    flex-basis:
+      28px !important;
   }
 
   html body .mobile-book {
-    font-size: 8px !important;
+    font-size:
+      8px !important;
   }
+
 }
 
 
@@ -925,9 +1292,11 @@
   html body .mobile-menu-screen nav > a,
   html body .mobile-menu-trigger,
   html body .mobile-menu-close {
-    transition: none !important;
+    transition:
+      none !important;
 
-    transform: none !important;
+    transform:
+      none !important;
   }
 
 }
