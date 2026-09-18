@@ -637,196 +637,187 @@ const webPageLd = {
       </div>
     </nav>
 
-    <details class="mobile-menu">
-      <summary
-        aria-label="Open navigation"
+   <button
+  type="button"
+  class="mobile-menu-trigger"
+  data-menu-open
+  aria-label="Open navigation"
+  aria-expanded="false"
+  aria-controls="mobile-menu-overlay"
+>
+  <span
+    class="hamburger"
+    aria-hidden="true"
+  >
+    <i></i>
+    <i></i>
+  </span>
+</button>
+
+</header>
+
+<div
+  id="mobile-menu-overlay"
+  class="mobile-menu-screen"
+  data-mobile-menu
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation"
+  aria-hidden="true"
+>
+  <div class="mobile-menu-head">
+    <a
+      class="mobile-menu-brand"
+      href={href('/')}
+      aria-label={name + ' home'}
+    >
+      <span class="mobile-menu-brand-strong">
+        ERGYS
+      </span>
+
+      <span class="mobile-menu-brand-light">
+        SHEHU
+      </span>
+    </a>
+
+    <button
+      type="button"
+      class="mobile-menu-close"
+      data-menu-close
+      aria-label="Close navigation"
+    >
+      <span class="sr-only">
+        Close
+      </span>
+    </button>
+  </div>
+
+  <nav aria-label="Mobile navigation">
+    <a
+      href={href('/#selected')}
+      data-en="Photography"
+      data-sq="Fotografi"
+    >
+      Photography
+    </a>
+
+    <a
+      href={href('/fashion/')}
+      data-en="Fashion"
+      data-sq="Modë"
+    >
+      Fashion
+    </a>
+
+    <a
+      href={href('/portraits/')}
+      data-en="Portraits"
+      data-sq="Portrete"
+    >
+      Portraits
+    </a>
+
+    <a
+      href={href('/weddings/')}
+      data-en="Weddings"
+      data-sq="Dasma"
+    >
+      Weddings
+    </a>
+
+    <a
+      href={href('/films/')}
+      data-en="Motion"
+      data-sq="Video"
+    >
+      Motion
+    </a>
+
+    <a
+      href={href('/projects/')}
+      data-en="Index"
+      data-sq="Indeksi"
+    >
+      Index
+    </a>
+
+    <a
+      href={href('/about/')}
+      data-en="About"
+      data-sq="Rreth"
+    >
+      About
+    </a>
+
+    <a
+      href={href('/journal/')}
+      data-en="Journal"
+      data-sq="Ditari"
+    >
+      Journal
+    </a>
+
+    <a
+      href={href('/book/#contact')}
+      data-en="Contact"
+      data-sq="Kontakt"
+    >
+      Contact
+    </a>
+  </nav>
+
+  <div class="mobile-menu-footer">
+    <div
+      class="language-switch"
+      data-active={lang}
+      role="group"
+      aria-label="Language / Gjuha"
+    >
+      <button
+        type="button"
+        data-lang="en"
+        data-lang-href={enSwitchHref}
+        class:is-active={lang === 'en'}
+        aria-pressed={
+          lang === 'en'
+            ? 'true'
+            : 'false'
+        }
       >
-        <span class="hamburger">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
-      </summary>
+        EN
+      </button>
 
-      <div class="mobile-menu-screen">
-        <div class="mobile-menu-head">
-          <a
-            class="mobile-menu-brand"
-            href={href('/')}
-            aria-label={
-              name +
-              ' home'
-            }
-          >
-            <span class="mobile-menu-brand-strong">
-              ERGYS
-            </span>
+      <button
+        type="button"
+        data-lang="sq"
+        data-lang-href={sqSwitchHref}
+        class:is-active={lang === 'sq'}
+        aria-pressed={
+          lang === 'sq'
+            ? 'true'
+            : 'false'
+        }
+      >
+        SQ
+      </button>
+    </div>
 
-            <span class="mobile-menu-brand-light">
-              SHEHU
-            </span>
-          </a>
+    <div class="mobile-footer-row">
+      <SocialIcons
+        class="mobile-social"
+      />
+    </div>
 
-          <button
-            type="button"
-            class="mobile-menu-close"
-            data-menu-close
-            aria-label="Close navigation"
-          >
-            ✕
-          </button>
-        </div>
-
-        <nav
-          aria-label="Mobile navigation"
-        >
-          <a
-            href={href('/#selected')}
-            data-en="Photography"
-            data-sq="Fotografi"
-          >
-            Photography
-          </a>
-
-          <a
-            href={href('/fashion/')}
-            data-en="Fashion"
-            data-sq="Modë"
-          >
-            Fashion
-          </a>
-
-          <a
-            href={href('/portraits/')}
-            data-en="Portraits"
-            data-sq="Portrete"
-          >
-            Portraits
-          </a>
-
-          <a
-            href={href('/weddings/')}
-            data-en="Weddings"
-            data-sq="Dasma"
-          >
-            Weddings
-          </a>
-
-          <a
-            href={href('/films/')}
-            data-en="Motion"
-            data-sq="Video"
-          >
-            Motion
-          </a>
-
-          <a
-            href={href('/projects/')}
-            data-en="Index"
-            data-sq="Indeksi"
-          >
-            Index
-          </a>
-
-          <a
-            href={href('/about/')}
-            data-en="About"
-            data-sq="Rreth"
-          >
-            About
-          </a>
-
-          <a
-            href={href('/journal/')}
-            data-en="Journal"
-            data-sq="Ditari"
-          >
-            Journal
-          </a>
-
-          <a
-            href={href('/book/#contact')}
-            data-en="Contact"
-            data-sq="Kontakt"
-          >
-            Contact
-          </a>
-        </nav>
-
-        <div class="mobile-menu-footer">
-          <div
-            class="language-switch"
-            data-active={lang}
-            role="group"
-            aria-label="Language / Gjuha"
-          >
-            <button
-              type="button"
-              data-lang="en"
-              data-lang-href={enSwitchHref}
-              class:is-active={
-                lang === 'en'
-              }
-              aria-pressed={
-                lang === 'en'
-                  ? 'true'
-                  : 'false'
-              }
-            >
-              EN
-            </button>
-
-            <button
-              type="button"
-              data-lang="sq"
-              data-lang-href={sqSwitchHref}
-              class:is-active={
-                lang === 'sq'
-              }
-              aria-pressed={
-                lang === 'sq'
-                  ? 'true'
-                  : 'false'
-              }
-            >
-              SQ
-            </button>
-          </div>
-
-          <a
-            class="mobile-book"
-            href={href('/book/#contact')}
-            data-en="Book now ↗"
-            data-sq="Rezervo ↗"
-          >
-            Book now ↗
-          </a>
-
-          <div class="mobile-footer-row">
-            <SocialIcons
-              class="mobile-social"
-            />
-
-            <div class="mobile-location">
-              <span
-                data-en="Albania"
-                data-sq="Shqipëri"
-              >
-                Albania
-              </span>
-
-              <span
-                data-en="Available worldwide"
-                data-sq="I disponueshëm në mbarë botën"
-              >
-                Available worldwide
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </details>
-  </header>
+    <a
+      class="mobile-book"
+      href={href('/book/#contact')}
+      data-en="Book now ↗"
+      data-sq="Rezervo ↗"
+    >
+      Book now ↗
+    </a>
+  </div>
+</div>
 
   <main id="main">
     <slot/>
