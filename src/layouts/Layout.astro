@@ -5,6 +5,8 @@ import '../styles/polish-home.css';
 import '../styles/polish-book.css';
 import '../styles/theme.css';
 import '../styles/v6.css';
+import '../styles/premium-v7.css';
+import '../styles/mobile-header-v8.css';
 
 import '../styles/components/footer.css';
 
@@ -36,6 +38,9 @@ interface Props {
   home?: boolean;
   image?: string;
   noindex?: boolean;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
   lang?: SiteLang;
 }
 
@@ -46,6 +51,9 @@ const {
   home = false,
   image = '/images/ergys-shehu-logo.png',
   noindex = false,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
   lang: requestedLang
 } = Astro.props;
 
@@ -238,6 +246,23 @@ const webPageLd = {
   content="width=device-width, initial-scale=1, viewport-fit=cover"
 />
 
+  <meta
+    name="color-scheme"
+    content="light dark"
+  />
+
+  <meta
+    name="theme-color"
+    content="#f1efe8"
+    media="(prefers-color-scheme: light)"
+  />
+
+  <meta
+    name="theme-color"
+    content="#070807"
+    media="(prefers-color-scheme: dark)"
+  />
+
   <title>
     {title}
   </title>
@@ -366,8 +391,28 @@ const webPageLd = {
 
   <meta
     property="og:type"
-    content="website"
+    content={ogType}
   />
+
+  {
+    ogType === 'article' &&
+    publishedTime && (
+      <meta
+        property="article:published_time"
+        content={publishedTime}
+      />
+    )
+  }
+
+  {
+    ogType === 'article' &&
+    modifiedTime && (
+      <meta
+        property="article:modified_time"
+        content={modifiedTime}
+      />
+    )
+  }
 
   <meta
     property="og:site_name"
@@ -439,6 +484,15 @@ const webPageLd = {
       <meta
         name="twitter:image"
         content={imageUrl}
+      />
+    )
+  }
+
+  {
+    imageUrl && (
+      <meta
+        name="twitter:image:alt"
+        content={title}
       />
     )
   }
@@ -869,6 +923,7 @@ const webPageLd = {
   <script>
     import { initMobileMenu } from '../scripts/mobile-menu';
     import { initHomeStack } from '../scripts/home-stack';
+    import { initPremiumRuntime } from '../scripts/premium-runtime';
 
     document
       .documentElement
@@ -880,6 +935,11 @@ const webPageLd = {
     const reducedMotion =
       window.matchMedia(
         '(prefers-reduced-motion: reduce)'
+      );
+
+    const mobileHeaderQuery =
+      window.matchMedia(
+        '(max-width: 1000px)'
       );
 
     const LANG_KEY =
@@ -1049,6 +1109,7 @@ const webPageLd = {
 
 
     initMobileMenu();
+    initPremiumRuntime();
 
     const siteHeader =
       document.querySelector<HTMLElement>(
@@ -1079,6 +1140,29 @@ const webPageLd = {
               'is-scrolled',
               y > headerH
             );
+
+          /*
+           * PHASE 5:
+           * Mobile/tablet navigation must keep ERGYS SHEHU + hamburger visible.
+           * Hide-on-scroll is now desktop-only.
+           */
+          if(
+            mobileHeaderQuery.matches
+          ){
+            siteHeader
+              .classList
+              .remove(
+                'is-hidden'
+              );
+
+            lastY =
+              y;
+
+            headerTicking =
+              false;
+
+            return;
+          }
 
           if(
             !reducedMotion.matches
@@ -1118,6 +1202,21 @@ const webPageLd = {
         };
 
       updateHeader();
+
+
+      mobileHeaderQuery
+        .addEventListener(
+          'change',
+          ()=>{
+            siteHeader
+              .classList
+              .remove(
+                'is-hidden'
+              );
+
+            updateHeader();
+          }
+        );
 
       document
         .addEventListener(

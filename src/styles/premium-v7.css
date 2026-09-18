@@ -1,0 +1,434 @@
+/* ==========================================================================
+   ERGYS SHEHU — PHASE 3 PREMIUM UI / PERFORMANCE
+   --------------------------------------------------------------------------
+   Additive polish only.
+   It deliberately does NOT change the homepage mobile sticky stack geometry:
+   - no .project-card position changes
+   - no .project-card top changes
+   - no .work-section overflow changes
+   - no .project-grid overflow changes
+   ========================================================================== */
+
+:root{
+  --premium-ease:
+    cubic-bezier(.16,1,.3,1);
+
+  --premium-fast:
+    160ms;
+
+  --premium-medium:
+    280ms;
+
+  --premium-focus:
+    color-mix(
+      in srgb,
+      var(--accent,#f2a52c) 86%,
+      white 14%
+    );
+}
+
+html{
+  scrollbar-gutter:
+    stable;
+
+  text-size-adjust:
+    100%;
+
+  -webkit-text-size-adjust:
+    100%;
+
+  overscroll-behavior-x:
+    none;
+}
+
+body{
+  min-width:
+    320px;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+
+  text-rendering:
+    optimizeLegibility;
+}
+
+::selection{
+  color:
+    #fff;
+
+  background:
+    rgba(
+      166,
+      109,
+      23,
+      .82
+    );
+}
+
+:where(
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  summary,
+  [role="button"]
+){
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+:where(
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  summary,
+  [tabindex]
+):focus-visible{
+  outline:
+    2px solid
+    var(
+      --premium-focus
+    );
+
+  outline-offset:
+    4px;
+}
+
+.site-header,
+.mobile-menu-screen,
+.mobile-menu-trigger,
+.mobile-menu-close,
+.nav-book,
+.mobile-book,
+.footer-contact,
+.back-link,
+.filter{
+  transition-timing-function:
+    var(
+      --premium-ease
+    ) !important;
+}
+
+/* Avoid transparent flashes while managed media decode. */
+.image-load-system
+:where(
+  .opening-image,
+  .filmstrip-image,
+  .project-image,
+  .latest-card,
+  .journal-card-image,
+  .journal-post-cover,
+  .gallery.collection-body figure,
+  .next-project-media
+){
+  background-color:
+    #050505;
+}
+
+.image-load-system
+:where(
+  .opening-image,
+  .filmstrip-image,
+  .project-image,
+  .latest-card,
+  .journal-card-image,
+  .journal-post-cover,
+  .gallery.collection-body figure,
+  .next-project-media
+)
+img{
+  -webkit-backface-visibility:
+    hidden;
+
+  backface-visibility:
+    hidden;
+
+  transform:
+    translateZ(0);
+}
+
+/* Homepage stack: compositing polish only, geometry remains untouched. */
+@media(max-width:700px){
+  body.is-home
+  .project-card
+  .project-image{
+    isolation:
+      isolate;
+
+    contain:
+      paint;
+
+    background:
+      #050505 !important;
+  }
+
+  body.is-home
+  .project-card
+  .project-image img{
+    -webkit-backface-visibility:
+      hidden;
+
+    backface-visibility:
+      hidden;
+
+    transform:
+      translateZ(0) !important;
+  }
+
+  html body
+  .site-header{
+    padding-top:
+      env(
+        safe-area-inset-top
+      ) !important;
+  }
+
+  html body
+  .mobile-menu-screen{
+    padding-bottom:
+      env(
+        safe-area-inset-bottom
+      ) !important;
+  }
+
+  html body
+  .mobile-book,
+  html body
+  .mobile-menu-trigger,
+  html body
+  .mobile-menu-close{
+    touch-action:
+      manipulation;
+  }
+}
+
+/* Premium pointer interactions without affecting touch. */
+@media(
+  hover:hover
+) and (
+  pointer:fine
+){
+  .desktop-nav > a:not(.nav-book),
+  .back-link,
+  footer a{
+    transition:
+      opacity
+      var(
+        --premium-fast
+      )
+      ease,
+      transform
+      var(
+        --premium-medium
+      )
+      var(
+        --premium-ease
+      );
+  }
+
+  .desktop-nav > a:not(.nav-book):hover,
+  .back-link:hover{
+    opacity:
+      .62;
+
+    transform:
+      translateY(
+        -1px
+      );
+  }
+
+  .nav-book,
+  .mobile-book,
+  .footer-contact{
+    transition:
+      transform
+      var(
+        --premium-medium
+      )
+      var(
+        --premium-ease
+      ),
+      opacity
+      var(
+        --premium-fast
+      )
+      ease,
+      background-color
+      var(
+        --premium-fast
+      )
+      ease;
+  }
+
+  .nav-book:hover,
+  .footer-contact:hover{
+    transform:
+      translateY(
+        -2px
+      );
+  }
+
+  dialog.lightbox
+  button:hover{
+    transform:
+      scale(
+        1.035
+      );
+  }
+}
+
+/* Form polish shared by Book/contact. */
+:where(
+  .booking-form,
+  #inquiry,
+  .contact-form
+)
+:where(
+  input,
+  textarea,
+  select
+){
+  transition:
+    border-color
+    var(
+      --premium-fast
+    )
+    ease,
+    box-shadow
+    var(
+      --premium-fast
+    )
+    ease,
+    background-color
+    var(
+      --premium-fast
+    )
+    ease;
+}
+
+:where(
+  .booking-form,
+  #inquiry,
+  .contact-form
+)
+:where(
+  input,
+  textarea,
+  select
+):focus{
+  box-shadow:
+    0
+    0
+    0
+    3px
+    color-mix(
+      in srgb,
+      var(--accent,#f2a52c) 13%,
+      transparent
+    );
+}
+
+/* Lightbox: zero-white-flash surface and safer touch targets. */
+dialog.lightbox,
+dialog.lightbox[open],
+dialog.lightbox::backdrop{
+  background:
+    #050505 !important;
+}
+
+dialog.lightbox
+button{
+  min-width:
+    42px;
+
+  min-height:
+    42px;
+
+  touch-action:
+    manipulation;
+
+  transition:
+    transform
+    var(
+      --premium-fast
+    )
+    var(
+      --premium-ease
+    ),
+    opacity
+    var(
+      --premium-fast
+    )
+    ease;
+}
+
+/* Large desktop / 4K rhythm without changing page structure. */
+@media(min-width:1900px){
+  .site-header,
+  footer{
+    padding-left:
+      clamp(
+        48px,
+        3.6vw,
+        112px
+      );
+
+    padding-right:
+      clamp(
+        48px,
+        3.6vw,
+        112px
+      );
+  }
+
+  body:not(.is-home)
+  :where(
+    .collection-intro,
+    .section-intro,
+    .project-intro
+  ){
+    max-width:
+      min(
+        1760px,
+        calc(
+          100% - 64px
+        )
+      );
+
+    margin-inline:
+      auto;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:
+      auto !important;
+  }
+
+  html body
+  .mobile-menu-trigger::before{
+    animation:
+      none !important;
+  }
+
+  :where(
+    .desktop-nav > a,
+    .back-link,
+    .nav-book,
+    .mobile-book,
+    .footer-contact,
+    dialog.lightbox button
+  ){
+    transition:
+      none !important;
+  }
+}

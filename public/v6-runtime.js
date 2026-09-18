@@ -48,22 +48,6 @@
    * HELPERS
    * ------------------------------------------------------------
    */
-
-
-  const clamp = (
-    value,
-    min,
-    max
-  ) =>
-    Math.min(
-      max,
-      Math.max(
-        min,
-        value
-      )
-    );
-
-
   const isMobile =
     () =>
       window.matchMedia(
@@ -345,8 +329,31 @@
 
 
         /*
-         * Desktop keeps the normal header behaviour.
-         * Hide-on-scroll is reserved for phones.
+         * PHASE 5 HOTFIX:
+         * Mobile header must never receive is-hidden.
+         * ERGYS SHEHU + hamburger stay visible after menu navigation
+         * and during downward scrolling.
+         */
+        if (
+          isMobile()
+        ) {
+          header.classList.remove(
+            'is-hidden'
+          );
+
+          previousY =
+            y;
+
+          directionDistance =
+            0;
+
+          return;
+        }
+
+
+        /*
+         * Desktop header behaviour is controlled by Layout.astro.
+         * This runtime must not add mobile hide state.
          */
         if (
           !isMobile() ||

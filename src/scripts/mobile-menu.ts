@@ -12,6 +12,11 @@ export function initMobileMenu(){
   const openButtonEl = openButton;
   const closeButtonEl = closeButton;
 
+  const siteHeader =
+    document.querySelector<HTMLElement>(
+      '.site-header'
+    );
+
   let lockedScrollY = 0;
   let isOpen = false;
 
@@ -23,6 +28,14 @@ export function initMobileMenu(){
     'textarea:not([disabled])',
     '[tabindex]:not([tabindex="-1"])'
   ].join(',');
+
+  function forceHeaderVisible(){
+    siteHeader
+      ?.classList
+      .remove(
+        'is-hidden'
+      );
+  }
 
   function getFocusable(){
     return Array.from(
@@ -66,6 +79,8 @@ export function initMobileMenu(){
     }
 
     isOpen = open;
+
+    forceHeaderVisible();
 
     menuEl.classList.toggle('is-open', open);
     menuEl.setAttribute('aria-hidden', String(!open));
@@ -136,8 +151,18 @@ export function initMobileMenu(){
   });
 
   window.addEventListener('pageshow', () => {
+    forceHeaderVisible();
+
     if(isOpen){
       setOpen(false, false);
+    }else{
+      menuEl.classList.remove('is-open');
+      menuEl.setAttribute('aria-hidden', 'true');
+      openButtonEl.setAttribute('aria-expanded', 'false');
     }
+  });
+
+  window.addEventListener('pagehide', () => {
+    forceHeaderVisible();
   });
 }

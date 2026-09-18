@@ -10,3 +10,5 @@ design-preview/
 !.env.example
 instagram-media.json
 *.log
+test-results/
+playwright-report/

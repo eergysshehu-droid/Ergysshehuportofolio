@@ -1,0 +1,86 @@
+/* ==========================================================================
+   ERGYS SHEHU — PHASE 5 MOBILE HEADER / MENU LOCK
+   --------------------------------------------------------------------------
+   On mobile/tablet the brand + hamburger must remain visible at all times.
+   Desktop keeps the existing hide-on-scroll behaviour.
+   This file does NOT touch homepage photo stacking geometry.
+   ========================================================================== */
+
+@media(max-width:1000px){
+
+  html body .site-header,
+  html body .site-header.is-hidden{
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      ) !important;
+
+    visibility:
+      visible !important;
+
+    opacity:
+      1 !important;
+  }
+
+
+  html body
+  .site-header
+  .ergys-wordmark,
+  html body
+  .site-header
+  .mobile-menu-trigger{
+    visibility:
+      visible !important;
+
+    opacity:
+      1 !important;
+
+    pointer-events:
+      auto !important;
+  }
+
+
+  html body
+  .site-header
+  .hamburger{
+    visibility:
+      visible !important;
+
+    opacity:
+      1 !important;
+  }
+
+
+  html.mobile-menu-open
+  body
+  .site-header{
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      ) !important;
+  }
+
+}
+
+
+/* Keep transitions crisp when navigating between pages. */
+@media(max-width:1000px) and (prefers-reduced-motion:no-preference){
+
+  html body .site-header{
+    transition:
+      background-color
+      220ms
+      ease,
+      border-color
+      220ms
+      ease,
+      color
+      220ms
+      ease !important;
+  }
+
+}
