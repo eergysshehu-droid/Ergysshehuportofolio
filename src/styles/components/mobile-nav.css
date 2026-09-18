@@ -405,19 +405,18 @@
       repeat(3,minmax(0,1fr)) !important;
 
     grid-template-rows:
-      repeat(6,minmax(0,1fr))
-      auto
-      clamp(18px,3dvh,34px) !important;
+  repeat(6,auto)
+  auto !important;
 
-    align-items: center !important;
+align-items: center !important;
 
-    align-content: stretch !important;
+align-content: center !important;
 
-    column-gap:
-      var(--menu-col-gap) !important;
+column-gap:
+  var(--menu-col-gap) !important;
 
-    row-gap: 0 !important;
-
+row-gap:
+  clamp(20px,2.8dvh,30px) !important;
     overflow: hidden !important;
 
     border: 0 !important;
