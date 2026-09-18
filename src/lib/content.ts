@@ -32,6 +32,7 @@ export interface Album {
   credits?: string;
   creditsSq?: string;
   cover?: Photo;
+  nextProjectCover?: Photo;
   photos?: Photo[];
   location?: string;
   locationSq?: string;
@@ -148,7 +149,10 @@ function normalizeAlbum(
       bilingualPhoto(
         album.cover
       ),
-
+    nextProjectCover:
+      bilingualPhoto(
+        album.nextProjectCover
+      ),
     photos:
       album.photos?.map(
         photo =>
