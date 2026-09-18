@@ -224,3 +224,48 @@ footer
   height:
     14px;
 }
+@media (min-width: 701px) {
+
+  footer
+  .footer-social {
+    gap:
+      7px;
+  }
+
+
+  footer
+  .footer-social
+  .social-link {
+    width:
+      42px;
+
+    height:
+      42px;
+
+    flex-basis:
+      42px;
+  }
+
+
+  footer
+  .footer-social
+  .social-icon {
+    width:
+      18px;
+
+    height:
+      18px;
+  }
+
+
+  footer
+  .footer-social
+  .social-icon-facebook {
+    width:
+      19px;
+
+    height:
+      19px;
+  }
+
+}
