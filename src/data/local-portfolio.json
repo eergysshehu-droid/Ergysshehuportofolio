@@ -6,7 +6,8 @@
       "width": 5839,
       "height": 3892,
       "alt": "Editorial fashion and portrait photography in Albania by Ergys Shehu",
-      "sourceFile": "ESH03139 first.jpg"
+      "sourceFile": "ESH03139 first.jpg",
+      "altSq": "Editorial fashion and fotografi portretesh në Shqipëri nga Ergys Shehu"
     },
     "fashionCover": {
       "src": "/images/6df8aeb5387481-1800.webp",
@@ -22,7 +23,8 @@
       "width": 2048,
       "height": 1273,
       "alt": "Wedding photography in Albania by Ergys Shehu",
-      "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg"
+      "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg",
+      "altSq": "Fotografi dasmash në Shqipëri nga Ergys Shehu"
     },
     "portraitsCover": {
       "src": "/images/8f822a1dff5d46-1800.webp",
@@ -56,7 +58,8 @@
         "height": 3892,
         "alt": "Dance in the elements — personal photography in Albania by Ergys Shehu",
         "sourceFile": "ESH03139 first.jpg",
-        "color": "#6f7a67"
+        "color": "#6f7a67",
+        "altSq": "Vallëzim mes elementeve — fotografi personale në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -66,7 +69,8 @@
           "height": 3892,
           "alt": "Dance in the elements — personal photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH03139 first.jpg",
-          "color": "#6f7a67"
+          "color": "#6f7a67",
+          "altSq": "Vallëzim mes elementeve — fotografi personale në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/eb68d69795eddd-1800.webp",
@@ -75,7 +79,8 @@
           "height": 2048,
           "alt": "Dance in the elements — personal photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH03058 low.jpg",
-          "color": "#695d6e"
+          "color": "#695d6e",
+          "altSq": "Vallëzim mes elementeve — fotografi personale në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/f7a610eb535430-1800.webp",
@@ -84,9 +89,13 @@
           "height": 1365,
           "alt": "Dance in the elements — personal photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH03185 low.jpg",
-          "color": "#6a989f"
+          "color": "#6a989f",
+          "altSq": "Vallëzim mes elementeve — fotografi personale në Shqipëri nga Ergys Shehu, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Vallëzim mes elementeve",
+      "descriptionSq": "Lëvizje dhe vallëzim përgjatë bregut, nën një qiell dramatik.",
+      "categorySq": "Projekte"
     },
     {
       "slug": "adel-lami",
@@ -106,7 +115,8 @@
         "hotspot": {
           "x": 0.42,
           "y": 0.2
-        }
+        },
+        "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -120,7 +130,8 @@
           "hotspot": {
             "x": 0.42,
             "y": 0.2
-          }
+          },
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/5ef79d674aabf3-1800.webp",
@@ -129,7 +140,8 @@
           "height": 1365,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Adel Lami\\ESH05349 v2 web.jpg",
-          "color": "#8b6245"
+          "color": "#8b6245",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/57fb66a29b09ee-1800.webp",
@@ -138,7 +150,8 @@
           "height": 2048,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Adel Lami\\ESH05369 low.jpg",
-          "color": "#846345"
+          "color": "#846345",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/579eb1884a6191-1800.webp",
@@ -147,7 +160,8 @@
           "height": 6000,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "Adel Lami\\ESH05547 web.jpg",
-          "color": "#b08e77"
+          "color": "#b08e77",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/0e802b3b2a388c-1800.webp",
@@ -156,7 +170,8 @@
           "height": 2048,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "Adel Lami\\ESH05552 web.jpg",
-          "color": "#b58359"
+          "color": "#b58359",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/5beed3c0759e02-1800.webp",
@@ -165,7 +180,8 @@
           "height": 2048,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "Adel Lami\\ESH05590 web.jpg",
-          "color": "#b69f7f"
+          "color": "#b69f7f",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/8043b7f053e322-1800.webp",
@@ -174,9 +190,13 @@
           "height": 2048,
           "alt": "Adel Lami — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "Adel Lami\\ESH05628 web.jpg",
-          "color": "#b89b84"
+          "color": "#b89b84",
+          "altSq": "Adel Lami — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         }
-      ]
+      ],
+      "titleSq": "Adel Lami",
+      "descriptionSq": "Portrete mode në tonalitete blu, motive grafike dhe veshje mbrëmjeje.",
+      "categorySq": "Modë"
     },
     {
       "slug": "megan-mersinaj",
@@ -192,7 +212,8 @@
         "height": 2048,
         "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "ESH07048 Low.jpg",
-        "color": "#554435"
+        "color": "#554435",
+        "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -202,7 +223,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH07048 Low.jpg",
-          "color": "#554435"
+          "color": "#554435",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/b789b60ef6520c-1800.webp",
@@ -211,7 +233,8 @@
           "height": 1365,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH06873 Low.jpg",
-          "color": "#668491"
+          "color": "#668491",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/cc3d7e1cfc9cf7-1800.webp",
@@ -220,7 +243,8 @@
           "height": 1365,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH06885 low.jpg",
-          "color": "#688180"
+          "color": "#688180",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/0bc3b20b4b8918-1800.webp",
@@ -229,7 +253,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH06890 low.jpg",
-          "color": "#3b4a51"
+          "color": "#3b4a51",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/8626b4dc9c7830-1800.webp",
@@ -238,7 +263,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH06891 Low Web.jpg",
-          "color": "#5e586b"
+          "color": "#5e586b",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/db4014724c2310-1800.webp",
@@ -247,7 +273,8 @@
           "height": 5000,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH06971 v2.jpg",
-          "color": "#4c3f22"
+          "color": "#4c3f22",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/0ce1dbf084b9b5-1800.webp",
@@ -256,7 +283,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "ESH07052 Low.jpg",
-          "color": "#6a634f"
+          "color": "#6a634f",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         },
         {
           "src": "/images/91d4516a58fea2-1800.webp",
@@ -265,7 +293,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 8",
           "sourceFile": "ESH07078-Low.jpg",
-          "color": "#644f38"
+          "color": "#644f38",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 8"
         },
         {
           "src": "/images/d0840f6a7fb8fa-1800.webp",
@@ -274,7 +303,8 @@
           "height": 2048,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 9",
           "sourceFile": "ESH07224 Low.jpg",
-          "color": "#453326"
+          "color": "#453326",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 9"
         },
         {
           "src": "/images/c4a3dfab55171c-1800.webp",
@@ -283,9 +313,13 @@
           "height": 1365,
           "alt": "Megan Mersinaj — fashion photography in Albania by Ergys Shehu, photo 10",
           "sourceFile": "ESH07261 Low.jpg",
-          "color": "#654243"
+          "color": "#654243",
+          "altSq": "Megan Mersinaj — fotografi mode në Shqipëri nga Ergys Shehu, foto 10"
         }
-      ]
+      ],
+      "titleSq": "Megan Mersinaj",
+      "descriptionSq": "Veshje mbrëmjeje, dritë bregdetare dhe ambiente me karakter kinematografik.",
+      "categorySq": "Modë"
     },
     {
       "slug": "livia-sinani",
@@ -301,7 +335,8 @@
         "height": 2048,
         "alt": "Livia Sinani — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "Livia sinani\\ESH01380 cc.jpg",
-        "color": "#494033"
+        "color": "#494033",
+        "altSq": "Livia Sinani — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -311,7 +346,8 @@
           "height": 2048,
           "alt": "Livia Sinani — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Livia sinani\\ESH01380 cc.jpg",
-          "color": "#494033"
+          "color": "#494033",
+          "altSq": "Livia Sinani — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/9cc6f3e8469bf2-1800.webp",
@@ -320,7 +356,8 @@
           "height": 2048,
           "alt": "Livia Sinani — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Livia sinani\\ESH00013 Insta.jpg",
-          "color": "#b09581"
+          "color": "#b09581",
+          "altSq": "Livia Sinani — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/eebef988b591ec-1800.webp",
@@ -329,9 +366,13 @@
           "height": 2048,
           "alt": "Livia Sinani — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Livia sinani\\ESH01431 low.jpg",
-          "color": "#2d3627"
+          "color": "#2d3627",
+          "altSq": "Livia Sinani — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Livia Sinani",
+      "descriptionSq": "Portrete mode në të gjelbër smeraldi dhe të bardhë.",
+      "categorySq": "Modë"
     },
     {
       "slug": "margaret-shllaku",
@@ -351,7 +392,8 @@
         "hotspot": {
           "x": 0.35,
           "y": 0.08
-        }
+        },
+        "altSq": "Margaret Shllaku — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -365,7 +407,8 @@
           "hotspot": {
             "x": 0.35,
             "y": 0.08
-          }
+          },
+          "altSq": "Margaret Shllaku — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/cd70deb784d70f-1800.webp",
@@ -374,7 +417,8 @@
           "height": 2048,
           "alt": "Margaret Shllaku — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Margaret Shllaku\\ESH07775  cc 2.jpg",
-          "color": "#482209"
+          "color": "#482209",
+          "altSq": "Margaret Shllaku — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/a20806ce7b4528-1800.webp",
@@ -383,9 +427,13 @@
           "height": 2048,
           "alt": "Margaret Shllaku — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Margaret Shllaku\\ESH07946 low.jpg",
-          "color": "#c17f57"
+          "color": "#c17f57",
+          "altSq": "Margaret Shllaku — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Margaret Shllaku",
+      "descriptionSq": "Fotografi mode në studio, me tone të ngrohta dhe stilim me teksturë.",
+      "categorySq": "Modë"
     },
     {
       "slug": "sara-fani",
@@ -405,7 +453,8 @@
         "hotspot": {
           "x": 0.55,
           "y": 0.2
-        }
+        },
+        "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -415,7 +464,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Sara Fani\\2 web.jpg",
-          "color": "#a17862"
+          "color": "#a17862",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/2cc65ebbd704ab-1800.webp",
@@ -424,7 +474,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Sara Fani\\ESH01257 low.jpg",
-          "color": "#845e4e"
+          "color": "#845e4e",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/e156afb0b8a4b4-1800.webp",
@@ -433,7 +484,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Sara Fani\\ESH01277 Low.jpg",
-          "color": "#6d5654"
+          "color": "#6d5654",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/b4bbd87a0fa1ec-1800.webp",
@@ -442,7 +494,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "Sara Fani\\ESH01483 low fin.jpg",
-          "color": "#77503c"
+          "color": "#77503c",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/efc8059db5289d-1800.webp",
@@ -451,7 +504,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "Sara Fani\\ESH01501 3 low.jpg",
-          "color": "#4b4131"
+          "color": "#4b4131",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/9820f20131a995-1800.webp",
@@ -460,7 +514,8 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "Sara Fani\\ESH01692 Low.jpg",
-          "color": "#322620"
+          "color": "#322620",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/e8b2a7e2016a10-1800.webp",
@@ -469,9 +524,13 @@
           "height": 2048,
           "alt": "Sara Fani — portrait photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "Sara Fani\\ESH01739 2.jpg",
-          "color": "#463635"
+          "color": "#463635",
+          "altSq": "Sara Fani — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 7"
         }
-      ]
+      ],
+      "titleSq": "Sara Fani",
+      "descriptionSq": "Portrete mes ambienteve urbane dhe studios.",
+      "categorySq": "Portrete"
     },
     {
       "slug": "eli",
@@ -487,7 +546,8 @@
         "height": 2048,
         "alt": "Eli — portrait photography in Albania by Ergys Shehu",
         "sourceFile": "Eli (1)\\ESH_0974 low.jpg",
-        "color": "#274445"
+        "color": "#274445",
+        "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -497,7 +557,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Eli (1)\\ESH_0974 low.jpg",
-          "color": "#274445"
+          "color": "#274445",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/31944828b99743-1800.webp",
@@ -506,7 +567,8 @@
           "height": 1367,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Eli (1)\\ESH_0746 Progress low.jpg",
-          "color": "#603b4c"
+          "color": "#603b4c",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/3914f8274ce92d-1800.webp",
@@ -515,7 +577,8 @@
           "height": 4614,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Eli (1)\\ESH_0884 ccr.jpg",
-          "color": "#5a3f3e"
+          "color": "#5a3f3e",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/86dbb5e8c21fe4-1800.webp",
@@ -524,7 +587,8 @@
           "height": 1516,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "Eli (1)\\ESH_0912.jpg",
-          "color": "#433036"
+          "color": "#433036",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/e80b07f231bf6d-1800.webp",
@@ -533,7 +597,8 @@
           "height": 1321,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "Eli (1)\\ESH_0920 low.jpg",
-          "color": "#57373d"
+          "color": "#57373d",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/1b0a4aeb00389c-1800.webp",
@@ -542,7 +607,8 @@
           "height": 1638,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "Eli (1)\\ESH_0957 low.jpg",
-          "color": "#580d17"
+          "color": "#580d17",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/c9cc1ca4ebc236-1800.webp",
@@ -551,7 +617,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "Eli (1)\\ESH_0974 red low.jpg",
-          "color": "#552524"
+          "color": "#552524",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 7"
         },
         {
           "src": "/images/bd848dbd85c04a-1800.webp",
@@ -560,7 +627,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 8",
           "sourceFile": "Eli (1)\\ESH_1025 low.jpg",
-          "color": "#8daf90"
+          "color": "#8daf90",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 8"
         },
         {
           "src": "/images/3547a7d5f26e73-1800.webp",
@@ -569,7 +637,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 9",
           "sourceFile": "Eli (1)\\ESH_1051 low.jpg",
-          "color": "#713f3f"
+          "color": "#713f3f",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 9"
         },
         {
           "src": "/images/8f51499ec8140e-1800.webp",
@@ -578,7 +647,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 10",
           "sourceFile": "Eli (1)\\ESH_1057 low.jpg",
-          "color": "#884f3e"
+          "color": "#884f3e",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 10"
         },
         {
           "src": "/images/63a9dd27aab350-1800.webp",
@@ -587,7 +657,8 @@
           "height": 2048,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 11",
           "sourceFile": "Eli (1)\\ESH_1088 low.jpg",
-          "color": "#5f2324"
+          "color": "#5f2324",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 11"
         },
         {
           "src": "/images/abcdea6e850a7a-1800.webp",
@@ -596,7 +667,8 @@
           "height": 1367,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 12",
           "sourceFile": "Eli (1)\\ESH_1245-low.jpg",
-          "color": "#421f20"
+          "color": "#421f20",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 12"
         },
         {
           "src": "/images/0b8b782bf2c85f-1800.webp",
@@ -605,9 +677,13 @@
           "height": 1388,
           "alt": "Eli — portrait photography in Albania by Ergys Shehu, photo 13",
           "sourceFile": "Eli (1)\\ESH_1253 low.jpg",
-          "color": "#6f3529"
+          "color": "#6f3529",
+          "altSq": "Eli — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 13"
         }
-      ]
+      ],
+      "titleSq": "Eli",
+      "descriptionSq": "Portrete ekspresive në studio, me stilim floral.",
+      "categorySq": "Portrete"
     },
     {
       "slug": "coastal-colour",
@@ -623,7 +699,8 @@
         "height": 1638,
         "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "ESH03400 hat instagram.jpg",
-        "color": "#b57959"
+        "color": "#b57959",
+        "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -633,7 +710,8 @@
           "height": 1638,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH03400 hat instagram.jpg",
-          "color": "#b57959"
+          "color": "#b57959",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/df79da6af149d3-1800.webp",
@@ -642,7 +720,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH03212 low.jpg",
-          "color": "#b9937a"
+          "color": "#b9937a",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/26ee266dfb6dd2-1800.webp",
@@ -651,7 +730,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH03234 low.jpg",
-          "color": "#bf907d"
+          "color": "#bf907d",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/2c609baca2d619-1800.webp",
@@ -660,7 +740,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH03238 low.jpg",
-          "color": "#ad8d96"
+          "color": "#ad8d96",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/431a89b2281f5c-1800.webp",
@@ -669,7 +750,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH03414 low.jpg",
-          "color": "#c88059"
+          "color": "#c88059",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/1b4cf46cdf211f-1800.webp",
@@ -678,7 +760,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH03415 isida low.jpg",
-          "color": "#c47543"
+          "color": "#c47543",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/efabcbb8c442a5-1800.webp",
@@ -687,7 +770,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "ESH06097 web.jpg",
-          "color": "#754e25"
+          "color": "#754e25",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         },
         {
           "src": "/images/bdd1c4df0df62c-1800.webp",
@@ -696,7 +780,8 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 8",
           "sourceFile": "ESH06257 web.jpg",
-          "color": "#a86b50"
+          "color": "#a86b50",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 8"
         },
         {
           "src": "/images/c4375c2050375c-1800.webp",
@@ -705,7 +790,8 @@
           "height": 1365,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 9",
           "sourceFile": "ESH06460 cc low.jpg",
-          "color": "#7a644c"
+          "color": "#7a644c",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 9"
         },
         {
           "src": "/images/4140fd44889912-1800.webp",
@@ -714,9 +800,13 @@
           "height": 2048,
           "alt": "Coastal colour — fashion photography in Albania by Ergys Shehu, photo 10",
           "sourceFile": "ESH_1977 low.jpg",
-          "color": "#1d4987"
+          "color": "#1d4987",
+          "altSq": "Ngjyra bregdetare — fotografi mode në Shqipëri nga Ergys Shehu, foto 10"
         }
-      ]
+      ],
+      "titleSq": "Ngjyra bregdetare",
+      "descriptionSq": "Studime mode të formësuara nga drita e diellit, deti dhe ngjyra.",
+      "categorySq": "Modë"
     },
     {
       "slug": "red-room",
@@ -732,7 +822,8 @@
         "height": 1365,
         "alt": "The red room — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "ESH08511 low.jpg",
-        "color": "#681a00"
+        "color": "#681a00",
+        "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -742,7 +833,8 @@
           "height": 1365,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH08511 low.jpg",
-          "color": "#681a00"
+          "color": "#681a00",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/59182db5d92518-1800.webp",
@@ -751,7 +843,8 @@
           "height": 2048,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH04601web.jpg",
-          "color": "#814220"
+          "color": "#814220",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/2f009d427535b4-1800.webp",
@@ -760,7 +853,8 @@
           "height": 4977,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH07430 cc f.jpg",
-          "color": "#6f2625"
+          "color": "#6f2625",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/95df597b0970d4-1800.webp",
@@ -769,7 +863,8 @@
           "height": 2048,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH07485 cc2 low.jpg",
-          "color": "#4c2d27"
+          "color": "#4c2d27",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/24f17d12f20f69-1800.webp",
@@ -778,7 +873,8 @@
           "height": 2048,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH08310 low.jpg",
-          "color": "#7e251b"
+          "color": "#7e251b",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/43077f8b3cfef5-1800.webp",
@@ -787,7 +883,8 @@
           "height": 2048,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH08340 v2 low.jpg",
-          "color": "#90171b"
+          "color": "#90171b",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/6f74a964ece069-1800.webp",
@@ -796,9 +893,13 @@
           "height": 2048,
           "alt": "The red room — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "ESH08421 web.jpg",
-          "color": "#9d2912"
+          "color": "#9d2912",
+          "altSq": "Dhoma e kuqe — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         }
-      ]
+      ],
+      "titleSq": "Dhoma e kuqe",
+      "descriptionSq": "Veshje të kuqe mbrëmjeje në ambiente të brendshme dhe të hapura.",
+      "categorySq": "Modë"
     },
     {
       "slug": "in-the-woods",
@@ -818,7 +919,8 @@
         "hotspot": {
           "x": 0.5,
           "y": 0.16
-        }
+        },
+        "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -832,7 +934,8 @@
           "hotspot": {
             "x": 0.5,
             "y": 0.16
-          }
+          },
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/c77fab16901d69-1800.webp",
@@ -841,7 +944,8 @@
           "height": 2048,
           "alt": "In the woods — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH09300 final.jpg",
-          "color": "#493421"
+          "color": "#493421",
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/445f6c3afb5d97-1800.webp",
@@ -850,7 +954,8 @@
           "height": 4000,
           "alt": "In the woods — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH09359 Low.jpg",
-          "color": "#403712"
+          "color": "#403712",
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/2a13a668afd088-1800.webp",
@@ -859,7 +964,8 @@
           "height": 2048,
           "alt": "In the woods — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH09482-web.jpg",
-          "color": "#38241a"
+          "color": "#38241a",
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/2304c8efad0107-1800.webp",
@@ -868,7 +974,8 @@
           "height": 1365,
           "alt": "In the woods — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH09555 web.jpg",
-          "color": "#473d27"
+          "color": "#473d27",
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/fe65ecc62b0da6-1800.webp",
@@ -877,9 +984,13 @@
           "height": 1314,
           "alt": "In the woods — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH09589 LOw.jpg",
-          "color": "#483b18"
+          "color": "#483b18",
+          "altSq": "Në pyll — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         }
-      ]
+      ],
+      "titleSq": "Në pyll",
+      "descriptionSq": "Modë dhe lëvizje brenda një peizazhi pyjor.",
+      "categorySq": "Modë"
     },
     {
       "slug": "city-studies",
@@ -895,7 +1006,8 @@
         "height": 2048,
         "alt": "City studies — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "ESH07318 web.jpg",
-        "color": "#a55d69"
+        "color": "#a55d69",
+        "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -905,7 +1017,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH07318 web.jpg",
-          "color": "#a55d69"
+          "color": "#a55d69",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/bcc81c84d70232-1800.webp",
@@ -914,7 +1027,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH07134web.jpg",
-          "color": "#a88973"
+          "color": "#a88973",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/36441463c73a57-1800.webp",
@@ -923,7 +1037,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH07415 web.jpg",
-          "color": "#b7997f"
+          "color": "#b7997f",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/1e170ac24b53bc-1800.webp",
@@ -932,7 +1047,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH07423 web.jpg",
-          "color": "#686652"
+          "color": "#686652",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/059f7c730d1f77-1800.webp",
@@ -941,7 +1057,8 @@
           "height": 1365,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH07970 Low.jpg",
-          "color": "#6f5745"
+          "color": "#6f5745",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/4ae1be4408e354-1800.webp",
@@ -950,7 +1067,8 @@
           "height": 2560,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH09850 web.jpg",
-          "color": "#b1a082"
+          "color": "#b1a082",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/46b21ba15a6098-1800.webp",
@@ -959,7 +1077,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "ESH09856 web v2.jpg",
-          "color": "#b4a487"
+          "color": "#b4a487",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         },
         {
           "src": "/images/e9c862ee6b0c88-1800.webp",
@@ -968,7 +1087,8 @@
           "height": 2048,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 8",
           "sourceFile": "ESH09866 web.jpg",
-          "color": "#9e977e"
+          "color": "#9e977e",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 8"
         },
         {
           "src": "/images/c8a9ac7c693f0b-1800.webp",
@@ -977,7 +1097,8 @@
           "height": 1330,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 10",
           "sourceFile": "ESH09902-web.jpg",
-          "color": "#a7795a"
+          "color": "#a7795a",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 10"
         },
         {
           "src": "/images/1c67e8960fb3a8-1800.webp",
@@ -986,7 +1107,8 @@
           "height": 1920,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 11",
           "sourceFile": "Mobile Uploads\\behance_download_1581932623102.png",
-          "color": "#849176"
+          "color": "#849176",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 11"
         },
         {
           "src": "/images/0fb376de66bf7a-1800.webp",
@@ -995,9 +1117,13 @@
           "height": 4000,
           "alt": "City studies — fashion photography in Albania by Ergys Shehu, photo 12",
           "sourceFile": "Mobile Uploads\\ESH09876.jpg",
-          "color": "#9c957d"
+          "color": "#9c957d",
+          "altSq": "Studime urbane — fotografi mode në Shqipëri nga Ergys Shehu, foto 12"
         }
-      ]
+      ],
+      "titleSq": "Studime urbane",
+      "descriptionSq": "Silueta urbane, arkitekturë dhe dritë natyrore.",
+      "categorySq": "Modë"
     },
     {
       "slug": "beauty-studies",
@@ -1013,7 +1139,8 @@
         "height": 4410,
         "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu",
         "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg",
-        "color": "#964a17"
+        "color": "#964a17",
+        "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -1023,7 +1150,8 @@
           "height": 4410,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Mobile Uploads\\ESH04886-Edit+final1607021844578.jpg",
-          "color": "#964a17"
+          "color": "#964a17",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/6057419de67e68-1800.webp",
@@ -1032,7 +1160,8 @@
           "height": 2048,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH07508 cc web.jpg",
-          "color": "#a26c4e"
+          "color": "#a26c4e",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/77fac6a4db4901-1800.webp",
@@ -1041,7 +1170,8 @@
           "height": 2048,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH07641 web.jpg",
-          "color": "#805640"
+          "color": "#805640",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/ff9f92093064be-1800.webp",
@@ -1050,7 +1180,8 @@
           "height": 2048,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH09763 low.jpg",
-          "color": "#67412a"
+          "color": "#67412a",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/44bd3dd8f3e059-1800.webp",
@@ -1059,7 +1190,8 @@
           "height": 3459,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "Mobile Uploads\\ESH04921-Edit+v23+final1609443166839.jpg",
-          "color": "#7b3f1e"
+          "color": "#7b3f1e",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/6001cb9264ee07-1800.webp",
@@ -1068,9 +1200,13 @@
           "height": 2048,
           "alt": "Beauty studies — portrait photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "Mobile Uploads\\ESH08995+low.jpg",
-          "color": "#946751"
+          "color": "#946751",
+          "altSq": "Studime bukurie — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 6"
         }
-      ]
+      ],
+      "titleSq": "Studime bukurie",
+      "descriptionSq": "Një përzgjedhje portretesh bukurie në plan të afërt.",
+      "categorySq": "Portrete"
     },
     {
       "slug": "intimate-light",
@@ -1086,7 +1222,8 @@
         "height": 3840,
         "alt": "Intimate light — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg",
-        "color": "#673d28"
+        "color": "#673d28",
+        "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -1096,7 +1233,8 @@
           "height": 3840,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Mobile Uploads\\ESH04586-Edit+v21607856071465.jpg",
-          "color": "#673d28"
+          "color": "#673d28",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/61e29d86bc0f9e-1800.webp",
@@ -1105,7 +1243,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH00015-Edit Low.jpg",
-          "color": "#644835"
+          "color": "#644835",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/6022e2bce4a82f-1800.webp",
@@ -1114,7 +1253,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH00060  low 2.jpg",
-          "color": "#9aa993"
+          "color": "#9aa993",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/fb2f848e9f39c9-1800.webp",
@@ -1123,7 +1263,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH00708 web.jpg",
-          "color": "#3d5450"
+          "color": "#3d5450",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         },
         {
           "src": "/images/25c891a8e1eb5d-1800.webp",
@@ -1132,7 +1273,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 5",
           "sourceFile": "ESH00745 web.jpg",
-          "color": "#304427"
+          "color": "#304427",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 5"
         },
         {
           "src": "/images/9f875ad91431db-1800.webp",
@@ -1141,7 +1283,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 6",
           "sourceFile": "ESH00864 low.jpg",
-          "color": "#91745c"
+          "color": "#91745c",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 6"
         },
         {
           "src": "/images/61071cabdcaf03-1800.webp",
@@ -1150,7 +1293,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 7",
           "sourceFile": "ESH01014 2cv.jpg",
-          "color": "#442d29"
+          "color": "#442d29",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 7"
         },
         {
           "src": "/images/0e005311c156bf-1800.webp",
@@ -1159,7 +1303,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 8",
           "sourceFile": "ESH04087 low v2.jpg",
-          "color": "#98906f"
+          "color": "#98906f",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 8"
         },
         {
           "src": "/images/ee4c72472284a3-1800.webp",
@@ -1168,7 +1313,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 9",
           "sourceFile": "ESH04841-web.jpg",
-          "color": "#837857"
+          "color": "#837857",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 9"
         },
         {
           "src": "/images/529a5f26d5962e-1800.webp",
@@ -1177,7 +1323,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 10",
           "sourceFile": "ESH05026web.jpg",
-          "color": "#7a432c"
+          "color": "#7a432c",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 10"
         },
         {
           "src": "/images/d53f37c4f86f1d-1800.webp",
@@ -1186,7 +1333,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 11",
           "sourceFile": "ESH09685 low.jpg",
-          "color": "#9a6a54"
+          "color": "#9a6a54",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 11"
         },
         {
           "src": "/images/353db151f53243-1800.webp",
@@ -1195,7 +1343,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 12",
           "sourceFile": "ESH09690 low.jpg",
-          "color": "#6c7089"
+          "color": "#6c7089",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 12"
         },
         {
           "src": "/images/07d0b9c8963558-1800.webp",
@@ -1204,7 +1353,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 13",
           "sourceFile": "ESH09752 face  low.jpg",
-          "color": "#46261a"
+          "color": "#46261a",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 13"
         },
         {
           "src": "/images/a346c9f10d3668-1800.webp",
@@ -1213,7 +1363,8 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 14",
           "sourceFile": "ESH09786 low.jpg",
-          "color": "#4d2c19"
+          "color": "#4d2c19",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 14"
         },
         {
           "src": "/images/8ce1e1bbd83a8d-1800.webp",
@@ -1222,7 +1373,8 @@
           "height": 1638,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 15",
           "sourceFile": "ESH09814web.jpg",
-          "color": "#654642"
+          "color": "#654642",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 15"
         },
         {
           "src": "/images/62ae9f04422b8e-1800.webp",
@@ -1231,7 +1383,8 @@
           "height": 2160,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 16",
           "sourceFile": "ESH09883 cc.jpg",
-          "color": "#4e2e2b"
+          "color": "#4e2e2b",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 16"
         },
         {
           "src": "/images/3647d236a3a0a3-1800.webp",
@@ -1240,7 +1393,8 @@
           "height": 4584,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 20",
           "sourceFile": "Mobile Uploads\\ESH04623-Edit1607881806791.jpg",
-          "color": "#86552e"
+          "color": "#86552e",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 20"
         },
         {
           "src": "/images/28acfaead4827c-1800.webp",
@@ -1249,7 +1403,8 @@
           "height": 3811,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 21",
           "sourceFile": "Mobile Uploads\\ESH04805-Edit+v231609434742216.jpg",
-          "color": "#cc8852"
+          "color": "#cc8852",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 21"
         },
         {
           "src": "/images/b5a0b3eb1ab1ba-1800.webp",
@@ -1258,7 +1413,8 @@
           "height": 5000,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 22",
           "sourceFile": "Mobile Uploads\\ESH08739-Edit-+Full+Size.jpg",
-          "color": "#ae8f8e"
+          "color": "#ae8f8e",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 22"
         },
         {
           "src": "/images/f1be13a6e30c80-1800.webp",
@@ -1267,7 +1423,8 @@
           "height": 3500,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 23",
           "sourceFile": "Mobile Uploads\\ESH08796-Edit.jpg",
-          "color": "#98845f"
+          "color": "#98845f",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 23"
         },
         {
           "src": "/images/ed476a98de12a0-1800.webp",
@@ -1276,7 +1433,8 @@
           "height": 3500,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 24",
           "sourceFile": "Mobile Uploads\\ESH08881+Low.jpg",
-          "color": "#af8980"
+          "color": "#af8980",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 24"
         },
         {
           "src": "/images/d7009a9f022954-1800.webp",
@@ -1285,9 +1443,13 @@
           "height": 2048,
           "alt": "Intimate light — fashion photography in Albania by Ergys Shehu, photo 25",
           "sourceFile": "Mobile Uploads\\ESH09831+low-1.jpg",
-          "color": "#5f4838"
+          "color": "#5f4838",
+          "altSq": "Dritë intime — fotografi mode në Shqipëri nga Ergys Shehu, foto 25"
         }
-      ]
+      ],
+      "titleSq": "Dritë intime",
+      "descriptionSq": "Portrete mode mes ambienteve të brendshme dhe dritës natyrore.",
+      "categorySq": "Modë"
     },
     {
       "slug": "evening-silhouettes",
@@ -1303,7 +1465,8 @@
         "height": 5000,
         "alt": "Evening silhouettes — fashion photography in Albania by Ergys Shehu",
         "sourceFile": "ESH07553 v2.jpg",
-        "color": "#543515"
+        "color": "#543515",
+        "altSq": "Silueta në mbrëmje — fotografi mode në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -1313,7 +1476,8 @@
           "height": 5000,
           "alt": "Evening silhouettes — fashion photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH07553 v2.jpg",
-          "color": "#543515"
+          "color": "#543515",
+          "altSq": "Silueta në mbrëmje — fotografi mode në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/53a0aca1b1780e-1800.webp",
@@ -1322,7 +1486,8 @@
           "height": 2048,
           "alt": "Evening silhouettes — fashion photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH07560-Recovered low.jpg",
-          "color": "#5d4933"
+          "color": "#5d4933",
+          "altSq": "Silueta në mbrëmje — fotografi mode në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/ddde5330bbd88e-1800.webp",
@@ -1331,7 +1496,8 @@
           "height": 1365,
           "alt": "Evening silhouettes — fashion photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH07629 fix low.jpg",
-          "color": "#5c382e"
+          "color": "#5c382e",
+          "altSq": "Silueta në mbrëmje — fotografi mode në Shqipëri nga Ergys Shehu, foto 3"
         },
         {
           "src": "/images/129550a3b0552c-1800.webp",
@@ -1340,9 +1506,13 @@
           "height": 2048,
           "alt": "Evening silhouettes — fashion photography in Albania by Ergys Shehu, photo 4",
           "sourceFile": "ESH07680 Low.jpg",
-          "color": "#45465b"
+          "color": "#45465b",
+          "altSq": "Silueta në mbrëmje — fotografi mode në Shqipëri nga Ergys Shehu, foto 4"
         }
-      ]
+      ],
+      "titleSq": "Silueta në mbrëmje",
+      "descriptionSq": "Veshje mbrëmjeje të fotografuara në një peizazh të hapur.",
+      "categorySq": "Modë"
     },
     {
       "slug": "character-studies",
@@ -1358,7 +1528,8 @@
         "height": 2048,
         "alt": "Character studies — portrait photography in Albania by Ergys Shehu",
         "sourceFile": "ESH00013web.jpg",
-        "color": "#5b463c"
+        "color": "#5b463c",
+        "altSq": "Studime karakteri — fotografi portretesh në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -1368,7 +1539,8 @@
           "height": 2048,
           "alt": "Character studies — portrait photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "ESH00013web.jpg",
-          "color": "#5b463c"
+          "color": "#5b463c",
+          "altSq": "Studime karakteri — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/d2f954e4f34b2c-1800.webp",
@@ -1377,7 +1549,8 @@
           "height": 2048,
           "alt": "Character studies — portrait photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "ESH09740-cc-web.jpg",
-          "color": "#828e76"
+          "color": "#828e76",
+          "altSq": "Studime karakteri — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/3c89eee303ab2d-1800.webp",
@@ -1386,9 +1559,13 @@
           "height": 1365,
           "alt": "Character studies — portrait photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "ESH09844 low web2.jpg",
-          "color": "#99796a"
+          "color": "#99796a",
+          "altSq": "Studime karakteri — fotografi portretesh në Shqipëri nga Ergys Shehu, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Studime karakteri",
+      "descriptionSq": "Portrete që eksplorojnë karakterin, dritën dhe atmosferën.",
+      "categorySq": "Portrete"
     },
     {
       "slug": "wedding-stories",
@@ -1404,7 +1581,8 @@
         "height": 1273,
         "alt": "Wedding stories — wedding photography in Albania by Ergys Shehu",
         "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg",
-        "color": "#663b31"
+        "color": "#663b31",
+        "altSq": "Histori dasmash — fotografi dasmash në Shqipëri nga Ergys Shehu"
       },
       "photos": [
         {
@@ -1414,7 +1592,8 @@
           "height": 1273,
           "alt": "Wedding stories — wedding photography in Albania by Ergys Shehu, photo 1",
           "sourceFile": "Mobile Uploads\\ESH_1491+web+cc-1.jpg",
-          "color": "#663b31"
+          "color": "#663b31",
+          "altSq": "Histori dasmash — fotografi dasmash në Shqipëri nga Ergys Shehu, foto 1"
         },
         {
           "src": "/images/99c5fef509fae2-1800.webp",
@@ -1423,7 +1602,8 @@
           "height": 2048,
           "alt": "Wedding stories — wedding photography in Albania by Ergys Shehu, photo 2",
           "sourceFile": "Mobile Uploads\\ESH_8943cc.jpg",
-          "color": "#5faea4"
+          "color": "#5faea4",
+          "altSq": "Histori dasmash — fotografi dasmash në Shqipëri nga Ergys Shehu, foto 2"
         },
         {
           "src": "/images/08e4c3196ed78b-1800.webp",
@@ -1432,9 +1612,13 @@
           "height": 2048,
           "alt": "Wedding stories — wedding photography in Albania by Ergys Shehu, photo 3",
           "sourceFile": "Mobile Uploads\\ESH04992-web.jpg",
-          "color": "#886a59"
+          "color": "#886a59",
+          "altSq": "Histori dasmash — fotografi dasmash në Shqipëri nga Ergys Shehu, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Histori dasmash",
+      "descriptionSq": "Një përzgjedhje fotografish nga dasmat dhe portretesh ceremoniale.",
+      "categorySq": "Dasma"
     },
     {
       "slug": "behind-the-lens",
@@ -1449,7 +1633,8 @@
         "width": 1079,
         "height": 1079,
         "alt": "Ergys Shehu jumping mid-air with two cameras by the sea",
-        "color": "#7d9ab2"
+        "color": "#7d9ab2",
+        "altSq": "Ergys Shehu duke kërcyer me dy kamera pranë detit"
       },
       "photos": [
         {
@@ -1458,7 +1643,8 @@
           "width": 1079,
           "height": 1079,
           "alt": "Ergys Shehu jumping mid-air with two cameras by the sea, photo 1",
-          "color": "#7d9ab2"
+          "color": "#7d9ab2",
+          "altSq": "Ergys Shehu duke kërcyer me dy kamera pranë detit, foto 1"
         },
         {
           "src": "/images/19beda948b27e5-1800.webp",
@@ -1466,7 +1652,8 @@
           "width": 1365,
           "height": 2048,
           "alt": "Ergys Shehu in a coat and flat cap beside an ornate stone monument and lamp post, photo 2",
-          "color": "#8e846a"
+          "color": "#8e846a",
+          "altSq": "Ergys Shehu in a coat and flat cap beside an ornate stone monument and lamp post, foto 2"
         },
         {
           "src": "/images/8a3d8d914afd79-1800.webp",
@@ -1474,9 +1661,13 @@
           "width": 1146,
           "height": 1152,
           "alt": "Ergys Shehu in a patterned shirt against a graffiti-covered wall, photo 3",
-          "color": "#c2beb6"
+          "color": "#c2beb6",
+          "altSq": "Ergys Shehu in a patterned shirt against a graffiti-covered wall, foto 3"
         }
-      ]
+      ],
+      "titleSq": "Pas objektivit",
+      "descriptionSq": "Autoportrete mes xhirimeve — fotografi në anën tjetër të objektivit.",
+      "categorySq": "Projekte"
     }
   ]
 }

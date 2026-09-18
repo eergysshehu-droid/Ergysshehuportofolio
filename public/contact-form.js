@@ -304,7 +304,7 @@
       setStatus(
         lang ===
           'sq'
-          ? 'Duke dërguar mesazhin…'
+          ? 'Po dërgohet mesazhi…'
           : 'Sending your message…',
         'sending'
       );

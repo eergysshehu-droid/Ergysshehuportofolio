@@ -75,7 +75,7 @@ const PROJECTS = {
       'Fashion Photography',
 
     sq:
-      'Fotografi Mode'
+      'Fotografi e Modës'
   },
 
   wedding: {
@@ -83,7 +83,7 @@ const PROJECTS = {
       'Wedding Photography & Video',
 
     sq:
-      'Fotografi & Video Dasmash'
+      'Fotografi dhe Video Dasmash'
   },
 
   music: {
@@ -99,7 +99,7 @@ const PROJECTS = {
       'Portrait Photography',
 
     sq:
-      'Fotografi Portreti'
+      'Fotografi Portretesh'
   },
 
   commercial: {
@@ -107,7 +107,7 @@ const PROJECTS = {
       'Commercial / Brand',
 
     sq:
-      'Komerciale / Brand'
+      'Komerciale / Marka'
   },
 
   collaboration: {
