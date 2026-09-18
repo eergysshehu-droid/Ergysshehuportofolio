@@ -1,9 +1,13 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE NAV
-   CLEAN EDITORIAL / TRUE AUTO-FIT / 2026
+   ERGYS SHEHU — MOBILE NAV FINAL
+   2026 / FULL SCREEN / AUTO FIT / EDITORIAL
    ============================================================ */
 
 @media (max-width: 1000px) {
+
+  /* ----------------------------------------------------------
+     LOCK PAGE
+     ---------------------------------------------------------- */
 
   html.mobile-menu-open,
   html.mobile-menu-open body {
@@ -13,10 +17,10 @@
 
   html.mobile-menu-open body .site-header {
     transform: none !important;
+    will-change: auto !important;
     contain: none !important;
     overflow: visible !important;
     max-width: none !important;
-    will-change: auto !important;
 
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -24,7 +28,118 @@
 
 
   /* ==========================================================
-     TRUE FULL VIEWPORT
+     CLOSED MENU BUTTON
+     ========================================================== */
+
+  html body .mobile-menu summary {
+    width: 44px !important;
+    height: 44px !important;
+
+    min-width: 44px !important;
+    min-height: 44px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    position: relative !important;
+
+    display: grid !important;
+    place-items: center !important;
+
+    list-style: none !important;
+
+    border:
+      1px solid rgba(255,255,255,.17) !important;
+
+    border-radius: 50% !important;
+
+    background:
+      rgba(255,255,255,.035) !important;
+
+    color: var(--header-fg) !important;
+
+    cursor: pointer !important;
+
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.015) !important;
+
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+
+    transition:
+      transform 220ms cubic-bezier(.22,1,.36,1),
+      border-color 180ms ease,
+      background 180ms ease !important;
+  }
+
+  html body .mobile-menu summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  html body .mobile-menu summary::before {
+    display: none !important;
+    content: none !important;
+  }
+
+
+  /* ==========================================================
+     MODERN TWO-LINE HAMBURGER
+     ========================================================== */
+
+  html body .hamburger {
+    position: relative !important;
+
+    display: block !important;
+
+    width: 18px !important;
+    height: 12px !important;
+  }
+
+  html body .hamburger i {
+    position: absolute !important;
+
+    left: 0 !important;
+
+    display: block !important;
+
+    width: 18px !important;
+    height: 1px !important;
+
+    margin: 0 !important;
+
+    background: currentColor !important;
+
+    border-radius: 999px !important;
+
+    transform: none !important;
+
+    opacity: 1 !important;
+
+    transition:
+      transform 240ms cubic-bezier(.22,1,.36,1),
+      width 240ms cubic-bezier(.22,1,.36,1),
+      opacity 160ms ease !important;
+  }
+
+  html body .hamburger i:nth-child(1) {
+    top: 2px !important;
+  }
+
+  html body .hamburger i:nth-child(2) {
+    display: none !important;
+  }
+
+  html body .hamburger i:nth-child(3) {
+    top: 9px !important;
+
+    left: 6px !important;
+
+    width: 12px !important;
+  }
+
+
+  /* ==========================================================
+     FULL SCREEN OVERLAY
      ========================================================== */
 
   html body .mobile-menu-screen {
@@ -42,26 +157,33 @@
     max-height: 100dvh !important;
 
     margin: 0 !important;
-
-    padding:
-      max(15px, env(safe-area-inset-top))
-      clamp(20px, 5vw, 34px)
-      max(12px, env(safe-area-inset-bottom)) !important;
+    padding: 0 !important;
 
     box-sizing: border-box !important;
 
     display: grid !important;
 
     grid-template-rows:
-      auto
+      var(--header-h)
       minmax(0, 1fr)
       auto !important;
 
     overflow: hidden !important;
 
-    background: #050b07 !important;
-
     color: #f4f2ed !important;
+
+    background:
+      radial-gradient(
+        circle at 82% 0%,
+        rgba(79,108,85,.09),
+        transparent 33%
+      ),
+      linear-gradient(
+        160deg,
+        #09110c 0%,
+        #050906 52%,
+        #020403 100%
+      ) !important;
 
     border: 0 !important;
     border-radius: 0 !important;
@@ -72,11 +194,11 @@
     visibility: hidden !important;
     pointer-events: none !important;
 
-    transform: translate3d(0, -5px, 0) !important;
+    transform: translate3d(0,-5px,0) !important;
 
     transition:
       opacity 200ms ease,
-      transform 300ms cubic-bezier(.22, 1, .36, 1),
+      transform 300ms cubic-bezier(.22,1,.36,1),
       visibility 0s linear 300ms !important;
 
     z-index: 999999 !important;
@@ -87,30 +209,33 @@
     visibility: visible !important;
     pointer-events: auto !important;
 
-    transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0,0,0) !important;
 
     transition:
       opacity 200ms ease,
-      transform 300ms cubic-bezier(.22, 1, .36, 1),
+      transform 300ms cubic-bezier(.22,1,.36,1),
       visibility 0s !important;
   }
 
 
   /* ==========================================================
-     TOP
+     OPEN HEADER
+     EXACT SAME POSITION AS CLOSED HEADER
      ========================================================== */
 
   html body .mobile-menu-head {
     width: 100% !important;
 
-    min-height: 54px !important;
+    height: var(--header-h) !important;
+    min-height: var(--header-h) !important;
 
     margin: 0 !important;
 
     padding:
       0
-      0
-      14px !important;
+      5vw !important;
+
+    box-sizing: border-box !important;
 
     display: flex !important;
 
@@ -120,21 +245,34 @@
     border: 0 !important;
 
     border-bottom:
-      1px solid rgba(244, 242, 237, .12) !important;
+      1px solid rgba(244,242,237,.11) !important;
   }
+
+
+  /* ==========================================================
+     OPEN WORDMARK
+     SAME AS NORMAL HEADER
+     ========================================================== */
 
   html body .mobile-menu-brand {
     display: inline-flex !important;
 
     align-items: baseline !important;
 
-    gap: .34em !important;
+    gap: .4em !important;
 
-    color: #f4f2ed !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    min-width: 0 !important;
+
+    font-family: var(--wordmark-font) !important;
 
     line-height: 1 !important;
 
-    letter-spacing: .03em !important;
+    letter-spacing: .17em !important;
+
+    color: #f4f2ed !important;
 
     white-space: nowrap !important;
   }
@@ -143,9 +281,9 @@
   html body .mobile-menu-brand-light {
     font-size:
       clamp(
-        19px,
-        5.2vw,
-        23px
+        24px,
+        1.9vw,
+        44px
       ) !important;
 
     line-height: 1 !important;
@@ -159,63 +297,121 @@
     font-weight: 200 !important;
   }
 
+
+  /* ==========================================================
+     MODERN CLOSE BUTTON
+     SAME SIZE / SAME POSITION AS HAMBURGER
+     ========================================================== */
+
   html body .mobile-menu-close {
-    width: 42px !important;
-    height: 42px !important;
+    position: relative !important;
 
-    min-width: 42px !important;
-    min-height: 42px !important;
+    width: 44px !important;
+    height: 44px !important;
 
-    margin: 0 -7px 0 0 !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
 
+    margin: 0 !important;
     padding: 0 !important;
 
     display: grid !important;
-
     place-items: center !important;
 
-    border: 0 !important;
+    border:
+      1px solid rgba(244,242,237,.17) !important;
 
-    background: transparent !important;
+    border-radius: 50% !important;
 
-    color: rgba(244, 242, 237, .75) !important;
+    background:
+      rgba(255,255,255,.035) !important;
 
-    font-size: 21px !important;
-    font-weight: 200 !important;
+    color: #f4f2ed !important;
 
-    line-height: 1 !important;
+    font-size: 0 !important;
 
     opacity: 1 !important;
+
+    cursor: pointer !important;
+
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.015) !important;
+
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+
+    transition:
+      transform 220ms cubic-bezier(.22,1,.36,1),
+      border-color 180ms ease,
+      background 180ms ease !important;
+  }
+
+  html body .mobile-menu-close::before,
+  html body .mobile-menu-close::after {
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    width: 18px !important;
+    height: 1px !important;
+
+    background: currentColor !important;
+
+    border-radius: 999px !important;
+  }
+
+  html body .mobile-menu-close::before {
+    transform:
+      translate(-50%,-50%)
+      rotate(45deg) !important;
+  }
+
+  html body .mobile-menu-close::after {
+    transform:
+      translate(-50%,-50%)
+      rotate(-45deg) !important;
+  }
+
+  html body .mobile-menu summary:active,
+  html body .mobile-menu-close:active {
+    transform: scale(.91) !important;
+
+    background:
+      rgba(255,255,255,.08) !important;
+
+    border-color:
+      rgba(244,242,237,.28) !important;
   }
 
 
   /* ==========================================================
      NAVIGATION
-     IMPORTANT:
-     AUTO rows — NOT 1fr rows.
+     COMPACT / CENTERED / AUTO FIT
      ========================================================== */
 
   html body .mobile-menu-screen nav {
-    width: 100% !important;
+    width: auto !important;
+    height: auto !important;
 
     min-width: 0 !important;
     min-height: 0 !important;
 
-    height: auto !important;
-
     margin: 0 !important;
 
     padding:
-      clamp(18px, 3dvh, 32px)
-      0
-      clamp(14px, 2dvh, 22px) !important;
+      clamp(20px,3dvh,34px)
+      5vw
+      clamp(18px,2.5dvh,28px) !important;
 
     align-self: center !important;
 
     display: grid !important;
 
     grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
+      repeat(3,minmax(0,1fr)) !important;
 
     grid-template-rows: none !important;
     grid-auto-rows: auto !important;
@@ -224,7 +420,7 @@
     align-items: center !important;
 
     column-gap:
-      clamp(14px, 4vw, 24px) !important;
+      clamp(14px,4vw,24px) !important;
 
     row-gap:
       clamp(
@@ -242,7 +438,7 @@
 
 
   /* ==========================================================
-     01 — 06
+     PRIMARY LINKS
      ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
@@ -257,32 +453,32 @@
     height: auto !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
 
     display: grid !important;
 
     grid-template-columns:
-      clamp(27px, 7vw, 34px)
+      clamp(26px,7vw,34px)
       auto !important;
 
     align-items: baseline !important;
 
     column-gap:
-      clamp(8px, 2.5vw, 12px) !important;
+      clamp(8px,2.5vw,12px) !important;
 
     border: 0 !important;
 
     background: transparent !important;
 
-    color: rgba(246, 244, 238, .95) !important;
+    color:
+      rgba(246,244,238,.95) !important;
 
     font-family: var(--sans) !important;
 
     font-size:
       clamp(
         25px,
-        min(8vw, 4.35dvh),
+        min(8vw,4.35dvh),
         38px
       ) !important;
 
@@ -298,29 +494,38 @@
 
     position: relative !important;
 
-    transform: translate3d(0, 7px, 0);
+    transform:
+      translate3d(0,7px,0);
 
     transition:
-      transform 300ms cubic-bezier(.22, 1, .36, 1),
-      opacity 160ms ease !important;
+      opacity 160ms ease,
+      transform 300ms cubic-bezier(.22,1,.36,1) !important;
   }
 
   html body
   .mobile-menu[open]
   .mobile-menu-screen
   nav > a:nth-child(-n+6) {
-    transform: translate3d(0, 0, 0) !important;
+    transform:
+      translate3d(0,0,0) !important;
   }
 
 
-  /* NUMBERS */
+  /* ==========================================================
+     INDEX NUMBERS
+     ========================================================== */
 
-  html body .mobile-menu-screen nav > a:nth-child(-n+6)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6)::before {
     display: block !important;
 
     align-self: center !important;
 
-    color: rgba(244, 242, 237, .28) !important;
+    margin-top: .25em !important;
+
+    color:
+      rgba(244,242,237,.28) !important;
 
     font-size: 8px !important;
     font-weight: 500 !important;
@@ -328,50 +533,56 @@
     line-height: 1 !important;
 
     letter-spacing: .14em !important;
-
-    margin-top: .25em !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(1)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(1)::before {
     content: "01" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(2)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(2)::before {
     content: "02" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(3)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(3)::before {
     content: "03" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(4)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(4)::before {
     content: "04" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(5)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(5)::before {
     content: "05" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(6)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(6)::before {
     content: "06" !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(-n+6):active {
-    opacity: .48 !important;
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6):active {
+    opacity: .5 !important;
 
     transform:
-      translate3d(
-        5px,
-        0,
-        0
-      ) !important;
+      translate3d(5px,0,0) !important;
   }
 
 
   /* ==========================================================
-     ABOUT / JOURNAL / CONTACT
-     One clean row.
-     No individual lines.
+     SECONDARY ROW
      ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(7),
@@ -385,12 +596,12 @@
     height: auto !important;
 
     margin:
-      clamp(4px, .8dvh, 8px)
+      clamp(5px,.8dvh,9px)
       0
       0 !important;
 
     padding:
-      clamp(8px, 1dvh, 11px)
+      clamp(9px,1.1dvh,12px)
       0
       0 !important;
 
@@ -402,9 +613,13 @@
 
     border: 0 !important;
 
+    border-top:
+      1px solid rgba(244,242,237,.11) !important;
+
     background: transparent !important;
 
-    color: rgba(244, 242, 237, .55) !important;
+    color:
+      rgba(244,242,237,.55) !important;
 
     font-size: 9px !important;
     font-weight: 500 !important;
@@ -422,16 +637,19 @@
 
   html body .mobile-menu-screen nav > a:nth-child(7) {
     grid-column: 1 !important;
+    grid-row: 7 !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(8) {
     grid-column: 2 !important;
+    grid-row: 7 !important;
 
     justify-content: center !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(9) {
     grid-column: 3 !important;
+    grid-row: 7 !important;
 
     justify-content: flex-end !important;
   }
@@ -442,25 +660,25 @@
      ========================================================== */
 
   html body .mobile-menu-footer {
-    width: 100% !important;
+    width: auto !important;
 
     min-width: 0 !important;
-    min-height: 48px !important;
+    min-height: 54px !important;
 
     height: auto !important;
 
     margin: 0 !important;
 
     padding:
-      9px
-      0
-      0 !important;
+      10px
+      5vw
+      max(10px,env(safe-area-inset-bottom)) !important;
 
     display: grid !important;
 
     grid-template-columns:
       auto
-      minmax(0, 1fr)
+      minmax(0,1fr)
       auto !important;
 
     grid-template-areas:
@@ -469,18 +687,22 @@
     align-items: center !important;
 
     column-gap:
-      clamp(6px, 2.2vw, 12px) !important;
+      clamp(7px,2vw,12px) !important;
 
     border: 0 !important;
 
     border-top:
-      1px solid rgba(244, 242, 237, .11) !important;
+      1px solid rgba(244,242,237,.11) !important;
   }
 
 
-  /* LANGUAGE */
+  /* ==========================================================
+     LANGUAGE
+     ========================================================== */
 
-  html body .mobile-menu-footer .language-switch {
+  html body
+  .mobile-menu-footer
+  .language-switch {
     grid-area: language !important;
 
     width: auto !important;
@@ -489,7 +711,6 @@
     min-height: 30px !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
 
     display: flex !important;
@@ -503,13 +724,16 @@
     background: transparent !important;
   }
 
-  html body .mobile-menu-footer .language-switch::before {
+  html body
+  .mobile-menu-footer
+  .language-switch::before {
     display: none !important;
-
     content: none !important;
   }
 
-  html body .mobile-menu-footer .language-switch button {
+  html body
+  .mobile-menu-footer
+  .language-switch button {
     width: auto !important;
 
     min-width: 0 !important;
@@ -518,14 +742,14 @@
     min-height: 30px !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
 
     border: 0 !important;
 
     background: transparent !important;
 
-    color: rgba(244, 242, 237, .38) !important;
+    color:
+      rgba(244,242,237,.38) !important;
 
     font-size: 9px !important;
     font-weight: 600 !important;
@@ -545,7 +769,9 @@
   }
 
 
-  /* SOCIAL */
+  /* ==========================================================
+     SOCIAL
+     ========================================================== */
 
   html body .mobile-footer-row {
     display: contents !important;
@@ -556,25 +782,25 @@
 
     justify-self: center !important;
 
+    min-width: 0 !important;
+
     display: flex !important;
 
     align-items: center !important;
 
-    gap: 1px !important;
-
-    min-width: 0 !important;
+    gap: 2px !important;
   }
 
   html body .mobile-social .social-link {
-    width: 29px !important;
-    height: 29px !important;
+    width: 30px !important;
+    height: 30px !important;
 
-    min-width: 29px !important;
-    min-height: 29px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
 
-    flex: 0 0 29px !important;
+    flex: 0 0 30px !important;
 
-    opacity: .56 !important;
+    opacity: .58 !important;
   }
 
   html body .mobile-social .social-icon {
@@ -583,7 +809,9 @@
   }
 
 
-  /* BOOK */
+  /* ==========================================================
+     BOOK NOW
+     ========================================================== */
 
   html body .mobile-book {
     grid-area: book !important;
@@ -593,12 +821,11 @@
     width: auto !important;
 
     min-width: 0 !important;
-    min-height: 30px !important;
 
     height: 30px !important;
+    min-height: 30px !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
 
     display: flex !important;
@@ -631,41 +858,37 @@
 
 @media (max-width: 700px) and (max-height: 720px) {
 
-  html body .mobile-menu-screen {
-    padding-top:
-      max(10px, env(safe-area-inset-top)) !important;
-
-    padding-bottom:
-      max(8px, env(safe-area-inset-bottom)) !important;
-  }
-
-  html body .mobile-menu-head {
-    min-height: 45px !important;
-
-    padding-bottom: 8px !important;
-  }
-
   html body .mobile-menu-screen nav {
     padding:
-      9px
-      0
-      7px !important;
+      10px
+      5vw
+      8px !important;
 
     row-gap: 8px !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(-n+6) {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
     font-size:
       clamp(
         22px,
-        min(7.4vw, 4.3dvh),
+        min(7.5vw,4.25dvh),
         30px
       ) !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(7),
-  html body .mobile-menu-screen nav > a:nth-child(8),
-  html body .mobile-menu-screen nav > a:nth-child(9) {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(7),
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(8),
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(9) {
     min-height: 24px !important;
 
     margin-top: 0 !important;
@@ -676,31 +899,27 @@
   }
 
   html body .mobile-menu-footer {
-    min-height: 40px !important;
+    min-height: 45px !important;
 
-    padding-top: 5px !important;
+    padding-top: 6px !important;
+    padding-bottom:
+      max(
+        7px,
+        env(safe-area-inset-bottom)
+      ) !important;
   }
 }
 
 
 /* ============================================================
-   NARROW PHONES
+   VERY NARROW PHONES
    ============================================================ */
 
 @media (max-width: 390px) {
 
-  html body .mobile-menu-screen {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  html body .mobile-menu-screen nav {
-    column-gap: 10px !important;
-  }
-
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
     grid-template-columns:
-      25px
+      24px
       auto !important;
 
     column-gap: 7px !important;
@@ -708,12 +927,14 @@
     font-size:
       clamp(
         22px,
-        min(7.5vw, 4.25dvh),
-        30px
+        min(7.4vw,4.2dvh),
+        29px
       ) !important;
   }
 
-  html body .mobile-menu-screen nav > a:nth-child(-n+6)::before {
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6)::before {
     font-size: 7px !important;
   }
 
@@ -748,9 +969,10 @@
 @media (prefers-reduced-motion: reduce) {
 
   html body .mobile-menu-screen,
-  html body .mobile-menu-screen nav > a {
+  html body .mobile-menu-screen nav > a,
+  html body .mobile-menu summary,
+  html body .mobile-menu-close {
     transition: none !important;
-
     transform: none !important;
   }
 }
