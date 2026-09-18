@@ -14,7 +14,10 @@ export async function getStaticPaths() {
   } = await content();
 
   return albums.map(
-    album => ({
+    (
+      album,
+      index
+    ) => ({
       params: {
         slug:
           album.slug
@@ -22,7 +25,18 @@ export async function getStaticPaths() {
 
       props: {
         album,
-        settings
+        settings,
+
+        nextAlbum:
+          albums.length > 1
+            ? albums[
+                (
+                  index +
+                  1
+                ) %
+                albums.length
+              ]
+            : undefined
       }
     })
   );
@@ -31,6 +45,7 @@ export async function getStaticPaths() {
 interface Props {
   album: Album;
   settings: Settings;
+  nextAlbum?: Album;
 }
 
 const props =
