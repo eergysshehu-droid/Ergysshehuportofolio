@@ -1,12 +1,12 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE NAV
-   COMPACT EDITORIAL INDEX
+   ERGYS SHEHU — MOBILE MENU
+   MINIMAL FASHION EDITORIAL
    ============================================================ */
 
 @media (max-width: 700px) {
 
   /* ==========================================================
-     SCREEN
+     FULL SCREEN
      ========================================================== */
 
   html body
@@ -34,7 +34,7 @@
         18px,
         env(safe-area-inset-top)
       )
-      20px
+      22px
       max(
         18px,
         env(safe-area-inset-bottom)
@@ -43,19 +43,10 @@
     display:
       grid !important;
 
-    /*
-     * IMPORTANT:
-     * Footer no longer gets pushed
-     * to the bottom of the viewport.
-     */
     grid-template-rows:
       auto
-      auto
-      auto
-      1fr !important;
-
-    align-content:
-      start !important;
+      minmax(0, 1fr)
+      auto !important;
 
     overflow:
       hidden !important;
@@ -64,14 +55,14 @@
       none !important;
 
     color:
-      #f3f1e9 !important;
+      #f2f0e9 !important;
 
     background:
       linear-gradient(
-        155deg,
-        #0a0f0b 0%,
-        #060906 48%,
-        #030503 100%
+        160deg,
+        #0b100c 0%,
+        #060906 55%,
+        #020302 100%
       ) !important;
 
     border:
@@ -84,14 +75,16 @@
       none !important;
 
     backdrop-filter:
-      blur(30px)
-      saturate(108%) !important;
+      blur(32px)
+      saturate(105%) !important;
 
     -webkit-backdrop-filter:
-      blur(30px)
-      saturate(108%) !important;
+      blur(32px)
+      saturate(105%) !important;
   }
 
+
+  /* subtle atmosphere */
 
   html body
   .mobile-menu-screen::before {
@@ -111,20 +104,20 @@
       radial-gradient(
         circle
         at
-        88%
-        2%,
+        85%
+        0%,
         rgba(
-          100,
-          125,
-          102,
+          126,
+          150,
+          128,
           .07
         ),
         transparent
-        30%
+        34%
       );
 
     opacity:
-      1 !important;
+      1;
   }
 
 
@@ -144,12 +137,12 @@
       100% !important;
 
     min-height:
-      48px !important;
+      54px !important;
 
     padding:
       0
       0
-      16px !important;
+      18px !important;
 
     display:
       flex !important;
@@ -160,11 +153,14 @@
     justify-content:
       space-between !important;
 
+    border:
+      0 !important;
+
     border-bottom:
       1px solid
       rgba(
-        243,
-        241,
+        242,
+        240,
         233,
         .11
       ) !important;
@@ -195,7 +191,7 @@
       1 !important;
 
     letter-spacing:
-      .06em !important;
+      .065em !important;
   }
 
 
@@ -216,16 +212,16 @@
   html body
   .mobile-menu-close {
     width:
-      34px !important;
+      40px !important;
 
     height:
-      34px !important;
+      40px !important;
 
     min-width:
-      34px !important;
+      40px !important;
 
     min-height:
-      34px !important;
+      40px !important;
 
     padding:
       0 !important;
@@ -244,28 +240,56 @@
 
     color:
       rgba(
-        243,
-        241,
+        242,
+        240,
         233,
-        .62
+        .72
       ) !important;
 
     font-size:
-      20px !important;
+      22px !important;
 
     font-weight:
-      200;
+      200 !important;
 
     line-height:
       1;
 
     opacity:
       1 !important;
+
+    transition:
+      transform
+      240ms
+      cubic-bezier(
+        .16,
+        1,
+        .3,
+        1
+      ),
+      color
+      180ms
+      ease;
+  }
+
+
+  html body
+  .mobile-menu-close:active {
+    transform:
+      rotate(
+        8deg
+      )
+      scale(
+        .92
+      );
+
+    color:
+      #fff !important;
   }
 
 
   /* ==========================================================
-     MAIN NAV
+     NAV
      ========================================================== */
 
   html body
@@ -280,7 +304,7 @@
       100% !important;
 
     height:
-      auto !important;
+      100% !important;
 
     min-height:
       0 !important;
@@ -289,33 +313,31 @@
       0 !important;
 
     padding:
-      28px
+      clamp(
+        24px,
+        4.2dvh,
+        46px
+      )
       0
-      20px !important;
+      18px !important;
 
     display:
-      grid !important;
+      flex !important;
 
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(
-          0,
-          1fr
-        )
-      ) !important;
+    flex-direction:
+      column !important;
 
-    column-gap:
-      26px !important;
+    justify-content:
+      center !important;
 
-    row-gap:
+    align-items:
+      stretch !important;
+
+    gap:
       0 !important;
 
-    align-content:
-      start !important;
-
     overflow:
-      visible !important;
+      hidden !important;
 
     border:
       0 !important;
@@ -326,7 +348,8 @@
 
 
   /* ==========================================================
-     PRIMARY — FIRST SIX
+     PRIMARY NAV
+     Photography → Index
      ========================================================== */
 
   html body
@@ -337,73 +360,57 @@
       relative;
 
     width:
-      100% !important;
-
-    min-width:
-      0 !important;
+      fit-content !important;
 
     min-height:
-      72px !important;
+      0 !important;
 
     margin:
       0 !important;
 
     padding:
-      23px
-      0
-      12px !important;
+      clamp(
+        6px,
+        1.05dvh,
+        10px
+      )
+      0 !important;
 
     display:
-      flex !important;
-
-    align-items:
-      center !important;
+      block !important;
 
     border:
       0 !important;
-
-    border-bottom:
-      1px solid
-      rgba(
-        243,
-        241,
-        233,
-        .075
-      ) !important;
 
     background:
       transparent !important;
 
     color:
       rgba(
-        247,
-        245,
-        238,
+        246,
+        244,
+        237,
         .94
       ) !important;
 
-    /*
-     * THIS is the important change:
-     * no giant serif anymore.
-     */
     font-family:
       var(--sans) !important;
 
     font-size:
       clamp(
-        21px,
-        6.2vw,
-        27px
+        30px,
+        8.3vw,
+        43px
       ) !important;
 
     font-weight:
       300 !important;
 
     line-height:
-      .98 !important;
+      .92 !important;
 
     letter-spacing:
-      -.035em !important;
+      -.055em !important;
 
     text-transform:
       none !important;
@@ -413,107 +420,62 @@
 
     transform:
       none !important;
+
+    transition:
+      padding
+      260ms
+      cubic-bezier(
+        .16,
+        1,
+        .3,
+        1
+      ),
+      opacity
+      180ms
+      ease;
   }
 
-
-  /* INDEX NUMBERS */
 
   html body
   .mobile-menu-screen
   nav >
   a:nth-child(-n+6)::before {
-    position:
-      absolute;
+    display:
+      none !important;
 
-    top:
-      10px;
-
-    left:
-      0;
-
-    font-family:
-      var(--sans);
-
-    font-size:
-      7px;
-
-    font-weight:
-      500;
-
-    line-height:
-      1;
-
-    letter-spacing:
-      .18em;
-
-    color:
-      rgba(
-        243,
-        241,
-        233,
-        .28
-      );
+    content:
+      none !important;
   }
 
 
   html body
   .mobile-menu-screen
   nav >
-  a:nth-child(1)::before {
-    content:
-      "01";
-  }
+  a:nth-child(-n+6):active {
+    padding-left:
+      8px !important;
 
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(2)::before {
-    content:
-      "02";
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(3)::before {
-    content:
-      "03";
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(4)::before {
-    content:
-      "04";
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(5)::before {
-    content:
-      "05";
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(6)::before {
-    content:
-      "06";
+    opacity:
+      .52 !important;
   }
 
 
   /* ==========================================================
-     SECONDARY
-     ABOUT / JOURNAL / CONTACT
+     SECONDARY ROW
      ========================================================== */
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(7) {
+    margin-top:
+      clamp(
+        24px,
+        3.5dvh,
+        38px
+      ) !important;
+  }
+
 
   html body
   .mobile-menu-screen
@@ -523,45 +485,33 @@
       auto !important;
 
     min-height:
-      42px !important;
-
-    margin:
-      20px
-      0
       0 !important;
 
+    margin-right:
+      22px !important;
+
     padding:
-      13px
-      0
+      9px
       0 !important;
 
     display:
-      flex !important;
+      inline-flex !important;
 
     align-items:
-      flex-start !important;
+      center !important;
 
     border:
       0 !important;
-
-    border-top:
-      1px solid
-      rgba(
-        243,
-        241,
-        233,
-        .1
-      ) !important;
 
     background:
       transparent !important;
 
     color:
       rgba(
-        243,
-        241,
+        242,
+        240,
         233,
-        .52
+        .53
       ) !important;
 
     font-family:
@@ -591,22 +541,42 @@
 
 
   /*
-   * Put three secondary items
-   * evenly across the full width.
+   * Make last three links one clean horizontal row.
    */
+
+  html body
+  .mobile-menu-screen nav {
+    flex-wrap:
+      nowrap !important;
+  }
+
+
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(7),
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(8),
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(9) {
+    position:
+      absolute;
+  }
+
 
   html body
   .mobile-menu-screen
   nav >
   a:nth-child(7) {
-    grid-column:
-      1;
+    left:
+      0;
 
-    width:
-      calc(
-        50% -
-        13px
-      ) !important;
+    bottom:
+      14px;
   }
 
 
@@ -614,20 +584,16 @@
   .mobile-menu-screen
   nav >
   a:nth-child(8) {
-    grid-column:
-      1;
-
-    position:
-      absolute;
-
     left:
-      33.333%;
+      50%;
 
     bottom:
-      0;
+      14px;
 
-    width:
-      33.333% !important;
+    transform:
+      translateX(
+        -50%
+      ) !important;
   }
 
 
@@ -635,37 +601,19 @@
   .mobile-menu-screen
   nav >
   a:nth-child(9) {
-    grid-column:
-      2;
+    right:
+      0;
 
-    justify-self:
-      end;
+    bottom:
+      14px;
 
-    width:
-      calc(
-        50% -
-        13px
-      ) !important;
-
-    text-align:
-      right;
-
-    justify-content:
-      flex-end;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:active {
-    opacity:
-      .5 !important;
+    margin-right:
+      0 !important;
   }
 
 
   /* ==========================================================
-     FOOTER / UTILITIES
+     FOOTER
      ========================================================== */
 
   html body
@@ -680,12 +628,10 @@
       100% !important;
 
     margin:
-      18px
-      0
       0 !important;
 
     padding:
-      18px
+      17px
       0
       0 !important;
 
@@ -698,16 +644,16 @@
 
     grid-template-areas:
       "language book"
-      "meta meta" !important;
+      "social location" !important;
 
     align-items:
       center !important;
 
     column-gap:
-      20px !important;
+      18px !important;
 
     row-gap:
-      12px !important;
+      13px !important;
 
     border:
       0 !important;
@@ -715,15 +661,13 @@
     border-top:
       1px solid
       rgba(
-        243,
-        241,
+        242,
+        240,
         233,
-        .1
+        .11
       ) !important;
   }
 
-
-  /* LANGUAGE */
 
   html body
   .mobile-menu-footer
@@ -731,124 +675,10 @@
     grid-area:
       language;
 
-    width:
-      auto !important;
-
-    height:
-      auto !important;
-
     margin:
       0 !important;
-
-    padding:
-      0 !important;
-
-    display:
-      flex !important;
-
-    align-items:
-      center;
-
-    gap:
-      14px !important;
-
-    border:
-      0 !important;
-
-    background:
-      transparent !important;
   }
 
-
-  html body
-  .mobile-menu-footer
-  .language-switch button {
-    position:
-      relative;
-
-    width:
-      auto !important;
-
-    min-width:
-      0 !important;
-
-    height:
-      28px !important;
-
-    min-height:
-      28px !important;
-
-    padding:
-      0 !important;
-
-    border:
-      0 !important;
-
-    border-radius:
-      0 !important;
-
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        243,
-        241,
-        233,
-        .32
-      ) !important;
-
-    font-size:
-      9px !important;
-
-    font-weight:
-      500 !important;
-
-    line-height:
-      28px !important;
-
-    letter-spacing:
-      .16em !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .language-switch
-  button.is-active {
-    color:
-      #f3f1e9 !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .language-switch
-  button.is-active::after {
-    content:
-      "";
-
-    position:
-      absolute;
-
-    left:
-      0;
-
-    right:
-      0;
-
-    bottom:
-      0;
-
-    height:
-      1px;
-
-    background:
-      currentColor;
-  }
-
-
-  /* BOOK NOW */
 
   html body
   .mobile-book {
@@ -859,27 +689,22 @@
       end;
 
     min-width:
-      0 !important;
+      auto !important;
 
     min-height:
-      28px !important;
+      36px !important;
 
     padding:
       0 !important;
 
     display:
-      inline-flex;
+      inline-flex !important;
 
     align-items:
       center;
 
     color:
-      rgba(
-        243,
-        241,
-        233,
-        .78
-      ) !important;
+      #f2f0e9 !important;
 
     font-size:
       9px !important;
@@ -898,111 +723,48 @@
   }
 
 
-  /* ==========================================================
-     SOCIAL / LOCATION
-     ========================================================== */
-
   html body
   .mobile-footer-row {
     grid-area:
-      meta;
+      social / social / location / location;
 
     width:
       100% !important;
 
-    min-height:
-      32px;
-
     display:
-      flex !important;
-
-    align-items:
-      center !important;
-
-    justify-content:
-      space-between !important;
-
-    gap:
-      16px !important;
+      contents !important;
   }
 
 
   html body
   .mobile-social {
-    flex-shrink:
-      0;
+    grid-area:
+      social;
 
-    gap:
-      9px !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .social-icons
-  .social-link {
-    width:
-      24px !important;
-
-    height:
-      28px !important;
-
-    flex-basis:
-      24px !important;
-
-    opacity:
-      .58 !important;
-
-    background:
-      transparent !important;
-
-    transform:
-      none !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .social-icons
-  .social-link::before {
-    display:
-      none !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .social-icons
-  .social-icon {
-    width:
-      14px !important;
-
-    height:
-      14px !important;
+    justify-self:
+      start;
   }
 
 
   html body
   .mobile-location {
-    margin-left:
-      auto;
+    grid-area:
+      location;
+
+    justify-self:
+      end;
 
     display:
-      flex !important;
+      flex;
 
-    align-items:
-      center;
+    flex-direction:
+      column;
 
     gap:
-      7px !important;
+      3px;
 
-    color:
-      rgba(
-        243,
-        241,
-        233,
-        .25
-      ) !important;
+    margin:
+      0 !important;
 
     font-size:
       7px !important;
@@ -1011,24 +773,21 @@
       1.3 !important;
 
     letter-spacing:
-      .1em !important;
+      .13em;
+
+    text-align:
+      right;
 
     text-transform:
       uppercase;
 
-    text-align:
-      right;
-  }
-
-
-  html body
-  .mobile-location
-  span + span::before {
-    content:
-      "·";
-
-    margin-right:
-      7px;
+    color:
+      rgba(
+        242,
+        240,
+        233,
+        .31
+      ) !important;
   }
 
 }
@@ -1041,7 +800,7 @@
 @media (
   max-width: 700px
 ) and (
-  max-height: 740px
+  max-height: 720px
 ) {
 
   html body
@@ -1062,6 +821,9 @@
 
   html body
   .mobile-menu-head {
+    min-height:
+      42px !important;
+
     padding-bottom:
       10px !important;
   }
@@ -1070,10 +832,10 @@
   html body
   .mobile-menu-screen nav {
     padding-top:
-      16px !important;
+      13px !important;
 
     padding-bottom:
-      10px !important;
+      8px !important;
   }
 
 
@@ -1081,20 +843,15 @@
   .mobile-menu-screen
   nav >
   a:nth-child(-n+6) {
-    min-height:
-      58px !important;
-
-    padding-top:
-      18px !important;
-
-    padding-bottom:
-      8px !important;
+    padding:
+      4px
+      0 !important;
 
     font-size:
       clamp(
-        19px,
-        5.4vw,
-        23px
+        25px,
+        6.8dvh,
+        34px
       ) !important;
   }
 
@@ -1102,37 +859,27 @@
   html body
   .mobile-menu-screen
   nav >
-  a:nth-child(-n+6)::before {
-    top:
-      7px;
-  }
-
-
+  a:nth-child(7),
   html body
   .mobile-menu-screen
   nav >
-  a:nth-child(n+7) {
-    margin-top:
-      10px !important;
-
-    min-height:
-      34px !important;
-
-    padding-top:
-      9px !important;
+  a:nth-child(8),
+  html body
+  .mobile-menu-screen
+  nav >
+  a:nth-child(9) {
+    bottom:
+      4px;
   }
 
 
   html body
   .mobile-menu-footer {
-    margin-top:
+    padding-top:
       10px !important;
 
-    padding-top:
-      11px !important;
-
     row-gap:
-      6px !important;
+      7px !important;
   }
 
 
