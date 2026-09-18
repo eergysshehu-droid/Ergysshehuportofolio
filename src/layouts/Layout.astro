@@ -1831,7 +1831,8 @@ if(
         );
     }
 
-
+let lastStackWidth =
+  window.innerWidth;
     function scheduleRebuild(){
       if(
         resizeRaf !==
@@ -1925,15 +1926,45 @@ if(
       );
 
 
-    window
-      .addEventListener(
-        'resize',
-        scheduleRebuild,
-        {
-          passive:
-            true
-        }
-      );
+  window
+  .addEventListener(
+    'resize',
+    ()=>{
+      const nextWidth =
+        window.innerWidth;
+
+
+      /*
+       * Mobile browsers frequently change viewport HEIGHT
+       * while the address bar appears/disappears during scroll.
+       *
+       * Rebuilding sticky card geometry for those height-only
+       * changes creates visible jumps in the stack.
+       *
+       * Only rebuild when the viewport WIDTH actually changes.
+       */
+      if(
+        Math.abs(
+          nextWidth -
+          lastStackWidth
+        ) <
+        2
+      ){
+        return;
+      }
+
+
+      lastStackWidth =
+        nextWidth;
+
+
+      scheduleRebuild();
+    },
+    {
+      passive:
+        true
+    }
+  );
 
 
     window
