@@ -279,7 +279,7 @@ test.describe(
         ).not.toBeNull();
 
         expect(
-          footerRect.bottom
+          (footerRect.y + footerRect.height)
         ).toBeLessThanOrEqual(
           viewport.height +
           2
