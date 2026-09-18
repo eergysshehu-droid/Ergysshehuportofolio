@@ -1806,7 +1806,7 @@ function clearCardState(
     }
 
 
-    function updateStack(){
+  function updateStack(){
   stackRaf =
     undefined;
 
@@ -1817,17 +1817,19 @@ function clearCardState(
     return;
   }
 
+
   stackItems
     .forEach(
       (
         item,
         index
       )=>{
+
         const nextItem =
           stackItems[
-            index +
-            1
+            index + 1
           ];
+
 
         const progress =
           nextItem
@@ -1837,47 +1839,98 @@ function clearCardState(
               )
             : 0;
 
+
+        if(
+          !item.image
+        ){
+          return;
+        }
+
+
+        /*
+         * Continuous low-radius blur.
+         *
+         * Keep the maximum small because
+         * filter: blur() on sticky mobile
+         * layers is relatively expensive.
+         */
+        const blur =
+          progress <= 0
+            ? 0
+            : Math.min(
+                1.8,
+                Math.pow(
+                  progress,
+                  1.15
+                ) * 1.8
+              );
+
+
+        /*
+         * Darkness remains the main melt.
+         * Slight easing keeps the photograph
+         * readable longer before it disappears.
+         */
+        const darkness =
+          progress <= 0
+            ? 0
+            : Math.min(
+                .70,
+                Math.pow(
+                  progress,
+                  1.08
+                ) * .70
+              );
+
+
+        const nextBlur =
+          `${
+            Math.round(
+              blur * 20
+            ) / 20
+          }px`;
+
+
+        const nextDarkness =
+          darkness
+            .toFixed(
+              3
+            );
+
+
         if(
           item.image
+            .style
+            .getPropertyValue(
+              '--stack-blur'
+            ) !==
+          nextBlur
         ){
-          const blur =
-            progress < .16
-              ? 0
-              : progress < .55
-                ? 1.2
-                : 2.2;
+          item.image
+            .style
+            .setProperty(
+              '--stack-blur',
+              nextBlur
+            );
+        }
 
-          const nextBlur =
-            `${blur}px`;
 
-          if(
-            item.image
-              .style
-              .getPropertyValue(
-                '--stack-blur'
-              ) !==
-            nextBlur
-          ){
-            item.image
-              .style
-              .setProperty(
-                '--stack-blur',
-                nextBlur
-              );
-          }
-
+        if(
+          item.image
+            .style
+            .getPropertyValue(
+              '--stack-darkness'
+            ) !==
+          nextDarkness
+        ){
           item.image
             .style
             .setProperty(
               '--stack-darkness',
-              (
-                progress *
-                .72
-              ).toFixed(
-                3
-              )
+              nextDarkness
             );
         }
+
       }
     );
 }
