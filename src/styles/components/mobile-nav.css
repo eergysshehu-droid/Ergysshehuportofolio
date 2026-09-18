@@ -1,6 +1,6 @@
 /* ============================================================
    ERGYS SHEHU — MOBILE NAV
-   FINAL / FULLSCREEN / REFERENCE MATCH
+   PREMIUM FINAL
    ============================================================ */
 
 .mobile-menu-trigger,
@@ -19,6 +19,10 @@
     --menu-accent: var(--accent, #f2a52c);
     --mobile-nav-pad: var(--page-pad);
     --menu-col-gap: clamp(14px, 4vw, 24px);
+
+    --menu-white: rgba(246,244,238,.95);
+    --menu-muted: rgba(246,244,238,.66);
+    --menu-line: rgba(246,244,238,.14);
   }
 
   html.mobile-menu-open,
@@ -29,7 +33,7 @@
 
 
   /* ==========================================================
-     MENU TRIGGER
+     CLOSED MENU BUTTON — WHITE + GOLD PROGRESS RING
      ========================================================== */
 
   html body .mobile-menu-trigger {
@@ -47,24 +51,74 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    border: 1px solid rgba(242,165,44,.58) !important;
+    border:
+      1px solid rgba(246,244,238,.25) !important;
+
     border-radius: 50% !important;
 
-    background: rgba(255,255,255,.025) !important;
+    background:
+      rgba(255,255,255,.015) !important;
 
-    color: var(--menu-accent) !important;
+    color:
+      rgba(246,244,238,.95) !important;
 
     cursor: pointer !important;
 
+    -webkit-tap-highlight-color:
+      transparent !important;
+
     transition:
-      transform 180ms ease,
-      background 180ms ease,
-      border-color 180ms ease !important;
+      transform 160ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease !important;
+  }
+
+
+  /* GOLD LOADING / PROGRESS RING */
+
+  html body .mobile-menu-trigger::before {
+    content: "" !important;
+
+    position: absolute !important;
+
+    inset: -3px !important;
+
+    border-radius: 50% !important;
+
+    border:
+      1px solid transparent !important;
+
+    border-top-color:
+      var(--menu-accent) !important;
+
+    border-right-color:
+      rgba(242,165,44,.38) !important;
+
+    border-bottom-color:
+      rgba(242,165,44,.08) !important;
+
+    pointer-events: none !important;
+
+    animation:
+      ergys-menu-ring
+      3.4s
+      linear
+      infinite !important;
+  }
+
+  @keyframes ergys-menu-ring {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  html body .mobile-menu-trigger:active {
+    transform: scale(.94) !important;
   }
 
 
   /* ==========================================================
-     HAMBURGER
+     HAMBURGER — WHITE
      ========================================================== */
 
   html body .hamburger {
@@ -85,9 +139,11 @@
 
     margin: 0 !important;
 
-    background: currentColor !important;
+    background:
+      currentColor !important;
 
-    border-radius: 999px !important;
+    border-radius:
+      999px !important;
   }
 
   html body .hamburger i:first-child {
@@ -99,7 +155,7 @@
 
   html body .hamburger i:last-child {
     top: 9px !important;
-    left: 6px !important;
+    right: 0 !important;
 
     width: 12px !important;
   }
@@ -113,11 +169,6 @@
     position: fixed !important;
 
     inset: 0 !important;
-
-    top: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
 
     width: 100% !important;
     max-width: none !important;
@@ -146,9 +197,11 @@
 
     isolation: isolate !important;
 
-    color: #f4f2ed !important;
+    color:
+      #f4f2ed !important;
 
-    background: #030705 !important;
+    background:
+      #020604 !important;
 
     border: 0 !important;
     border-radius: 0 !important;
@@ -163,12 +216,13 @@
 
     pointer-events: none !important;
 
-    transform: translate3d(0, -5px, 0) !important;
+    transform:
+      translate3d(0,-4px,0) !important;
 
     transition:
-      opacity 200ms ease,
-      transform 300ms cubic-bezier(.22,1,.36,1),
-      visibility 0s linear 300ms !important;
+      opacity 180ms ease,
+      transform 280ms cubic-bezier(.22,1,.36,1),
+      visibility 0s linear 280ms !important;
 
     z-index: 999999 !important;
   }
@@ -185,32 +239,29 @@
 
     inset: 0 !important;
 
-    display: block !important;
+    z-index: 0 !important;
 
     pointer-events: none !important;
-
-    z-index: 0 !important;
 
     background:
       radial-gradient(
         ellipse at 94% 2%,
-        rgba(58,100,71,.15) 0%,
-        rgba(27,63,40,.07) 28%,
-        transparent 50%
+        rgba(55,94,67,.14) 0%,
+        rgba(25,58,37,.06) 28%,
+        transparent 51%
       ),
       radial-gradient(
-        ellipse at 4% 96%,
-        rgba(34,73,47,.08) 0%,
-        transparent 38%
+        ellipse at 3% 96%,
+        rgba(28,64,40,.065) 0%,
+        transparent 39%
       ),
       linear-gradient(
         155deg,
-        #08130d 0%,
-        #030a06 46%,
-        #010403 100%
+        #07120c 0%,
+        #030906 46%,
+        #010302 100%
       ) !important;
   }
-
 
   html body .mobile-menu-screen.is-open {
     opacity: 1 !important;
@@ -218,17 +269,18 @@
 
     pointer-events: auto !important;
 
-    transform: translate3d(0,0,0) !important;
+    transform:
+      translate3d(0,0,0) !important;
 
     transition:
-      opacity 200ms ease,
-      transform 300ms cubic-bezier(.22,1,.36,1),
+      opacity 180ms ease,
+      transform 280ms cubic-bezier(.22,1,.36,1),
       visibility 0s !important;
   }
 
 
   /* ==========================================================
-     HEADER
+     OPEN HEADER
      ========================================================== */
 
   html body .mobile-menu-head {
@@ -257,7 +309,7 @@
     border: 0 !important;
 
     border-bottom:
-      1px solid rgba(244,242,237,.12) !important;
+      1px solid rgba(244,242,237,.115) !important;
   }
 
 
@@ -277,20 +329,24 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    color: #f4f2ed !important;
+    color:
+      #f4f2ed !important;
 
-    font-family: var(--wordmark-font) !important;
+    font-family:
+      var(--wordmark-font) !important;
 
     line-height: 1 !important;
 
-    letter-spacing: .17em !important;
+    letter-spacing:
+      .17em !important;
 
     white-space: nowrap !important;
   }
 
   html body .mobile-menu-brand-strong,
   html body .mobile-menu-brand-light {
-    font-size: clamp(24px,1.9vw,44px) !important;
+    font-size:
+      clamp(24px,1.9vw,44px) !important;
 
     line-height: 1 !important;
   }
@@ -305,11 +361,14 @@
 
 
   /* ==========================================================
-     CLOSE BUTTON
+     CLOSE BUTTON — PREMIUM WHITE
      ========================================================== */
 
   html body .mobile-menu-close {
     position: relative !important;
+
+    display: grid !important;
+    place-items: center !important;
 
     width: 44px !important;
     height: 44px !important;
@@ -320,24 +379,30 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    display: grid !important;
-    place-items: center !important;
-
     border:
-      1px solid var(--menu-accent) !important;
+      1px solid rgba(244,242,237,.24) !important;
 
     border-radius: 50% !important;
 
     background:
-      rgba(242,165,44,.025) !important;
+      rgba(255,255,255,.014) !important;
 
-    color: var(--menu-accent) !important;
+    color:
+      rgba(244,242,237,.94) !important;
 
     font-size: 0 !important;
 
     cursor: pointer !important;
 
     opacity: 1 !important;
+
+    -webkit-tap-highlight-color:
+      transparent !important;
+
+    transition:
+      transform 160ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease !important;
   }
 
   html body .mobile-menu-close::before,
@@ -349,12 +414,14 @@
     top: 50% !important;
     left: 50% !important;
 
-    width: 18px !important;
+    width: 16px !important;
     height: 1px !important;
 
-    background: currentColor !important;
+    background:
+      currentColor !important;
 
-    border-radius: 999px !important;
+    border-radius:
+      999px !important;
   }
 
   html body .mobile-menu-close::before {
@@ -369,9 +436,9 @@
       rotate(-45deg) !important;
   }
 
-  html body .mobile-menu-trigger:active,
   html body .mobile-menu-close:active {
-    transform: scale(.92) !important;
+    transform:
+      scale(.94) !important;
   }
 
 
@@ -393,7 +460,7 @@
     margin: 0 !important;
 
     padding:
-      clamp(20px,3dvh,38px)
+      clamp(48px,6.2dvh,76px)
       var(--mobile-nav-pad)
       0 !important;
 
@@ -405,18 +472,21 @@
       repeat(3,minmax(0,1fr)) !important;
 
     grid-template-rows:
-  repeat(6,auto)
-  auto !important;
+      repeat(
+        6,
+        clamp(50px,6.6dvh,68px)
+      )
+      auto !important;
 
-align-items: center !important;
+    align-content: start !important;
+    align-items: center !important;
 
-align-content: center !important;
+    column-gap:
+      var(--menu-col-gap) !important;
 
-column-gap:
-  var(--menu-col-gap) !important;
+    row-gap:
+      0 !important;
 
-row-gap:
-  clamp(20px,2.8dvh,30px) !important;
     overflow: hidden !important;
 
     border: 0 !important;
@@ -426,13 +496,14 @@ row-gap:
 
 
   /* ==========================================================
-     PRIMARY NAV 01–06
+     PRIMARY LINKS 01–06
      ========================================================== */
 
   html body
   .mobile-menu-screen
   nav > a:nth-child(-n+6) {
-    grid-column: 1 / -1 !important;
+    grid-column:
+      1 / -1 !important;
 
     width: fit-content !important;
     max-width: 100% !important;
@@ -448,53 +519,70 @@ row-gap:
     display: grid !important;
 
     grid-template-columns:
-      clamp(22px,6vw,28px)
+      20px
       auto !important;
 
     align-items: baseline !important;
 
     column-gap:
-      clamp(7px,2vw,10px) !important;
+      8px !important;
 
     border: 0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
 
     color:
-      rgba(246,244,238,.96) !important;
+      var(--menu-white) !important;
 
-    font-family: var(--sans) !important;
+    font-family:
+      var(--sans) !important;
 
     font-size:
       clamp(
-        30px,
-        min(8.8vw,4.6dvh),
-        43px
+        24px,
+        min(7.25vw,3.75dvh),
+        34px
       ) !important;
 
-    font-weight: 300 !important;
+    font-weight:
+      300 !important;
 
-    line-height: .94 !important;
+    line-height:
+      .98 !important;
 
-    letter-spacing: -.045em !important;
+    letter-spacing:
+      -.035em !important;
 
-    text-transform: uppercase !important;
+    text-transform:
+      uppercase !important;
 
     opacity: 1 !important;
 
-    transform: translate3d(0,6px,0);
+    transform:
+      translate3d(0,5px,0);
 
     transition:
-      opacity 150ms ease,
-      transform 300ms cubic-bezier(.22,1,.36,1) !important;
-  }
+      opacity 160ms ease,
+      transform 300ms cubic-bezier(.22,1,.36,1),
+      color 160ms ease !important;
 
+    -webkit-tap-highlight-color:
+      transparent !important;
+  }
 
   html body
   .mobile-menu-screen.is-open
   nav > a:nth-child(-n+6) {
     transform:
       translate3d(0,0,0) !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6):active {
+    opacity:
+      .62 !important;
   }
 
 
@@ -512,13 +600,17 @@ row-gap:
     color:
       var(--menu-accent) !important;
 
-    font-size: 9px !important;
+    font-size:
+      8px !important;
 
-    font-weight: 500 !important;
+    font-weight:
+      500 !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
 
-    letter-spacing: .10em !important;
+    letter-spacing:
+      .11em !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(1)::before {
@@ -553,6 +645,8 @@ row-gap:
   html body .mobile-menu-screen nav > a:nth-child(7),
   html body .mobile-menu-screen nav > a:nth-child(8),
   html body .mobile-menu-screen nav > a:nth-child(9) {
+    position: relative !important;
+
     width: 100% !important;
 
     min-width: 0 !important;
@@ -560,7 +654,10 @@ row-gap:
 
     height: auto !important;
 
-    margin: 0 !important;
+    margin:
+      clamp(20px,2.8dvh,32px)
+      0
+      0 !important;
 
     padding:
       14px
@@ -571,24 +668,28 @@ row-gap:
 
     align-items: flex-start !important;
 
-    position: relative !important;
-
     border: 0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
 
     color:
-      rgba(244,242,237,.72) !important;
+      var(--menu-muted) !important;
 
-    font-size: 9px !important;
+    font-size:
+      8px !important;
 
-    font-weight: 500 !important;
+    font-weight:
+      500 !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
 
-    letter-spacing: .18em !important;
+    letter-spacing:
+      .19em !important;
 
-    text-transform: uppercase !important;
+    text-transform:
+      uppercase !important;
 
     opacity: 1 !important;
 
@@ -596,7 +697,7 @@ row-gap:
   }
 
 
-  /* one continuous separator */
+  /* CONTINUOUS LINE */
 
   html body
   .mobile-menu-screen
@@ -614,14 +715,15 @@ row-gap:
         (var(--menu-col-gap) * 2)
       ) !important;
 
-    height: 1px !important;
+    height:
+      1px !important;
 
     background:
-      rgba(244,242,237,.15) !important;
+      var(--menu-line) !important;
 
-    pointer-events: none !important;
+    pointer-events:
+      none !important;
   }
-
 
   html body .mobile-menu-screen nav > a:nth-child(7) {
     grid-column: 1 !important;
@@ -632,14 +734,16 @@ row-gap:
     grid-column: 2 !important;
     grid-row: 7 !important;
 
-    justify-content: center !important;
+    justify-content:
+      center !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(9) {
     grid-column: 3 !important;
     grid-row: 7 !important;
 
-    justify-content: flex-end !important;
+    justify-content:
+      flex-end !important;
   }
 
 
@@ -681,12 +785,12 @@ row-gap:
     align-items: center !important;
 
     column-gap:
-      clamp(8px,2vw,14px) !important;
+      clamp(7px,2vw,13px) !important;
 
     border: 0 !important;
 
     border-top:
-      1px solid rgba(244,242,237,.14) !important;
+      1px solid var(--menu-line) !important;
   }
 
 
@@ -697,7 +801,8 @@ row-gap:
   html body
   .mobile-menu-footer
   .language-switch {
-    grid-area: language !important;
+    grid-area:
+      language !important;
 
     width: auto !important;
 
@@ -711,18 +816,22 @@ row-gap:
 
     align-items: center !important;
 
-    gap: 9px !important;
+    gap: 8px !important;
 
     border: 0 !important;
+    border-radius: 0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
+
+    box-shadow:
+      none !important;
   }
 
   html body
   .mobile-menu-footer
   .language-switch::before {
     display: none !important;
-
     content: none !important;
   }
 
@@ -730,7 +839,6 @@ row-gap:
   .mobile-menu-footer
   .language-switch button {
     width: auto !important;
-
     min-width: 0 !important;
 
     height: 32px !important;
@@ -740,21 +848,28 @@ row-gap:
     padding: 0 !important;
 
     border: 0 !important;
+    border-radius: 0 !important;
 
-    background: transparent !important;
+    background:
+      transparent !important;
 
     color:
-      rgba(244,242,237,.38) !important;
+      rgba(244,242,237,.35) !important;
 
-    font-size: 9px !important;
+    font-size:
+      8px !important;
 
-    font-weight: 600 !important;
+    font-weight:
+      600 !important;
 
-    line-height: 32px !important;
+    line-height:
+      32px !important;
 
-    letter-spacing: .11em !important;
+    letter-spacing:
+      .12em !important;
 
-    opacity: 1 !important;
+    opacity:
+      1 !important;
   }
 
   html body
@@ -771,56 +886,70 @@ row-gap:
      ========================================================== */
 
   html body .mobile-footer-row {
-    display: contents !important;
+    display:
+      contents !important;
   }
 
   html body .mobile-social {
-    grid-area: social !important;
+    grid-area:
+      social !important;
 
-    justify-self: center !important;
+    justify-self:
+      center !important;
 
-    display: flex !important;
+    display:
+      flex !important;
 
-    align-items: center !important;
+    align-items:
+      center !important;
 
-    gap: 3px !important;
+    gap:
+      2px !important;
 
     color:
-      rgba(244,242,237,.86) !important;
+      rgba(244,242,237,.84) !important;
   }
 
   html body
   .mobile-social
   .social-link {
-    width: 32px !important;
-    height: 32px !important;
+    width: 31px !important;
+    height: 31px !important;
 
-    min-width: 32px !important;
-    min-height: 32px !important;
+    min-width: 31px !important;
+    min-height: 31px !important;
 
-    flex: 0 0 32px !important;
+    flex:
+      0 0 31px !important;
 
     color:
-      rgba(244,242,237,.86) !important;
+      rgba(244,242,237,.84) !important;
 
-    opacity: .72 !important;
+    opacity:
+      .68 !important;
+
+    transform:
+      none !important;
   }
 
   html body
   .mobile-social
   .social-link::before {
-    inset: 1px !important;
+    inset:
+      1px !important;
 
-    opacity: .20 !important;
+    opacity:
+      .18 !important;
 
-    transform: scale(1) !important;
+    transform:
+      scale(1) !important;
   }
 
   html body
   .mobile-social
   .social-icon {
-    width: 13px !important;
-    height: 13px !important;
+    width: 12px !important;
+    height: 12px !important;
   }
 
 
@@ -829,12 +958,13 @@ row-gap:
      ========================================================== */
 
   html body .mobile-book {
-    grid-area: book !important;
+    grid-area:
+      book !important;
 
-    justify-self: end !important;
+    justify-self:
+      end !important;
 
     width: auto !important;
-
     min-width: 0 !important;
 
     height: 32px !important;
@@ -850,18 +980,25 @@ row-gap:
     color:
       var(--menu-accent) !important;
 
-    font-size: 9px !important;
+    font-size:
+      8px !important;
 
-    font-weight: 600 !important;
+    font-weight:
+      600 !important;
 
-    line-height: 1 !important;
+    line-height:
+      1 !important;
 
-    letter-spacing: .14em !important;
+    letter-spacing:
+      .15em !important;
 
-    text-transform: uppercase !important;
+    text-transform:
+      uppercase !important;
 
-    white-space: nowrap !important;
+    white-space:
+      nowrap !important;
   }
+
 }
 
 
@@ -872,7 +1009,93 @@ row-gap:
 @media (max-width: 700px) {
 
   html {
-    --mobile-nav-pad: 4vw;
+    --mobile-nav-pad: 18px;
+    --menu-col-gap: clamp(12px,3.8vw,18px);
+  }
+
+}
+
+
+/* ============================================================
+   NARROW PHONE
+   ============================================================ */
+
+@media (max-width: 390px) {
+
+  html body .mobile-menu-screen nav {
+    padding-top:
+      38px !important;
+
+    grid-template-rows:
+      repeat(
+        6,
+        clamp(46px,6.1dvh,58px)
+      )
+      auto !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6) {
+    grid-template-columns:
+      19px
+      auto !important;
+
+    column-gap:
+      7px !important;
+
+    font-size:
+      clamp(
+        22px,
+        min(7vw,3.6dvh),
+        30px
+      ) !important;
+  }
+
+  html body
+  .mobile-menu-screen
+  nav > a:nth-child(-n+6)::before {
+    font-size:
+      7px !important;
+  }
+
+  html body .mobile-menu-screen nav > a:nth-child(7),
+  html body .mobile-menu-screen nav > a:nth-child(8),
+  html body .mobile-menu-screen nav > a:nth-child(9) {
+    margin-top:
+      18px !important;
+
+    font-size:
+      7px !important;
+  }
+
+  html body .mobile-menu-footer {
+    column-gap:
+      4px !important;
+  }
+
+  html body
+  .mobile-social
+  .social-link {
+    width:
+      28px !important;
+
+    height:
+      28px !important;
+
+    min-width:
+      28px !important;
+
+    min-height:
+      28px !important;
+
+    flex-basis:
+      28px !important;
+  }
+
+  html body .mobile-book {
+    font-size:
+      7.5px !important;
   }
 
 }
@@ -885,12 +1108,15 @@ row-gap:
 @media (max-width: 700px) and (max-height: 720px) {
 
   html body .mobile-menu-screen nav {
-    padding-top: 12px !important;
+    padding-top:
+      20px !important;
 
     grid-template-rows:
-      repeat(6,minmax(0,1fr))
-      auto
-      14px !important;
+      repeat(
+        6,
+        clamp(40px,5.8dvh,48px)
+      )
+      auto !important;
   }
 
   html body
@@ -898,82 +1124,63 @@ row-gap:
   nav > a:nth-child(-n+6) {
     font-size:
       clamp(
-        25px,
-        min(8vw,4.2dvh),
-        34px
+        20px,
+        min(6.5vw,3.45dvh),
+        27px
       ) !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(7),
   html body .mobile-menu-screen nav > a:nth-child(8),
   html body .mobile-menu-screen nav > a:nth-child(9) {
-    min-height: 28px !important;
+    margin-top:
+      8px !important;
 
-    padding-top: 8px !important;
+    min-height:
+      26px !important;
 
-    font-size: 8px !important;
+    padding-top:
+      8px !important;
+
+    font-size:
+      7px !important;
   }
 
   html body .mobile-menu-footer {
-    min-height: 48px !important;
+    min-height:
+      48px !important;
 
-    padding-top: 5px !important;
+    padding-top:
+      5px !important;
   }
+
 }
 
 
 /* ============================================================
-   NARROW PHONE
+   TABLET / POINTER HOVER
    ============================================================ */
 
-@media (max-width: 390px) {
-
-  html {
-    --mobile-nav-pad: 3.5vw;
-  }
+@media (max-width:1000px) and (hover:hover) and (pointer:fine) {
 
   html body
   .mobile-menu-screen
-  nav > a:nth-child(-n+6) {
-    grid-template-columns:
-      21px
-      auto !important;
+  nav > a:nth-child(-n+6):hover {
+    color:
+      #fff !important;
 
-    column-gap: 6px !important;
-
-    font-size:
-      clamp(
-        25px,
-        min(8.2vw,4.1dvh),
-        33px
-      ) !important;
+    opacity:
+      .72 !important;
   }
 
-  html body
-  .mobile-menu-screen
-  nav > a:nth-child(-n+6)::before {
-    font-size: 8px !important;
+  html body .mobile-menu-close:hover {
+    border-color:
+      rgba(244,242,237,.46) !important;
+
+    background:
+      rgba(255,255,255,.035) !important;
   }
 
-  html body .mobile-menu-footer {
-    column-gap: 4px !important;
-  }
-
-  html body
-  .mobile-social
-  .social-link {
-    width: 28px !important;
-    height: 28px !important;
-
-    min-width: 28px !important;
-    min-height: 28px !important;
-
-    flex-basis: 28px !important;
-  }
-
-  html body .mobile-book {
-    font-size: 8px !important;
-  }
 }
 
 
@@ -987,9 +1194,19 @@ row-gap:
   html body .mobile-menu-screen nav > a,
   html body .mobile-menu-trigger,
   html body .mobile-menu-close {
-    transition: none !important;
+    transition:
+      none !important;
 
-    transform: none !important;
+    transform:
+      none !important;
+  }
+
+  html body .mobile-menu-trigger::before {
+    animation:
+      none !important;
+
+    border:
+      1px solid rgba(242,165,44,.45) !important;
   }
 
 }
