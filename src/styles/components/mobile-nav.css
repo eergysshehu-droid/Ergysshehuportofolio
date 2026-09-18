@@ -1,6 +1,6 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE NAV FINAL
-   FULL VIEWPORT / AUTO-FIT / EDITORIAL 2026
+   ERGYS SHEHU — MOBILE NAV
+   CLEAN EDITORIAL / TRUE AUTO-FIT / 2026
    ============================================================ */
 
 @media (max-width: 1000px) {
@@ -13,27 +13,24 @@
 
   html.mobile-menu-open body .site-header {
     transform: none !important;
-    will-change: auto !important;
     contain: none !important;
     overflow: visible !important;
-
     max-width: none !important;
+    will-change: auto !important;
 
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
 
+
   /* ==========================================================
-     FULL SCREEN
+     TRUE FULL VIEWPORT
      ========================================================== */
 
   html body .mobile-menu-screen {
     position: fixed !important;
 
-    top: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
+    inset: 0 !important;
 
     width: auto !important;
     max-width: none !important;
@@ -46,12 +43,12 @@
 
     margin: 0 !important;
 
-    box-sizing: border-box !important;
-
     padding:
-      max(16px, env(safe-area-inset-top))
-      clamp(18px, 5vw, 32px)
-      max(14px, env(safe-area-inset-bottom)) !important;
+      max(15px, env(safe-area-inset-top))
+      clamp(20px, 5vw, 34px)
+      max(12px, env(safe-area-inset-bottom)) !important;
+
+    box-sizing: border-box !important;
 
     display: grid !important;
 
@@ -62,20 +59,9 @@
 
     overflow: hidden !important;
 
-    color: #f4f2ed !important;
+    background: #050b07 !important;
 
-    background:
-      radial-gradient(
-        circle at 88% 2%,
-        rgba(74, 104, 81, .08),
-        transparent 34%
-      ),
-      linear-gradient(
-        158deg,
-        #0a120d 0%,
-        #050906 55%,
-        #020403 100%
-      ) !important;
+    color: #f4f2ed !important;
 
     border: 0 !important;
     border-radius: 0 !important;
@@ -86,12 +72,12 @@
     visibility: hidden !important;
     pointer-events: none !important;
 
-    transform: translate3d(0, -6px, 0) !important;
+    transform: translate3d(0, -5px, 0) !important;
 
     transition:
-      opacity 220ms ease,
-      transform 320ms cubic-bezier(.22, 1, .36, 1),
-      visibility 0s linear 320ms !important;
+      opacity 200ms ease,
+      transform 300ms cubic-bezier(.22, 1, .36, 1),
+      visibility 0s linear 300ms !important;
 
     z-index: 999999 !important;
   }
@@ -104,26 +90,27 @@
     transform: translate3d(0, 0, 0) !important;
 
     transition:
-      opacity 220ms ease,
-      transform 320ms cubic-bezier(.22, 1, .36, 1),
+      opacity 200ms ease,
+      transform 300ms cubic-bezier(.22, 1, .36, 1),
       visibility 0s !important;
   }
 
+
   /* ==========================================================
-     HEADER
+     TOP
      ========================================================== */
 
   html body .mobile-menu-head {
     width: 100% !important;
 
-    min-height: 52px !important;
+    min-height: 54px !important;
 
     margin: 0 !important;
 
     padding:
       0
       0
-      clamp(11px, 1.8dvh, 15px) !important;
+      14px !important;
 
     display: flex !important;
 
@@ -133,7 +120,7 @@
     border: 0 !important;
 
     border-bottom:
-      1px solid rgba(244, 242, 237, .11) !important;
+      1px solid rgba(244, 242, 237, .12) !important;
   }
 
   html body .mobile-menu-brand {
@@ -147,7 +134,7 @@
 
     line-height: 1 !important;
 
-    letter-spacing: .035em !important;
+    letter-spacing: .03em !important;
 
     white-space: nowrap !important;
   }
@@ -157,7 +144,7 @@
     font-size:
       clamp(
         19px,
-        5.4vw,
+        5.2vw,
         23px
       ) !important;
 
@@ -184,15 +171,16 @@
     padding: 0 !important;
 
     display: grid !important;
+
     place-items: center !important;
 
     border: 0 !important;
 
     background: transparent !important;
 
-    color: rgba(244, 242, 237, .76) !important;
+    color: rgba(244, 242, 237, .75) !important;
 
-    font-size: 22px !important;
+    font-size: 21px !important;
     font-weight: 200 !important;
 
     line-height: 1 !important;
@@ -200,47 +188,61 @@
     opacity: 1 !important;
   }
 
+
   /* ==========================================================
-     MAIN NAV
+     NAVIGATION
+     IMPORTANT:
+     AUTO rows — NOT 1fr rows.
      ========================================================== */
 
   html body .mobile-menu-screen nav {
     width: 100% !important;
-    height: 100% !important;
 
     min-width: 0 !important;
     min-height: 0 !important;
 
+    height: auto !important;
+
     margin: 0 !important;
 
     padding:
-      clamp(14px, 2.5dvh, 28px)
+      clamp(18px, 3dvh, 32px)
       0
-      clamp(10px, 1.8dvh, 18px) !important;
+      clamp(14px, 2dvh, 22px) !important;
+
+    align-self: center !important;
 
     display: grid !important;
 
     grid-template-columns:
       repeat(3, minmax(0, 1fr)) !important;
 
-    grid-template-rows:
-      repeat(6, minmax(0, 1fr))
-      auto !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
 
-    align-content: stretch !important;
+    align-content: center !important;
     align-items: center !important;
 
-    column-gap: 18px !important;
-    row-gap: 0 !important;
+    column-gap:
+      clamp(14px, 4vw, 24px) !important;
 
-    overflow: hidden !important;
+    row-gap:
+      clamp(
+        13px,
+        2dvh,
+        20px
+      ) !important;
+
+    overflow: visible !important;
 
     border: 0 !important;
+
     background: transparent !important;
   }
 
+
   /* ==========================================================
-     PRIMARY LINKS
+     01 — 06
      ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
@@ -252,21 +254,22 @@
     min-width: 0 !important;
     min-height: 0 !important;
 
-    margin: 0 !important;
-    padding: 0 !important;
+    height: auto !important;
 
-    align-self: center !important;
+    margin: 0 !important;
+
+    padding: 0 !important;
 
     display: grid !important;
 
     grid-template-columns:
-      clamp(28px, 8vw, 38px)
-      minmax(0, auto) !important;
+      clamp(27px, 7vw, 34px)
+      auto !important;
 
     align-items: baseline !important;
 
     column-gap:
-      clamp(8px, 2.5vw, 13px) !important;
+      clamp(8px, 2.5vw, 12px) !important;
 
     border: 0 !important;
 
@@ -279,15 +282,15 @@
     font-size:
       clamp(
         25px,
-        min(8.2vw, 4.65dvh),
-        40px
+        min(8vw, 4.35dvh),
+        38px
       ) !important;
 
     font-weight: 300 !important;
 
-    line-height: .92 !important;
+    line-height: .95 !important;
 
-    letter-spacing: -.05em !important;
+    letter-spacing: -.045em !important;
 
     text-transform: uppercase !important;
 
@@ -298,8 +301,8 @@
     transform: translate3d(0, 7px, 0);
 
     transition:
-      opacity 180ms ease,
-      transform 340ms cubic-bezier(.22, 1, .36, 1) !important;
+      transform 300ms cubic-bezier(.22, 1, .36, 1),
+      opacity 160ms ease !important;
   }
 
   html body
@@ -309,21 +312,24 @@
     transform: translate3d(0, 0, 0) !important;
   }
 
+
+  /* NUMBERS */
+
   html body .mobile-menu-screen nav > a:nth-child(-n+6)::before {
     display: block !important;
 
-    color: rgba(244, 242, 237, .30) !important;
+    align-self: center !important;
+
+    color: rgba(244, 242, 237, .28) !important;
 
     font-size: 8px !important;
     font-weight: 500 !important;
 
     line-height: 1 !important;
 
-    letter-spacing: .15em !important;
+    letter-spacing: .14em !important;
 
-    align-self: center !important;
-
-    margin-top: .24em !important;
+    margin-top: .25em !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(1)::before {
@@ -351,7 +357,7 @@
   }
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6):active {
-    opacity: .5 !important;
+    opacity: .48 !important;
 
     transform:
       translate3d(
@@ -361,8 +367,11 @@
       ) !important;
   }
 
+
   /* ==========================================================
      ABOUT / JOURNAL / CONTACT
+     One clean row.
+     No individual lines.
      ========================================================== */
 
   html body .mobile-menu-screen nav > a:nth-child(7),
@@ -371,14 +380,17 @@
     width: 100% !important;
 
     min-width: 0 !important;
+    min-height: 30px !important;
 
     height: auto !important;
-    min-height: 31px !important;
 
-    margin: 0 !important;
+    margin:
+      clamp(4px, .8dvh, 8px)
+      0
+      0 !important;
 
     padding:
-      clamp(8px, 1.2dvh, 12px)
+      clamp(8px, 1dvh, 11px)
       0
       0 !important;
 
@@ -390,12 +402,9 @@
 
     border: 0 !important;
 
-    border-top:
-      1px solid rgba(244, 242, 237, .11) !important;
-
     background: transparent !important;
 
-    color: rgba(244, 242, 237, .56) !important;
+    color: rgba(244, 242, 237, .55) !important;
 
     font-size: 9px !important;
     font-weight: 500 !important;
@@ -417,11 +426,16 @@
 
   html body .mobile-menu-screen nav > a:nth-child(8) {
     grid-column: 2 !important;
+
+    justify-content: center !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(9) {
     grid-column: 3 !important;
+
+    justify-content: flex-end !important;
   }
+
 
   /* ==========================================================
      FOOTER
@@ -431,14 +445,14 @@
     width: 100% !important;
 
     min-width: 0 !important;
+    min-height: 48px !important;
 
     height: auto !important;
-    min-height: 46px !important;
 
     margin: 0 !important;
 
     padding:
-      clamp(7px, 1.2dvh, 10px)
+      9px
       0
       0 !important;
 
@@ -455,13 +469,14 @@
     align-items: center !important;
 
     column-gap:
-      clamp(6px, 2vw, 12px) !important;
+      clamp(6px, 2.2vw, 12px) !important;
 
     border: 0 !important;
 
     border-top:
       1px solid rgba(244, 242, 237, .11) !important;
   }
+
 
   /* LANGUAGE */
 
@@ -490,6 +505,7 @@
 
   html body .mobile-menu-footer .language-switch::before {
     display: none !important;
+
     content: none !important;
   }
 
@@ -509,7 +525,7 @@
 
     background: transparent !important;
 
-    color: rgba(244, 242, 237, .4) !important;
+    color: rgba(244, 242, 237, .38) !important;
 
     font-size: 9px !important;
     font-weight: 600 !important;
@@ -528,6 +544,7 @@
     color: #f4f2ed !important;
   }
 
+
   /* SOCIAL */
 
   html body .mobile-footer-row {
@@ -540,9 +557,10 @@
     justify-self: center !important;
 
     display: flex !important;
+
     align-items: center !important;
 
-    gap: 2px !important;
+    gap: 1px !important;
 
     min-width: 0 !important;
   }
@@ -556,13 +574,14 @@
 
     flex: 0 0 29px !important;
 
-    opacity: .58 !important;
+    opacity: .56 !important;
   }
 
   html body .mobile-social .social-icon {
     width: 12px !important;
     height: 12px !important;
   }
+
 
   /* BOOK */
 
@@ -583,6 +602,7 @@
     padding: 0 !important;
 
     display: flex !important;
+
     align-items: center !important;
 
     color: #f4f2ed !important;
@@ -592,7 +612,7 @@
 
     line-height: 1 !important;
 
-    letter-spacing: .15em !important;
+    letter-spacing: .14em !important;
 
     text-transform: uppercase !important;
 
@@ -609,7 +629,7 @@
    SHORT PHONES
    ============================================================ */
 
-@media (max-width: 700px) and (max-height: 740px) {
+@media (max-width: 700px) and (max-height: 720px) {
 
   html body .mobile-menu-screen {
     padding-top:
@@ -620,30 +640,37 @@
   }
 
   html body .mobile-menu-head {
-    min-height: 44px !important;
+    min-height: 45px !important;
 
     padding-bottom: 8px !important;
   }
 
   html body .mobile-menu-screen nav {
-    padding: 7px 0 5px !important;
+    padding:
+      9px
+      0
+      7px !important;
+
+    row-gap: 8px !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
     font-size:
       clamp(
-        23px,
-        min(7.7vw, 4.4dvh),
-        31px
+        22px,
+        min(7.4vw, 4.3dvh),
+        30px
       ) !important;
   }
 
   html body .mobile-menu-screen nav > a:nth-child(7),
   html body .mobile-menu-screen nav > a:nth-child(8),
   html body .mobile-menu-screen nav > a:nth-child(9) {
-    min-height: 25px !important;
+    min-height: 24px !important;
 
-    padding-top: 7px !important;
+    margin-top: 0 !important;
+
+    padding-top: 6px !important;
 
     font-size: 8px !important;
   }
@@ -667,18 +694,22 @@
     padding-right: 16px !important;
   }
 
+  html body .mobile-menu-screen nav {
+    column-gap: 10px !important;
+  }
+
   html body .mobile-menu-screen nav > a:nth-child(-n+6) {
     grid-template-columns:
-      26px
-      minmax(0, auto) !important;
+      25px
+      auto !important;
 
-    column-gap: 8px !important;
+    column-gap: 7px !important;
 
     font-size:
       clamp(
-        23px,
-        min(7.8vw, 4.5dvh),
-        32px
+        22px,
+        min(7.5vw, 4.25dvh),
+        30px
       ) !important;
   }
 
@@ -719,6 +750,7 @@
   html body .mobile-menu-screen,
   html body .mobile-menu-screen nav > a {
     transition: none !important;
+
     transform: none !important;
   }
 }
