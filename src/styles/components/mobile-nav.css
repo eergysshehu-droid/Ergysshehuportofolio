@@ -1,13 +1,43 @@
 /* ============================================================
-   ERGYS SHEHU — MOBILE NAV
-   FINAL COMPACT SINGLE-VIEWPORT MENU
+   FINAL MOBILE MENU VIEWPORT FIX
    ============================================================ */
 
 @media (max-width: 700px) {
 
-  /* ==========================================================
-     SCREEN
-     ========================================================== */
+  /* Header must not become the containing block
+     for the full-screen fixed menu. */
+
+  html.mobile-menu-open
+  body
+  .site-header {
+    transform:
+      none !important;
+
+    will-change:
+      auto !important;
+
+    overflow:
+      visible !important;
+
+    contain:
+      none !important;
+
+    backdrop-filter:
+      none !important;
+
+    -webkit-backdrop-filter:
+      none !important;
+  }
+
+
+  html.mobile-menu-open,
+  html.mobile-menu-open body {
+    overflow:
+      hidden !important;
+  }
+
+
+  /* Full usable phone viewport */
 
   html body
   .mobile-menu-screen {
@@ -17,14 +47,11 @@
     inset:
       0 !important;
 
-    z-index:
-      9999 !important;
-
     width:
       100vw !important;
 
-    height:
-      100vh !important;
+    max-width:
+      none !important;
 
     height:
       100svh !important;
@@ -35,167 +62,47 @@
     max-height:
       100svh !important;
 
+    margin:
+      0 !important;
+
     padding:
       max(
-        12px,
+        10px,
         env(safe-area-inset-top)
       )
-      18px
+      16px
       max(
-        10px,
+        8px,
         env(safe-area-inset-bottom)
       ) !important;
 
-    display:
-      grid !important;
-
     grid-template-rows:
-      auto
+      46px
       minmax(
         0,
         1fr
       )
-      auto !important;
+      44px !important;
 
     overflow:
       hidden !important;
-
-    overscroll-behavior:
-      none !important;
-
-    color:
-      #f3f1eb !important;
-
-    background:
-      linear-gradient(
-        155deg,
-        #0b120d 0%,
-        #060a07 48%,
-        #020403 100%
-      ) !important;
-
-    border:
-      0 !important;
-
-    border-radius:
-      0 !important;
-
-    box-shadow:
-      none !important;
-
-    backdrop-filter:
-      blur(28px)
-      saturate(106%) !important;
-
-    -webkit-backdrop-filter:
-      blur(28px)
-      saturate(106%) !important;
   }
 
 
-  html body
-  .mobile-menu-screen::before {
-    content:
-      "";
-
-    position:
-      absolute;
-
-    inset:
-      0;
-
-    pointer-events:
-      none;
-
-    background:
-      radial-gradient(
-        circle
-        at
-        84%
-        0%,
-        rgba(
-          112,
-          139,
-          117,
-          .08
-        ),
-        transparent
-        34%
-      );
-
-    opacity:
-      1;
-  }
-
-
-  /* ==========================================================
-     HEADER
-     ========================================================== */
+  /* Header */
 
   html body
   .mobile-menu-head {
-    position:
-      relative;
-
-    z-index:
-      2;
-
-    width:
-      100% !important;
-
     min-height:
-      44px !important;
+      46px !important;
 
-    margin:
-      0 !important;
+    height:
+      46px !important;
 
     padding:
       0
       0
-      11px !important;
-
-    display:
-      flex !important;
-
-    align-items:
-      center !important;
-
-    justify-content:
-      space-between !important;
-
-    border:
-      0 !important;
-
-    border-bottom:
-      1px solid
-      rgba(
-        243,
-        241,
-        235,
-        .09
-      ) !important;
-
-    background:
-      transparent !important;
-  }
-
-
-  html body
-  .mobile-menu-brand {
-    display:
-      inline-flex !important;
-
-    align-items:
-      baseline !important;
-
-    gap:
-      6px !important;
-
-    margin:
-      0 !important;
-
-    padding:
-      0 !important;
+      9px !important;
   }
 
 
@@ -205,114 +112,37 @@
   .mobile-menu-brand-light {
     font-size:
       clamp(
-        18px,
+        17px,
         5vw,
-        21px
+        20px
       ) !important;
-
-    line-height:
-      1 !important;
-
-    letter-spacing:
-      .065em !important;
-  }
-
-
-  html body
-  .mobile-menu-brand-strong {
-    font-weight:
-      600 !important;
-  }
-
-
-  html body
-  .mobile-menu-brand-light {
-    font-weight:
-      200 !important;
   }
 
 
   html body
   .mobile-menu-close {
     width:
-      38px !important;
+      36px !important;
 
     height:
-      38px !important;
+      36px !important;
 
     min-width:
-      38px !important;
+      36px !important;
 
     min-height:
-      38px !important;
-
-    margin:
-      0 !important;
-
-    padding:
-      0 !important;
-
-    display:
-      grid !important;
-
-    place-items:
-      center !important;
-
-    border:
-      0 !important;
-
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        243,
-        241,
-        235,
-        .68
-      ) !important;
-
-    font-size:
-      20px !important;
-
-    font-weight:
-      200 !important;
-
-    line-height:
-      1 !important;
-
-    opacity:
-      1 !important;
-
-    transform:
-      none !important;
-  }
-
-
-  html body
-  .mobile-menu-close:active {
-    opacity:
-      .48 !important;
-
-    transform:
-      scale(
-        .92
-      ) !important;
+      36px !important;
   }
 
 
   /* ==========================================================
-     NAV AREA
+     NAV
+     Uses ALL available middle space.
+     No giant dead areas.
      ========================================================== */
 
   html body
   .mobile-menu-screen nav {
-    position:
-      relative !important;
-
-    z-index:
-      2 !important;
-
     width:
       100% !important;
 
@@ -326,13 +156,9 @@
       0 !important;
 
     padding:
-      clamp(
-        12px,
-        2.2svh,
-        20px
-      )
+      8px
       0
-      8px !important;
+      7px !important;
 
     display:
       grid !important;
@@ -349,12 +175,15 @@
     grid-template-rows:
       repeat(
         6,
-        auto
+        minmax(
+          0,
+          1fr
+        )
       )
-      auto !important;
+      38px !important;
 
     align-content:
-      center !important;
+      stretch !important;
 
     align-items:
       center !important;
@@ -367,132 +196,61 @@
 
     overflow:
       hidden !important;
-
-    border:
-      0 !important;
-
-    background:
-      transparent !important;
   }
 
 
-  /* ==========================================================
-     PRIMARY LINKS
-     Photography / Fashion / Portraits / Weddings / Motion / Index
-     ========================================================== */
+  /* Main six links */
 
   html body
   .mobile-menu-screen
   nav >
   a:nth-child(-n+6) {
-    position:
-      static !important;
-
     grid-column:
       1 / -1 !important;
 
     width:
       fit-content !important;
 
-    min-width:
-      0 !important;
-
     min-height:
       0 !important;
+
+    height:
+      auto !important;
 
     margin:
       0 !important;
 
     padding:
-      clamp(
-        4px,
-        .72svh,
-        7px
-      )
       0 !important;
 
     display:
-      block !important;
+      flex !important;
 
-    border:
-      0 !important;
+    align-items:
+      center !important;
 
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        246,
-        244,
-        238,
-        .94
-      ) !important;
-
-    font-family:
-      var(--sans) !important;
+    position:
+      static !important;
 
     font-size:
       clamp(
-        27px,
-        7.4vw,
-        35px
+        23px,
+        min(
+          7.3vw,
+          4.6svh
+        ),
+        36px
       ) !important;
-
-    font-weight:
-      300 !important;
 
     line-height:
       .94 !important;
 
     letter-spacing:
       -.045em !important;
-
-    text-transform:
-      none !important;
-
-    opacity:
-      1 !important;
-
-    transform:
-      none !important;
-
-    transition:
-      opacity
-      160ms
-      ease !important;
   }
 
 
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(-n+6)::before,
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(-n+6)::after {
-    display:
-      none !important;
-
-    content:
-      none !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(-n+6):active {
-    opacity:
-      .48 !important;
-  }
-
-
-  /* ==========================================================
-     SECONDARY ROW
-     About / Journal / Contact
-     ========================================================== */
+  /* About / Journal / Contact */
 
   html body
   .mobile-menu-screen
@@ -508,159 +266,53 @@
   .mobile-menu-screen
   nav >
   a:nth-child(9) {
-    position:
-      static !important;
-
-    width:
-      auto !important;
-
-    min-width:
-      0 !important;
-
     min-height:
-      34px !important;
+      38px !important;
+
+    height:
+      38px !important;
 
     margin:
-      clamp(
-        12px,
-        1.8svh,
-        18px
-      )
-      0
       0 !important;
 
     padding:
-      10px
+      8px
       0
       0 !important;
 
-    display:
-      flex !important;
-
-    align-items:
-      center !important;
-
-    border:
-      0 !important;
-
-    border-top:
-      1px solid
-      rgba(
-        243,
-        241,
-        235,
-        .09
-      ) !important;
-
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        243,
-        241,
-        235,
-        .5
-      ) !important;
-
-    font-family:
-      var(--sans) !important;
+    align-self:
+      end !important;
 
     font-size:
-      9px !important;
-
-    font-weight:
-      500 !important;
-
-    line-height:
-      1 !important;
+      8px !important;
 
     letter-spacing:
       .15em !important;
-
-    text-transform:
-      uppercase !important;
-
-    opacity:
-      1 !important;
-
-    transform:
-      none !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(7) {
-    grid-column:
-      1 !important;
-
-    justify-content:
-      flex-start !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(8) {
-    grid-column:
-      2 !important;
-
-    justify-content:
-      center !important;
-
-    text-align:
-      center !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(9) {
-    grid-column:
-      3 !important;
-
-    justify-content:
-      flex-end !important;
-
-    text-align:
-      right !important;
   }
 
 
   /* ==========================================================
-     FOOTER
-     One compact line:
-     EN/SQ — SOCIAL — BOOK NOW
+     BOTTOM BAR
      ========================================================== */
 
   html body
   .mobile-menu-footer {
-    position:
-      relative !important;
-
-    z-index:
-      2 !important;
-
     width:
       100% !important;
 
+    height:
+      44px !important;
+
     min-height:
-      46px !important;
+      44px !important;
 
     margin:
       0 !important;
 
     padding:
-      10px
+      6px
       0
       0 !important;
-
-    display:
-      grid !important;
 
     grid-template-columns:
       auto
@@ -677,84 +329,18 @@
       center !important;
 
     column-gap:
-      10px !important;
-
-    row-gap:
-      0 !important;
-
-    border:
-      0 !important;
-
-    border-top:
-      1px solid
-      rgba(
-        243,
-        241,
-        235,
-        .09
-      ) !important;
-
-    background:
-      transparent !important;
+      7px !important;
   }
 
-
-  /* ==========================================================
-     LANGUAGE
-     ========================================================== */
 
   html body
   .mobile-menu-footer
   .language-switch {
-    grid-area:
-      language !important;
-
-    justify-self:
-      start !important;
-
-    width:
-      auto !important;
-
-    min-width:
-      0 !important;
-
     height:
-      32px !important;
-
-    margin:
-      0 !important;
+      30px !important;
 
     padding:
       2px !important;
-
-    display:
-      inline-flex !important;
-
-    align-items:
-      center !important;
-
-    gap:
-      1px !important;
-
-    border:
-      1px solid
-      rgba(
-        243,
-        241,
-        235,
-        .13
-      ) !important;
-
-    border-radius:
-      8px !important;
-
-    background:
-      rgba(
-        255,
-        255,
-        255,
-        .018
-      ) !important;
   }
 
 
@@ -762,77 +348,24 @@
   .mobile-menu-footer
   .language-switch button {
     width:
-      34px !important;
+      29px !important;
 
     min-width:
-      34px !important;
+      29px !important;
 
     height:
-      26px !important;
+      24px !important;
 
     min-height:
-      26px !important;
-
-    margin:
-      0 !important;
-
-    padding:
-      0 !important;
-
-    border:
-      0 !important;
-
-    border-radius:
-      6px !important;
-
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        243,
-        241,
-        235,
-        .48
-      ) !important;
-
-    font-size:
-      9px !important;
-
-    font-weight:
-      600 !important;
+      24px !important;
 
     line-height:
-      26px !important;
+      24px !important;
 
-    letter-spacing:
-      .08em !important;
+    font-size:
+      8px !important;
   }
 
-
-  html body
-  .mobile-menu-footer
-  .language-switch button.is-active,
-
-  html body
-  .mobile-menu-footer
-  .language-switch button[aria-pressed="true"] {
-    background:
-      rgba(
-        243,
-        241,
-        235,
-        .1
-      ) !important;
-
-    color:
-      #fff !important;
-  }
-
-
-  /* ==========================================================
-     SOCIAL
-     ========================================================== */
 
   html body
   .mobile-footer-row {
@@ -848,19 +381,6 @@
 
     justify-self:
       center !important;
-
-    margin:
-      0 !important;
-
-    padding:
-      0 !important;
-  }
-
-
-  html body
-  .mobile-social.social-icons {
-    gap:
-      0 !important;
   }
 
 
@@ -868,30 +388,19 @@
   .mobile-social
   .social-link {
     width:
-      28px !important;
+      25px !important;
 
     height:
-      28px !important;
+      25px !important;
 
     min-width:
-      28px !important;
+      25px !important;
 
     min-height:
-      28px !important;
+      25px !important;
 
     flex-basis:
-      28px !important;
-
-    margin:
-      0 !important;
-  }
-
-
-  html body
-  .mobile-social
-  .social-link::before {
-    inset:
-      3px !important;
+      25px !important;
   }
 
 
@@ -899,277 +408,36 @@
   .mobile-social
   .social-icon {
     width:
-      12px !important;
+      11px !important;
 
     height:
-      12px !important;
-  }
-
-
-  /* ==========================================================
-     BOOK NOW
-     ========================================================== */
-
-  html body
-  .mobile-book {
-    grid-area:
-      book !important;
-
-    justify-self:
-      end !important;
-
-    width:
-      auto !important;
-
-    min-width:
-      0 !important;
-
-    min-height:
-      32px !important;
-
-    margin:
-      0 !important;
-
-    padding:
-      0 !important;
-
-    display:
-      inline-flex !important;
-
-    align-items:
-      center !important;
-
-    border:
-      0 !important;
-
-    background:
-      transparent !important;
-
-    color:
-      rgba(
-        243,
-        241,
-        235,
-        .9
-      ) !important;
-
-    font-size:
-      9px !important;
-
-    font-weight:
-      500 !important;
-
-    line-height:
-      1 !important;
-
-    letter-spacing:
-      .13em !important;
-
-    text-transform:
-      uppercase !important;
-
-    white-space:
-      nowrap !important;
-  }
-
-
-  /* ==========================================================
-     LOCATION
-     Hide only inside mobile menu.
-     It exists elsewhere on the site.
-     ========================================================== */
-
-  html body
-  .mobile-menu-footer
-  .mobile-location {
-    display:
-      none !important;
-  }
-
-}
-
-
-/* ============================================================
-   SHORT PHONES
-   iPhone SE / short Android screens
-   ============================================================ */
-
-@media (
-  max-width: 700px
-) and (
-  max-height: 720px
-) {
-
-  html body
-  .mobile-menu-screen {
-    padding-top:
-      max(
-        8px,
-        env(safe-area-inset-top)
-      ) !important;
-
-    padding-bottom:
-      max(
-        8px,
-        env(safe-area-inset-bottom)
-      ) !important;
-  }
-
-
-  html body
-  .mobile-menu-head {
-    min-height:
-      38px !important;
-
-    padding-bottom:
-      7px !important;
-  }
-
-
-  html body
-  .mobile-menu-brand-strong,
-  html body
-  .mobile-menu-brand-light {
-    font-size:
-      17px !important;
-  }
-
-
-  html body
-  .mobile-menu-close {
-    width:
-      34px !important;
-
-    height:
-      34px !important;
-
-    min-width:
-      34px !important;
-
-    min-height:
-      34px !important;
-  }
-
-
-  html body
-  .mobile-menu-screen nav {
-    padding:
-      7px
-      0
-      5px !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(-n+6) {
-    padding:
-      3px
-      0 !important;
-
-    font-size:
-      clamp(
-        22px,
-        5.4svh,
-        28px
-      ) !important;
-  }
-
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(7),
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(8),
-
-  html body
-  .mobile-menu-screen
-  nav >
-  a:nth-child(9) {
-    min-height:
-      27px !important;
-
-    margin-top:
-      8px !important;
-
-    padding-top:
-      7px !important;
-
-    font-size:
-      8px !important;
-  }
-
-
-  html body
-  .mobile-menu-footer {
-    min-height:
-      38px !important;
-
-    padding-top:
-      6px !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .language-switch {
-    height:
-      29px !important;
-  }
-
-
-  html body
-  .mobile-menu-footer
-  .language-switch button {
-    width:
-      30px !important;
-
-    min-width:
-      30px !important;
-
-    height:
-      23px !important;
-
-    min-height:
-      23px !important;
-
-    line-height:
-      23px !important;
-  }
-
-
-  html body
-  .mobile-social
-  .social-link {
-    width:
-      25px !important;
-
-    height:
-      25px !important;
-
-    min-width:
-      25px !important;
-
-    min-height:
-      25px !important;
-
-    flex-basis:
-      25px !important;
+      11px !important;
   }
 
 
   html body
   .mobile-book {
+    min-width:
+      0 !important;
+
     min-height:
+      28px !important;
+
+    height:
       28px !important;
 
     font-size:
       8px !important;
+
+    letter-spacing:
+      .12em !important;
+  }
+
+
+  html body
+  .mobile-location {
+    display:
+      none !important;
   }
 
 }
