@@ -568,3 +568,36 @@
     border: 1px solid rgba(242,165,44,.42) !important;
   }
 }
+/* ============================================================
+   MOBILE HOME HEADER — CONTRAST FIX
+   Scrolled homepage header is dark, so brand + hamburger stay white.
+   ============================================================ */
+
+@media (max-width:1000px) {
+
+  html body.is-home .site-header.is-scrolled {
+    --header-fg: #f4f2ed !important;
+  }
+
+  html body.is-home
+  .site-header.is-scrolled
+  .ergys-wordmark {
+    color: #f4f2ed !important;
+    text-shadow:
+      0 2px 14px rgba(0,0,0,.32) !important;
+  }
+
+  html body.is-home
+  .site-header.is-scrolled
+  .mobile-menu-trigger {
+    color: #fff !important;
+    border-color: rgba(255,255,255,.30) !important;
+    background: rgba(0,0,0,.08) !important;
+  }
+
+  html body.is-home
+  .site-header.is-scrolled
+  .hamburger i {
+    background: #fff !important;
+  }
+}
