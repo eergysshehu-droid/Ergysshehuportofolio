@@ -753,29 +753,34 @@ const breadcrumbLd = {
           href={nextHref}
           data-next-project
         >
-          <div
-            class="next-project-media"
-            aria-hidden="true"
-          >
+         <div
+  class="next-project-media"
+  aria-hidden="true"
+  style={
+    nextProjectPhoto
+      ? `--next-focal-point:${photoPosition(nextProjectPhoto)}`
+      : undefined
+  }
+>
             <img
               src={nextCoverUrl}
               srcset={
                 photoSet(
-                  nextAlbum.cover
-                )
+  nextProjectPhoto
+)
               }
               sizes="100vw"
               alt=""
               loading="lazy"
               decoding="async"
-              width={
-                nextAlbum.cover?.width ||
-                1800
-              }
+             width={
+  nextProjectPhoto?.width ||
+  1800
+}
               height={
-                nextAlbum.cover?.height ||
-                1200
-              }
+  nextProjectPhoto?.height ||
+  1200
+}
             />
           </div>
 
