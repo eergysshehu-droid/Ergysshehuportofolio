@@ -219,7 +219,19 @@ const album = defineType({
       validation: r =>
         r.required()
     }),
+defineField({
+  name:
+    'nextProjectCover',
 
+  title:
+    'Next project banner',
+
+  type:
+    'portfolioPhoto',
+
+  description:
+    'Fotografia që shfaqet si banner në fund të projektit të mëparshëm. Prefero një foto horizontale / cinematic.'
+}),
     defineField({
       name: 'photos',
       title:
