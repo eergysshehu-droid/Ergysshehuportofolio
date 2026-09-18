@@ -1437,3 +1437,34 @@
   }
 
 }
+/* ============================================================
+   HOME HERO — MENU CONTROL ALWAYS WHITE
+   Gold progress ring remains gold
+   ============================================================ */
+
+@media (max-width:1000px) {
+
+  html body.is-home
+  .site-header:not(.is-scrolled)
+  .mobile-menu-trigger {
+    color:
+      rgba(255,255,255,.96) !important;
+
+    border-color:
+      rgba(255,255,255,.34) !important;
+
+    background:
+      rgba(0,0,0,.08) !important;
+
+    box-shadow:
+      0 2px 12px rgba(0,0,0,.16) !important;
+  }
+
+  html body.is-home
+  .site-header:not(.is-scrolled)
+  .hamburger i {
+    background:
+      #fff !important;
+  }
+
+}
