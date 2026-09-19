@@ -647,3 +647,513 @@ html body .lightbox,
 html body .lightbox-backdrop{
   color-scheme:dark;
 }
+
+/* ==========================================================================
+   LIGHT MODE CONTRAST REFINEMENT
+   Screenshot-driven correction:
+   - cream canvas + clearly separate white plates
+   - strong charcoal typography
+   - black moving perimeter in LIGHT only
+   - mobile header/menu controls remain clearly visible
+   - Selected Work controls become a real light-mode component
+   ========================================================================== */
+
+@media(prefers-color-scheme:light){
+
+  :root{
+    --light-canvas:#f5f0e8;
+    --light-surface:#fffdf9;
+    --light-surface-soft:#faf6ef;
+    --light-surface-deep:#f1e9de;
+    --light-ink:#171914;
+    --light-text:#302d28;
+    --light-muted:#625d54;
+    --light-soft:#817a70;
+    --light-border:#d7d0c5;
+    --light-border-strong:#bdb5aa;
+    --light-shadow:rgba(43,35,27,.10);
+  }
+
+  html{
+    background:var(--light-canvas)!important;
+  }
+
+  html body{
+    background:var(--light-canvas)!important;
+    color:var(--light-ink)!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     PANEL CARDS
+     Old high-specificity green rules are deliberately overridden here.
+     The page is cream; important editorial panels are brighter white plates.
+     ------------------------------------------------------------------------ */
+
+  html body.is-home .artist-section,
+  html body.is-home .contact-section,
+  html body .collection-intro,
+  html body .about-intro,
+  html body .about-cta{
+    color:var(--light-ink)!important;
+    background:
+      linear-gradient(
+        145deg,
+        #fffefb 0%,
+        var(--light-surface) 52%,
+        #f7f1e8 100%
+      )!important;
+    border:1px solid var(--light-border)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.98),
+      0 18px 46px var(--light-shadow)!important;
+  }
+
+  html body .collection-intro .back-link,
+  html body .collection-intro h1,
+  html body .about-intro-copy .back-link,
+  html body .about-intro-copy h1,
+  html body .about-cta h2,
+  html body .about-cta a,
+  html body.is-home .artist-copy,
+  html body.is-home .artist-copy h2,
+  html body.is-home .artist-copy .text-link,
+  html body.is-home .contact-section,
+  html body.is-home .contact-section h2,
+  html body.is-home .contact-details,
+  html body.is-home .contact-details a,
+  html body.is-home .contact-details .email{
+    color:var(--light-ink)!important;
+  }
+
+  html body .collection-intro .kicker,
+  html body .collection-intro>p:not(.kicker),
+  html body .about-intro-bio,
+  html body .about-intro-copy>p:last-child,
+  html body .about-cta-kicker,
+  html body .about-cta-copy p,
+  html body.is-home .artist-number,
+  html body.is-home .artist-copy p,
+  html body.is-home .contact-details p,
+  html body.is-home .contact-social-label{
+    color:var(--light-muted)!important;
+    opacity:1!important;
+  }
+
+  html body .about-intro-meta{
+    border-top-color:rgba(23,25,20,.13)!important;
+  }
+
+  html body .about-intro-meta strong{
+    color:var(--light-text)!important;
+  }
+
+  html body .about-intro-meta span{
+    color:var(--light-muted)!important;
+  }
+
+  html body .about-intro-meta a,
+  html body .about-cta-link{
+    color:var(--light-ink)!important;
+    border-color:rgba(23,25,20,.34)!important;
+  }
+
+  html body.is-home .contact-social-block{
+    border-top-color:rgba(23,25,20,.13)!important;
+  }
+
+  html body.is-home .contact-social-icons .social-link{
+    color:var(--light-ink)!important;
+    opacity:.84!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     BLACK ORBIT IN LIGHT MODE
+     Same 7.2s motion and same perimeter geometry; only its visual language
+     changes from gold to charcoal on a cream/white surface.
+     ------------------------------------------------------------------------ */
+
+  html body .panel-gold-orbit{
+    opacity:1!important;
+    background:
+      conic-gradient(
+        from var(--v31-panel-angle),
+        transparent 0deg 303deg,
+        rgba(23,25,20,0) 303deg,
+        rgba(23,25,20,.20) 316deg,
+        rgba(23,25,20,.66) 329deg,
+        #171914 338deg,
+        rgba(23,25,20,.76) 347deg,
+        transparent 360deg
+      )!important;
+    filter:none!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     COLLECTION / CATEGORY INTRO CARDS ON MOBILE
+     Make the plate read unmistakably as a card instead of a dark block.
+     ------------------------------------------------------------------------ */
+
+  @media(max-width:700px){
+    html body .collection-intro,
+    html body .about-intro{
+      border:1px solid var(--light-border-strong)!important;
+      border-radius:20px!important;
+      box-shadow:
+        inset 0 1px 0 #fff,
+        0 16px 38px rgba(43,35,27,.11)!important;
+    }
+
+    html body .collection-intro .back-link{
+      color:#3f3a33!important;
+      opacity:1!important;
+    }
+
+    html body .collection-intro .kicker{
+      color:#6f685e!important;
+    }
+
+    html body .collection-intro h1{
+      color:#121310!important;
+      text-shadow:none!important;
+    }
+
+    html body .collection-intro>p:not(.kicker){
+      color:#575148!important;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     CLOSED MOBILE HEADER
+     Screenshots showed the hamburger almost disappearing on cream.
+     ------------------------------------------------------------------------ */
+
+  @media(max-width:1000px){
+    html body:not(.is-home) .site-header,
+    html body:not(.is-home) .site-header.is-scrolled,
+    html body.is-home .site-header.is-scrolled{
+      color:var(--light-ink)!important;
+      background:rgba(255,253,249,.98)!important;
+      border-bottom:1px solid #ddd6cb!important;
+      box-shadow:0 7px 24px rgba(43,35,27,.065)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    html body:not(.is-home) .site-header .ergys-wordmark,
+    html body.is-home .site-header.is-scrolled .ergys-wordmark{
+      color:#171914!important;
+      opacity:1!important;
+    }
+
+    html body:not(.is-home) .site-header .mobile-menu-trigger,
+    html body.is-home .site-header.is-scrolled .mobile-menu-trigger{
+      color:#171914!important;
+      background:#fffdf9!important;
+      border:1px solid #bdb5aa!important;
+      box-shadow:0 4px 16px rgba(43,35,27,.055)!important;
+      opacity:1!important;
+    }
+
+    html body:not(.is-home) .site-header .hamburger,
+    html body.is-home .site-header.is-scrolled .hamburger{
+      opacity:1!important;
+    }
+
+    html body:not(.is-home) .site-header .hamburger i,
+    html body.is-home .site-header.is-scrolled .hamburger i{
+      background:#171914!important;
+      opacity:1!important;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     OPEN MOBILE MENU
+     Real light UI: no leftover dark navigation surface.
+     ------------------------------------------------------------------------ */
+
+  @media(max-width:1000px){
+    html{
+      --menu-white:#171914!important;
+      --menu-muted:#625d54!important;
+      --menu-line:#d9d1c6!important;
+    }
+
+    html body .mobile-menu-screen{
+      color:#171914!important;
+      background:#f8f3eb!important;
+    }
+
+    html body .mobile-menu-screen::before{
+      background:
+        radial-gradient(
+          circle at 86% 14%,
+          rgba(182,135,61,.08),
+          transparent 36%
+        ),
+        linear-gradient(
+          155deg,
+          #fffdf9 0%,
+          #f8f3eb 56%,
+          #eee6db 100%
+        )!important;
+    }
+
+    html body .mobile-menu-screen::after{
+      display:none!important;
+    }
+
+    html body .mobile-menu-atmosphere{
+      opacity:.10!important;
+      mix-blend-mode:multiply!important;
+    }
+
+    html body .mobile-menu-head{
+      border-bottom-color:#d9d1c6!important;
+    }
+
+    html body .mobile-menu-brand,
+    html body .mobile-menu-primary>a,
+    html body .mobile-menu-secondary>a{
+      color:#171914!important;
+    }
+
+    html body .mobile-menu-primary>a{
+      border-bottom:1px solid rgba(23,25,20,.095)!important;
+    }
+
+    html body .mobile-menu-number{
+      color:#8b5e1c!important;
+    }
+
+    html body .mobile-menu-label{
+      color:#171914!important;
+    }
+
+    html body .mobile-menu-label::before{
+      background:rgba(23,25,20,.28)!important;
+    }
+
+    html body .mobile-menu-arrow{
+      color:#514c44!important;
+    }
+
+    html body .mobile-menu-close{
+      color:#171914!important;
+      border-color:#bdb5aa!important;
+      background:#fffdf9!important;
+    }
+
+    html body .mobile-menu-close::before,
+    html body .mobile-menu-close::after{
+      background:#171914!important;
+    }
+
+    html body .mobile-menu-social-label{
+      color:#6d665d!important;
+    }
+
+    html body .mobile-menu-social-zone{
+      border-top-color:#d9d1c6!important;
+    }
+
+    html body .mobile-menu-social-zone .mobile-social .social-link,
+    html body .mobile-menu-footer .social-icons .social-link{
+      color:#171914!important;
+      border-color:#cfc7bc!important;
+      background:#fffdf9!important;
+      opacity:.88!important;
+    }
+
+    html body .mobile-menu-footer{
+      color:#171914!important;
+      background:rgba(248,243,235,.985)!important;
+      border-top-color:#d9d1c6!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    html body .mobile-menu-footer .language-switch,
+    html body .mobile-menu-footer .language-switch a{
+      color:#171914!important;
+    }
+
+    html body .mobile-book{
+      color:#171914!important;
+      border-color:#9e9589!important;
+      background:#fffdf9!important;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     SELECTED WORK
+     The heading and category rail now have explicit contrast and a plate.
+     ------------------------------------------------------------------------ */
+
+  html body.is-home .work-section,
+  html body.is-home .project-grid{
+    background:var(--light-canvas)!important;
+    color:var(--light-ink)!important;
+  }
+
+  html body.is-home .home-marquee{
+    color:#5f594f!important;
+    border-top-color:rgba(23,25,20,.12)!important;
+    border-bottom-color:rgba(23,25,20,.12)!important;
+    background:rgba(255,253,249,.45)!important;
+  }
+
+  html body.is-home .home-marquee-no{
+    color:#8b5e1c!important;
+  }
+
+  html body.is-home .home-marquee-sep{
+    background:rgba(23,25,20,.24)!important;
+  }
+
+  html body.is-home .work-heading,
+  html body.is-home .work-heading h2,
+  html body.is-home .work-heading h2 em,
+  html body.is-home .work-count,
+  html body.is-home .index-link{
+    color:#171914!important;
+    opacity:1!important;
+  }
+
+  html body.is-home .work-heading .kicker{
+    color:#625d54!important;
+  }
+
+  html body.is-home .filters-shell{
+    background:#fffdf9!important;
+    border:1px solid #cfc7bc!important;
+    border-radius:12px!important;
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 8px 24px rgba(43,35,27,.065)!important;
+  }
+
+  html body.is-home .filters{
+    background:transparent!important;
+    border-color:#d8d0c5!important;
+  }
+
+  html body.is-home .filters button{
+    color:#5c564d!important;
+    background:transparent!important;
+    border-color:rgba(23,25,20,.10)!important;
+    opacity:1!important;
+  }
+
+  html body.is-home .filters button+button{
+    border-left-color:rgba(23,25,20,.10)!important;
+  }
+
+  html body.is-home .filters button:hover{
+    color:#171914!important;
+    background:#f5f0e8!important;
+  }
+
+  html body.is-home .filters button[aria-pressed="true"],
+  html body.is-home .filters button.is-active{
+    color:#171914!important;
+    background:#f3ede4!important;
+  }
+
+  html body.is-home .filters button::before{
+    background:#171914!important;
+  }
+
+  html body.is-home .filters button::after{
+    background:#171914!important;
+    box-shadow:none!important;
+  }
+
+  html body.is-home .filter-count,
+  html body.is-home .filters button[aria-pressed="true"] .filter-count{
+    color:#746d63!important;
+  }
+
+  html body.is-home .filter-rail-arrow{
+    color:#403b34!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     Remove the visibly wrong pure-black transition band from LIGHT.
+     ------------------------------------------------------------------------ */
+
+  html body.is-home .section-veil{
+    background:var(--light-canvas)!important;
+  }
+
+  html body.is-home .motion-section{
+    background:var(--light-canvas)!important;
+    color:var(--light-ink)!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     OTHER LIGHT PLATES
+     ------------------------------------------------------------------------ */
+
+  html body.is-home .recognition-row,
+  html body .journal-card,
+  html body .booking-page .inquiry-form{
+    background:#fffdf9!important;
+    color:#171914!important;
+    border-color:#d7d0c5!important;
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 12px 34px rgba(43,35,27,.07)!important;
+  }
+
+  html body .journal-card-copy h2,
+  html body .journal-read,
+  html body .booking-page .direct-contact h2,
+  html body .booking-page .contact-links strong,
+  html body .booking-page .contact-location strong{
+    color:#171914!important;
+  }
+
+  html body .journal-card-copy p,
+  html body .booking-page .contact-intro,
+  html body .booking-page .inquiry-form label{
+    color:#625d54!important;
+  }
+
+  /* ------------------------------------------------------------------------
+     FOOTER
+     Keep the approved layout, but improve contrast in light mode.
+     ------------------------------------------------------------------------ */
+
+  html body #site-footer-final{
+    background:linear-gradient(180deg,#fffdf9 0%,#f1e9de 100%)!important;
+    color:#171914!important;
+    border-top-color:#d7d0c5!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark,
+  html body #site-footer-final .footer-v19-contact,
+  html body #site-footer-final .footer-v19-legal a{
+    color:#171914!important;
+    opacity:1!important;
+  }
+
+  html body #site-footer-final .footer-v19-role,
+  html body #site-footer-final .footer-v19-tagline,
+  html body #site-footer-final .footer-v19-contact-copy,
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-top{
+    color:#625d54!important;
+    opacity:1!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block,
+  html body #site-footer-final>.footer-v19-meta{
+    border-color:#d7d0c5!important;
+  }
+
+  html body #site-footer-final .social-link{
+    color:#171914!important;
+    opacity:.82!important;
+  }
+}
