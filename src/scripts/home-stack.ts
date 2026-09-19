@@ -1,635 +1,351 @@
 type StackItem = {
   card: HTMLElement;
-  image: HTMLElement | null;
+  surface: HTMLElement | null;
   height: number;
   absoluteTop: number;
+  darkness: number;
 };
 
-const DEAD_ZONE = 0.035;
-const BLACKOUT_AT = 0.28;
-const MAX_DARKNESS = 1;
+type StackGroup = {
+  section: HTMLElement;
+  grid: HTMLElement;
+  items: StackItem[];
+  active: boolean;
+  cardSelector: string;
+  surfaceSelector: string | null;
+  darknessVar: string;
+  textFade: boolean;
+};
 
-function documentTop(
-  element:
-    HTMLElement
-){
-  let top =
-    0;
+/*
+ * V33 SMOOTH STACK
+ * - Start almost immediately after real overlap begins.
+ * - Do NOT reach black until the next card has covered ~82%.
+ * - Scroll velocity changes response time:
+ *   slow scroll  = soft / cinematic
+ *   fast scroll  = catches up quickly
+ */
+const START_OVERLAP = 0.045;
+const FULL_DARK_AT = 0.82;
+const MAX_DARKNESS = 0.985;
+const SLOW_RESPONSE_MS = 230;
+const FAST_RESPONSE_MS = 58;
+const FAST_SCROLL_PX_PER_MS = 1.85;
 
-  let node:
-    HTMLElement |
-    null =
-    element;
+function clamp01(value: number) {
+  return Math.max(0, Math.min(1, value));
+}
 
-  while(
-    node
-  ){
-    top +=
-      node.offsetTop;
+function smoothstep(value: number) {
+  const t = clamp01(value);
+  return t * t * (3 - 2 * t);
+}
 
-    node =
-      node
-        .offsetParent as
-          HTMLElement |
-          null;
+function documentTop(element: HTMLElement) {
+  let top = 0;
+  let node: HTMLElement | null = element;
+
+  while (node) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
   }
 
   return top;
 }
 
-function easedProgress(
-  nextTopInViewport:
-    number,
-
-  currentHeight:
-    number
-){
-  const raw =
-    (
-      currentHeight -
-      nextTopInViewport
-    ) /
-    currentHeight;
-
-  const clamped =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        raw
-      )
-    );
-
-  if(
-    clamped <=
-    DEAD_ZONE
-  ){
-    return 0;
-  }
-
-  const normalized =
-    (
-      clamped -
-      DEAD_ZONE
-    ) /
-    (
-      1 -
-      DEAD_ZONE
-    );
-
-  return (
-    normalized *
-    normalized *
-    (
-      3 -
-      2 *
-      normalized
-    )
-  );
+function overlapProgress(nextTopInViewport: number, currentHeight: number) {
+  return clamp01((currentHeight - nextTopInViewport) / currentHeight);
 }
 
-export function initHomeStack(){
-  if(
-    !document
-      .body
-      .classList
-      .contains(
-        'is-home'
-      )
-  ){
-    return;
+function targetDarkness(progress: number) {
+  if (progress <= START_OVERLAP) return 0;
+
+  const normalized =
+    (progress - START_OVERLAP) /
+    (FULL_DARK_AT - START_OVERLAP);
+
+  return smoothstep(normalized) * MAX_DARKNESS;
+}
+
+function responseAlpha(deltaMs: number, velocityPxPerMs: number) {
+  const speed = clamp01(velocityPxPerMs / FAST_SCROLL_PX_PER_MS);
+  const responseMs =
+    SLOW_RESPONSE_MS +
+    (FAST_RESPONSE_MS - SLOW_RESPONSE_MS) * speed;
+
+  return 1 - Math.exp(-Math.max(1, deltaMs) / responseMs);
+}
+
+export function initHomeStack() {
+  if (!document.body.classList.contains('is-home')) return;
+
+  const media = window.matchMedia('(max-width: 700px)');
+
+  const groups: StackGroup[] = [];
+
+  const addGroup = (
+    sectionSelector: string,
+    gridSelector: string,
+    cardSelector: string,
+    surfaceSelector: string | null,
+    darknessVar: string,
+    textFade: boolean
+  ) => {
+    const section = document.querySelector<HTMLElement>(sectionSelector);
+    const grid = section?.querySelector<HTMLElement>(gridSelector) ?? null;
+
+    if (!section || !grid) return;
+
+    groups.push({
+      section,
+      grid,
+      items: [],
+      active: false,
+      cardSelector,
+      surfaceSelector,
+      darknessVar,
+      textFade
+    });
+  };
+
+  addGroup(
+    '.work-section',
+    '.project-grid',
+    '.project-card',
+    '.project-image',
+    '--stack-darkness',
+    true
+  );
+
+  addGroup(
+    '.instagram-gallery-section',
+    '.instagram-editorial-grid',
+    '.instagram-editorial-card',
+    null,
+    '--ig-stack-darkness',
+    false
+  );
+
+  if (!groups.length) return;
+
+  let raf: number | null = null;
+  let rebuildRaf: number | null = null;
+  let lastWidth = window.innerWidth;
+  let lastScrollY = window.scrollY;
+  let lastFrameTime = performance.now();
+
+  function visibleCards(group: StackGroup) {
+    return Array.from(
+      group.grid.querySelectorAll<HTMLElement>(group.cardSelector)
+    ).filter(card => !card.hidden && getComputedStyle(card).display !== 'none');
   }
 
-  const media =
-    window
-      .matchMedia(
-        '(max-width: 700px)'
-      );
+  function clearItem(group: StackGroup, card: HTMLElement) {
+    card.style.removeProperty('z-index');
+    card.style.removeProperty('--stack-text-opacity');
 
-  const section =
-    document
-      .querySelector<HTMLElement>(
-        '.work-section'
-      );
+    const surface = group.surfaceSelector
+      ? card.querySelector<HTMLElement>(group.surfaceSelector)
+      : card;
 
-  const grid =
-    section
-      ?.querySelector<HTMLElement>(
-        '.project-grid'
-      ) ??
-    null;
-
-  if(
-    !section ||
-    !grid
-  ){
-    return;
+    surface?.style.setProperty(group.darknessVar, '0');
+    surface?.style.removeProperty('will-change');
   }
 
-  const sectionEl =
-    section;
+  function resetGroup(group: StackGroup) {
+    group.grid
+      .querySelectorAll<HTMLElement>(group.cardSelector)
+      .forEach(card => clearItem(group, card));
 
-  const gridEl =
-    grid;
-
-  let items:
-    StackItem[] =
-    [];
-
-  let active =
-    false;
-
-  let raf:
-    number |
-    null =
-    null;
-
-  let rebuildRaf:
-    number |
-    null =
-    null;
-
-  let lastWidth =
-    window.innerWidth;
-
-  let lastGridWidth =
-    0;
-
-  let lastGridHeight =
-    0;
-
-  function visibleCards(){
-    return Array
-      .from(
-        gridEl
-          .querySelectorAll<HTMLElement>(
-            '.project-card'
-          )
-      )
-      .filter(
-        card =>
-          !card.hidden &&
-          getComputedStyle(
-            card
-          ).display !==
-            'none'
-      );
+    group.items = [];
+    group.active = false;
   }
 
-  function clearCard(
-    card:
-      HTMLElement
-  ){
-    card
-      .style
-      .removeProperty(
-        'z-index'
-      );
-
-    const image =
-      card
-        .querySelector<HTMLElement>(
-          '.project-image'
-        );
-
-    if(
-      !image
-    ){
+  function rebuildGroup(group: StackGroup) {
+    if (!media.matches) {
+      resetGroup(group);
       return;
     }
 
-    image
-      .style
-      .setProperty(
-        '--stack-darkness',
-        '0'
-      );
+    group.grid
+      .querySelectorAll<HTMLElement>(group.cardSelector)
+      .forEach(card => clearItem(group, card));
 
-    image
-      .style
-      .removeProperty(
-        '--stack-blur'
-      );
+    group.items = visibleCards(group).map((card, index) => {
+      card.style.setProperty('z-index', String(index + 1));
 
-    image
-      .style
-      .removeProperty(
-        'will-change'
-      );
+      const surface = group.surfaceSelector
+        ? card.querySelector<HTMLElement>(group.surfaceSelector)
+        : card;
 
-    card.style.setProperty('--stack-text-opacity', '1');
+      surface?.style.setProperty(group.darknessVar, '0');
+
+      return {
+        card,
+        surface,
+        height: Math.max(1, card.offsetHeight),
+        absoluteTop: documentTop(card),
+        darkness: 0
+      };
+    });
   }
 
-  function resetAll(){
-    gridEl
-      .querySelectorAll<HTMLElement>(
-        '.project-card'
-      )
-      .forEach(
-        clearCard
-      );
-
-    items =
-      [];
-
-    document
-      .body
-      .classList
-      .remove(
-        'in-stack-grid'
-      );
-  }
-
-  function rebuild(){
-    rebuildRaf =
-      null;
-
-    if(
-      !media.matches
-    ){
-      resetAll();
-      return;
-    }
-
-    gridEl
-      .querySelectorAll<HTMLElement>(
-        '.project-card'
-      )
-      .forEach(
-        clearCard
-      );
-
-    items =
-      visibleCards()
-        .map(
-          (
-            card,
-            index
-          )=>{
-            card
-              .style
-              .setProperty(
-                'z-index',
-                String(
-                  index +
-                  1
-                )
-              );
-
-            return {
-              card,
-
-              image:
-                card
-                  .querySelector<HTMLElement>(
-                    '.project-image'
-                  ),
-
-              height:
-                Math.max(
-                  1,
-                  card.offsetHeight
-                ),
-
-              absoluteTop:
-                documentTop(
-                  card
-                )
-            };
-          }
-        );
-
+  function rebuild() {
+    rebuildRaf = null;
+    groups.forEach(rebuildGroup);
     schedule();
   }
 
-  function scheduleRebuild(){
-    if(
-      rebuildRaf !==
-      null
-    ){
-      return;
-    }
-
-    rebuildRaf =
-      requestAnimationFrame(
-        rebuild
-      );
+  function scheduleRebuild() {
+    if (rebuildRaf !== null) return;
+    rebuildRaf = requestAnimationFrame(rebuild);
   }
 
-  function update(){
-    raf =
-      null;
+  function update() {
+    raf = null;
 
-    if(
-      !media.matches ||
-      !active ||
-      !items.length
-    ){
-      return;
-    }
+    if (!media.matches) return;
 
-    const scrollY =
-      window.scrollY;
+    const now = performance.now();
+    const scrollY = window.scrollY;
+    const deltaMs = Math.min(64, Math.max(1, now - lastFrameTime));
+    const velocity = Math.abs(scrollY - lastScrollY) / deltaMs;
+    const alpha = responseAlpha(deltaMs, velocity);
 
-    for(
-      let index =
-        0;
+    lastFrameTime = now;
+    lastScrollY = scrollY;
 
-      index <
-      items.length;
+    let needsAnotherFrame = false;
 
-      index++
-    ){
-      const item =
-        items[
-          index
-        ];
+    for (const group of groups) {
+      if (!group.active || !group.items.length) continue;
 
-      const next =
-        items[
-          index +
-          1
-        ];
+      for (let index = 0; index < group.items.length; index++) {
+        const item = group.items[index];
+        const next = group.items[index + 1];
 
-      if(
-        !item.image
-      ){
-        continue;
-      }
+        if (!item.surface) continue;
 
-      const progress =
-        next
-          ? easedProgress(
-              next.absoluteTop -
-                scrollY,
-
-              item.height
-            )
+        const progress = next
+          ? overlapProgress(next.absoluteTop - scrollY, item.height)
           : 0;
 
-      /*
-       * V19: once the next sticky card is genuinely covering the current
-       * one, the covered card must resolve all the way to black instead of
-       * leaving a visible strip of the previous photograph underneath.
-       * BLACKOUT_AT intentionally reaches full black before 100% overlap.
-       */
-      const darkness =
-        progress <= 0
-          ? 0
-          : Math.min(
-              MAX_DARKNESS,
-              Math.pow(
-                Math.min(1, progress / BLACKOUT_AT),
-                1.08
-              ) * MAX_DARKNESS
-            );
+        const target = targetDarkness(progress);
+        const current = item.darkness;
+        const nextValue = current + (target - current) * alpha;
 
-      const nextDarkness =
-        darkness
-          .toFixed(
-            3
-          );
+        item.darkness = Math.abs(target - nextValue) < 0.0015
+          ? target
+          : nextValue;
 
-      if(
-        item
-          .image
-          .style
-          .getPropertyValue(
-            '--stack-darkness'
-          ) !==
-        nextDarkness
-      ){
-        item
-          .image
-          .style
-          .setProperty(
-            '--stack-darkness',
-            nextDarkness
+        item.surface.style.setProperty(
+          group.darknessVar,
+          item.darkness.toFixed(3)
+        );
+
+        if (group.textFade) {
+          const textTarget = 1 - smoothstep(
+            clamp01((progress - 0.08) / 0.70)
           );
+          item.card.style.setProperty(
+            '--stack-text-opacity',
+            textTarget.toFixed(3)
+          );
+        }
+
+        if (Math.abs(target - item.darkness) > 0.0025) {
+          needsAnotherFrame = true;
+        }
       }
-
-      const textOpacity = Math.max(0, 1 - (progress / 0.24)).toFixed(3);
-      item.card.style.setProperty('--stack-text-opacity', textOpacity);
-    }
-  }
-
-  function schedule(){
-    if(
-      raf !==
-      null
-    ){
-      return;
     }
 
-    raf =
-      requestAnimationFrame(
-        update
-      );
+    if (needsAnotherFrame) schedule();
   }
 
-  const observer =
-    new IntersectionObserver(
-      entries=>{
-        active =
-          media.matches &&
-          entries.some(
-            entry =>
-              entry
-                .isIntersecting
-          );
-
-        document
-          .body
-          .classList
-          .toggle(
-            'in-stack-grid',
-            active
-          );
-
-        if(
-          active
-        ){
-          schedule();
-        }
-      },
-      {
-        rootMargin:
-          '15% 0px 15% 0px'
-      }
-    );
-
-  observer
-    .observe(
-      sectionEl
-    );
-
-  window
-    .addEventListener(
-      'scroll',
-      schedule,
-      {
-        passive:
-          true
-      }
-    );
-
-  document
-    .addEventListener(
-      'portfolio:filter-change',
-      scheduleRebuild
-    );
-
-  window
-    .addEventListener(
-      'resize',
-      ()=>{
-        const width =
-          window.innerWidth;
-
-        /*
-         * Mobile browser chrome changes viewport HEIGHT while the user
-         * scrolls. Rebuilding the stack for those height-only changes adds
-         * needless work and can feel like scroll jank.
-         */
-        if(
-          width ===
-          lastWidth
-        ){
-          return;
-        }
-
-        lastWidth =
-          width;
-
-        scheduleRebuild();
-      },
-      {
-        passive:
-          true
-      }
-    );
-
-  window
-    .addEventListener(
-      'orientationchange',
-      ()=>{
-        window
-          .setTimeout(
-            ()=>{
-              lastWidth =
-                window.innerWidth;
-
-              scheduleRebuild();
-            },
-            160
-          );
-      }
-    );
-
-  window
-    .addEventListener(
-      'pageshow',
-      scheduleRebuild
-    );
-
-  media
-    .addEventListener(
-      'change',
-      ()=>{
-        active =
-          false;
-
-        scheduleRebuild();
-      }
-    );
-
-  if(
-    'ResizeObserver'
-    in window
-  ){
-    const gridObserver =
-      new ResizeObserver(
-        entries=>{
-          const entry =
-            entries[
-              0
-            ];
-
-          if(
-            !entry
-          ){
-            return;
-          }
-
-          const width =
-            Math.round(
-              entry
-                .contentRect
-                .width
-            );
-
-          const height =
-            Math.round(
-              entry
-                .contentRect
-                .height
-            );
-
-          if(
-            width ===
-              lastGridWidth &&
-            height ===
-              lastGridHeight
-          ){
-            return;
-          }
-
-          lastGridWidth =
-            width;
-
-          lastGridHeight =
-            height;
-
-          scheduleRebuild();
-        }
-      );
-
-    gridObserver
-      .observe(
-        gridEl
-      );
+  function schedule() {
+    if (raf !== null) return;
+    raf = requestAnimationFrame(update);
   }
 
-  gridEl
-    .querySelectorAll<HTMLImageElement>(
-      'img'
-    )
-    .forEach(
-      image=>{
-        if(
-          !image.complete
-        ){
-          image
-            .addEventListener(
-              'load',
-              scheduleRebuild,
-              {
-                once:
-                  true
-              }
-            );
+  const observers: IntersectionObserver[] = [];
+
+  groups.forEach(group => {
+    const observer = new IntersectionObserver(
+      entries => {
+        group.active = media.matches && entries.some(entry => entry.isIntersecting);
+
+        if (group === groups[0]) {
+          document.body.classList.toggle('in-stack-grid', group.active);
         }
-      }
+
+        if (group.active) schedule();
+      },
+      { rootMargin: '18% 0px 18% 0px' }
     );
 
-  try{
-    document
-      .fonts
-      ?.ready
-      .then(
-        scheduleRebuild
-      );
-  }catch{}
+    observer.observe(group.section);
+    observers.push(observer);
+  });
+
+  window.addEventListener('scroll', schedule, { passive: true });
+
+  document.addEventListener('portfolio:filter-change', scheduleRebuild);
+
+  window.addEventListener(
+    'resize',
+    () => {
+      const width = window.innerWidth;
+      if (width === lastWidth) return;
+      lastWidth = width;
+      scheduleRebuild();
+    },
+    { passive: true }
+  );
+
+  window.addEventListener('orientationchange', () => {
+    window.setTimeout(() => {
+      lastWidth = window.innerWidth;
+      scheduleRebuild();
+    }, 160);
+  });
+
+  window.addEventListener('pageshow', scheduleRebuild);
+
+  media.addEventListener('change', scheduleRebuild);
+
+  if ('ResizeObserver' in window) {
+    groups.forEach(group => {
+      let lastW = 0;
+      let lastH = 0;
+
+      const ro = new ResizeObserver(entries => {
+        const entry = entries[0];
+        if (!entry) return;
+
+        const width = Math.round(entry.contentRect.width);
+        const height = Math.round(entry.contentRect.height);
+
+        if (width === lastW && height === lastH) return;
+        lastW = width;
+        lastH = height;
+        scheduleRebuild();
+      });
+
+      ro.observe(group.grid);
+    });
+  }
+
+  groups.forEach(group => {
+    group.grid.querySelectorAll<HTMLImageElement>('img').forEach(image => {
+      if (!image.complete) {
+        image.addEventListener('load', scheduleRebuild, { once: true });
+      }
+    });
+  });
+
+  try {
+    document.fonts?.ready.then(scheduleRebuild);
+  } catch {}
 
   rebuild();
 }

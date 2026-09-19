@@ -7,8 +7,7 @@ import Lightbox from './Lightbox.astro';
 const lang = languageFromPath(Astro.url.pathname);
 const isSq = lang === 'sq';
 
-const availableItems = await instagramMedia(24);
-
+const availableItems = await instagramMedia(30);
 const normalized = (url: string) => url.replace(/\/$/, '');
 
 const pinnedItems = instagramSelection.permalinks.flatMap(url => {
@@ -18,14 +17,25 @@ const pinnedItems = instagramSelection.permalinks.flatMap(url => {
   return item ? [item] : [];
 });
 
+const looksPromotional = (caption = '') =>
+  /(coming\s+soon|terminal|teaser|trailer|poster|premiere\s+soon)/i.test(caption);
+
+const photographicPool = availableItems.filter(item =>
+  item.media_type !== 'VIDEO' && !looksPromotional(item.caption || '')
+);
+
+const backupPhotoPool = availableItems.filter(item => item.media_type !== 'VIDEO');
+
+const autoPool = photographicPool.length >= 6
+  ? photographicPool
+  : backupPhotoPool;
+
 /*
- * IMPORTANT: this section uses ONLY the existing Instagram API integration.
- * Never substitute portfolio photographs for Instagram posts. If the API/token
- * is unavailable at build time, the section simply does not render.
+ * Manual pinned URLs win when present in editorial-selection.ts.
+ * Otherwise use the strongest automatic photography-only pool.
  */
-const usableItems = (
-  pinnedItems.length ? pinnedItems : availableItems
-).slice(0, instagramSelection.limit);
+const usableItems = (pinnedItems.length ? pinnedItems : autoPool)
+  .slice(0, 10);
 ---
 
 {
@@ -39,17 +49,14 @@ const usableItems = (
         <div>
           <p
             class="kicker"
-            data-en="INSTAGRAM / RECENT WORK"
-            data-sq="INSTAGRAM / PUNA E FUNDIT"
+            data-en="INSTAGRAM / SELECTED WORK"
+            data-sq="INSTAGRAM / PUNË TË PËRZGJEDHURA"
           >
-            {isSq ? 'INSTAGRAM / PUNA E FUNDIT' : 'INSTAGRAM / RECENT WORK'}
+            {isSq ? 'INSTAGRAM / PUNË TË PËRZGJEDHURA' : 'INSTAGRAM / SELECTED WORK'}
           </p>
 
-          <h2
-            data-en="Selected moments"
-            data-sq="Momente të përzgjedhura"
-          >
-            {isSq ? 'Momente të përzgjedhura' : 'Selected moments'}
+          <h2 data-en="Recent photographs" data-sq="Fotografi të fundit">
+            {isSq ? 'Fotografi të fundit' : 'Recent photographs'}
           </h2>
         </div>
 
@@ -66,15 +73,13 @@ const usableItems = (
 
       <p
         class="latest-intro"
-        data-en="A living edit of commissions, portraits, details and work behind the camera."
-        data-sq="Një përzgjedhje e gjallë nga projektet, portretet, detajet dhe puna pas kamerës."
+        data-en="A curated live edit from Instagram — photography first."
+        data-sq="Një përzgjedhje live nga Instagrami — me fokus fotografinë."
         data-reveal
       >
-        {
-          isSq
-            ? 'Një përzgjedhje e gjallë nga projektet, portretet, detajet dhe puna pas kamerës.'
-            : 'A living edit of commissions, portraits, details and work behind the camera.'
-        }
+        {isSq
+          ? 'Një përzgjedhje live nga Instagrami — me fokus fotografinë.'
+          : 'A curated live edit from Instagram — photography first.'}
       </p>
 
       <div class="latest-grid instagram-editorial-grid">
@@ -82,7 +87,7 @@ const usableItems = (
           usableItems.map((item, index) => {
             const alt = item.caption?.trim()
               ? item.caption.trim().slice(0, 160)
-              : (isSq ? 'Punë e fundit nga Ergys Shehu' : 'Recent work by Ergys Shehu');
+              : (isSq ? 'Punë e përzgjedhur nga Ergys Shehu' : 'Selected work by Ergys Shehu');
 
             return (
               <a
@@ -95,8 +100,6 @@ const usableItems = (
                 aria-label={alt}
                 data-caption={alt}
                 data-media-type={item.media_type}
-                data-media-url={item.media_type === 'VIDEO' ? item.media_url : undefined}
-                data-poster={item.media_type === 'VIDEO' ? (item.thumbnail_url || item.cover) : undefined}
               >
                 <img
                   src={item.cover}
@@ -104,16 +107,14 @@ const usableItems = (
                   loading="lazy"
                   decoding="async"
                   width="1000"
-                  height="1000"
+                  height="1250"
                 />
+
+                <span class="instagram-stack-shade" aria-hidden="true"></span>
 
                 <span class="instagram-card-index" aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-
-                {item.media_type === 'VIDEO' && (
-                  <span class="icon-badge latest-icon" aria-hidden="true">▶</span>
-                )}
 
                 {item.media_type === 'CAROUSEL_ALBUM' && (
                   <span class="icon-badge latest-icon-carousel" aria-hidden="true">⧉</span>

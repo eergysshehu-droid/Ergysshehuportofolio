@@ -1,0 +1,435 @@
+/* ERGYS V29 — footer revert + gold everywhere + home image flush + instagram 10-grid */
+
+@property --orbit-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes v19FinalOrbit {
+  to { --orbit-angle: 360deg; }
+}
+
+/* GOLD LINE — same language everywhere */
+html body.is-home .artist-section,
+html body.is-home .contact-section,
+html body .collection-intro,
+html body .about-intro,
+html body .about-cta,
+html body .v19-orbit-card {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+html body.is-home .artist-section::after,
+html body.is-home .contact-section::after,
+html body .collection-intro::after,
+html body .about-intro::after,
+html body .about-cta::after,
+html body .v19-orbit-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body.is-home .artist-section::before,
+html body.is-home .contact-section::before,
+html body .collection-intro::before,
+html body .about-intro::before,
+html body .about-cta::before,
+html body .v19-orbit-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -1px !important;
+  z-index: 30 !important;
+  pointer-events: none !important;
+  border-radius: inherit !important;
+  padding: 1px !important;
+  background: conic-gradient(
+    from var(--orbit-angle),
+    transparent 0deg 304deg,
+    rgba(239,189,95,0) 304deg,
+    rgba(239,189,95,.55) 321deg,
+    #ffe5a0 334deg,
+    rgba(239,189,95,.78) 344deg,
+    transparent 360deg
+  ) !important;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask-composite: exclude !important;
+  animation: v19FinalOrbit 7.2s linear infinite !important;
+}
+
+/* HOME PURITY CARD — image flush, no dark transparent matte */
+html body.is-home .artist-section {
+  width: min(calc(100% - 64px), 1180px) !important;
+}
+
+html body.is-home .artist-media {
+  width: 100% !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  display: block !important;
+  align-self: stretch !important;
+}
+
+html body.is-home .artist-media::before,
+html body.is-home .artist-media::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body.is-home .artist-media img,
+html body.is-home .artist-image,
+html body.is-home .artist-image img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: transparent !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+/* CONTACT card wider like before */
+html body.is-home .contact-section {
+  width: min(calc(100% - 64px), 1360px) !important;
+  max-width: 1360px !important;
+}
+
+/* FOOTER — revert to V27-like approved layout */
+html body .site-footer-v19 {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #020403 !important;
+  color: var(--v19-paper) !important;
+  border-top: 1px solid rgba(245,242,234,.07) !important;
+}
+
+@media (min-width: 1001px) {
+  html body .footer-v19-main {
+    width: min(calc(100% - 56px), 1576px) !important;
+    max-width: 1576px !important;
+    margin: 0 auto !important;
+    padding: 58px 28px 46px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1.25fr 1fr !important;
+    align-items: center !important;
+    gap: 38px !important;
+    text-align: left !important;
+  }
+
+  html body .footer-v19-brand {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+    margin: 0 !important;
+  }
+
+  html body .footer-v19-brand-copy {
+    display: grid !important;
+    justify-items: start !important;
+    gap: 6px !important;
+  }
+
+  html body .footer-v19-wordmark {
+    font-size: 13px !important;
+    line-height: 1 !important;
+    letter-spacing: .16em !important;
+    white-space: nowrap !important;
+    color: #fff !important;
+  }
+
+  html body .footer-v19-role {
+    font-size: 6.5px !important;
+    line-height: 1.55 !important;
+    letter-spacing: .18em !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+  }
+
+  html body .footer-v19-social-block {
+    display: grid !important;
+    justify-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 28px !important;
+    border-left: 1px solid rgba(245,242,234,.10) !important;
+    border-right: 1px solid rgba(245,242,234,.10) !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-social {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  html body .footer-v19-social .social-link {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    flex: 0 0 40px !important;
+  }
+
+  html body .footer-v19-tagline {
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-contact-block {
+    display: grid !important;
+    justify-self: end !important;
+    justify-items: start !important;
+    min-width: 190px !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  html body .footer-v19-meta {
+    width: min(calc(100% - 56px), 1576px) !important;
+    max-width: 1576px !important;
+    margin: 0 auto !important;
+    padding: 24px 28px 30px !important;
+    border-top: 1px solid rgba(245,242,234,.07) !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    align-items: center !important;
+    gap: 26px !important;
+    text-align: left !important;
+  }
+
+  html body .footer-v19-legal {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  html body.is-home .artist-section,
+  html body.is-home .contact-section {
+    width: calc(100% - 22px) !important;
+    max-width: none !important;
+  }
+
+  html body .footer-v19-main {
+    width: 100% !important;
+    max-width: 560px !important;
+    margin: 0 auto !important;
+    padding: 54px 24px 34px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    align-items: start !important;
+    gap: 0 !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-brand {
+    display: grid !important;
+    justify-items: center !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-brand-copy {
+    display: grid !important;
+    justify-items: center !important;
+    gap: 7px !important;
+  }
+
+  html body .footer-v19-wordmark {
+    font-size: 16px !important;
+    line-height: 1 !important;
+    letter-spacing: .16em !important;
+  }
+
+  html body .footer-v19-role {
+    max-width: 32ch !important;
+    margin: 0 !important;
+    font-size: 8px !important;
+    line-height: 1.6 !important;
+    letter-spacing: .17em !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-social-block {
+    width: 100% !important;
+    display: grid !important;
+    justify-items: center !important;
+    gap: 13px !important;
+    margin: 30px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-social {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 9px !important;
+  }
+
+  html body .footer-v19-social .social-link {
+    width: 39px !important;
+    height: 39px !important;
+    min-width: 39px !important;
+    min-height: 39px !important;
+    flex: 0 0 39px !important;
+  }
+
+  html body .footer-v19-tagline {
+    max-width: 32ch !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-contact-block {
+    display: grid !important;
+    justify-self: center !important;
+    justify-items: center !important;
+    min-width: 0 !important;
+    margin: 29px 0 0 !important;
+    gap: 0 !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-contact {
+    font-size: 9px !important;
+    letter-spacing: .18em !important;
+    padding: 0 0 8px !important;
+    border-bottom: 1px solid rgba(239,189,95,.55) !important;
+  }
+
+  html body .footer-v19-contact-copy {
+    display: block !important;
+    max-width: 29ch !important;
+    margin: 18px 0 0 !important;
+    text-align: center !important;
+    font-size: 7px !important;
+    line-height: 1.55 !important;
+    letter-spacing: .16em !important;
+  }
+
+  html body .footer-v19-meta {
+    width: calc(100% - 48px) !important;
+    max-width: 520px !important;
+    margin: 0 auto !important;
+    padding: 24px 0 32px !important;
+    border-top: 1px solid rgba(245,242,234,.09) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 13px !important;
+    text-align: center !important;
+  }
+
+  html body .footer-v19-copy {
+    order: 1 !important;
+    max-width: 36ch !important;
+    margin: 0 !important;
+    text-align: center !important;
+    font-size: 9.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  html body .footer-v19-legal {
+    order: 2 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    text-align: center !important;
+    font-size: 8.5px !important;
+  }
+
+  html body .footer-v19-top {
+    order: 3 !important;
+    margin: 2px 0 0 !important;
+    text-align: center !important;
+    font-size: 7.5px !important;
+  }
+}
+
+/* INSTAGRAM GRID — adaptive, 10 recent, same viewer */
+html body.is-home .instagram-editorial-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  columns: auto !important;
+}
+
+html body.is-home .instagram-editorial-card,
+html body.is-home .instagram-editorial-card:nth-child(n) {
+  width: 100% !important;
+  margin: 0 !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: #050705 !important;
+}
+
+html body.is-home .instagram-editorial-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: #050705 !important;
+}
+
+@media (max-width: 1200px) {
+  html body.is-home .instagram-editorial-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body.is-home .instagram-editorial-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  html body.is-home .instagram-editorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  html body.is-home .instagram-card-index {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body.is-home .artist-section::before,
+  html body.is-home .contact-section::before,
+  html body .collection-intro::before,
+  html body .about-intro::before,
+  html body .about-cta::before,
+  html body .v19-orbit-card::before {
+    animation: none !important;
+  }
+}

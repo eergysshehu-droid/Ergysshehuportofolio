@@ -60,7 +60,8 @@ const profilePageLd = {
   <script type="application/ld+json" is:inline set:html={JSON.stringify(profilePageLd)} />
 
   <section class="collection-intro about-intro v19-orbit-card">
-    <div class="about-intro-copy">
+    <span class="panel-gold-orbit" aria-hidden="true"></span>
+<div class="about-intro-copy">
       <a class="back-link" data-reveal href={localizedPath('/', lang)}>
         {isSq ? '← Punë të përzgjedhura' : '← Selected work'}
       </a>
@@ -139,7 +140,8 @@ const profilePageLd = {
   </section>
 
   <section class="about-cta v19-orbit-card" data-reveal>
-    <p class="about-cta-kicker">
+    <span class="panel-gold-orbit" aria-hidden="true"></span>
+<p class="about-cta-kicker">
       {isSq ? 'PROJEKTE / KOMISIONE / BASHKËPUNIME' : 'PROJECTS / COMMISSIONS / COLLABORATIONS'}
     </p>
 

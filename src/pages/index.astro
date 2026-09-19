@@ -9,7 +9,7 @@ import MotionSection from '../components/home/MotionSection.astro';
 import JournalFeature from '../components/home/JournalFeature.astro';
 import ArtistSection from '../components/home/ArtistSection.astro';
 import HomeContact from '../components/home/HomeContact.astro';
-import BrandReveal from '../components/BrandReveal.astro';
+
 
 import {
   content,
@@ -308,7 +308,7 @@ const homeDescription =
     )
   }
 >
-  <BrandReveal isSq={isSq} />
+
 
 
   <div class="hero-scroll-scene">
@@ -393,12 +393,12 @@ const homeDescription =
 
 
   <script>
-    import { initHomeIntro } from '../scripts/home-intro';
+
     import { initHomeHero } from '../scripts/home-hero';
     import { initFilmstrip } from '../scripts/filmstrip';
     import { initWorkFilters } from '../scripts/work-filters';
 
-    initHomeIntro();
+
     initHomeHero();
     initFilmstrip();
     initWorkFilters();

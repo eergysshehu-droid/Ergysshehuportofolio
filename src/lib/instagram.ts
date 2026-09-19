@@ -35,9 +35,7 @@ async function writeCache(items: InstagramMedia[]) {
   try {
     const { writeFile } = await import('node:fs/promises');
     await writeFile(await cachePath(), JSON.stringify({ fetchedAt: Date.now(), items }, null, 2));
-  } catch {
-    // Caching is a build-time optimization, not a requirement.
-  }
+  } catch {}
 }
 
 function isValidHttpUrl(value?: string | null) {
@@ -56,14 +54,20 @@ function toUsable(items: InstagramMedia[]): UsableInstagramMedia[] {
       ...item,
       cover: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
     }))
-    .filter((item): item is UsableInstagramMedia => isValidHttpUrl(item.cover) && isValidHttpUrl(item.permalink));
+    .filter((item): item is UsableInstagramMedia =>
+      isValidHttpUrl(item.cover) && isValidHttpUrl(item.permalink)
+    );
 }
 
 let cached: Promise<UsableInstagramMedia[]> | undefined;
 
 export function instagramMedia(limit = 24): Promise<UsableInstagramMedia[]> {
   return cached ??= (async () => {
-    const token = import.meta.env.INSTAGRAM_ACCESS_TOKEN as string | undefined;
+    const token = (
+      import.meta.env.INSTAGRAM_ACCESS_TOKEN ||
+      process.env.INSTAGRAM_ACCESS_TOKEN
+    ) as string | undefined;
+
     const disk = await readCache();
     let raw: InstagramMedia[];
 
@@ -74,7 +78,9 @@ export function instagramMedia(limit = 24): Promise<UsableInstagramMedia[]> {
         const fields = 'id,media_type,media_url,thumbnail_url,permalink,caption,timestamp';
         const endpoint = `https://graph.instagram.com/me/media?fields=${fields}&limit=${limit}&access_token=${encodeURIComponent(token)}`;
         const response = await fetch(endpoint, { signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
+
         if (!response.ok) throw new Error(`Instagram media request failed: ${response.status}`);
+
         const data = await response.json();
         raw = Array.isArray(data?.data) ? data.data : [];
         await writeCache(raw);

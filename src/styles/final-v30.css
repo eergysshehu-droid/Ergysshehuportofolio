@@ -1,0 +1,433 @@
+/* ERGYS V30 — EXACT V27 FOOTER + GOLD BORDER FIX ONLY */
+
+:root{
+  --v27-gold:#efbd5f;
+  --v27-paper:#f5f2ea;
+  --v27-footer:#020403;
+}
+
+@property --v30-orbit-angle{
+  syntax:'<angle>';
+  initial-value:0deg;
+  inherits:false;
+}
+
+@keyframes v30CardOrbit{to{--v30-orbit-angle:360deg}}
+
+/*
+  ONE gold runner for every real card family.
+  Same timing/thickness/gradient language as the approved Weddings card.
+  The pseudo-element is exactly the live card box, so it follows each card's
+  own width, height and border radius instead of using a fixed frame.
+*/
+html body.is-home .artist-section,
+html body.is-home .contact-section,
+html body .collection-intro,
+html body .about-cta,
+html body .journal-card,
+html body .project-card{
+  position:relative!important;
+  isolation:isolate!important;
+}
+
+/* Kill any detached/duplicate old runner on these same cards. */
+html body.is-home .artist-section::after,
+html body.is-home .contact-section::after,
+html body .collection-intro::after,
+html body .about-cta::after,
+html body .journal-card::after,
+html body .project-card::after{
+  content:none!important;
+  display:none!important;
+  animation:none!important;
+}
+
+/* Exact edge runner. */
+html body.is-home .artist-section::before,
+html body.is-home .contact-section::before,
+html body .collection-intro::before,
+html body .about-cta::before,
+html body .journal-card::before,
+html body .project-card::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:80!important;
+  pointer-events:none!important;
+  border-radius:inherit!important;
+  padding:1px!important;
+  box-sizing:border-box!important;
+  background:conic-gradient(
+    from var(--v30-orbit-angle),
+    transparent 0deg 304deg,
+    rgba(239,189,95,0) 304deg,
+    rgba(239,189,95,.55) 321deg,
+    #ffe5a0 334deg,
+    rgba(239,189,95,.78) 344deg,
+    transparent 360deg
+  )!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  animation:v30CardOrbit 7.2s linear infinite!important;
+}
+
+/* Keep the runner clipped to rounded cards where the card already clips. */
+html body.is-home .artist-section,
+html body.is-home .contact-section,
+html body .collection-intro,
+html body .about-cta{
+  overflow:hidden!important;
+}
+
+/* Do not alter project/journal card content geometry; only the perimeter. */
+html body .journal-card,
+html body .project-card{
+  border-radius:inherit;
+}
+
+/* ==========================================================================
+   FOOTER — EXACT TWO APPROVED STATES
+   >1100px  = horizontal desktop reference
+   <=1100px = centered one-column mobile/tablet reference
+   ========================================================================== */
+
+html body #site-footer-final{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  background:var(--v27-footer)!important;
+  color:var(--v27-paper)!important;
+  border-top:1px solid rgba(245,242,234,.07)!important;
+  box-sizing:border-box!important;
+}
+
+html body #site-footer-final > .footer-v19-main,
+html body #site-footer-final > .footer-v19-meta{
+  box-sizing:border-box!important;
+}
+
+/* DESKTOP */
+@media(min-width:1101px){
+  html body #site-footer-final > .footer-v19-main{
+    width:min(calc(100% - 56px),1576px)!important;
+    max-width:1576px!important;
+    margin:0 auto!important;
+    padding:58px 28px 46px!important;
+    display:grid!important;
+    grid-template-columns:1fr 1.25fr 1fr!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    gap:38px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    justify-self:start!important;
+    gap:16px!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand img{
+    width:54px!important;
+    height:auto!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand-copy{
+    display:grid!important;
+    justify-items:start!important;
+    gap:6px!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark{
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:.16em!important;
+    white-space:nowrap!important;
+    color:#fff!important;
+  }
+
+  html body #site-footer-final .footer-v19-role{
+    max-width:none!important;
+    margin:0!important;
+    font-size:6.5px!important;
+    line-height:1.55!important;
+    letter-spacing:.18em!important;
+    white-space:nowrap!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block{
+    display:grid!important;
+    justify-items:center!important;
+    gap:12px!important;
+    margin:0!important;
+    padding:0 28px!important;
+    border-left:1px solid rgba(245,242,234,.10)!important;
+    border-right:1px solid rgba(245,242,234,.10)!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social{
+    display:flex!important;
+    justify-content:center!important;
+    gap:8px!important;
+  }
+
+  html body #site-footer-final .footer-v19-social .social-link{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    flex:0 0 40px!important;
+  }
+
+  html body #site-footer-final .footer-v19-tagline{
+    max-width:none!important;
+    margin:0!important;
+    white-space:nowrap!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-block{
+    display:grid!important;
+    justify-self:end!important;
+    justify-items:start!important;
+    min-width:190px!important;
+    margin:0!important;
+    gap:10px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-copy{
+    display:block!important;
+    max-width:26ch!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final > .footer-v19-meta{
+    width:min(calc(100% - 56px),1576px)!important;
+    max-width:1576px!important;
+    margin:0 auto!important;
+    padding:24px 28px 30px!important;
+    border-top:1px solid rgba(245,242,234,.07)!important;
+    display:grid!important;
+    grid-template-columns:1fr auto auto!important;
+    align-items:center!important;
+    gap:26px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-top{
+    order:initial!important;
+    margin:0!important;
+  }
+
+  html body #site-footer-final .footer-v19-legal{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+  }
+}
+
+/* MOBILE + TABLET */
+@media(max-width:1100px){
+  html body.is-home .artist-section,
+  html body.is-home .contact-section{
+    width:calc(100% - 20px)!important;
+    max-width:none!important;
+  }
+
+  html body.is-home .contact-section{
+    min-height:0!important;
+  }
+
+  html body .gold-orbit-svg{
+    --orbit-radius:18px;
+  }
+
+  html body.is-home .artist-media{
+    aspect-ratio:4 / 3!important;
+    padding:6px!important;
+  }
+
+  html body #site-footer-final > .footer-v19-main{
+    width:100%!important;
+    max-width:560px!important;
+    margin:0 auto!important;
+    padding:54px 24px 34px!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    justify-items:center!important;
+    align-items:start!important;
+    gap:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand{
+    display:grid!important;
+    justify-items:center!important;
+    justify-self:center!important;
+    align-items:center!important;
+    gap:12px!important;
+    margin:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand img{
+    width:68px!important;
+    height:auto!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand-copy{
+    display:grid!important;
+    justify-items:center!important;
+    gap:7px!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark{
+    font-size:16px!important;
+    line-height:1!important;
+    letter-spacing:.16em!important;
+    white-space:nowrap!important;
+  }
+
+  html body #site-footer-final .footer-v19-role{
+    max-width:32ch!important;
+    margin:0!important;
+    font-size:8px!important;
+    line-height:1.6!important;
+    letter-spacing:.17em!important;
+    white-space:normal!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block{
+    width:100%!important;
+    display:grid!important;
+    justify-items:center!important;
+    gap:13px!important;
+    margin:30px 0 0!important;
+    padding:0!important;
+    border:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-label{
+    color:var(--v27-gold)!important;
+  }
+
+  html body #site-footer-final .footer-v19-social{
+    display:flex!important;
+    justify-content:center!important;
+    gap:9px!important;
+  }
+
+  html body #site-footer-final .footer-v19-social .social-link{
+    width:39px!important;
+    height:39px!important;
+    min-width:39px!important;
+    min-height:39px!important;
+    flex:0 0 39px!important;
+  }
+
+  html body #site-footer-final .footer-v19-tagline{
+    max-width:32ch!important;
+    margin:0!important;
+    white-space:normal!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-block{
+    display:grid!important;
+    justify-self:center!important;
+    justify-items:center!important;
+    min-width:0!important;
+    margin:29px 0 0!important;
+    gap:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact{
+    font-size:9px!important;
+    letter-spacing:.18em!important;
+    padding:0 0 8px!important;
+    border-bottom:1px solid rgba(239,189,95,.55)!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-copy{
+    display:block!important;
+    max-width:29ch!important;
+    margin:18px 0 0!important;
+    text-align:center!important;
+    font-size:7px!important;
+    line-height:1.55!important;
+    letter-spacing:.16em!important;
+  }
+
+  html body #site-footer-final > .footer-v19-meta{
+    width:calc(100% - 48px)!important;
+    max-width:520px!important;
+    margin:0 auto!important;
+    padding:24px 0 32px!important;
+    border-top:1px solid rgba(245,242,234,.09)!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:13px!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-copy{
+    order:1!important;
+    max-width:36ch!important;
+    margin:0!important;
+    text-align:center!important;
+    font-size:9.5px!important;
+    line-height:1.5!important;
+  }
+
+  html body #site-footer-final .footer-v19-legal{
+    order:2!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    flex-wrap:wrap!important;
+    gap:10px!important;
+    margin:0!important;
+    text-align:center!important;
+    font-size:8.5px!important;
+  }
+
+  html body #site-footer-final .footer-v19-top{
+    order:3!important;
+    margin:2px 0 0!important;
+    text-align:center!important;
+    font-size:7.5px!important;
+  }
+}
+
+
+
+@media(prefers-reduced-motion:reduce){
+  html body.is-home .artist-section::before,
+  html body.is-home .contact-section::before,
+  html body .collection-intro::before,
+  html body .about-cta::before,
+  html body .journal-card::before,
+  html body .project-card::before{
+    animation:none!important;
+  }
+}

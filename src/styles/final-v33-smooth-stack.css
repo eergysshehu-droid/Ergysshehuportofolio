@@ -1,0 +1,153 @@
+/* ==========================================================================
+   ERGYS SHEHU — V33 SMOOTH DUAL STACK
+   ONLY:
+   - smoother velocity-aware mobile Selected Work darkness
+   - same mobile stacking treatment for Instagram
+   - even quieter photo-frame shimmer
+   Everything else remains untouched.
+   ========================================================================== */
+
+@property --v33-white-angle{
+  syntax:'<angle>';
+  initial-value:0deg;
+  inherits:false;
+}
+
+@keyframes v33WhiteWhisper{
+  to{--v33-white-angle:360deg}
+}
+
+/* Quieter than V32: sub-pixel, low-contrast, slower. */
+@media(min-width:701px){
+  html body .project-image::after,
+  html body .journal-card-image::after,
+  html body.is-home .instagram-editorial-card::after{
+    padding:.35px!important;
+    background:conic-gradient(
+      from var(--v33-white-angle),
+      transparent 0deg 330deg,
+      rgba(255,255,255,.008) 336deg,
+      rgba(255,255,255,.045) 343deg,
+      rgba(255,255,255,.11) 348deg,
+      rgba(255,255,255,.035) 353deg,
+      transparent 360deg
+    )!important;
+    opacity:.16!important;
+    animation:v33WhiteWhisper 18s linear infinite!important;
+    filter:none!important;
+  }
+}
+
+@media(max-width:700px){
+  /* Selected Work: JS controls darkness continuously; never CSS-transition it. */
+  html.motion-ready body.is-home .project-card .project-image::after{
+    content:""!important;
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    z-index:1!important;
+    pointer-events:none!important;
+    padding:0!important;
+    border-radius:inherit!important;
+    background:#000!important;
+    opacity:var(--stack-darkness,0)!important;
+    animation:none!important;
+    transition:none!important;
+    filter:none!important;
+    -webkit-mask:none!important;
+    mask:none!important;
+    box-shadow:none!important;
+    will-change:opacity!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-image img{
+    transition:none!important;
+    filter:none!important;
+  }
+
+  /* Instagram: same sticky stack behavior, desktop grid stays untouched. */
+  html.motion-ready body.is-home .instagram-gallery-section,
+  html.motion-ready body.is-home .instagram-editorial-grid{
+    overflow:visible!important;
+    contain:none!important;
+    transform:none!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-grid{
+    display:block!important;
+    columns:auto!important;
+    column-count:auto!important;
+    gap:0!important;
+    background:#000!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card,
+  html.motion-ready body.is-home .instagram-editorial-card:nth-child(n){
+    position:sticky!important;
+    top:0!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    aspect-ratio:4/5!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+    contain:none!important;
+    isolation:isolate!important;
+    transform:none!important;
+    transition:none!important;
+    background:#000!important;
+    -webkit-backface-visibility:hidden!important;
+    backface-visibility:hidden!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card img{
+    position:relative!important;
+    z-index:1!important;
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-height:100svh!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    transform:none!important;
+    transition:none!important;
+    filter:none!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card::after{
+    content:none!important;
+    display:none!important;
+    animation:none!important;
+  }
+
+  html.motion-ready body.is-home .instagram-stack-shade{
+    position:absolute!important;
+    inset:0!important;
+    z-index:2!important;
+    display:block!important;
+    pointer-events:none!important;
+    background:#000!important;
+    opacity:var(--ig-stack-darkness,0)!important;
+    transition:none!important;
+    will-change:opacity!important;
+  }
+
+  html.motion-ready body.is-home .instagram-card-index,
+  html.motion-ready body.is-home .instagram-editorial-card .icon-badge{
+    z-index:3!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card{
+    --ig-stack-darkness:0;
+    box-shadow:inset 0 0 0 .35px rgba(255,255,255,.04)!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body .project-image::after,
+  html body .journal-card-image::after,
+  html body.is-home .instagram-editorial-card::after{
+    animation:none!important;
+  }
+}

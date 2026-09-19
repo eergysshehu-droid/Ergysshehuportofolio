@@ -1,0 +1,596 @@
+/* ==========================================================================
+   ERGYS SHEHU — V31 TARGETED FINISH
+   - Footer below is copied verbatim from the user-uploaded V27 ZIP.
+   - Gold only belongs to green panel cards.
+   - Photography/article frames get only a quiet white shimmer.
+   ========================================================================== */
+
+:root{
+  --v27-gold:#efbd5f;
+  --v27-gold-hot:#ffe6a3;
+  --v27-paper:#f5f2ea;
+  --v27-footer:#020403;
+}
+
+@property --v31-panel-angle{
+  syntax:'<angle>';
+  initial-value:0deg;
+  inherits:false;
+}
+
+@property --v31-white-angle{
+  syntax:'<angle>';
+  initial-value:0deg;
+  inherits:false;
+}
+
+@keyframes v31PanelOrbit{to{--v31-panel-angle:360deg}}
+@keyframes v31WhiteGlow{to{--v31-white-angle:360deg}}
+
+/* --------------------------------------------------------------------------
+   GREEN PANEL CARDS — real DOM perimeter.
+   This completely disables old pseudo runners on the panels.
+   -------------------------------------------------------------------------- */
+html body.is-home .artist-section,
+html body.is-home .contact-section,
+html body .collection-intro,
+html body .about-cta{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+
+html body.is-home .artist-section::before,
+html body.is-home .artist-section::after,
+html body.is-home .contact-section::before,
+html body.is-home .contact-section::after,
+html body .collection-intro::before,
+html body .collection-intro::after,
+html body .about-cta::before,
+html body .about-cta::after{
+  content:none!important;
+  display:none!important;
+  animation:none!important;
+  background:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+html body .panel-gold-orbit{
+  position:absolute!important;
+  inset:0!important;
+  z-index:70!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  padding:1px!important;
+  border-radius:inherit!important;
+  pointer-events:none!important;
+  box-sizing:border-box!important;
+  background:conic-gradient(
+    from var(--v31-panel-angle),
+    transparent 0deg 304deg,
+    rgba(239,189,95,0) 304deg,
+    rgba(239,189,95,.55) 321deg,
+    #ffe5a0 334deg,
+    rgba(239,189,95,.78) 344deg,
+    transparent 360deg
+  )!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  animation:v31PanelOrbit 7.2s linear infinite!important;
+}
+
+/* --------------------------------------------------------------------------
+   HOME / PURITY — photograph touches the actual card edge.
+   No inner dark matte around the square photograph.
+   -------------------------------------------------------------------------- */
+html body.is-home .artist-section{
+  width:min(calc(100% - 64px),1180px)!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important;
+  gap:0!important;
+  align-items:stretch!important;
+}
+
+html body.is-home .artist-media{
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border-radius:inherit!important;
+  border-top-right-radius:0!important;
+  border-bottom-right-radius:0!important;
+  overflow:hidden!important;
+}
+
+html body.is-home .artist-media::before,
+html body.is-home .artist-media::after{
+  content:none!important;
+  display:none!important;
+}
+
+html body.is-home .artist-media img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  background:transparent!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+html body.is-home .artist-copy{
+  align-self:center!important;
+  padding:clamp(40px,4.6vw,72px)!important;
+}
+
+@media(max-width:700px){
+  html body.is-home .artist-section{
+    width:calc(100% - 22px)!important;
+    grid-template-columns:1fr!important;
+  }
+
+  html body.is-home .artist-media{
+    aspect-ratio:1/1!important;
+    border-radius:inherit!important;
+    border-bottom-left-radius:0!important;
+    border-bottom-right-radius:0!important;
+  }
+
+  html body.is-home .artist-copy{
+    padding:34px 22px 42px!important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   IMAGE FRAMES — quiet white shimmer only, never gold.
+   -------------------------------------------------------------------------- */
+html body .project-image,
+html body .journal-card-image,
+html body.is-home .instagram-editorial-card{
+  position:relative!important;
+  isolation:isolate!important;
+}
+
+html body .project-image::after,
+html body .journal-card-image::after,
+html body.is-home .instagram-editorial-card::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:8!important;
+  pointer-events:none!important;
+  border-radius:inherit!important;
+  padding:1px!important;
+  background:conic-gradient(
+    from var(--v31-white-angle),
+    transparent 0deg 320deg,
+    rgba(255,255,255,.02) 326deg,
+    rgba(255,255,255,.16) 337deg,
+    rgba(255,255,255,.34) 344deg,
+    rgba(255,255,255,.10) 352deg,
+    transparent 360deg
+  )!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  opacity:.42!important;
+  animation:v31WhiteGlow 12.5s linear infinite!important;
+}
+
+/* --------------------------------------------------------------------------
+   INSTAGRAM — curated photo-first grid.
+   Four columns instead of the wide 5x2 catalogue.
+   -------------------------------------------------------------------------- */
+html body.is-home .instagram-gallery-section{
+  padding-bottom:clamp(96px,8vw,138px)!important;
+}
+
+html body.is-home .instagram-editorial-grid{
+  width:min(100%,1240px)!important;
+  max-width:1240px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  columns:auto!important;
+}
+
+html body.is-home .instagram-editorial-card,
+html body.is-home .instagram-editorial-card:nth-child(n){
+  width:100%!important;
+  margin:0!important;
+  grid-column:auto!important;
+  grid-row:auto!important;
+  aspect-ratio:4/5!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+  background:#050705!important;
+}
+
+html body.is-home .instagram-editorial-card img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  filter:none!important;
+}
+
+@media(min-width:1101px){
+  html body.is-home .instagram-editorial-card:nth-child(9):nth-last-child(2){
+    grid-column:2!important;
+  }
+}
+
+@media(max-width:1100px){
+  html body.is-home .instagram-editorial-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+}
+
+@media(max-width:700px){
+  html body.is-home .instagram-editorial-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  html body.is-home .instagram-card-index{display:none!important}
+}
+
+html body.is-home .journal-feature{
+  margin-top:clamp(38px,4.5vw,70px)!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body .panel-gold-orbit,
+  html body .project-image::after,
+  html body .journal-card-image::after,
+  html body.is-home .instagram-editorial-card::after{
+    animation:none!important;
+  }
+}
+
+/* ==========================================================================
+   FOOTER — EXACT TWO APPROVED STATES
+   >1100px  = horizontal desktop reference
+   <=1100px = centered one-column mobile/tablet reference
+   ========================================================================== */
+
+html body #site-footer-final{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  background:var(--v27-footer)!important;
+  color:var(--v27-paper)!important;
+  border-top:1px solid rgba(245,242,234,.07)!important;
+  box-sizing:border-box!important;
+}
+
+html body #site-footer-final > .footer-v19-main,
+html body #site-footer-final > .footer-v19-meta{
+  box-sizing:border-box!important;
+}
+
+/* DESKTOP */
+@media(min-width:1101px){
+  html body #site-footer-final > .footer-v19-main{
+    width:min(calc(100% - 56px),1576px)!important;
+    max-width:1576px!important;
+    margin:0 auto!important;
+    padding:58px 28px 46px!important;
+    display:grid!important;
+    grid-template-columns:1fr 1.25fr 1fr!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    gap:38px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    justify-self:start!important;
+    gap:16px!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand img{
+    width:54px!important;
+    height:auto!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand-copy{
+    display:grid!important;
+    justify-items:start!important;
+    gap:6px!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark{
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:.16em!important;
+    white-space:nowrap!important;
+    color:#fff!important;
+  }
+
+  html body #site-footer-final .footer-v19-role{
+    max-width:none!important;
+    margin:0!important;
+    font-size:6.5px!important;
+    line-height:1.55!important;
+    letter-spacing:.18em!important;
+    white-space:nowrap!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block{
+    display:grid!important;
+    justify-items:center!important;
+    gap:12px!important;
+    margin:0!important;
+    padding:0 28px!important;
+    border-left:1px solid rgba(245,242,234,.10)!important;
+    border-right:1px solid rgba(245,242,234,.10)!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social{
+    display:flex!important;
+    justify-content:center!important;
+    gap:8px!important;
+  }
+
+  html body #site-footer-final .footer-v19-social .social-link{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    min-height:40px!important;
+    flex:0 0 40px!important;
+  }
+
+  html body #site-footer-final .footer-v19-tagline{
+    max-width:none!important;
+    margin:0!important;
+    white-space:nowrap!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-block{
+    display:grid!important;
+    justify-self:end!important;
+    justify-items:start!important;
+    min-width:190px!important;
+    margin:0!important;
+    gap:10px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-copy{
+    display:block!important;
+    max-width:26ch!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final > .footer-v19-meta{
+    width:min(calc(100% - 56px),1576px)!important;
+    max-width:1576px!important;
+    margin:0 auto!important;
+    padding:24px 28px 30px!important;
+    border-top:1px solid rgba(245,242,234,.07)!important;
+    display:grid!important;
+    grid-template-columns:1fr auto auto!important;
+    align-items:center!important;
+    gap:26px!important;
+    text-align:left!important;
+  }
+
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-top{
+    order:initial!important;
+    margin:0!important;
+  }
+
+  html body #site-footer-final .footer-v19-legal{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+  }
+}
+
+/* MOBILE + TABLET */
+@media(max-width:1100px){
+  html body.is-home .artist-section,
+  html body.is-home .contact-section{
+    width:calc(100% - 20px)!important;
+    max-width:none!important;
+  }
+
+  html body.is-home .contact-section{
+    min-height:0!important;
+  }
+
+  html body .gold-orbit-svg{
+    --orbit-radius:18px;
+  }
+
+  html body.is-home .artist-media{
+    aspect-ratio:4 / 3!important;
+    padding:6px!important;
+  }
+
+  html body #site-footer-final > .footer-v19-main{
+    width:100%!important;
+    max-width:560px!important;
+    margin:0 auto!important;
+    padding:54px 24px 34px!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    justify-items:center!important;
+    align-items:start!important;
+    gap:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand{
+    display:grid!important;
+    justify-items:center!important;
+    justify-self:center!important;
+    align-items:center!important;
+    gap:12px!important;
+    margin:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand img{
+    width:68px!important;
+    height:auto!important;
+  }
+
+  html body #site-footer-final .footer-v19-brand-copy{
+    display:grid!important;
+    justify-items:center!important;
+    gap:7px!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark{
+    font-size:16px!important;
+    line-height:1!important;
+    letter-spacing:.16em!important;
+    white-space:nowrap!important;
+  }
+
+  html body #site-footer-final .footer-v19-role{
+    max-width:32ch!important;
+    margin:0!important;
+    font-size:8px!important;
+    line-height:1.6!important;
+    letter-spacing:.17em!important;
+    white-space:normal!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block{
+    width:100%!important;
+    display:grid!important;
+    justify-items:center!important;
+    gap:13px!important;
+    margin:30px 0 0!important;
+    padding:0!important;
+    border:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-label{
+    color:var(--v27-gold)!important;
+  }
+
+  html body #site-footer-final .footer-v19-social{
+    display:flex!important;
+    justify-content:center!important;
+    gap:9px!important;
+  }
+
+  html body #site-footer-final .footer-v19-social .social-link{
+    width:39px!important;
+    height:39px!important;
+    min-width:39px!important;
+    min-height:39px!important;
+    flex:0 0 39px!important;
+  }
+
+  html body #site-footer-final .footer-v19-tagline{
+    max-width:32ch!important;
+    margin:0!important;
+    white-space:normal!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-block{
+    display:grid!important;
+    justify-self:center!important;
+    justify-items:center!important;
+    min-width:0!important;
+    margin:29px 0 0!important;
+    gap:0!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact{
+    font-size:9px!important;
+    letter-spacing:.18em!important;
+    padding:0 0 8px!important;
+    border-bottom:1px solid rgba(239,189,95,.55)!important;
+  }
+
+  html body #site-footer-final .footer-v19-contact-copy{
+    display:block!important;
+    max-width:29ch!important;
+    margin:18px 0 0!important;
+    text-align:center!important;
+    font-size:7px!important;
+    line-height:1.55!important;
+    letter-spacing:.16em!important;
+  }
+
+  html body #site-footer-final > .footer-v19-meta{
+    width:calc(100% - 48px)!important;
+    max-width:520px!important;
+    margin:0 auto!important;
+    padding:24px 0 32px!important;
+    border-top:1px solid rgba(245,242,234,.09)!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:13px!important;
+    text-align:center!important;
+  }
+
+  html body #site-footer-final .footer-v19-copy{
+    order:1!important;
+    max-width:36ch!important;
+    margin:0!important;
+    text-align:center!important;
+    font-size:9.5px!important;
+    line-height:1.5!important;
+  }
+
+  html body #site-footer-final .footer-v19-legal{
+    order:2!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    flex-wrap:wrap!important;
+    gap:10px!important;
+    margin:0!important;
+    text-align:center!important;
+    font-size:8.5px!important;
+  }
+
+  html body #site-footer-final .footer-v19-top{
+    order:3!important;
+    margin:2px 0 0!important;
+    text-align:center!important;
+    font-size:7.5px!important;
+  }
+}
+

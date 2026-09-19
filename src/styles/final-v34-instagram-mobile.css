@@ -1,0 +1,123 @@
+/* ========================================================================== 
+   ERGYS SHEHU — V34 INSTAGRAM MOBILE FINISH
+   ONLY:
+   - Instagram mobile section background follows the page theme
+   - centered stacked photos with breathing room + spacing
+   - photo-frame white runner thinner/quieter
+   NO green-panel / gold / footer / About / stack-timing changes.
+   ========================================================================== */
+
+@property --v34-photo-angle{
+  syntax:'<angle>';
+  initial-value:0deg;
+  inherits:false;
+}
+
+@keyframes v34PhotoWhisper{
+  to{--v34-photo-angle:360deg}
+}
+
+/* Desktop/tablet photo-frame shimmer only — never green cards. */
+@media(min-width:701px){
+  html body .project-image::after,
+  html body .journal-card-image::after,
+  html body.is-home .instagram-editorial-card::after{
+    padding:.20px!important;
+    background:conic-gradient(
+      from var(--v34-photo-angle),
+      transparent 0deg 334deg,
+      rgba(255,255,255,.004) 339deg,
+      rgba(255,255,255,.024) 345deg,
+      rgba(255,255,255,.065) 350deg,
+      rgba(255,255,255,.018) 355deg,
+      transparent 360deg
+    )!important;
+    opacity:.10!important;
+    animation:v34PhotoWhisper 24s linear infinite!important;
+    filter:none!important;
+  }
+}
+
+@media(max-width:700px){
+  /* Match the actual page surface instead of the previous pure-black block. */
+  html body.is-home .instagram-gallery-section{
+    background:var(--theme-bg,#10110e)!important;
+    color:var(--theme-text,#f3efe7)!important;
+  }
+
+  /* Keep the stack centered with the same kind of side breathing room as the rest of mobile. */
+  html.motion-ready body.is-home .instagram-editorial-grid{
+    width:100%!important;
+    max-width:none!important;
+    margin:0 auto!important;
+    padding:0 14px 12px!important;
+    box-sizing:border-box!important;
+    background:transparent!important;
+    overflow:visible!important;
+    contain:none!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card,
+  html.motion-ready body.is-home .instagram-editorial-card:nth-child(n){
+    width:100%!important;
+    max-width:620px!important;
+    margin:0 auto 12px!important;
+    padding:0!important;
+    aspect-ratio:4/5!important;
+    border-radius:8px!important;
+    background:transparent!important;
+    overflow:hidden!important;
+    box-shadow:none!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-card img{
+    width:100%!important;
+    height:100%!important;
+    max-height:100svh!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    border-radius:8px!important;
+    background:transparent!important;
+  }
+
+  /* Stack darkness remains a separate layer from V33. */
+  html.motion-ready body.is-home .instagram-stack-shade{
+    border-radius:8px!important;
+  }
+
+  /* Re-enable ONLY the very quiet photo-frame runner on Instagram mobile. */
+  html.motion-ready body.is-home .instagram-editorial-card::after{
+    content:""!important;
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    z-index:4!important;
+    pointer-events:none!important;
+    border-radius:inherit!important;
+    padding:.20px!important;
+    background:conic-gradient(
+      from var(--v34-photo-angle),
+      transparent 0deg 334deg,
+      rgba(255,255,255,.004) 339deg,
+      rgba(255,255,255,.022) 345deg,
+      rgba(255,255,255,.060) 350deg,
+      rgba(255,255,255,.016) 355deg,
+      transparent 360deg
+    )!important;
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+    -webkit-mask-composite:xor!important;
+    mask-composite:exclude!important;
+    opacity:.10!important;
+    animation:v34PhotoWhisper 24s linear infinite!important;
+    filter:none!important;
+    box-shadow:none!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body .project-image::after,
+  html body .journal-card-image::after,
+  html body.is-home .instagram-editorial-card::after{
+    animation:none!important;
+  }
+}
