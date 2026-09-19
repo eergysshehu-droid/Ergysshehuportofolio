@@ -131,6 +131,17 @@ body{
     #050505;
 }
 
+/* Project cards already carry a dominant/source frame colour. Use it as the
+   simple placeholder without hiding the real photo or delaying LCP. */
+.image-load-system
+.project-image{
+  background-color:
+    var(
+      --frame-color,
+      #050505
+    );
+}
+
 .image-load-system
 :where(
   .opening-image,
@@ -334,7 +345,7 @@ img{
     );
 }
 
-/* Lightbox: zero-white-flash surface and safer touch targets. */
+/* Lightbox: zero-white-flash surface and >=44px touch targets. */
 dialog.lightbox,
 dialog.lightbox[open],
 dialog.lightbox::backdrop{
@@ -345,10 +356,10 @@ dialog.lightbox::backdrop{
 dialog.lightbox
 button{
   min-width:
-    42px;
+    44px;
 
   min-height:
-    42px;
+    44px;
 
   touch-action:
     manipulation;

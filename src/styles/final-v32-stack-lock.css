@@ -41,8 +41,8 @@ html body.is-home .instagram-editorial-card::after{
 
 /* --------------------------------------------------------------------------
    MOBILE HOME STACK
-   Important: on the home stacking gallery, ::after is NOT a shimmer layer.
-   It is the black coverage layer controlled by home-stack.ts.
+   Darkness now lives on a real .project-stack-shade element.
+   ::after is no longer used as a black coverage layer on mobile.
    -------------------------------------------------------------------------- */
 @media(max-width:700px){
   html.motion-ready body.is-home .work-section,
@@ -105,6 +105,8 @@ html body.is-home .instagram-editorial-card::after{
   }
 
   html.motion-ready body.is-home .project-card .project-image img{
+    position:relative!important;
+    z-index:1!important;
     display:block!important;
     width:100%!important;
     height:auto!important;
@@ -117,23 +119,22 @@ html body.is-home .instagram-editorial-card::after{
     backface-visibility:hidden!important;
   }
 
-  /* Restore the stacking coverage layer that V31's shimmer accidentally replaced. */
+  /* Decorative pseudo is intentionally disabled on the sticky mobile stack. */
   html.motion-ready body.is-home .project-card .project-image::after{
-    content:""!important;
-    display:block!important;
+    content:none!important;
+    display:none!important;
+    animation:none!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-stack-shade{
     position:absolute!important;
     inset:0!important;
-    z-index:1!important;
+    z-index:2!important;
+    display:block!important;
     pointer-events:none!important;
-    padding:0!important;
     border-radius:inherit!important;
     background:#000!important;
     opacity:var(--stack-darkness,0)!important;
-    animation:none!important;
-    filter:none!important;
-    -webkit-mask:none!important;
-    mask:none!important;
-    box-shadow:none!important;
     transition:none!important;
     will-change:opacity!important;
   }
@@ -164,12 +165,5 @@ html body.is-home .instagram-editorial-card::after{
   html body .journal-card-image::after,
   html body.is-home .instagram-editorial-card::after{
     animation:none!important;
-  }
-
-  @media(max-width:700px){
-    html.motion-ready body.is-home .project-card .project-image::after{
-      background:#000!important;
-      opacity:var(--stack-darkness,0)!important;
-    }
   }
 }

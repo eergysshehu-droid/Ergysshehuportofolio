@@ -64,13 +64,17 @@ jobs:
 
       - name: Run E2E browser tests
         run: npx playwright test
+        env:
+          VISUAL_REGRESSION: ${{ vars.VISUAL_REGRESSION || '0' }}
 
-      - name: Upload Playwright report on failure
+      - name: Upload Playwright failures
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: playwright-failures
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 7
           if-no-files-found: ignore
 

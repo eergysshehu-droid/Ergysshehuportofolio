@@ -54,6 +54,19 @@ test('EN / SQ language switch works', async ({page}, testInfo) => {
   await expect(page.locator('html')).toHaveAttribute('lang','en');
 });
 
+test('EN / SQ switch preserves route, query and hash', async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chromium');
+
+  await page.goto('/book/?visual=e2e#contact');
+  await page.locator('.desktop-nav .language-switch button[data-lang="sq"]').click();
+  await expect(page).toHaveURL(/\/sq\/book\/\?visual=e2e#contact$/);
+  await expect(page.locator('html')).toHaveAttribute('lang','sq');
+
+  await page.locator('.desktop-nav .language-switch button[data-lang="en"]').click();
+  await expect(page).toHaveURL(/\/book\/\?visual=e2e#contact$/);
+  await expect(page.locator('html')).toHaveAttribute('lang','en');
+});
+
 test('mobile navigation opens and closes', async ({page}, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium');
 
@@ -71,7 +84,6 @@ test('mobile navigation opens and closes', async ({page}, testInfo) => {
   await expect(menu).toHaveClass(/is-open/);
   await expect(menu).toBeVisible();
 
-  // Focus must stay inside the dialog while open.
   await page.keyboard.press('Tab');
   const focusInside = await page.evaluate(() => {
     const menu = document.querySelector('[data-mobile-menu]');
@@ -177,6 +189,16 @@ test('custom 404 responds correctly', async ({page}, testInfo) => {
   expect(response).not.toBeNull();
   expect(response.status()).toBe(404);
   await expect(page.locator('body')).toBeVisible();
+});
+
+test('Albanian 404 keeps SQ language', async ({page}, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chromium');
+
+  const response = await page.goto('/sq/__e2e-page-that-does-not-exist__/', {waitUntil:'domcontentloaded'});
+  expect(response).not.toBeNull();
+  expect(response.status()).toBe(404);
+  await expect(page.locator('html')).toHaveAttribute('lang','sq');
+  await expect(page.locator('main h1')).toContainText('Jashtë kuadrit');
 });
 
 test('dark mode follows system preference', async ({page}) => {

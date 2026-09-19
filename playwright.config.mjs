@@ -7,6 +7,9 @@ export default defineConfig({
   testDir:
     './tests',
 
+  snapshotPathTemplate:
+    '{testDir}/__screenshots__/{testFilePath}/{arg}-{projectName}{ext}',
+
   timeout:
     45_000,
 

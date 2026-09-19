@@ -124,6 +124,12 @@ const projectKindLabel = (
           albums.length >
             3;
 
+        const eager =
+          i < 2;
+
+        const highPriority =
+          i === 0;
+
         const imageUrl =
           photoUrl(
             album.cover
@@ -198,7 +204,7 @@ const projectKindLabel = (
               <div
                 class="project-image"
                 data-image-reveal
-                style={`--focal-point:${photoPosition(album.cover)}`}
+                style={`--focal-point:${photoPosition(album.cover)};--frame-color:${album.cover?.color || '#141412'}`}
               >
                 {
                   imageUrl
@@ -209,12 +215,14 @@ const projectKindLabel = (
                               album.cover,
                               feature
                                 ? 1800
-                                : 1200
+                                : 1200,
+                              80
                             )
                           }
                           srcset={
                             photoSet(
-                              album.cover
+                              album.cover,
+                              80
                             )
                           }
                           sizes={
@@ -225,7 +233,16 @@ const projectKindLabel = (
                           alt={
                             alt
                           }
-                          loading="lazy"
+                          loading={
+                            eager
+                              ? 'eager'
+                              : 'lazy'
+                          }
+                          fetchpriority={
+                            highPriority
+                              ? 'high'
+                              : 'auto'
+                          }
                           decoding="async"
                           width={
                             album.cover?.width ||
@@ -245,6 +262,11 @@ const projectKindLabel = (
                         </span>
                       )
                 }
+
+                <span
+                  class="project-stack-shade"
+                  aria-hidden="true"
+                ></span>
 
                 {
                   albumKind(

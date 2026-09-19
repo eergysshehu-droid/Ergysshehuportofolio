@@ -42,15 +42,7 @@ function smoothstep(value: number) {
 }
 
 function documentTop(element: HTMLElement) {
-  let top = 0;
-  let node: HTMLElement | null = element;
-
-  while (node) {
-    top += node.offsetTop;
-    node = node.offsetParent as HTMLElement | null;
-  }
-
-  return top;
+  return element.getBoundingClientRect().top + window.scrollY;
 }
 
 function overlapProgress(nextTopInViewport: number, currentHeight: number) {
@@ -80,6 +72,7 @@ export function initHomeStack() {
   if (!document.body.classList.contains('is-home')) return;
 
   const media = window.matchMedia('(max-width: 700px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const groups: StackGroup[] = [];
 
@@ -210,7 +203,9 @@ export function initHomeStack() {
     const scrollY = window.scrollY;
     const deltaMs = Math.min(64, Math.max(1, now - lastFrameTime));
     const velocity = Math.abs(scrollY - lastScrollY) / deltaMs;
-    const alpha = responseAlpha(deltaMs, velocity);
+    const alpha = reducedMotion.matches
+      ? 1
+      : responseAlpha(deltaMs, velocity);
 
     lastFrameTime = now;
     lastScrollY = scrollY;
@@ -253,7 +248,7 @@ export function initHomeStack() {
           );
         }
 
-        if (Math.abs(target - item.darkness) > 0.0025) {
+        if (!reducedMotion.matches && Math.abs(target - item.darkness) > 0.0025) {
           needsAnotherFrame = true;
         }
       }
@@ -312,6 +307,7 @@ export function initHomeStack() {
   window.addEventListener('pageshow', scheduleRebuild);
 
   media.addEventListener('change', scheduleRebuild);
+  reducedMotion.addEventListener('change', schedule);
 
   if ('ResizeObserver' in window) {
     groups.forEach(group => {

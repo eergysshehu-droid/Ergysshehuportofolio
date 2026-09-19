@@ -492,7 +492,8 @@ export function photoUrl(
   photo:
     | Photo
     | undefined,
-  width = 1400
+  width = 1400,
+  quality = 85
 ) {
   if (
     photo?.localBase
@@ -526,7 +527,7 @@ export function photoUrl(
     .width(width)
     .fit('max')
     .auto('format')
-    .quality(85)
+    .quality(quality)
     .url();
 }
 
@@ -629,7 +630,8 @@ export function photoPosition(
 export function photoSet(
   photo:
     | Photo
-    | undefined
+    | undefined,
+  quality = 85
 ) {
   if (
     photo?.localBase
@@ -649,10 +651,7 @@ export function photoSet(
       )
       .map(
         width =>
-          `${photoUrl(
-            photo,
-            width
-          )} ${width}w`
+          `${photoUrl(photo, width, quality)} ${width}w`
       )
       .join(', ') ||
       undefined;
@@ -668,10 +667,7 @@ export function photoSet(
       ]
         .map(
           width =>
-            `${photoUrl(
-              photo,
-              width
-            )} ${width}w`
+            `${photoUrl(photo, width, quality)} ${width}w`
         )
         .join(', ')
     : undefined;

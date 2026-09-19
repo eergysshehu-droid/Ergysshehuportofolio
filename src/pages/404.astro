@@ -29,7 +29,10 @@ const isSq =
       404
     </p>
 
-    <h1>
+    <h1
+      data-en="Out of frame."
+      data-sq="Jashtë kuadrit."
+    >
       {
         isSq
           ? 'Jashtë kuadrit.'
@@ -37,7 +40,10 @@ const isSq =
       }
     </h1>
 
-    <p>
+    <p
+      data-en="This page could not be found."
+      data-sq="Kjo faqe nuk u gjet."
+    >
       {
         isSq
           ? 'Kjo faqe nuk u gjet.'
@@ -47,6 +53,7 @@ const isSq =
 
     <a
       class="cta-row"
+      data-404-home
       href={
         localizedPath(
           '/',
@@ -58,7 +65,10 @@ const isSq =
         ↗
       </span>
 
-      <span>
+      <span
+        data-en="BACK TO PORTFOLIO"
+        data-sq="KTHEHU TE PORTOFOLI"
+      >
         {
           isSq
             ? 'KTHEHU TE PORTOFOLI'
@@ -67,4 +77,29 @@ const isSq =
       </span>
     </a>
   </section>
+
+  <script is:inline>
+    (() => {
+      /*
+       * Static Astro builds one physical 404 document. Cloudflare serves that
+       * document while keeping the originally requested URL in the browser.
+       * Resolve SQ from the real request pathname before Layout's shared
+       * language runtime runs, so /sq/... 404s keep Albanian UI.
+       */
+      const isSq404 =
+        window.location.pathname === '/sq/' ||
+        window.location.pathname.startsWith('/sq/');
+
+      if (!isSq404) return;
+
+      document.documentElement.lang = 'sq';
+      document.title = 'Faqja nuk u gjet — Ergys Shehu';
+
+      const home = document.querySelector('[data-404-home]');
+
+      if (home) {
+        home.setAttribute('href', '/sq/');
+      }
+    })();
+  </script>
 </Layout>

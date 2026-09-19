@@ -1286,8 +1286,25 @@ const webPageLd = {
                 if(
                   targetHref
                 ){
+                  const currentUrl =
+                    new URL(
+                      window.location.href
+                    );
+
+                  const nextUrl =
+                    new URL(
+                      targetHref,
+                      currentUrl.origin
+                    );
+
+                  nextUrl.search =
+                    currentUrl.search;
+
+                  nextUrl.hash =
+                    currentUrl.hash;
+
                   window.location.href =
-                    targetHref;
+                    `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`;
                 }
               }
             );

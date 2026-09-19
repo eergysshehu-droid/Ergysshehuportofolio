@@ -39,30 +39,74 @@
 }
 
 @media(max-width:700px){
-  /* Selected Work: JS controls darkness continuously; never CSS-transition it. */
-  html.motion-ready body.is-home .project-card .project-image::after{
-    content:""!important;
-    display:block!important;
-    position:absolute!important;
-    inset:0!important;
+  /* ----------------------------------------------------------------------
+     HERO / STACK PAINT ORDER STABILITY
+     Keep sticky geometry untouched; only normalize compositing layers.
+     ---------------------------------------------------------------------- */
+  html body.is-home .opening{
+    z-index:0!important;
+    isolation:isolate!important;
+  }
+
+  html body.is-home .opening-image{
+    z-index:0!important;
+  }
+
+  html body.is-home .opening::after{
     z-index:1!important;
-    pointer-events:none!important;
-    padding:0!important;
-    border-radius:inherit!important;
-    background:#000!important;
-    opacity:var(--stack-darkness,0)!important;
+  }
+
+  html body.is-home .hero-topline,
+  html body.is-home .hero-feature,
+  html body.is-home .scroll-indicator{
+    z-index:2!important;
+  }
+
+  html body.is-home .filmstrip-section{
+    position:relative!important;
+    z-index:3!important;
+    isolation:isolate!important;
+  }
+
+  html body.is-home .work-section{
+    position:relative!important;
+    z-index:5!important;
+    isolation:isolate!important;
+  }
+
+  /* Selected Work: darkness is a real DOM layer, not ::after. */
+  html.motion-ready body.is-home .project-card .project-image::after{
+    content:none!important;
+    display:none!important;
     animation:none!important;
-    transition:none!important;
-    filter:none!important;
-    -webkit-mask:none!important;
-    mask:none!important;
-    box-shadow:none!important;
-    will-change:opacity!important;
   }
 
   html.motion-ready body.is-home .project-card .project-image img{
+    position:relative!important;
+    z-index:1!important;
     transition:none!important;
     filter:none!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-stack-shade{
+    position:absolute!important;
+    inset:0!important;
+    z-index:2!important;
+    display:block!important;
+    pointer-events:none!important;
+    border-radius:inherit!important;
+    background:#000!important;
+    opacity:var(--stack-darkness,0)!important;
+    transition:none!important;
+    will-change:opacity!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-overlay{
+    z-index:3!important;
+  }
+
+  html.motion-ready body.is-home .project-card .icon-badge{
+    z-index:4!important;
   }
 
   /* Instagram: same sticky stack behavior, desktop grid stays untouched. */
@@ -115,6 +159,7 @@
     filter:none!important;
   }
 
+  /* V34 may re-enable this as the decorative white runner at z-index:2. */
   html.motion-ready body.is-home .instagram-editorial-card::after{
     content:none!important;
     display:none!important;
@@ -124,7 +169,7 @@
   html.motion-ready body.is-home .instagram-stack-shade{
     position:absolute!important;
     inset:0!important;
-    z-index:2!important;
+    z-index:3!important;
     display:block!important;
     pointer-events:none!important;
     background:#000!important;
@@ -135,7 +180,7 @@
 
   html.motion-ready body.is-home .instagram-card-index,
   html.motion-ready body.is-home .instagram-editorial-card .icon-badge{
-    z-index:3!important;
+    z-index:4!important;
   }
 
   html.motion-ready body.is-home .instagram-editorial-card{

@@ -67,6 +67,9 @@ const initScrollShutter =
      * IMPORTANT:
      * .project-card images are intentionally absent.
      * Mobile sticky stacking keeps its own system.
+     * The sticky hero image is also excluded on mobile so the
+     * hero -> filmstrip -> Selected Work handoff does not combine
+     * velocity blur with sticky/compositing changes.
      */
     const mediaSelector =
       [
@@ -99,6 +102,12 @@ const initScrollShutter =
             ) &&
             !image.closest(
               '.lightbox'
+            ) &&
+            !(
+              mobile.matches &&
+              image.closest(
+                '.opening-image'
+              )
             )
         );
 
