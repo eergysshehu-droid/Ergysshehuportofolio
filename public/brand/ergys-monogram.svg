@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1037 866" role="img" aria-label="Ergys Shehu monogram">
-  <path d="M 505 401 L 293 401 L 0 863 L 200 863 Z" fill="#F4F1E9"/>
-  <path d="M 380 647 L 241 865 L 499 864 Z" fill="#F4F1E9"/>
-  <path d="M 541 0 L 312 372 L 540 373 L 667 591 L 785 415 Z" fill="#F4F1E9"/>
-  <path d="M 451 714 L 532 863 L 1036 863 L 953 714 Z" fill="#F4F1E9"/>
-  <path d="M 940 687 L 804 445 L 641 688 Z" fill="#F4F1E9"/>
+  <g fill="#F4F1E9">
+    <path d="M505 401H293L0 863h200z"/>
+    <path d="M380 647 241 865l258-1z"/>
+    <path d="M541 0 312 372l228 1 127 218 118-176z"/>
+    <path d="M451 714l81 149h504l-83-149z"/>
+    <path d="M940 687 804 445 641 688z"/>
+  </g>
 </svg>

@@ -1,9 +1,5 @@
 ---
-import SocialIcons
-  from '../SocialIcons.astro';
-
-import BrandMark
-  from '../BrandMark.astro';
+import SocialIcons from '../SocialIcons.astro';
 
 interface Props {
   settings: any;
@@ -16,95 +12,48 @@ const {
 } = Astro.props;
 ---
 
-<section
-  class="contact-section"
-  id="contact"
->
+<section class="contact-section" id="contact">
   <div data-reveal>
     <p
       class="kicker"
       data-en="FOR COMMISSIONS & COLLABORATIONS"
       data-sq="PËR PROJEKTE & BASHKËPUNIME"
     >
-      {
-        isSq
-          ? 'PËR PROJEKTE & BASHKËPUNIME'
-          : 'FOR COMMISSIONS & COLLABORATIONS'
-      }
+      {isSq ? 'PËR PROJEKTE & BASHKËPUNIME' : 'FOR COMMISSIONS & COLLABORATIONS'}
     </p>
 
     <h2>
-      <span
-        data-en="Let’s make"
-        data-sq="Le të krijojmë"
-      >
-        {
-          isSq
-            ? 'Le të krijojmë'
-            : 'Let’s make'
-        }
+      <span data-en="Let’s make" data-sq="Le të krijojmë">
+        {isSq ? 'Le të krijojmë' : 'Let’s make'}
       </span>
-
       <br/>
-
-      <em
-        data-en="something that matters"
-        data-sq="diçka me kuptim"
-      >
-        {
-          isSq
-            ? 'diçka me kuptim'
-            : 'something that matters'
-        }
+      <em data-en="something that matters" data-sq="diçka me kuptim">
+        {isSq ? 'diçka me kuptim' : 'something that matters'}
       </em>
     </h2>
   </div>
 
-  <div
-    class="contact-details"
-    data-reveal
-  >
+  <div class="contact-details" data-reveal>
     {
       settings.email && (
-        <a
-          class="email"
-          href={`mailto:${settings.email}`}
-        >
+        <a class="email" href={`mailto:${settings.email}`}>
           {settings.email} ↗
         </a>
       )
     }
 
     <p>
-      <span
-        data-en="Based in Albania."
-        data-sq="Punoj nga Shqipëria."
-      >
-        {
-          isSq
-            ? 'Punoj nga Shqipëria.'
-            : 'Based in Albania.'
-        }
+      <span data-en="Based in Albania." data-sq="Punoj nga Shqipëria.">
+        {isSq ? 'Punoj nga Shqipëria.' : 'Based in Albania.'}
       </span>
-
       <br/>
-
       <span
         data-en="Available worldwide."
         data-sq="I hapur për projekte kudo në botë."
       >
-        {
-          isSq
-            ? 'I hapur për projekte kudo në botë.'
-            : 'Available worldwide.'
-        }
+        {isSq ? 'I hapur për projekte kudo në botë.' : 'Available worldwide.'}
       </span>
     </p>
-
-    <BrandMark
-      class="contact-brand-lockup"
-      compact
-    />
 
     <div class="contact-social-block">
       <span
@@ -112,16 +61,10 @@ const {
         data-en="FOLLOW / CONNECT"
         data-sq="NDIQ / LIDHU"
       >
-        {
-          isSq
-            ? 'NDIQ / LIDHU'
-            : 'FOLLOW / CONNECT'
-        }
+        {isSq ? 'NDIQ / LIDHU' : 'FOLLOW / CONNECT'}
       </span>
 
-      <SocialIcons
-        class="contact-social-icons"
-      />
+      <SocialIcons class="contact-social-icons" />
     </div>
   </div>
 </section>

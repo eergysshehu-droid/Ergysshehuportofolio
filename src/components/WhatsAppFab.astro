@@ -1,0 +1,59 @@
+---
+import { content } from '../lib/content';
+import { languageFromPath } from '../lib/i18n';
+
+const lang = languageFromPath(Astro.url.pathname);
+const isSq = lang === 'sq';
+const { settings } = await content();
+
+const digits = (settings.whatsappNumber || '').replace(/\D/g, '');
+const allowedPath = /^(?:\/sq)?\/(?:$|about\/?$|book\/?|portfolio\/)/.test(Astro.url.pathname);
+
+const message = isSq
+  ? (settings.whatsappMessageSq || settings.whatsappMessage || 'Përshëndetje Ergys, po të kontaktoj nga website-i.')
+  : (settings.whatsappMessage || 'Hi Ergys, I am contacting you from your website.');
+
+const href = digits
+  ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}`
+  : '';
+---
+
+{
+  href && allowedPath && (
+    <a
+      class="whatsapp-fab"
+      data-whatsapp-fab
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={isSq ? 'Kontakto në WhatsApp' : 'Contact on WhatsApp'}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.45L3.5 20.5l1.4-4.25A8.5 8.5 0 1 1 20.5 11.7Z"/>
+        <path d="M8.1 7.7c.22-.48.46-.49.7-.5h.6c.2 0 .46.07.57.4l.8 1.9c.08.22.05.4-.08.58l-.6.74c-.13.16-.2.3-.08.52.5.9 1.14 1.6 2 2.12.25.15.4.12.57-.07l.8-.98c.18-.22.37-.26.61-.16l1.8.85c.27.13.45.2.52.33.07.12.07.73-.17 1.42-.23.69-1.36 1.3-1.88 1.38-.48.08-1.1.12-1.78-.1-.42-.14-.96-.33-1.65-.62-.73-.31-3.22-1.13-5.44-4.02-.62-.8-1.25-1.72-1.25-2.75 0-1.04.53-1.56.74-1.78.2-.23.45-.29.6-.29"/>
+      </svg>
+      <span>{isSq ? 'CHAT' : 'CHAT'}</span>
+    </a>
+  )
+}
+
+<script>
+  const whatsappFab = document.querySelector<HTMLElement>('[data-whatsapp-fab]');
+
+  if(whatsappFab){
+    const syncWhatsApp = () => {
+      const threshold = Math.max(300, window.innerHeight * .45);
+      const menuOpen = document.documentElement.classList.contains('mobile-menu-open');
+      const lightboxOpen = Boolean(document.querySelector('dialog.lightbox[open]'));
+      whatsappFab.classList.toggle(
+        'is-visible',
+        window.scrollY > threshold && !menuOpen && !lightboxOpen
+      );
+    };
+
+    syncWhatsApp();
+    window.addEventListener('scroll', syncWhatsApp, { passive: true });
+    window.addEventListener('resize', syncWhatsApp, { passive: true });
+    document.addEventListener('click', () => requestAnimationFrame(syncWhatsApp));
+  }
+</script>

@@ -1,276 +1,89 @@
 export function initHomeIntro(){
-  const reducedMotion =
-    window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    );
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const introSeenKey = 'ergys-intro-v19-closing-seen';
+  const introEl = document.querySelector<HTMLElement>('[data-intro]');
+  const introTitle = document.querySelector<HTMLElement>('.title-mask [data-slide-title]');
 
-  const introSeenKey =
-    'ergys-intro-seen';
-
-  const introEl =
-    document.querySelector<HTMLElement>(
-      '[data-intro]'
-    );
-
-  const introTitle =
-    document.querySelector<HTMLElement>(
-      '.title-mask [data-slide-title]'
-    );
-
-  let introSeen =
-    false;
-
+  let introSeen = false;
   try{
-    introSeen =
-      sessionStorage.getItem(
-        introSeenKey
-      ) === '1';
+    introSeen = sessionStorage.getItem(introSeenKey) === '1';
   }catch{}
 
   if(!introEl){
     return;
   }
 
-  if(
-    reducedMotion.matches ||
-    introSeen
-  ){
+  if(reducedMotion.matches || introSeen){
     introEl.remove();
-
     if(introTitle){
-      introTitle.style.transform =
-        'none';
+      introTitle.style.transform = 'none';
     }
-
     return;
   }
 
-  document.documentElement
-    .classList
-    .add(
-      'intro-running'
-    );
+  document.documentElement.classList.add('intro-running');
 
-  const isMobile =
-    window.matchMedia(
-      '(max-width:700px)'
-    ).matches;
+  const isMobile = window.matchMedia('(max-width:700px)').matches;
+  const t = (ms:number) => Math.round(ms * (isMobile ? .94 : 1));
 
-  const scale =
-    isMobile
-      ? .82
-      : 1;
+  const leftCurtain = introEl.querySelector<HTMLElement>('.intro-curtain-left');
+  const rightCurtain = introEl.querySelector<HTMLElement>('.intro-curtain-right');
+  const sweep = document.querySelector<HTMLElement>('[data-hero-sweep]');
 
-  const t = (
-    ms: number
-  ) =>
-    Math.round(
-      ms *
-      scale
-    );
-
-  const leftCurtain =
-    introEl.querySelector<HTMLElement>(
-      '.intro-curtain-left'
-    );
-
-  const rightCurtain =
-    introEl.querySelector<HTMLElement>(
-      '.intro-curtain-right'
-    );
-
-  const sweep =
-    document.querySelector<HTMLElement>(
-      '[data-hero-sweep]'
-    );
+  requestAnimationFrame(() => {
+    introEl.classList.add('is-brand-revealing');
+  });
 
   /*
-   * CSS owns the gold-line drawing and the SHEHU reveal.
-   * JS only starts the timeline and handles the transition back to the hero.
+   * Final pacing: the monogram draws first, then SHEHU is visibly written
+   * with a gold pen stroke from left to right. Only after the handwriting
+   * finishes does the clean white wordmark settle in.
    */
-  requestAnimationFrame(
-    ()=>{
-      introEl
-        .classList
-        .add(
-          'is-brand-revealing'
-        );
+  setTimeout(() => {
+    leftCurtain?.animate(
+      [{transform:'translateX(0)'},{transform:'translateX(-100%)'}],
+      {duration:t(980),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'}
+    );
+
+    rightCurtain?.animate(
+      [{transform:'translateX(0)'},{transform:'translateX(100%)'}],
+      {duration:t(980),easing:'cubic-bezier(.77,0,.18,1)',fill:'forwards'}
+    );
+  }, t(5050));
+
+  setTimeout(() => {
+    introEl.animate(
+      [{opacity:1},{opacity:0}],
+      {duration:t(560),easing:'ease',fill:'forwards'}
+    );
+
+    introTitle?.animate(
+      [{transform:'translateY(115%)'},{transform:'translateY(0)'}],
+      {duration:t(820),easing:'cubic-bezier(.2,.75,.2,1)',fill:'forwards'}
+    );
+  }, t(5700));
+
+  setTimeout(() => {
+    sweep?.animate(
+      [
+        {left:'-25%',opacity:0},
+        {left:'25%',opacity:.52},
+        {left:'115%',opacity:0}
+      ],
+      {duration:t(1450),easing:'ease-in-out'}
+    );
+  }, t(5860));
+
+  setTimeout(() => {
+    introEl.remove();
+    document.documentElement.classList.remove('intro-running');
+
+    if(introTitle){
+      introTitle.style.transform = 'none';
     }
-  );
 
-  setTimeout(
-    ()=>{
-      leftCurtain
-        ?.animate(
-          [
-            {
-              transform:
-                'translateX(0)'
-            },
-            {
-              transform:
-                'translateX(-100%)'
-            }
-          ],
-          {
-            duration:
-              t(
-                920
-              ),
-            easing:
-              'cubic-bezier(.77,0,.18,1)',
-            fill:
-              'forwards'
-          }
-        );
-
-      rightCurtain
-        ?.animate(
-          [
-            {
-              transform:
-                'translateX(0)'
-            },
-            {
-              transform:
-                'translateX(100%)'
-            }
-          ],
-          {
-            duration:
-              t(
-                920
-              ),
-            easing:
-              'cubic-bezier(.77,0,.18,1)',
-            fill:
-              'forwards'
-          }
-        );
-    },
-    t(
-      1320
-    )
-  );
-
-  setTimeout(
-    ()=>{
-      introEl
-        .animate(
-          [
-            {
-              opacity:
-                1
-            },
-            {
-              opacity:
-                0
-            }
-          ],
-          {
-            duration:
-              t(
-                420
-              ),
-            easing:
-              'ease',
-            fill:
-              'forwards'
-          }
-        );
-
-      introTitle
-        ?.animate(
-          [
-            {
-              transform:
-                'translateY(115%)'
-            },
-            {
-              transform:
-                'translateY(0)'
-            }
-          ],
-          {
-            duration:
-              t(
-                760
-              ),
-            easing:
-              'cubic-bezier(.2,.75,.2,1)',
-            fill:
-              'forwards'
-          }
-        );
-    },
-    t(
-      1720
-    )
-  );
-
-  setTimeout(
-    ()=>{
-      sweep
-        ?.animate(
-          [
-            {
-              left:
-                '-25%',
-              opacity:
-                0
-            },
-            {
-              left:
-                '25%',
-              opacity:
-                .7
-            },
-            {
-              left:
-                '115%',
-              opacity:
-                0
-            }
-          ],
-          {
-            duration:
-              t(
-                1500
-              ),
-            easing:
-              'ease-in-out'
-          }
-        );
-    },
-    t(
-      1950
-    )
-  );
-
-  setTimeout(
-    ()=>{
-      introEl.remove();
-
-      document.documentElement
-        .classList
-        .remove(
-          'intro-running'
-        );
-
-      if(introTitle){
-        introTitle.style.transform =
-          'none';
-      }
-
-      try{
-        sessionStorage.setItem(
-          introSeenKey,
-          '1'
-        );
-      }catch{}
-    },
-    t(
-      2350
-    )
-  );
+    try{
+      sessionStorage.setItem(introSeenKey, '1');
+    }catch{}
+  }, t(6500));
 }

@@ -5,8 +5,9 @@ type StackItem = {
   absoluteTop: number;
 };
 
-const DEAD_ZONE = 0.10;
-const MAX_DARKNESS = 0.56;
+const DEAD_ZONE = 0.035;
+const BLACKOUT_AT = 0.28;
+const MAX_DARKNESS = 1;
 
 function documentTop(
   element:
@@ -215,6 +216,8 @@ export function initHomeStack(){
       .removeProperty(
         'will-change'
       );
+
+    card.style.setProperty('--stack-text-opacity', '1');
   }
 
   function resetAll(){
@@ -364,18 +367,21 @@ export function initHomeStack(){
             )
           : 0;
 
+      /*
+       * V19: once the next sticky card is genuinely covering the current
+       * one, the covered card must resolve all the way to black instead of
+       * leaving a visible strip of the previous photograph underneath.
+       * BLACKOUT_AT intentionally reaches full black before 100% overlap.
+       */
       const darkness =
-        progress <=
-          0
+        progress <= 0
           ? 0
           : Math.min(
               MAX_DARKNESS,
-
               Math.pow(
-                progress,
-                1.06
-              ) *
-              MAX_DARKNESS
+                Math.min(1, progress / BLACKOUT_AT),
+                1.08
+              ) * MAX_DARKNESS
             );
 
       const nextDarkness =
@@ -401,6 +407,9 @@ export function initHomeStack(){
             nextDarkness
           );
       }
+
+      const textOpacity = Math.max(0, 1 - (progress / 0.24)).toFixed(3);
+      item.card.style.setProperty('--stack-text-opacity', textOpacity);
     }
   }
 

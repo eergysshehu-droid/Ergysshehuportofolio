@@ -4,6 +4,12 @@ import {
   type SiteLang
 } from '../../lib/i18n';
 
+import {
+  photoPosition,
+  photoSet,
+  photoUrl
+} from '../../lib/content';
+
 interface Props {
   settings: any;
   isSq: boolean;
@@ -15,63 +21,59 @@ const {
   isSq,
   lang
 } = Astro.props;
+
+const behindLensImage = settings.behindLensImage;
+const behindLensSrc = behindLensImage
+  ? photoUrl(behindLensImage, 1800)
+  : '/images/5998b542175204-1800.webp';
+const behindLensSrcset = behindLensImage
+  ? photoSet(behindLensImage)
+  : '/images/5998b542175204-480.webp 480w, /images/5998b542175204-1000.webp 1000w, /images/5998b542175204-1800.webp 1800w';
+const behindLensPosition = photoPosition(behindLensImage, '50% 45%');
 ---
 
 <section
-  class="artist-section"
+  class="artist-section v19-orbit-card"
   id="about"
+  data-reveal
 >
-  <div
-    class="artist-label"
-    data-reveal
-  >
+  <div class="artist-media" data-image-reveal>
+    <img
+      src={behindLensSrc}
+      srcset={behindLensSrcset}
+      sizes="(max-width: 700px) 92vw, 46vw"
+      style={`object-position:${behindLensPosition};`}
+      alt={isSq ? 'Ergys Shehu duke kërcyer me dy kamera pranë detit' : 'Ergys Shehu jumping with two cameras by the sea'}
+      width="1079"
+      height="1079"
+      loading="lazy"
+      decoding="async"
+    />
+
     <span
-      class="kicker"
+      class="artist-media-label"
       data-en="BEHIND THE LENS"
       data-sq="PAS OBJEKTIVIT"
     >
       {isSq ? 'PAS OBJEKTIVIT' : 'BEHIND THE LENS'}
     </span>
-
-    <span class="artist-number">
-      ES / 01
-    </span>
   </div>
 
   <div class="artist-copy">
+    <div class="artist-label">
+      <span class="artist-number">ES / 01</span>
+    </div>
+
     <h2 data-reveal>
-      <span
-        data-en="Purity"
-        data-sq="Pastërti"
-      >
-        {isSq ? 'Pastërti' : 'Purity'}
-      </span>
-
+      <span data-en="Purity" data-sq="Pastërti">{isSq ? 'Pastërti' : 'Purity'}</span>
       <br/>
-
-      <span
-        data-en="Simplicity"
-        data-sq="Thjeshtësi"
-      >
-        {isSq ? 'Thjeshtësi' : 'Simplicity'}
-      </span>
-
+      <span data-en="Simplicity" data-sq="Thjeshtësi">{isSq ? 'Thjeshtësi' : 'Simplicity'}</span>
       <br/>
-
-      <em
-        data-en="Honesty"
-        data-sq="Ndershmëri"
-      >
-        {isSq ? 'Ndershmëri' : 'Honesty'}
-      </em>
+      <em data-en="Honesty" data-sq="Ndershmëri">{isSq ? 'Ndershmëri' : 'Honesty'}</em>
     </h2>
 
     <p data-reveal>
-      {
-        isSq
-          ? (settings.bioSq || settings.bio)
-          : settings.bio
-      }
+      {isSq ? (settings.bioSq || settings.bio) : settings.bio}
     </p>
 
     <a

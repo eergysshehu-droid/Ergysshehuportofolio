@@ -453,6 +453,20 @@ const settings = defineType({
     }),
 
     defineField({
+      name: 'aboutAwardImage',
+      title: 'About - award / podium image',
+      type: 'portfolioPhoto',
+      description: 'Optional. If empty, the main Portrait field is used. Set hotspot on the face when needed.'
+    }),
+
+    defineField({
+      name: 'behindLensImage',
+      title: 'Homepage - Behind the Lens image',
+      type: 'portfolioPhoto',
+      description: 'Optional. If empty, the built-in two-camera photo is used. Set hotspot on the face when needed.'
+    }),
+
+    defineField({
       name: 'email',
       title:
         'Email publik për kontakt',
@@ -469,6 +483,32 @@ const settings = defineType({
         r.uri({
           scheme: ['https']
         })
+    }),
+
+    defineField({
+      name: 'whatsappNumber',
+      title: 'WhatsApp — numri',
+      type: 'string',
+      description: 'Numri me kod shteti. Shembull: 355XXXXXXXXX. Ky aktivizon butonin floating në mobile.',
+      validation: r =>
+        r.custom(value =>
+          !value || /^\+?[0-9\s().-]{8,24}$/.test(value) ||
+          'Përdor numrin me kod shteti, vetëm shifra dhe +.'
+        )
+    }),
+
+    defineField({
+      name: 'whatsappMessage',
+      title: 'WhatsApp mesazhi fillestar — English',
+      type: 'string',
+      initialValue: 'Hi Ergys, I am contacting you from your website.'
+    }),
+
+    defineField({
+      name: 'whatsappMessageSq',
+      title: 'WhatsApp mesazhi fillestar — Shqip',
+      type: 'string',
+      initialValue: 'Përshëndetje Ergys, po të kontaktoj nga website-i.'
     }),
 
     defineField({

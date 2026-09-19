@@ -61,6 +61,8 @@ export interface Settings {
   artistQuoteSq?: string;
 
   portrait?: Photo;
+  aboutAwardImage?: Photo;
+  behindLensImage?: Photo;
   heroImage?: Photo;
   fashionCover?: Photo;
   weddingsCover?: Photo;
@@ -70,6 +72,9 @@ export interface Settings {
   reelUrl?: string;
   email?: string;
   instagram?: string;
+  whatsappNumber?: string;
+  whatsappMessage?: string;
+  whatsappMessageSq?: string;
 
   seoDescription?: string;
   seoDescriptionSq?: string;
@@ -200,6 +205,16 @@ function normalizeSettings(
         settings.portrait
       ),
 
+    aboutAwardImage:
+      bilingualPhoto(
+        settings.aboutAwardImage
+      ),
+
+    behindLensImage:
+      bilingualPhoto(
+        settings.behindLensImage
+      ),
+
     heroImage:
       bilingualPhoto(
         settings.heroImage
@@ -294,6 +309,8 @@ export function content():
       artistQuoteSq,
 
       portrait,
+      aboutAwardImage,
+      behindLensImage,
       heroImage,
       fashionCover,
       weddingsCover,
@@ -303,6 +320,9 @@ export function content():
       reelUrl,
       email,
       instagram,
+      whatsappNumber,
+      whatsappMessage,
+      whatsappMessageSq,
 
       seoDescription,
       seoDescriptionSq

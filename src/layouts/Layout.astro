@@ -13,7 +13,9 @@ import '../styles/components/footer.css';
 import '../styles/pages/mobile-collection.css';
 import '../styles/pages/desktop-collection.css';
 import '../styles/components/mobile-nav.css';
-import '../styles/final-v14.css';
+import '../styles/final-v16.css';
+import '../styles/final-v18.css';
+import '../styles/final-v19.css';
 
 import {
   defaults,
@@ -31,8 +33,7 @@ import {
 } from '../lib/i18n';
 
 import SocialIcons from '../components/SocialIcons.astro';
-import BrandMark from '../components/BrandMark.astro';
-
+import WhatsAppFab from '../components/WhatsAppFab.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -47,7 +48,7 @@ interface Props {
 }
 
 const {
-  title = 'Ergys Shehu — Photographer, Videographer & Director | Albania',
+  title = 'Ergys Shehu — Photographer & Director',
   description = defaults.seoDescription,
   name = defaults.name,
   home = false,
@@ -627,8 +628,8 @@ const webPageLd = {
         ERGYS
       </span>
 
-      <span class="ergys-wordmark-light">
-        SHEHU
+      <span class="ergys-wordmark-light" aria-label="SHEHU">
+        <span class="header-shehu-letter" style="--header-letter-index:0" aria-hidden="true">S</span><span class="header-shehu-letter" style="--header-letter-index:1" aria-hidden="true">H</span><span class="header-shehu-letter" style="--header-letter-index:2" aria-hidden="true">E</span><span class="header-shehu-letter" style="--header-letter-index:3" aria-hidden="true">H</span><span class="header-shehu-letter" style="--header-letter-index:4" aria-hidden="true">U</span>
       </span>
     </a>
 
@@ -887,38 +888,22 @@ const webPageLd = {
         </span>
         <span class="mobile-menu-arrow" aria-hidden="true">→</span>
       </a>
-    </nav>
-
-    <nav
-      class="mobile-menu-secondary"
-      aria-label="Secondary navigation"
-    >
-      <a
-        href={href('/about/')}
-        data-en="About"
-        data-sq="Rreth meje"
-      >
-        About
+      <a href={href('/about/')}>
+        <span class="mobile-menu-number">07</span>
+        <span class="mobile-menu-label" data-en="About" data-sq="Rreth meje">About</span>
+        <span class="mobile-menu-arrow" aria-hidden="true">&#8594;</span>
       </a>
 
-      <span aria-hidden="true"></span>
-
-      <a
-        href={href('/journal/')}
-        data-en="Journal"
-        data-sq="Shkrime"
-      >
-        Journal
+      <a href={href('/journal/')}>
+        <span class="mobile-menu-number">08</span>
+        <span class="mobile-menu-label" data-en="Journal" data-sq="Shkrime">Journal</span>
+        <span class="mobile-menu-arrow" aria-hidden="true">&#8594;</span>
       </a>
 
-      <span aria-hidden="true"></span>
-
-      <a
-        href={href('/book/#contact')}
-        data-en="Contact"
-        data-sq="Kontakt"
-      >
-        Contact
+      <a href={href('/book/#contact')}>
+        <span class="mobile-menu-number">09</span>
+        <span class="mobile-menu-label" data-en="Contact" data-sq="Kontakt">Contact</span>
+        <span class="mobile-menu-arrow" aria-hidden="true">&#8594;</span>
       </a>
     </nav>
 
@@ -991,6 +976,7 @@ const webPageLd = {
       </button>
     </div>
 
+<SocialIcons class="mobile-footer-social" />
 <a
       class="mobile-book"
       href={href('/book/#contact')}
@@ -1013,66 +999,108 @@ const webPageLd = {
     <slot/>
   </main>
 
-  <footer>
-    <div class="footer-row">
-      <BrandMark
-        href={href('/')}
-        class="footer-brand"
-        name={name}
+  <footer class="site-footer-v19">
+  <div class="footer-v19-main">
+    <a
+      class="footer-v19-brand"
+      href={href('/')}
+      aria-label={isSq ? 'Ergys Shehu — Ballina' : 'Ergys Shehu — Home'}
+    >
+      <img
+        src="/brand/ergys-monogram-outline-gold.svg"
+        alt=""
+        width="54"
+        height="46"
       />
 
-      <SocialIcons
-        class="footer-social"
-      />
+      <span class="footer-v19-brand-copy">
+        <span class="footer-v19-wordmark">
+          <strong>ERGYS</strong> <span>SHEHU</span>
+        </span>
+        <span
+          class="footer-v19-role"
+          data-en="PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST"
+          data-sq="FOTOGRAF / REGJISOR / ARTIST VIZUAL"
+        >
+          {isSq ? 'FOTOGRAF / REGJISOR / ARTIST VIZUAL' : 'PHOTOGRAPHER / DIRECTOR / VISUAL ARTIST'}
+        </span>
+      </span>
+    </a>
 
-      <a
-        class="footer-contact"
-        href={href('/book/#contact')}
-        data-reveal
-        data-en="CONTACT ↗"
-        data-sq="KONTAKT ↗"
+    <div class="footer-v19-social-block">
+      <span
+        class="footer-v19-social-label"
+        data-en="FOLLOW / CONNECT"
+        data-sq="NDIQ / LIDHU"
       >
-        CONTACT ↗
-      </a>
+        {isSq ? 'NDIQ / LIDHU' : 'FOLLOW / CONNECT'}
+      </span>
+
+      <SocialIcons class="footer-v19-social" />
+
+      <span
+        class="footer-v19-tagline"
+        data-en="IMAGES FOR A MORE HUMAN TOMORROW"
+        data-sq="IMAZHE PËR NJË TË NESËRME MË NJERËZORE"
+      >
+        {isSq ? 'IMAZHE PËR NJË TË NESËRME MË NJERËZORE' : 'IMAGES FOR A MORE HUMAN TOMORROW'}
+      </span>
     </div>
 
+    <div class="footer-v19-contact-block">
+      <a
+        class="footer-v19-contact"
+        href={href('/book/#contact')}
+      >
+        <span data-en="CONTACT" data-sq="KONTAKT">
+          {isSq ? 'KONTAKT' : 'CONTACT'}
+        </span>
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <span
+        class="footer-v19-contact-copy"
+        data-en="LET'S CREATE SOMETHING MEANINGFUL"
+        data-sq="LE TË KRIJOJMË DIÇKA ME KUPTIM"
+      >
+        {isSq ? 'LE TË KRIJOJMË DIÇKA ME KUPTIM' : "LET'S CREATE SOMETHING MEANINGFUL"}
+      </span>
+    </div>
+  </div>
+
+  <div class="footer-v19-meta">
     <span
-  class="footer-copyright"
-  data-en={`© ${new Date().getFullYear()} Ergys Shehu. All rights reserved.`}
-  data-sq={`© ${new Date().getFullYear()} Ergys Shehu. Të gjitha të drejtat të rezervuara.`}
->
-  © {new Date().getFullYear()} Ergys Shehu. All rights reserved.
-</span>
+      class="footer-v19-copy"
+      data-en={`© ${new Date().getFullYear()} Ergys Shehu. All rights reserved.`}
+      data-sq={`© ${new Date().getFullYear()} Ergys Shehu. Të gjitha të drejtat të rezervuara.`}
+    >
+      © {new Date().getFullYear()} Ergys Shehu. All rights reserved.
+    </span>
+
     <nav
-      class="footer-legal"
+      class="footer-v19-legal"
       aria-label={isSq ? 'Informacion ligjor' : 'Legal'}
     >
-      <a href={href('/privacy/')}>
-        {isSq ? 'Privatësia' : 'Privacy'}
-      </a>
-
-      <span aria-hidden="true">·</span>
-
-      <a href={href('/terms/')}>
-        {isSq ? 'Kushtet' : 'Terms'}
-      </a>
-
-      <span aria-hidden="true">·</span>
-
-      <a href={href('/cookies/')}>
-        {isSq ? 'Cookies' : 'Cookies'}
-      </a>
+      <a href={href('/privacy/')}>{isSq ? 'Privatësia' : 'Privacy'}</a>
+      <i aria-hidden="true"></i>
+      <a href={href('/terms/')}>{isSq ? 'Kushtet' : 'Terms'}</a>
+      <i aria-hidden="true"></i>
+      <a href={href('/cookies/')}>Cookies</a>
     </nav>
 
-    <a
-      href="#main"
-      data-reveal
-      data-en="BACK TO TOP ↑"
-      data-sq="KTHEHU NË KRYE ↑"
-    >
-      BACK TO TOP ↑
+    <a class="footer-v19-top" href="#">
+      <span data-en="BACK TO TOP" data-sq="NË KRYE">{isSq ? 'NË KRYE' : 'BACK TO TOP'}</span> ↑
     </a>
-  </footer>
+  </div>
+</footer>
+
+<WhatsAppFab />
+
+
+
+
+
+
 
   <script>
     import { initMobileMenu } from '../scripts/mobile-menu';
@@ -2152,6 +2180,7 @@ if(
 <script>
   import '../scripts/mobile-rollup';
 </script>
+
 
 </body>
 </html>

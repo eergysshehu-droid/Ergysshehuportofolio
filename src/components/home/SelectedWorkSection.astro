@@ -28,13 +28,13 @@ const filterItems = [
   {
     key: 'all',
     en: 'All work',
-    sq: 'TÃƒÂ« gjitha',
+    sq: 'Të gjitha',
     count: albums.length
   },
   {
     key: 'fashion',
     en: 'Fashion',
-    sq: 'ModÃƒÂ«',
+    sq: 'Modë',
     count: albums.filter(album => albumKind(album) === 'fashion').length
   },
   {
@@ -58,198 +58,112 @@ const filterItems = [
 ];
 
 const marqueeItems = [
-  {
-    no: '01',
-    en: 'PHOTOGRAPHY',
-    sq: 'FOTOGRAFI'
-  },
-  {
-    no: '02',
-    en: 'FILM',
-    sq: 'FILM'
-  },
-  {
-    no: '03',
-    en: 'ART DIRECTION',
-    sq: 'DREJTIM ARTISTIK'
-  },
-  {
-    no: '04',
-    en: 'ALBANIA',
-    sq: 'SHQIPÃƒâ€¹RI'
-  },
-  {
-    no: '05',
-    en: 'WORLDWIDE',
-    sq: 'NDÃƒâ€¹RKOMBÃƒâ€¹TARISHT'
-  }
+  { no: '01', en: 'PHOTOGRAPHY', sq: 'FOTOGRAFI' },
+  { no: '02', en: 'FASHION', sq: 'MODË' },
+  { no: '03', en: 'BEAUTY', sq: 'BUKURI' },
+  { no: '04', en: 'PORTRAITS', sq: 'PORTRETE' },
+  { no: '05', en: 'EDITORIAL', sq: 'EDITORIAL' },
+  { no: '06', en: 'WEDDINGS', sq: 'DASMA' },
+  { no: '07', en: 'CINEMATIC VIDEO', sq: 'VIDEO KINEMATIKE' },
+  { no: '08', en: 'VIDEOGRAPHY', sq: 'VIDEOGRAFI' },
+  { no: '09', en: 'DIRECTING', sq: 'REGJI' },
+  { no: '10', en: 'ALBANIA', sq: 'SHQIPËRI' },
+  { no: '11', en: 'WORLDWIDE', sq: 'NDËRKOMBËTARISHT' }
 ];
 ---
 
-<section
-  class="work-section"
-  id="selected"
->
+<section class="work-section" id="selected">
   <div
     class="home-marquee"
     aria-label={
       isSq
-        ? 'Fotografi, film, drejtim artistik, ShqipÃƒÂ«ri, ndÃƒÂ«rkombÃƒÂ«tarisht'
-        : 'Photography, film, art direction, Albania, worldwide'
+        ? 'Fotografi, modë, bukuri, portrete, editorial, dasma, video kinematike, videografi, regji, Shqipëri, ndërkombëtarisht'
+        : 'Photography, fashion, beauty, portraits, editorial, weddings, cinematic video, videography, directing, Albania, worldwide'
     }
   >
     <div class="home-marquee-track">
       {
-        [0, 1].map(
-          () => (
-            <div
-              class="home-marquee-set"
-              aria-hidden="true"
-            >
-              {
-                marqueeItems.map(
-                  item => (
-                    <span class="home-marquee-item">
-                      <span class="home-marquee-no">
-                        {item.no}
-                      </span>
-
-                      <span
-                        data-en={item.en}
-                        data-sq={item.sq}
-                      >
-                        {
-                          isSq
-                            ? item.sq
-                            : item.en
-                        }
-                      </span>
-
-                      <i aria-hidden="true">
-                        Ã¢â‚¬â€
-                      </i>
-                    </span>
-                  )
-                )
-              }
-            </div>
-          )
-        )
+        [0, 1].map(() => (
+          <div class="home-marquee-set" aria-hidden="true">
+            {
+              marqueeItems.map(item => (
+                <span class="home-marquee-item">
+                  <span class="home-marquee-no">{item.no}</span>
+                  <span data-en={item.en} data-sq={item.sq}>
+                    {isSq ? item.sq : item.en}
+                  </span>
+                  <i class="home-marquee-sep" aria-hidden="true"></i>
+                </span>
+              ))
+            }
+          </div>
+        ))
       }
     </div>
   </div>
 
-  <div
-    class="work-heading"
-    data-reveal
-  >
+  <div class="work-heading" data-reveal>
     <div>
       <p
         class="kicker"
         data-en="A SELECTED PERSPECTIVE"
-        data-sq="PÃƒâ€¹RZGJEDHJE AUTORIALE"
+        data-sq="PËRZGJEDHJE AUTORIALE"
       >
-        {isSq ? 'PÃƒâ€¹RZGJEDHJE AUTORIALE' : 'A SELECTED PERSPECTIVE'}
+        {isSq ? 'PËRZGJEDHJE AUTORIALE' : 'A SELECTED PERSPECTIVE'}
       </p>
 
       <h2>
-        <span
-          data-en="Still"
-          data-sq="Statike"
-        >
+        <span data-en="Still" data-sq="Statike">
           {isSq ? 'Statike' : 'Still'}
-        </span>
-
-        {' '}
-
-        <em
-          data-en="Never silent"
-          data-sq="KurrÃƒÂ« e heshtur"
-        >
-          {isSq ? 'KurrÃƒÂ« e heshtur' : 'Never silent'}
+        </span>{' '}
+        <em data-en="Never silent" data-sq="Kurrë e heshtur">
+          {isSq ? 'Kurrë e heshtur' : 'Never silent'}
         </em>
       </h2>
     </div>
 
     <span class="work-count">
       {String(albums.length).padStart(2, '0')}{' '}
-      <span
-        data-en="COLLECTIONS"
-        data-sq="KOLEKSIONE"
-      >
+      <span data-en="COLLECTIONS" data-sq="KOLEKSIONE">
         {isSq ? 'KOLEKSIONE' : 'COLLECTIONS'}
       </span>
     </span>
   </div>
 
-  <div
-    class="work-toolbar"
-    data-reveal
-  >
+  <div class="work-toolbar" data-reveal>
     <div class="filters-shell">
       <button
         type="button"
         class="filter-rail-arrow filter-rail-arrow-prev"
         data-filter-prev
-        aria-label={
-          isSq
-            ? 'LÃƒÂ«viz kategoritÃƒÂ« majtas'
-            : 'Scroll categories left'
-        }
+        aria-label={isSq ? 'Lëviz kategoritë majtas' : 'Scroll categories left'}
       >
-        Ã¢â‚¬Â¹
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M12.5 4.5 7 10l5.5 5.5" />
+        </svg>
       </button>
 
       <div
         class="filters"
         data-filter-rail
         role="group"
-        aria-label={
-          isSq
-            ? 'Filtro projektet'
-            : 'Filter projects'
-        }
+        aria-label={isSq ? 'Filtro projektet' : 'Filter projects'}
       >
         {
-          filterItems.map(
-            (
-              item,
-              index
-            ) => (
-              <button
-                type="button"
-                data-filter={item.key}
-                aria-pressed={
-                  index === 0
-                    ? 'true'
-                    : 'false'
-                }
-                data-en={item.en}
-                data-sq={item.sq}
-              >
-                <span
-                  class="filter-label"
-                  data-en={item.en}
-                  data-sq={item.sq}
-                >
-                  {
-                    isSq
-                      ? item.sq
-                      : item.en
-                  }
-                </span>
-
-                <span
-                  class="filter-count"
-                  aria-hidden="true"
-                >
-                  /
-                  {' '}
-                  {String(item.count).padStart(2, '0')}
-                </span>
-              </button>
-            )
-          )
+          filterItems.map((item, index) => (
+            <button
+              type="button"
+              data-filter={item.key}
+              aria-pressed={index === 0 ? 'true' : 'false'}
+            >
+              <span class="filter-label" data-en={item.en} data-sq={item.sq}>
+                {isSq ? item.sq : item.en}
+              </span>
+              <span class="filter-count" aria-hidden="true">
+                / {String(item.count).padStart(2, '0')}
+              </span>
+            </button>
+          ))
         }
       </div>
 
@@ -257,23 +171,21 @@ const marqueeItems = [
         type="button"
         class="filter-rail-arrow filter-rail-arrow-next"
         data-filter-next
-        aria-label={
-          isSq
-            ? 'LÃƒÂ«viz kategoritÃƒÂ« djathtas'
-            : 'Scroll categories right'
-        }
+        aria-label={isSq ? 'Lëviz kategoritë djathtas' : 'Scroll categories right'}
       >
-        Ã¢â‚¬Âº
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="m7.5 4.5 5.5 5.5-5.5 5.5" />
+        </svg>
       </button>
     </div>
 
     <a
       class="index-link"
       href={localizedPath('/projects/', lang)}
-      data-en="PROJECT INDEX Ã¢â€ â€”"
-      data-sq="TÃƒâ€¹ GJITHA PROJEKTET Ã¢â€ â€”"
+      data-en="PROJECT INDEX ↗"
+      data-sq="TË GJITHA PROJEKTET ↗"
     >
-      {isSq ? 'TÃƒâ€¹ GJITHA PROJEKTET Ã¢â€ â€”' : 'PROJECT INDEX Ã¢â€ â€”'}
+      {isSq ? 'TË GJITHA PROJEKTET ↗' : 'PROJECT INDEX ↗'}
     </a>
   </div>
 
@@ -283,12 +195,8 @@ const marqueeItems = [
     class="work-empty"
     hidden
     data-en="No projects in this selection yet."
-    data-sq="Nuk ka ende projekte nÃƒÂ« kÃƒÂ«tÃƒÂ« pÃƒÂ«rzgjedhje."
+    data-sq="Nuk ka ende projekte në këtë përzgjedhje."
   >
-    {
-      isSq
-        ? 'Nuk ka ende projekte nÃƒÂ« kÃƒÂ«tÃƒÂ« pÃƒÂ«rzgjedhje.'
-        : 'No projects in this selection yet.'
-    }
+    {isSq ? 'Nuk ka ende projekte në këtë përzgjedhje.' : 'No projects in this selection yet.'}
   </p>
 </section>
