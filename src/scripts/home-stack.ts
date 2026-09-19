@@ -27,7 +27,7 @@ type StackGroup = {
  */
 const START_OVERLAP = 0.045;
 const FULL_DARK_AT = 0.82;
-const MAX_DARKNESS = 0.985;
+const MAX_DARKNESS = 0.86;
 const SLOW_RESPONSE_MS = 230;
 const FAST_RESPONSE_MS = 58;
 const FAST_SCROLL_PX_PER_MS = 1.85;

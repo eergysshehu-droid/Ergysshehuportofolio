@@ -127,3 +127,269 @@
     animation:none!important;
   }
 }
+
+/* ==========================================================================
+   FINAL MOBILE COMPOSITOR + THEME FINISH
+   - Keep sticky geometry and timing intact.
+   - Remove obsolete GPU-promotion hints from the Selected Work stack.
+   - Use warm white/cream in light mode.
+   - Keep dark mode deep and neutral with cream typography.
+   - Finish every page with a warm white footer.
+   ========================================================================== */
+
+@media(max-width:700px){
+  html.motion-ready body.is-home .project-card{
+    contain:none!important;
+    isolation:auto!important;
+    transform:none!important;
+    -webkit-transform:none!important;
+    -webkit-backface-visibility:visible!important;
+    backface-visibility:visible!important;
+    background:transparent!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-image{
+    contain:none!important;
+    isolation:auto!important;
+    transform:none!important;
+    -webkit-transform:none!important;
+    will-change:auto!important;
+    background:var(--frame-color,#141412)!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-image img{
+    transform:none!important;
+    -webkit-transform:none!important;
+    -webkit-backface-visibility:visible!important;
+    backface-visibility:visible!important;
+    will-change:auto!important;
+    filter:none!important;
+  }
+
+  html.motion-ready body.is-home .project-card .project-stack-shade{
+    will-change:auto!important;
+  }
+}
+
+@media(prefers-color-scheme:light){
+  :root{
+    --paper:#f7f3ea;
+    --ink:#171914;
+    --muted:#736f67;
+    --line:rgba(23,23,20,.12);
+    --theme-bg:#f7f3ea;
+    --theme-bg-soft:#f1ebe1;
+    --theme-panel:rgba(251,248,241,.94);
+    --theme-panel-deep:rgba(242,235,224,.95);
+    --theme-text:#171914;
+    --theme-muted:rgba(23,23,20,.60);
+    --theme-line:rgba(23,23,20,.10);
+  }
+
+  html,
+  body{
+    background:#f7f3ea!important;
+    color:#171914!important;
+  }
+
+  body.is-home .filmstrip-section{
+    background:linear-gradient(180deg,#fbf8f1 0%,#f6f1e8 100%)!important;
+    color:#171914!important;
+  }
+
+  body.is-home .filmstrip-curve path{
+    fill:#fbf8f1!important;
+  }
+
+  body.is-home .artist-section{
+    background:linear-gradient(145deg,#fcf9f2 0%,#f4eee4 58%,#eee6da 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,23,20,.08)!important;
+  }
+
+  body.is-home .recognition-section{
+    background:#f7f3ea!important;
+    color:#171914!important;
+  }
+
+  body.is-home .recognition-row{
+    background:linear-gradient(145deg,rgba(255,253,248,.82),rgba(245,238,228,.80))!important;
+    border-color:rgba(23,23,20,.09)!important;
+  }
+
+  body.is-home .latest-section{
+    background:linear-gradient(180deg,#faf7f0 0%,#f3ede3 100%)!important;
+    color:#171914!important;
+  }
+
+  body.is-home .journal-feature{
+    background:#f5efe5!important;
+    color:#171914!important;
+  }
+
+  body.is-home .contact-section{
+    background:linear-gradient(145deg,#fbf8f1 0%,#f2eadf 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,23,20,.08)!important;
+  }
+
+  .collection-intro{
+    background:linear-gradient(145deg,rgba(253,250,244,.97) 0%,rgba(246,240,231,.96) 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,23,20,.085)!important;
+  }
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    background:#f7f3ea!important;
+    color:#171914!important;
+  }
+}
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --paper:#0d0f0c;
+    --ink:#f4efe5;
+    --muted:#aaa59c;
+    --line:rgba(244,239,229,.10);
+    --theme-bg:#0d0f0c;
+    --theme-bg-soft:#121510;
+    --theme-panel:rgba(20,24,18,.94);
+    --theme-panel-deep:rgba(10,12,9,.97);
+    --theme-text:#f4efe5;
+    --theme-muted:rgba(244,239,229,.61);
+    --theme-line:rgba(244,239,229,.10);
+  }
+
+  html{
+    background:#080a08!important;
+  }
+
+  body{
+    background:#0d0f0c!important;
+    color:#f4efe5!important;
+  }
+
+  body.is-home .filmstrip-section{
+    background:linear-gradient(180deg,#11140f 0%,#0b0d0a 100%)!important;
+    color:#f4efe5!important;
+  }
+
+  body.is-home .filmstrip-curve path{
+    fill:#11140f!important;
+  }
+
+  body.is-home .artist-section{
+    background:linear-gradient(145deg,#151914 0%,#0d100c 100%)!important;
+    color:#f4efe5!important;
+  }
+
+  body.is-home .recognition-section,
+  body.is-home .latest-section,
+  body.is-home .journal-feature{
+    background:#0e110d!important;
+    color:#f4efe5!important;
+  }
+
+  body.is-home .contact-section{
+    background:linear-gradient(145deg,#141713 0%,#0c0f0b 100%)!important;
+    color:#f4efe5!important;
+  }
+
+  .collection-intro{
+    background:linear-gradient(145deg,rgba(22,26,20,.97),rgba(11,13,10,.98))!important;
+    color:#f4efe5!important;
+  }
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    background:#0d0f0c!important;
+    color:#f4efe5!important;
+  }
+}
+
+@media(max-width:1000px) and (prefers-color-scheme:light){
+  html body:not(.is-home) .site-header,
+  html body:not(.is-home) .site-header.is-scrolled,
+  html body.is-home .site-header.is-scrolled{
+    --header-fg:#171914!important;
+    --header-bg:rgba(250,247,240,.96)!important;
+    --header-line:rgba(23,23,20,.09)!important;
+    color:#171914!important;
+    background:rgba(250,247,240,.96)!important;
+    border-color:rgba(23,23,20,.09)!important;
+    box-shadow:0 8px 30px rgba(35,31,24,.07)!important;
+    backdrop-filter:blur(24px) saturate(118%)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(118%)!important;
+  }
+
+  html body:not(.is-home) .site-header .ergys-wordmark,
+  html body.is-home .site-header.is-scrolled .ergys-wordmark{
+    color:#171914!important;
+    text-shadow:none!important;
+  }
+
+  html body:not(.is-home) .mobile-menu-trigger,
+  html body.is-home .site-header.is-scrolled .mobile-menu-trigger{
+    color:#171914!important;
+    border-color:rgba(23,23,20,.18)!important;
+    background:rgba(255,255,255,.30)!important;
+    filter:none!important;
+  }
+
+  html body:not(.is-home) .hamburger i,
+  html body.is-home .site-header.is-scrolled .hamburger i{
+    background:#171914!important;
+  }
+}
+
+html body footer,
+html body.is-home footer{
+  background:linear-gradient(180deg,#fbf8f1 0%,#f4eee4 100%)!important;
+  color:#171914!important;
+  border-top:1px solid rgba(23,23,20,.10)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.80)!important;
+}
+
+html body footer .footer-brand,
+html body footer .brand-lockup,
+html body footer .footer-name,
+html body footer .footer-contact,
+html body footer .footer-social,
+html body footer .footer-social a,
+html body footer .social-link,
+html body footer>a{
+  color:#171914!important;
+}
+
+html body footer .brand-lockup-subtitle,
+html body footer .footer-copyright,
+html body footer .footer-legal,
+html body footer .footer-legal a{
+  color:rgba(23,23,20,.50)!important;
+}
+
+html body footer .footer-contact{
+  border-color:rgba(23,23,20,.22)!important;
+}
+
+html body footer .social-link{
+  border-color:rgba(23,23,20,.14)!important;
+  background:rgba(255,255,255,.24)!important;
+}
+
+html body footer .footer-legal a:hover,
+html body footer>a:hover,
+html body footer .footer-contact:hover{
+  color:#000!important;
+}
+
+@media(max-width:700px){
+  html body .footer-copyright{
+    border-top-color:rgba(23,23,20,.09)!important;
+  }
+}
