@@ -1,0 +1,649 @@
+/* ==========================================================================
+   ERGYS SHEHU — AUTHORITATIVE SYSTEM THEME
+   Imported LAST on purpose.
+
+   Contract:
+   - LIGHT = real warm white / cream UI.
+   - DARK  = real deep neutral UI.
+   - Photography is never recoloured.
+   - Hero can stay cinematic over photography.
+   - Lightbox can stay dark for image viewing.
+   - Mobile navigation follows the OS theme.
+   - Footer follows the OS theme.
+   ========================================================================== */
+
+:root{
+  color-scheme:light dark;
+}
+
+/* ==========================================================================
+   LIGHT
+   ========================================================================== */
+
+@media(prefers-color-scheme:light){
+  :root{
+    --paper:#f8f5ee;
+    --ink:#171914;
+    --muted:#746f66;
+    --line:rgba(23,25,20,.11);
+
+    --theme-bg:#f8f5ee;
+    --theme-bg-soft:#f1ebe1;
+    --theme-panel:#fffdf8;
+    --theme-panel-deep:#f3ecdf;
+    --theme-text:#171914;
+    --theme-muted:rgba(23,25,20,.60);
+    --theme-line:rgba(23,25,20,.10);
+    --theme-glass-highlight:rgba(255,255,255,.86);
+  }
+
+  html{
+    background:#f3eee5!important;
+    color-scheme:light!important;
+  }
+
+  body{
+    background:#f8f5ee!important;
+    color:#171914!important;
+  }
+
+  /* ---------- Home content surfaces ---------- */
+
+  body.is-home .filmstrip-section{
+    background:linear-gradient(180deg,#fffdf8 0%,#f5efe6 100%)!important;
+    color:#171914!important;
+  }
+
+  body.is-home .filmstrip-curve path{
+    fill:#fffdf8!important;
+  }
+
+  body.is-home .filmstrip-heading h2,
+  body.is-home .filmstrip-view-all,
+  body.is-home .filmstrip-next{
+    color:#171914!important;
+  }
+
+  body.is-home .filmstrip-heading .kicker,
+  body.is-home .filmstrip-heading .kicker::after,
+  body.is-home .filmstrip-copy,
+  body.is-home .filmstrip-counter{
+    color:rgba(23,25,20,.56)!important;
+  }
+
+  body.is-home .filmstrip-next{
+    background:rgba(255,253,248,.92)!important;
+    border-color:rgba(23,25,20,.12)!important;
+    box-shadow:0 10px 28px rgba(39,34,27,.07)!important;
+  }
+
+  /* Selected Work is now part of the light theme.
+     Photography itself remains unchanged. */
+  body.is-home .work-section,
+  body.is-home .project-grid,
+  html.motion-ready body.is-home .project-grid{
+    background:#f8f5ee!important;
+    color:#171914!important;
+  }
+
+  body.is-home .work-heading,
+  body.is-home .work-heading h2,
+  body.is-home .work-count,
+  body.is-home .index-link{
+    color:#171914!important;
+  }
+
+  body.is-home .work-toolbar{
+    border-color:rgba(23,25,20,.11)!important;
+  }
+
+  body.is-home .filters button{
+    color:rgba(23,25,20,.56)!important;
+    border-color:rgba(23,25,20,.13)!important;
+    background:transparent!important;
+  }
+
+  body.is-home .filters button[aria-pressed="true"],
+  body.is-home .filters button.is-active{
+    color:#171914!important;
+    background:#fffdf8!important;
+    border-color:rgba(23,25,20,.22)!important;
+    box-shadow:0 5px 18px rgba(39,34,27,.06)!important;
+  }
+
+  html.motion-ready body.is-home .project-card,
+  html.motion-ready body.is-home .project-feature{
+    background:#f8f5ee!important;
+  }
+
+  body.is-home .artist-section{
+    background:linear-gradient(145deg,#fffdf8 0%,#f5efe6 56%,#eee5d8 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.09)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 26px 64px rgba(47,39,28,.08)!important;
+  }
+
+  body.is-home .artist-copy,
+  body.is-home .artist-copy h2,
+  body.is-home .artist-copy .text-link{
+    color:#171914!important;
+  }
+
+  body.is-home .artist-copy p{
+    color:rgba(23,25,20,.61)!important;
+  }
+
+  body.is-home .recognition-section{
+    background:#f8f5ee!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.08)!important;
+  }
+
+  body.is-home .recognition-heading,
+  body.is-home .recognition-row{
+    color:#171914!important;
+  }
+
+  body.is-home .recognition-row{
+    background:linear-gradient(145deg,#fffdf8 0%,#f4ede3 100%)!important;
+    border-color:rgba(23,25,20,.09)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.85)!important;
+  }
+
+  body.is-home .recognition-meta{
+    color:rgba(23,25,20,.50)!important;
+  }
+
+  body.is-home .latest-section,
+  body.is-home .instagram-gallery-section{
+    background:linear-gradient(180deg,#fbf8f2 0%,#f3ede4 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.08)!important;
+  }
+
+  body.is-home .latest-section .kicker,
+  body.is-home .latest-section h2,
+  body.is-home .editorial-social-link{
+    color:#171914!important;
+  }
+
+  body.is-home .latest-intro{
+    color:rgba(23,25,20,.58)!important;
+  }
+
+  html.motion-ready body.is-home .instagram-editorial-grid{
+    background:transparent!important;
+  }
+
+  body.is-home .journal-feature{
+    background:#f4ede3!important;
+    color:#171914!important;
+  }
+
+  body.is-home .journal-feature p{
+    color:rgba(23,25,20,.60)!important;
+  }
+
+  body.is-home .contact-section{
+    background:linear-gradient(145deg,#fffdf8 0%,#f1e9de 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.09)!important;
+  }
+
+  body.is-home .contact-section .kicker,
+  body.is-home .contact-section h2,
+  body.is-home .contact-details,
+  body.is-home .contact-details a,
+  body.is-home .contact-details .email{
+    color:#171914!important;
+  }
+
+  body.is-home .contact-details p{
+    color:rgba(23,25,20,.58)!important;
+  }
+
+  body.is-home .contact-social-block{
+    border-color:rgba(23,25,20,.11)!important;
+  }
+
+  body.is-home .contact-social-label{
+    color:rgba(23,25,20,.48)!important;
+  }
+
+  /* ---------- Inner pages ---------- */
+
+  .collection-intro{
+    background:linear-gradient(145deg,#fffdf8 0%,#f5efe6 100%)!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.09)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.90),
+      0 22px 60px rgba(46,38,28,.07)!important;
+  }
+
+  .collection-intro h1,
+  .collection-intro .back-link,
+  .journal-card,
+  .journal-card-copy h2,
+  .journal-read,
+  .journal-post-body h2,
+  .journal-post-body h3,
+  .journal-post-body strong,
+  .bio-language summary,
+  blockquote{
+    color:#171914!important;
+  }
+
+  .collection-intro .kicker,
+  .collection-intro>p:not(.kicker),
+  .journal-card-copy p,
+  .journal-post-body,
+  .contact-copy,
+  .bio-language p,
+  .biography-layout aside>p:not(.kicker){
+    color:rgba(23,25,20,.62)!important;
+  }
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    background:#f8f5ee!important;
+    color:#171914!important;
+  }
+
+  .journal-date,
+  .journal-post-body figcaption{
+    color:rgba(23,25,20,.47)!important;
+  }
+
+  .bio-language,
+  .bio-milestones,
+  .bio-milestones p{
+    border-color:rgba(23,25,20,.11)!important;
+  }
+
+  /* ---------- Booking follows LIGHT too ---------- */
+
+  .booking-page{
+    --book-bg:#f8f5ee!important;
+    --book-fg:#171914!important;
+    --book-muted:rgba(23,25,20,.63)!important;
+    --book-soft:rgba(23,25,20,.43)!important;
+    --book-line:rgba(23,25,20,.11)!important;
+    --book-panel:rgba(255,253,248,.88)!important;
+    --book-field:rgba(255,255,255,.70)!important;
+    --book-shadow:rgba(43,36,27,.08)!important;
+    background:#f8f5ee!important;
+    color:#171914!important;
+    color-scheme:light!important;
+  }
+
+  .booking-page .services-section,
+  .booking-page .contact-booking,
+  .booking-page .collab-section,
+  .booking-page .collab-copy{
+    background:#f8f5ee!important;
+    color:#171914!important;
+    border-color:rgba(23,25,20,.10)!important;
+  }
+
+  .booking-page .inquiry-form{
+    background:rgba(255,253,248,.90)!important;
+    border-color:rgba(23,25,20,.11)!important;
+    box-shadow:0 18px 52px rgba(43,36,27,.08)!important;
+  }
+
+  /* ---------- Footer follows LIGHT ---------- */
+
+  html body #site-footer-final,
+  html body footer,
+  html body.is-home footer{
+    background:linear-gradient(180deg,#fffdf8 0%,#f2ebe1 100%)!important;
+    color:#171914!important;
+    border-top-color:rgba(23,25,20,.10)!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark,
+  html body #site-footer-final .footer-v19-role,
+  html body #site-footer-final .footer-v19-tagline,
+  html body #site-footer-final .footer-v19-contact,
+  html body #site-footer-final .footer-v19-contact-copy,
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-legal a,
+  html body #site-footer-final .footer-v19-top,
+  html body #site-footer-final .social-link,
+  html body footer a,
+  html body footer .footer-contact,
+  html body footer .footer-name{
+    color:#171914!important;
+  }
+
+  html body #site-footer-final .footer-v19-role,
+  html body #site-footer-final .footer-v19-tagline,
+  html body #site-footer-final .footer-v19-contact-copy,
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-top{
+    opacity:.56!important;
+  }
+
+  html body #site-footer-final .footer-v19-social-block{
+    border-color:rgba(23,25,20,.10)!important;
+  }
+
+  html body #site-footer-final > .footer-v19-meta{
+    border-top-color:rgba(23,25,20,.10)!important;
+  }
+
+  html body #site-footer-final .social-link::before{
+    border-color:currentColor!important;
+  }
+
+  /* ---------- Mobile navigation follows LIGHT ---------- */
+
+  @media(max-width:1000px){
+    html{
+      --menu-white:#171914!important;
+      --menu-muted:rgba(23,25,20,.48)!important;
+      --menu-line:rgba(23,25,20,.12)!important;
+    }
+
+    html body:not(.is-home) .site-header,
+    html body:not(.is-home) .site-header.is-scrolled,
+    html body.is-home .site-header.is-scrolled{
+      --header-fg:#171914!important;
+      --header-bg:#fbf8f2!important;
+      --header-line:rgba(23,25,20,.09)!important;
+      color:#171914!important;
+      background:rgba(251,248,242,.97)!important;
+      border-bottom:1px solid rgba(23,25,20,.09)!important;
+      box-shadow:0 8px 26px rgba(40,34,27,.055)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    html body:not(.is-home) .site-header .ergys-wordmark,
+    html body.is-home .site-header.is-scrolled .ergys-wordmark{
+      color:#171914!important;
+      text-shadow:none!important;
+    }
+
+    html body:not(.is-home) .site-header .mobile-menu-trigger,
+    html body.is-home .site-header.is-scrolled .mobile-menu-trigger{
+      color:#171914!important;
+      border-color:rgba(23,25,20,.20)!important;
+      background:rgba(255,255,255,.48)!important;
+    }
+
+    /* Keep the home trigger white while it sits directly over the hero photo. */
+    html body.is-home .site-header:not(.is-scrolled) .mobile-menu-trigger{
+      color:#fff!important;
+      border-color:rgba(255,255,255,.28)!important;
+      background:rgba(0,0,0,.08)!important;
+    }
+
+    html body .mobile-menu-screen{
+      color:#171914!important;
+      background:#fbf8f2!important;
+    }
+
+    html body .mobile-menu-screen::before{
+      background:
+        radial-gradient(circle at 84% 15%,rgba(239,189,95,.08),transparent 38%),
+        linear-gradient(155deg,#fffdf8 0%,#f7f1e8 56%,#efe6da 100%)!important;
+    }
+
+    html body .mobile-menu-screen::after{
+      display:none!important;
+    }
+
+    html body .mobile-menu-atmosphere{
+      opacity:.16!important;
+      background-image:
+        repeating-linear-gradient(
+          115deg,
+          transparent 0,
+          transparent 18px,
+          rgba(23,25,20,.015) 19px,
+          transparent 20px
+        )!important;
+      mix-blend-mode:multiply!important;
+    }
+
+    html body .mobile-menu-head{
+      border-bottom-color:rgba(23,25,20,.11)!important;
+    }
+
+    html body .mobile-menu-brand,
+    html body .mobile-menu-primary>a,
+    html body .mobile-menu-secondary>a,
+    html body .mobile-menu-footer,
+    html body .mobile-menu-footer a{
+      color:#171914!important;
+    }
+
+    html body .mobile-menu-tagline,
+    html body .mobile-menu-social-label{
+      color:rgba(23,25,20,.42)!important;
+    }
+
+    html body .mobile-menu-label::before{
+      background:rgba(23,25,20,.21)!important;
+    }
+
+    html body .mobile-menu-arrow{
+      color:rgba(23,25,20,.50)!important;
+    }
+
+    html body .mobile-menu-close{
+      border-color:rgba(23,25,20,.20)!important;
+      background:rgba(255,255,255,.42)!important;
+    }
+
+    html body .mobile-menu-close::before,
+    html body .mobile-menu-close::after{
+      background:#171914!important;
+    }
+
+    html body .mobile-menu-social-zone{
+      border-top-color:rgba(23,25,20,.10)!important;
+    }
+
+    html body .mobile-menu-social-zone .mobile-social .social-link,
+    html body .mobile-menu-footer .social-icons .social-link{
+      color:#171914!important;
+      border-color:rgba(23,25,20,.13)!important;
+      background:rgba(255,255,255,.28)!important;
+    }
+
+    html body .mobile-menu-footer{
+      background:rgba(248,245,238,.96)!important;
+      border-top-color:rgba(23,25,20,.10)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    html body .mobile-book{
+      color:#9a6923!important;
+      border-color:rgba(154,105,35,.50)!important;
+      background:rgba(255,255,255,.28)!important;
+    }
+  }
+}
+
+/* ==========================================================================
+   DARK
+   ========================================================================== */
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --paper:#0b0d0a;
+    --ink:#f4efe6;
+    --muted:#aaa59c;
+    --line:rgba(244,239,230,.10);
+
+    --theme-bg:#0b0d0a;
+    --theme-bg-soft:#11140f;
+    --theme-panel:#151914;
+    --theme-panel-deep:#090b09;
+    --theme-text:#f4efe6;
+    --theme-muted:rgba(244,239,230,.62);
+    --theme-line:rgba(244,239,230,.10);
+    --theme-glass-highlight:rgba(255,255,255,.08);
+  }
+
+  html{
+    background:#070807!important;
+    color-scheme:dark!important;
+  }
+
+  body{
+    background:#0b0d0a!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .filmstrip-section{
+    background:linear-gradient(180deg,#121510 0%,#0b0d0a 100%)!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .filmstrip-curve path{
+    fill:#121510!important;
+  }
+
+  body.is-home .work-section,
+  body.is-home .project-grid,
+  html.motion-ready body.is-home .project-grid{
+    background:#080a08!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .artist-section{
+    background:linear-gradient(145deg,#171b15 0%,#0c0f0b 100%)!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .recognition-section{
+    background:#0d100c!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .recognition-row{
+    background:linear-gradient(145deg,#151914 0%,#0b0e0a 100%)!important;
+    border-color:rgba(244,239,230,.09)!important;
+  }
+
+  body.is-home .latest-section,
+  body.is-home .instagram-gallery-section{
+    background:#0b0d0a!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .journal-feature{
+    background:#10130f!important;
+    color:#f4efe6!important;
+  }
+
+  body.is-home .contact-section{
+    background:linear-gradient(145deg,#151914 0%,#0b0d0a 100%)!important;
+    color:#f4efe6!important;
+  }
+
+  .collection-intro{
+    background:linear-gradient(145deg,#171b15 0%,#0c0f0b 100%)!important;
+    color:#f4efe6!important;
+  }
+
+  .collection-body,
+  .journal-list,
+  .journal-post,
+  .biography-layout{
+    background:#0b0d0a!important;
+    color:#f4efe6!important;
+  }
+
+  .booking-page{
+    --book-bg:#0b0d0a!important;
+    --book-fg:#f4efe6!important;
+    --book-muted:rgba(244,239,230,.68)!important;
+    --book-soft:rgba(244,239,230,.44)!important;
+    --book-line:rgba(244,239,230,.11)!important;
+    --book-panel:rgba(21,25,20,.90)!important;
+    --book-field:rgba(8,10,8,.64)!important;
+    --book-shadow:rgba(0,0,0,.28)!important;
+    background:#0b0d0a!important;
+    color:#f4efe6!important;
+    color-scheme:dark!important;
+  }
+
+  html body #site-footer-final,
+  html body footer,
+  html body.is-home footer{
+    background:#070907!important;
+    color:#f4efe6!important;
+    border-top-color:rgba(244,239,230,.08)!important;
+  }
+
+  html body #site-footer-final .footer-v19-wordmark,
+  html body #site-footer-final .footer-v19-role,
+  html body #site-footer-final .footer-v19-tagline,
+  html body #site-footer-final .footer-v19-contact,
+  html body #site-footer-final .footer-v19-contact-copy,
+  html body #site-footer-final .footer-v19-copy,
+  html body #site-footer-final .footer-v19-legal,
+  html body #site-footer-final .footer-v19-legal a,
+  html body #site-footer-final .footer-v19-top,
+  html body #site-footer-final .social-link{
+    color:#f4efe6!important;
+  }
+
+  @media(max-width:1000px){
+    html{
+      --menu-white:#f4efe6!important;
+      --menu-muted:rgba(244,239,230,.48)!important;
+      --menu-line:rgba(244,239,230,.12)!important;
+    }
+
+    html body:not(.is-home) .site-header,
+    html body:not(.is-home) .site-header.is-scrolled,
+    html body.is-home .site-header.is-scrolled{
+      --header-fg:#f4efe6!important;
+      --header-bg:#0b0d0a!important;
+      --header-line:rgba(244,239,230,.09)!important;
+      color:#f4efe6!important;
+      background:rgba(11,13,10,.97)!important;
+      border-bottom:1px solid rgba(244,239,230,.08)!important;
+      box-shadow:0 8px 28px rgba(0,0,0,.18)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+
+    html body .mobile-menu-screen{
+      color:#f4efe6!important;
+      background:#070907!important;
+    }
+
+    html body .mobile-menu-screen::before{
+      background:
+        radial-gradient(circle at 84% 16%,rgba(41,74,49,.13),transparent 42%),
+        linear-gradient(155deg,#101510 0%,#080b08 56%,#050605 100%)!important;
+    }
+
+    html body .mobile-menu-footer{
+      background:rgba(7,9,7,.97)!important;
+      border-top-color:rgba(244,239,230,.10)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
+    }
+  }
+}
+
+/* Lightbox remains intentionally dark in both themes so photography is isolated. */
+html body .lightbox,
+html body .lightbox-backdrop{
+  color-scheme:dark;
+}
